@@ -88,7 +88,6 @@ PRs and issues are welcome.
 | Can it resolve resources from parent classes and traits??? | - |
 | Add the missing relationships: https://laravel.com/docs/6.x/eloquent-relationships#introduction | - |
 | Make a minimal querybuilder | - |
-| Publish to packagist | - |
 
 ## API
 
