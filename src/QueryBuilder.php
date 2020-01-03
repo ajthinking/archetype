@@ -17,6 +17,16 @@ class QueryBuilder
         $this->PHPSignature = '/\.php$/';
     }
 
+    public function building()
+    {
+        return $this;
+    }
+
+    public function sayIt()
+    {
+        return "hey!";
+    }    
+
     public function all()
     {
         $PHPSignature = '/\.php$/';

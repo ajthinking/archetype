@@ -40,6 +40,10 @@
             "providers": [
                 "Ajthinking\\PHPFileManipulator\\PHPFileManipulatorServiceProvider"
             ]            
+        },
+        "aliases": {
+            "PHPFile": "Ajthinking\\PHPFileManipulator\\Facades\\PHPFile",
+            "LaravelFile": "Ajthinking\\PHPFileManipulator\\Facades\\LaravelFile"
         }
     },
     "autoload": {

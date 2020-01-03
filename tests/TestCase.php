@@ -3,8 +3,8 @@
 namespace Ajthinking\PHPFileManipulator\Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Ajthinking\PHPFileManipulator\PHPFile;
-use Ajthinking\PHPFileManipulator\LaravelFile;
+use Ajthinking\PHPFileManipulator\Facades\PHPFile;
+use Ajthinking\PHPFileManipulator\Facades\LaravelFile;
 use Illuminate\Contracts\Console\Kernel;
 
 abstract class TestCase extends BaseTestCase

@@ -2,44 +2,28 @@
 
 namespace Ajthinking\PHPFileManipulator\Traits;
 
-use Ajthinking\PHPFileManipulator\PHPFile;
 use Ajthinking\PHPFileManipulator\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;
+use Illuminate\Support\Str;
 
 trait HasIO
 {
-    public function __construct($relativePath)
+    public function load($path)
     {
-        $this->path = base_path($relativePath);
-        $this->relativePath = $relativePath;
+        $this->path = Str::startsWith($path, '/') ? $path : base_path($path);
         
         $this->contents = file_get_contents($this->path);
-        // ast - abstract syntax tree
-        $this->ast = $this->parse();
-    }
+        
+        $this->ast = $this->parse();        
 
-    static function load($relativePath)
-    {
-        return new static(
-            $relativePath
-        );
+        return $this;
     }    
 
     public function path()
     {
         return $this->path;
-    }
-
-    public function relativePath($newRelativePath = false)
-    {
-        if($newRelativePath) {
-            $this->path = base_path($newRelativePath);
-            $this->relativePath = $newRelativePath;
-        }
-
-        return $this->relativePath;
     }        
 
     public function save($path = false)

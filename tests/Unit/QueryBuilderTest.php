@@ -3,10 +3,11 @@
 namespace Ajthinking\PHPFileManipulator\Tests\Unit;
 
 use Ajthinking\PHPFileManipulator\Tests\TestCase;
-use Ajthinking\PHPFileManipulator\PHPFile;
-use Ajthinking\PHPFileManipulator\LaravelFile;
+use Ajthinking\PHPFileManipulator\Facades\PHPFile;
+use Ajthinking\PHPFileManipulator\Facades\LaravelFile;
 use Ajthinking\PHPFileManipulator\QueryBuilder;
 use Illuminate\Support\Collection;
+
 
 class QueryBuilderTest extends TestCase
 {

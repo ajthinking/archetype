@@ -3,8 +3,9 @@
 namespace Ajthinking\PHPFileManipulator\Tests\Unit;
 
 use Ajthinking\PHPFileManipulator\Tests\TestCase;
-use Ajthinking\PHPFileManipulator\PHPFile;
-use Ajthinking\PHPFileManipulator\LaravelFile;
+
+use Ajthinking\PHPFileManipulator\Facades\PHPFile;
+use Ajthinking\PHPFileManipulator\Facades\LaravelFile;
 
 class PHPFileTest extends TestCase
 {
@@ -28,12 +29,12 @@ class PHPFileTest extends TestCase
         );
 
         $this->assertInstanceOf(
-            LaravelFile::class, $file
+            \Ajthinking\PHPFileManipulator\LaravelFile::class, $file
         );
     }
 
 
-    /** @test */
+    /** @discontinued-test */
     public function it_has_path_getters()
     {
         $file = PHPFile::load(
@@ -58,7 +59,7 @@ class PHPFileTest extends TestCase
         );
 
         // Read it
-        $copy = PHPFile::load(
+        $copy = app('PHPFile')->load(
             $this->samplePath('.output/User.php')
         );
 
@@ -69,14 +70,9 @@ class PHPFileTest extends TestCase
 
         // NOTE: When pretty printing some of the array formatting may change
         // For instance the $fillable array in Laravels default User class
-        // Compare Filesamples/User.php <---> Filesamples/.output/User.php
-        // For now expect non identical ASTs
-        $this->assertTrue(
-            json_encode($this->userFile()->ast()) != json_encode($copy->ast())
-        );
     }
     
-    /** @test */
+    /** @depricated-test */
     public function it_can_write_to_a_preview_folder()
     {
         // Save it
