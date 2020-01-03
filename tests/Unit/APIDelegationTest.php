@@ -3,7 +3,7 @@
 namespace Ajthinking\PHPFileManipulator\Tests\Unit;
 
 use Ajthinking\PHPFileManipulator\Tests\TestCase;
-use Ajthinking\PHPFileManipulator\Facades\PHPFile;
+use PHPFile;
 
 use BadMethodCallException;
 

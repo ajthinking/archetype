@@ -5,7 +5,8 @@ namespace Ajthinking\PHPFileManipulator;
 use Illuminate\Support\ServiceProvider;
 use App;
 use Ajthinking\PHPFileManipulator\Factories\PHPFileFactory;
-use Ajthinking\PHPFileManipulator\LaravelFile;
+use Ajthinking\PHPFileManipulator\Factories\LaravelFileFactory;
+
 
 class PHPFileManipulatorServiceProvider extends ServiceProvider
 {
@@ -17,12 +18,11 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerFacades();
-        $this->registerAliases();
     }
 
     public function boot()
     {
-
+        //
     }
     
     private function registerFacades()
@@ -32,13 +32,7 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
         });
 
         App::bind('LaravelFile',function() {
-            return new LaravelFile;
+            return new LaravelFileFactory;
         });
-    }
-
-    private function registerAliases()
-    {
-        App::alias('PHPFile','Ajthinking\PHPFileManipulator\Facades\PHPFile');
-        App::alias('LaravelFile','Ajthinking\PHPFileManipulator\Facades\LaravelFile');
     }
 }

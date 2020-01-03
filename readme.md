@@ -10,8 +10,8 @@ composer require ajthinking/php-file-manipulator
 
 ### 
 ```php
-use Ajthinking\PHPFile;
-use Ajthinking\LaravelFile;
+use PHPFile;
+use LaravelFile;
 
 // list class methods
 PHPFile::load('app/User.php')
