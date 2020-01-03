@@ -5,7 +5,15 @@
     "keywords": [
         "php",
         "laravel",
-        "ast"
+        "ast",
+        "abstract syntax tree",
+        "php-parser"
+    ],
+    "authors": [
+        {
+            "name": "Anders Jürisoo",
+            "email": "jurisoo@hotmail.com"
+        }
     ],
     "license": "MIT",
     "require": {
@@ -32,18 +40,14 @@
         "laravel": {
             "dont-discover": [],
             "providers": [
-                "Ajthinking\\PHPFileManipulator\\ServiceProvider"
+                "Ajthinking\\PHPFileManipulator\\PHPFileManipulatorServiceProvider"
             ]            
         }
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+            "Ajthinking\\PHPFileManipulator": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -51,17 +55,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ]
-    }
+    "prefer-stable": true
 }
