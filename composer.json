@@ -44,7 +44,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ajthinking\\PHPFileManipulator": "src/"
+            "Ajthinking\\PHPFileManipulator\\": "src/"
         }
     },
     "autoload-dev": {
