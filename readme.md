@@ -1,4 +1,4 @@
-# PHP-FILE-MANIPULATOR
+# PHP-FILE-MANIPULATOR :fire: :fire: :fire:
 Programatically manipulate PHP / Laravel files on disk with an intuiutive, fluent API.
 
 ## Installation
