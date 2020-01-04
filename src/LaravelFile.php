@@ -11,9 +11,7 @@ class LaravelFile extends PHPFile
             'casts',
             'fillable',
             'hidden',
-            
             'routes',
-
             'hasOneMethods',
             'hasManyMethods',
             'belongsToMethods',
