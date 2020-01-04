@@ -1,4 +1,4 @@
-# PHPFile::manipulator(:fire:);
+# PHPFile::manipulator(:fire::fire::fire:);
 Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include a file QueryBuilder, Template engine and categorization of read/write operations in human readable `Resource` endpoints. Look at the examples to get started.
 
 ## Installation
