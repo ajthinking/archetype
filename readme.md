@@ -59,6 +59,10 @@ LaravelFile::load('app/User.php')
     ->addCasts(['is_admin' => 'boolean'])
     ->addHidden('secret')    
 
+// create new files from templates
+LaravelFile::controller('BeerController')
+    ->save()        
+
 ```
 
 ## Running tests
