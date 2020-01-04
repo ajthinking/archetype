@@ -6,14 +6,14 @@ use Ajthinking\PHPFileManipulator\QueryBuilder;
 
 trait HasQueryBuilder
 {
-    public static function all()
+    public function all()
     {
-        return (new QueryBuilder)->all();
+        return collect();
     }
 
-    public static function in($args)
+    public function in($args)
     {
-        return (new QueryBuilder())->in($args);
+        return collect();
     }
 
     public static function where($args)

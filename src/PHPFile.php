@@ -5,14 +5,14 @@ namespace Ajthinking\PHPFileManipulator;
 use Ajthinking\PHPFileManipulator\Traits\DelegatesAPICalls;
 use Ajthinking\PHPFileManipulator\Traits\HasIO;
 use Ajthinking\PHPFileManipulator\Traits\HasQueryBuilder;
-use Ajthinking\PHPFileManipulator\Traits\HasSnippets;
+use Ajthinking\PHPFileManipulator\Traits\HasTemplates;
 
 class PHPFile
 {
     use DelegatesAPICalls;
     use HasIO;
     use HasQueryBuilder;
-    use HasSnippets;
+    use HasTemplates;
 
     public function resources() {
         return collect([
@@ -25,4 +25,11 @@ class PHPFile
             'classMethodNames',            
         ]);
     }
+
+    public function templates() {
+        return collect(
+            'class',
+            'trait',
+        );
+    }    
 }

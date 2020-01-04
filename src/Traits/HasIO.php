@@ -19,7 +19,16 @@ trait HasIO
         $this->ast = $this->parse();        
 
         return $this;
-    }    
+    }
+    
+    public function fromString($code)
+    {        
+        $this->contents = $code;
+        
+        $this->ast = $this->parse();        
+
+        return $this;        
+    }
 
     public function path()
     {

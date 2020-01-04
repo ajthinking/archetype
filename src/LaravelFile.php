@@ -18,4 +18,10 @@ class LaravelFile extends PHPFile
             'belongsToManyMethods',
         ]);
     }
+
+    public function templates() {
+        return parent::templates()->concat([
+            'model',
+        ]);
+    }    
 }
