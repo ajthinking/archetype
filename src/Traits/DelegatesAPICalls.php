@@ -18,7 +18,7 @@ trait DelegatesAPICalls
         if($resource) return $resource->$method(...$args);
 
         /** if template */
-        if(TemplateResolver::canHandle($this, $method)) return $this->fromTemplate($method); 
+        if(TemplateResolver::canHandle($this, $method)) return $this->fromTemplate($method, ...$args); 
 
         /** if querybuilder */
         if(QueryBuilderResolver::canHandle($this, $method)) return $this->$method(...$args); 

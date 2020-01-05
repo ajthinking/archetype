@@ -4,7 +4,7 @@ namespace Ajthinking\PHPFileManipulator\Traits;
 
 trait HasTemplates
 {
-    public function fromTemplate($name)
+    public function fromTemplate($name, $path, $replacementPairs = [])
     {
         $paths = [
             'model' => 'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/model.stub'
