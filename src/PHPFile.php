@@ -11,7 +11,6 @@ class PHPFile
 {
     use DelegatesAPICalls;
     use HasIO;
-    use HasQueryBuilder;
     use HasTemplates;
 
     public function resources() {

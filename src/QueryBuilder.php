@@ -4,18 +4,13 @@ namespace Ajthinking\PHPFileManipulator;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use RegexIterator;
 use RecursiveCallbackFilterIterator;
 
 use Ajthinking\PHPFileManipulator\LaravelFile;
 
 class QueryBuilder
 {
-    public function __construct()
-    {
-        $this->result = collect();    
-        $this->PHPSignature = '/\.php$/';
-    }
+    static $PHPSignature = '/\.php$/';
 
     public function building()
     {
@@ -29,12 +24,9 @@ class QueryBuilder
 
     public function all()
     {
-        $PHPSignature = '/\.php$/';
-        $JSONSignature = '/\.json$/';
-
         $this->recursiveFileSearch(
             base_path(),
-            $PHPSignature
+            static::$PHPSignature
         );
     }
 
@@ -78,7 +70,7 @@ class QueryBuilder
             }
 
             // Accept any file matching signature
-            return $file->isFile() && preg_match($this->PHPSignature, $file->getFilename());
+            return $file->isFile() && preg_match(static::$PHPSignature, $file->getFilename());
         };
         
         $innerIterator = new RecursiveDirectoryIterator(

@@ -17,7 +17,7 @@ class QueryBuilderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @wip-test */
+    /** @test */
     public function it_can_instanciate_via_php_or_laravel_file_with_in_method()
     {
         $this->assertInstanceOf(
@@ -31,7 +31,7 @@ class QueryBuilderTest extends TestCase
         );        
     }
 
-    /** @wip-test */
+    /** @test */
     public function it_will_return_a_collection_on_get()
     {
         $this->assertInstanceOf(
