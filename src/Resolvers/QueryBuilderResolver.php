@@ -11,7 +11,7 @@ class QueryBuilderResolver
 {
     public static function canHandle($_, $name)
     {
-        return (boolean) $this->getHandler($_, $name);
+        return (boolean) static::getHandler($_, $name);
     }
 
     public static function getHandler($_, $method)
