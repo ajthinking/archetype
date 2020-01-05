@@ -3,15 +3,21 @@
 namespace Ajthinking\PHPFileManipulator\Resolvers;
 
 use Illuminate\Support\Str;
-use Ajthinking\PHPFileManipulator\Template;
 use ReflectionClass;
+use ReflectionMethod;
+use Ajthinking\PHPFileManipulator\QueryBuilder;
 
 class QueryBuilderResolver
 {
-    public static function canHandle($file, $method)
+    public static function canHandle($_, $name)
     {
-        $reflection = new ReflectionClass('Ajthinking\PHPFileManipulator\Traits\HasQueryBuilder');
-        $traitMethods = $reflection->getMethods();        
-        return collect($traitMethods)->contains($method) ? $file : false;
+        return (boolean) $this->getHandler($_, $name);
+    }
+
+    public static function getHandler($_, $method)
+    {
+        $reflection = new ReflectionClass('Ajthinking\PHPFileManipulator\QueryBuilder');
+        $methods = collect($reflection->getMethods(ReflectionMethod::IS_PUBLIC))->pluck('name');
+        return collect($methods)->contains($method) ? new QueryBuilder : false;
     }
 }

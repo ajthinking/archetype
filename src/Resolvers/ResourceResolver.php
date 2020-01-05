@@ -6,6 +6,11 @@ use Illuminate\Support\Str;
 
 class ResourceResolver
 {
+    public static function canHandle($file, $name)
+    {
+        return (boolean) static::getHandler($file, $name);
+    }
+
     public static function getHandler($file, $method)
     {
         $resource = $file->resources()->filter(function($resource) use($method) {
