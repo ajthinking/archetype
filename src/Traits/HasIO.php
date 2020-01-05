@@ -7,6 +7,7 @@ use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;
 use Illuminate\Support\Str;
+use UnexpectedValueException;
 
 trait HasIO
 {
@@ -24,6 +25,8 @@ trait HasIO
     public function fromString($code)
     {        
         $this->contents = $code;
+
+        $this->path = null;
         
         $this->ast = $this->parse();        
 
@@ -43,6 +46,9 @@ trait HasIO
         // write current ast to file
         $prettyPrinter = new PSR2PrettyPrinter;
         $code = $prettyPrinter->prettyPrintFile($this->ast);
+
+        if(!$this->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
+
         file_put_contents($this->path, $code);
 
         return $this;

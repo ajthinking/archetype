@@ -5,6 +5,7 @@ namespace Ajthinking\PHPFileManipulator\Tests\Unit;
 use Ajthinking\PHPFileManipulator\Tests\TestCase;
 use BadMethodCallException;
 use Illuminate\Support\Str;
+use UnexpectedValueException;
 
 use LaravelFile;
 
@@ -34,6 +35,15 @@ class TemplateTest extends TestCase
     public function it_can_not_load_unregistered_templates()
     {
         $this->expectException(BadMethodCallException::class);
-        $file = LaravelFile::some_non_existing_template('Haha');        
+        $file = LaravelFile::markdown('Haha');        
+    }
+    
+    /** @test */
+    public function it_can_not_rely_on_default_path_for_templates_yet()
+    {
+        $this->expectException(UnexpectedValueException::class);
+        $file = LaravelFile::model('Explosion')->save(
+            /* for now path is mandatory when using templates */
+        );        
     }    
 }
