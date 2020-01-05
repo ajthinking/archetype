@@ -5,44 +5,61 @@ namespace Ajthinking\PHPFileManipulator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveCallbackFilterIterator;
-
-use Ajthinking\PHPFileManipulator\LaravelFile;
+use InvalidArgumentException;
+use LaravelFile;
 
 class QueryBuilder
 {
     static $PHPSignature = '/\.php$/';
+    
+    const EQUALS = "=";
 
-    public function building()
+    public function __construct()
     {
-        return $this;
+        $this->result = collect();
     }
-
-    public function sayIt()
-    {
-        return "hey!";
-    }    
 
     public function all()
     {
-        $this->recursiveFileSearch(
-            base_path(),
-            static::$PHPSignature
-        );
+        $this->recursiveFileSearch('', static::$PHPSignature);
     }
 
     public function in($directory)
     {
-        $this->result = $this->recursiveFileSearch($directory)->map(function($filePath) {
-            return new LaravelFile($filePath);
-        });        
+        $this->baseDir = $directory;
+
+        $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) { 
+            return LaravelFile::load($filePath);
+        });
+
         return $this;    
     }
-    
-    public function where($args)
+    /**
+     * Supported signatures:
+     * where('something', <value>)
+     * where('something', <operator> , <value>)
+     */
+    public function where($arg1, $arg2 = null, $arg3 = null)
     {
-        // resource query
-        // filename query
-        // function query
+        // Ensure we are in a directory context - default to base path
+        if(!isset($this->baseDir)) $this->in('');
+
+        // If a function is passed
+        if(is_callable($arg1)) {
+            $this->result = $this->result->filter($arg1);
+            return $this;
+        }
+
+        // If its a resource where query
+        $property = $arg1;
+        $operator = $arg3 ? $arg2 : $this::EQUALS;
+        if($operator != $this::EQUALS) throw new InvalidArgumentException("Only EQUALS operator supported rigth now.");
+        $value = $arg3 ? $arg3 : $arg2;
+
+        $this->result = $this->result->filter(function($file) use($property, $value) {
+            return $file->$property() == $value;
+        });
+
         return $this;
     }
 
@@ -64,8 +81,13 @@ class QueryBuilder
          * @return bool True if you need to recurse or if the item is acceptable
          */
         $filter = function ($file, $key, $iterator) use ($exclude) {
-            // Iterate recursively - except excludes folder
-            if ($iterator->hasChildren() && !in_array($file->getFilename(), $exclude)) {
+            // Exclude some folders
+            if (in_array($file->getFilename(), $exclude)) {
+                return false;
+            }
+
+            // Iterate recursively
+            if ($iterator->hasChildren()) {
                 return true;
             }
 
