@@ -11,7 +11,7 @@ class ClassExtendsResource extends BaseResource
     public function get()
     {
         $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        return $class ? join('\\', $class->extends->parts) : null;
+        return $class && isset($class->extends) ? join('\\', $class->extends->parts) : null;
     }
 
     public function set($newExtends)
