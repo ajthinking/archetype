@@ -28,8 +28,7 @@ class PHPFile
 
     public function templates() {
         return collect(
-            'class',
-            'trait',
+            //
         );
     }    
 }
