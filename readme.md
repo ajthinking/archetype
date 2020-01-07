@@ -1,17 +1,33 @@
 # ```PHPFile::manipulator```(:fire::fire::fire:);
-Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include a file QueryBuilder, Template engine and categorization of read/write operations in human readable `Resource` endpoints. Look at the examples to get started.
+Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include a file QueryBuilder, Template engine and categorization of read/write operations into `Resource` endpoints.
 
 ## Installation
 ```
 composer require ajthinking/php-file-manipulator
 ```
 
-## Examples
+## Quick start examples
 
 ### 
 ```php
 use PHPFile;
 use LaravelFile;
+
+// find files with the query builder
+PHPFile::in('database/migrations')
+    ->where('classExtends', 'Migration')
+    ->get()
+    ->each(function($file) {
+        // Do something
+        $file->classExtends('Database\CustomMigration')->save()
+    });
+
+// add relationship methods
+LaravelFile::load('app/User.php')
+    ->addHasMany('App\Car')
+    ->addHasOne('App\Life')
+    ->addBelongsTo('App\Wife')
+    ->save()
 
 // list class methods
 PHPFile::load('app/User.php')
@@ -26,21 +42,6 @@ PHPFile::load('app/User.php')
 PHPFile::load('app/User.php')
     ->addUseStatements('Package\Tool')
     ->addTraitUseStatement('Tool')
-    ->save()
-
-// find files with the query builder
-PHPFile::in('database/migrations')
-    ->where('classExtends', 'Migration')
-    ->get()
-    ->each(function($file) {
-        echo $file->className()
-    });
-
-// add relationship methods
-LaravelFile::load('app/User.php')
-    ->addHasMany('App\Car')
-    ->addHasOne('App\Life')
-    ->addBelongsTo('App\Wife')
     ->save()
 
 // add a route
@@ -60,10 +61,54 @@ LaravelFile::load('app/User.php')
     ->addHidden('secret')    
 
 // create new files from templates
+LaravelFile::model('Beer')
+    ->save()
 LaravelFile::controller('BeerController')
-    ->save()        
+    ->save()
+
+// many in one go
+LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 
 ```
+
+### Experimental feature: inline method builder
+```php
+
+// Go to snippets.php
+
+// if needed set up fake names
+use PHPFile\FakeName as User;
+use PHPFile\FakeName as Car;
+
+// name your snippet
+$snippet = PHPFile::snippet('myMethod',
+    // put snippet code
+    function($any, $nbr, $of, Car $params) {
+        Car::wow()->also(User $user)
+            ->many()->write_inline('CODE');
+        return $this::static('anything') ? 13 : 37;
+    }
+);
+
+// Your snippet is instantly available elsewhere
+PHPFile::load('app/User.php')
+    ->addSnippet('myMethod');
+
+
+
+```
+
+## Example Artisan commands
+This package provides a few artisan commands to showcase possible use cases 
+
+### `php artisan file:demo soft-deletes {model}`
+Sets soft-deletes on model and migration
+
+### `php artisan file:demo guess-relationships`
+Sets upp any missing relationships
+
+### `php artisan file:demo package`
+A step by step tutorial on how to provide an installer for your package
 
 ## Running tests
 ```bash
