@@ -2,7 +2,7 @@
 
 namespace Ajthinking\PHPFileManipulator\Traits;
 
-use Ajthinking\PHPFileManipulator\QueryBuilder;
+use Ajthinking\PHPFileManipulator\Support\QueryBuilder;
 
 trait HasQueryBuilder
 {

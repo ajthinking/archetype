@@ -2,7 +2,7 @@
 
 namespace Ajthinking\PHPFileManipulator\Traits;
 
-use Ajthinking\PHPFileManipulator\PSR2PrettyPrinter;
+use Ajthinking\PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;

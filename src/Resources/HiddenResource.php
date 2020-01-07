@@ -4,15 +4,15 @@ namespace Ajthinking\PHPFileManipulator\Resources;
 
 use Ajthinking\PHPFileManipulator\Support\ArrayPropertyResource;
 
-class FillableResource extends ArrayPropertyResource
+class HiddenResource extends ArrayPropertyResource
 {
     public function get()
     {
-        return $this->items('fillable');
+        return $this->items('hidden');
     }
 
     public function set($values)
     {
-        return $this->setItems('fillable', $values);
+        return $this->setItems('hidden', $values);
     }
 }

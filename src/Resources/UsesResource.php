@@ -2,8 +2,8 @@
 
 namespace Ajthinking\PHPFileManipulator\Resources;
 
-use Ajthinking\PHPFileManipulator\BaseResource;
-use Ajthinking\PHPFileManipulator\UseStatementInserter;
+use Ajthinking\PHPFileManipulator\Support\BaseResource;
+use Ajthinking\PHPFileManipulator\Support\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_;

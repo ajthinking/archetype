@@ -2,7 +2,7 @@
 
 namespace Ajthinking\PHPFileManipulator\Resources;
 
-use Ajthinking\PHPFileManipulator\BaseResource;
+use Ajthinking\PHPFileManipulator\Support\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Class_;
 

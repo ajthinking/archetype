@@ -5,7 +5,7 @@ namespace Ajthinking\PHPFileManipulator\Tests\Unit;
 use Ajthinking\PHPFileManipulator\Tests\TestCase;
 use PHPFile;
 use LaravelFile;
-use Ajthinking\PHPFileManipulator\QueryBuilder;
+use Ajthinking\PHPFileManipulator\Support\QueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

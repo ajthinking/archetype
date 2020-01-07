@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator;
+namespace Ajthinking\PHPFileManipulator\Support;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;

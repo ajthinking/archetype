@@ -2,8 +2,8 @@
 
 namespace Ajthinking\PHPFileManipulator\Resources;
 
-use Ajthinking\PHPFileManipulator\BaseResource;
-use Ajthinking\PHPFileManipulator\LaravelSnippet;
+use Ajthinking\PHPFileManipulator\Support\BaseResource;
+use Ajthinking\PHPFileManipulator\Support\LaravelSnippet;
 
 class HasOneMethodsResource extends BaseResource
 {

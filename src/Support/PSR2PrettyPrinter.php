@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator;
+namespace Ajthinking\PHPFileManipulator\Support;
 
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;

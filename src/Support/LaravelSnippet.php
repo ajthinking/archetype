@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator;
+namespace Ajthinking\PHPFileManipulator\Support;
 
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Stmt\Return_;

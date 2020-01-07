@@ -44,7 +44,7 @@ abstract class TestCase extends BaseTestCase
     
     protected function routesFile()
     {
-        return PHPFile::load(
+        return LaravelFile::load(
             $this->samplePath('routes/web.php')
         );        
     }    

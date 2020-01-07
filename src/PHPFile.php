@@ -4,7 +4,6 @@ namespace Ajthinking\PHPFileManipulator;
 
 use Ajthinking\PHPFileManipulator\Traits\DelegatesAPICalls;
 use Ajthinking\PHPFileManipulator\Traits\HasIO;
-use Ajthinking\PHPFileManipulator\Traits\HasQueryBuilder;
 use Ajthinking\PHPFileManipulator\Traits\HasTemplates;
 
 class PHPFile
