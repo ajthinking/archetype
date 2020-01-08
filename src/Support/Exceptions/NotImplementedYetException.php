@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Exceptions;
+namespace Ajthinking\PHPFileManipulator\Support\Exceptions;
 use Exception;
 
 class NotImplementedYetException extends Exception {}
