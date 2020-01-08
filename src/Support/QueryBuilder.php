@@ -27,7 +27,7 @@ class QueryBuilder
     public function in($directory)
     {
         $this->baseDir = $directory;
-
+                
         $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) { 
             return LaravelFile::load($filePath);
         });
@@ -63,16 +63,23 @@ class QueryBuilder
         return $this;
     }
 
+    public function getNode($arg1, $arg2 = null, $arg3 = null)
+    {
+        //
+    }
+
     public function get()
     {
+        if(!isset($this->baseDir)) $this->in('');        
         return $this->result;
     }
     
     private function recursiveFileSearch($directory) {
+        
         $directory = base_path($directory);
 
         // Will exclude everything under these directories
-        $exclude = array('vendor', '.git', 'node_modules');
+        $exclude = array('_ide_helper.php', 'vendor', '.git', 'node_modules');
         
         /**
          * @param SplFileInfo $file
@@ -106,7 +113,7 @@ class QueryBuilder
         foreach ($iterator as $pathname => $fileInfo) {
             // do your insertion here
         }
-
+        
         return collect(iterator_to_array($iterator))->map(function($file) {
             return $file->getFilename();
         })->keys();
