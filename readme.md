@@ -122,6 +122,8 @@ PRs and issues are welcome.
 
 | task | status |
 |------|--------|
+| Add methods get/find in QueryBuilder to fetch AST instances | - |
+| Let resources provide aliases to get a more fluent api | - |
 | Make the test work without being inside a host application| - |
 | How handle base_path() when not in a Laravel app? | - |
 | Create a dedicated Storage disk (storage/php-file-manipulator/preview etc) ??? | - |
@@ -131,7 +133,6 @@ PRs and issues are welcome.
 | Group related resources (PHP/Laravel Reources in separate folders) | - |
 | Can it resolve resources from parent classes and traits??? | - |
 | Add the missing relationships: https://laravel.com/docs/6.x/eloquent-relationships#introduction | - |
-| Make a minimal querybuilder | - |
 
 ## API
 
