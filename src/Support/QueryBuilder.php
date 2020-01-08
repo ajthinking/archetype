@@ -63,11 +63,6 @@ class QueryBuilder
         return $this;
     }
 
-    public function getNode($arg1, $arg2 = null, $arg3 = null)
-    {
-        //
-    }
-
     public function get()
     {
         if(!isset($this->baseDir)) $this->in('');        
