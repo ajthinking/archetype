@@ -99,11 +99,7 @@ PHPFile::load('app/User.php')
 ```
 
 ## Example Artisan command
-This package provides a demo command to showcase possible use cases:
-
- ```bash 
- php artisan file:demo
- ```
+This package provides a command ```php artisan file:demo``` to showcase possible use cases:
 
 <img src="docs/DemoCommand.png" width="600px">
 
