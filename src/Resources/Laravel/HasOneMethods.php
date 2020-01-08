@@ -1,12 +1,12 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace Ajthinking\PHPFileManipulator\Resources\Laravel;
 
-use Ajthinking\PHPFileManipulator\Support\BaseResource;
+use Ajthinking\PHPFileManipulator\Resources\BaseResource;
 use LaravelFile;
 use Illuminate\Support\Str;
 
-class HasOneMethodsResource extends BaseResource
+class HasOneMethods extends BaseResource
 {
     public function add($targets)
     {

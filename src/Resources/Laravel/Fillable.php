@@ -1,11 +1,11 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace Ajthinking\PHPFileManipulator\Resources\Laravel;
 
-use Ajthinking\PHPFileManipulator\Support\ArrayPropertyResource;
+use Ajthinking\PHPFileManipulator\Resources\ArrayPropertyResource;
 
-class FillableResource extends ArrayPropertyResource
-{
+class Fillable extends ArrayPropertyResource
+{   
     public function get()
     {
         return $this->items('fillable');

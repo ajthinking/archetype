@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Support;
+namespace Ajthinking\PHPFileManipulator\Resources;
 
 use Ajthinking\PHPFileManipulator\PHPFile;
 use BadMethodCallException;
@@ -8,6 +8,20 @@ use Illuminate\Support\Str;
 
 abstract class BaseResource
 {
+    public static function alias()
+    {
+        return Str::camel(
+            Str::afterLast(Str::replaceLast('Resource', '', static::class), '\\')
+        );
+    }
+
+    public static function aliases()
+    {
+        return [Str::camel(
+            Str::afterLast(Str::replaceLast('Resource', '', static::class), '\\')
+        )];
+    }    
+
     public function __construct(PHPFile $file)
     {
         $this->file = $file;      

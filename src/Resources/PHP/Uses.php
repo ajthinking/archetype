@@ -1,16 +1,21 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace Ajthinking\PHPFileManipulator\Resources\PHP;
 
-use Ajthinking\PHPFileManipulator\Support\BaseResource;
-use Ajthinking\PHPFileManipulator\Support\UseStatementInserter;
+use Ajthinking\PHPFileManipulator\Resources\BaseResource;
+use Ajthinking\PHPFileManipulator\Resources\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeTraverser;
 
-class UsesResource extends BaseResource
+class Uses extends BaseResource
 {
+    public static function aliases()
+    {
+        return ['use', 'uses'];
+    }
+
     public function get()
     {
         return collect((new NodeFinder)->findInstanceOf($this->ast(), Use_::class))

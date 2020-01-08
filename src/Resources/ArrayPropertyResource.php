@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Support;
+namespace Ajthinking\PHPFileManipulator\Resources;
 
-use Ajthinking\PHPFileManipulator\Support\BaseResource;
+use Ajthinking\PHPFileManipulator\Resources\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Expr\Array_;

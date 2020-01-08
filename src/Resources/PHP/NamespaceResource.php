@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace Ajthinking\PHPFileManipulator\Resources\PHP;
 
-use Ajthinking\PHPFileManipulator\Support\BaseResource;
+use Ajthinking\PHPFileManipulator\Resources\BaseResource;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\BuilderFactory;

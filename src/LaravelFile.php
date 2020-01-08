@@ -7,17 +7,17 @@ use Ajthinking\PHPFileManipulator\PHPFile;
 class LaravelFile extends PHPFile 
 {
     public function resources() {
-        return parent::resources()->concat([
-            'casts',
-            'fillable',
-            'hidden',
-            'routes',
-            'hasOneMethods',
-            'hasManyMethods',
-            'belongsToMethods',
-            'belongsToManyMethods',
-        ]);
+        return parent::resources()->concat($this->resources);
     }
+
+    protected $resources = [
+        Resources\Laravel\Fillable::class,
+        Resources\Laravel\Hidden::class,
+        Resources\Laravel\HasOneMethods::class,
+        Resources\Laravel\HasManyMethods::class,
+        Resources\Laravel\BelongsToMethods::class,
+        Resources\Laravel\BelongsToManyMethods::class,
+    ];
 
     public function templates() {
         return parent::templates()->concat([

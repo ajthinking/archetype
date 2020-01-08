@@ -1,12 +1,12 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace Ajthinking\PHPFileManipulator\Resources\PHP;
 
-use Ajthinking\PHPFileManipulator\Support\BaseResource;
+use Ajthinking\PHPFileManipulator\Resources\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Class_;
 
-class ClassExtendsResource extends BaseResource
+class ClassExtends extends BaseResource
 {
     public function get()
     {
