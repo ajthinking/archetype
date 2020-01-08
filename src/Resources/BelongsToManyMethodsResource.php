@@ -3,7 +3,8 @@
 namespace Ajthinking\PHPFileManipulator\Resources;
 
 use Ajthinking\PHPFileManipulator\Support\BaseResource;
-use Ajthinking\PHPFileManipulator\Support\LaravelSnippet;
+use LaravelFile;
+use Illuminate\Support\Str;
 
 class BelongsToManyMethodsResource extends BaseResource
 {
@@ -11,7 +12,10 @@ class BelongsToManyMethodsResource extends BaseResource
     {
         $this->file->addClassMethods(
             collect($targets)->map(function($target) {
-                return LaravelSnippet::belongsToManyMethod($target);     
+                return LaravelFile::snippet('___BELONGS_TO_MANY_METHOD___', [
+                    '___BELONGS_TO_MANY_METHOD___' => Str::belongsToManyMethodName($target),
+                    '___TARGET_IN_DOC_BLOCK___' => Str::belongsToManyDocBlockName($target)
+                ]);
             })->toArray()
         );
 

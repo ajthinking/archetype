@@ -26,8 +26,6 @@ trait CanUseSnippets
         });
 
         return $node;
-
-
     }
     
     private function getNodeByName($name)

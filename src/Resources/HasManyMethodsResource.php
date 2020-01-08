@@ -3,7 +3,8 @@
 namespace Ajthinking\PHPFileManipulator\Resources;
 
 use Ajthinking\PHPFileManipulator\Support\BaseResource;
-use Ajthinking\PHPFileManipulator\Support\LaravelSnippet;
+use LaravelFile;
+use Illuminate\Support\Str;
 
 class HasManyMethodsResource extends BaseResource
 {
@@ -11,7 +12,10 @@ class HasManyMethodsResource extends BaseResource
     {
         $this->file->addClassMethods(
             collect($targets)->map(function($target) {
-                return LaravelSnippet::hasManyMethod($target);     
+                return LaravelFile::snippet('___HAS_MANY_METHOD___', [
+                    '___HAS_MANY_METHOD___' => Str::hasManyMethodName($target),
+                    '___TARGET_IN_DOC_BLOCK___' => Str::hasManyDocBlockName($target)
+                ]);     
             })->toArray()
         );
 

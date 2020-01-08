@@ -23,12 +23,33 @@ class _ extends FakeName
     protected $hidden = [];
     protected $casts = [];
 
-
+    /**
+    * Get the associated ___TARGET_IN_DOC_BLOCK___
+    */
     public function ___HAS_MANY_METHOD___()
     {
         return $this->hasMany(___TARGET_CLASS___::class);
     }
 
+    /**
+    * Get the associated ___TARGET_IN_DOC_BLOCK___
+    */    
+    public function ___HAS_ONE_METHOD___()
+    {
+        return $this->hasOne(___TARGET_CLASS___::class);
+    }    
+
+    /**
+    * Get the associated ___TARGET_IN_DOC_BLOCK___
+    */
+    public function ___BELONGS_TO_METHOD___()
+    {
+        return $this->belongsTo(___TARGET_CLASS___::class);
+    } 
+
+    /**
+    * Get the associated ___TARGET_IN_DOC_BLOCK___
+    */    
     public function ___BELONGS_TO_MANY_METHOD___()
     {
         return $this->belongsToMany(___TARGET_CLASS___::class);

@@ -8,6 +8,7 @@ use App;
 use Ajthinking\PHPFileManipulator\Factories\PHPFileFactory;
 use Ajthinking\PHPFileManipulator\Factories\LaravelFileFactory;
 use Ajthinking\PHPFileManipulator\Commands\ListAPICommand;
+Use Illuminate\Support\Str;
 
 class PHPFileManipulatorServiceProvider extends ServiceProvider
 {
@@ -19,18 +20,85 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerFacades();
+        $this->registerCommands();
+    }
 
+    public function boot()
+    {
+        $this->bootStrMacros();
+    }
+    
+    private function registerCommands()
+    {
         $this->commands([
             ListAPICommand::class,
             DemoCommand::class,
         ]);
     }
 
-    public function boot()
+    private function bootStrMacros()
     {
-        //
+        // Str::hasOneMethodName($target);
+        // Str::tableName($target);
+        // Str::attributeName($target);
+
+        Str::macro('hasOneMethodName', function ($target) {
+            return static::camel(
+                collect(explode('\\', $target))->last()
+            );
+        });
+        
+        Str::macro('hasManyMethodName', function ($target) {
+            return static::camel(
+                static::plural(
+                    collect(explode('\\', $target))->last()
+                )
+            );
+        });
+
+        Str::macro('belongsToMethodName', function ($target) {
+            return static::camel(
+                collect(explode('\\', $target))->last()
+            );
+        });
+
+        Str::macro('belongsToManyMethodName', function ($target) {
+            return static::camel(
+                static::plural(
+                    collect(explode('\\', $target))->last()
+                )
+            );
+        });        
+
+        Str::macro('hasOneDocBlockName', function ($target) {
+            return static::studly(
+                collect(explode('\\', $target))->last()
+            );
+        });
+
+        Str::macro('hasManyDocBlockName', function ($target) {
+            return static::studly(
+                static::plural(
+                    collect(explode('\\', $target))->last()
+                )
+            );
+        });        
+
+        Str::macro('belongsToDocBlockName', function ($target) {
+            return static::studly(
+                collect(explode('\\', $target))->last()
+            );
+        });
+        
+        Str::macro('belongsToManyDocBlockName', function ($target) {
+            return static::studly(
+                static::plural(
+                    collect(explode('\\', $target))->last()
+                )
+            );
+        });        
     }
-    
+
     private function registerFacades()
     {
         App::bind('PHPFile',function() {

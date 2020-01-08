@@ -3,7 +3,8 @@
 namespace Ajthinking\PHPFileManipulator\Resources;
 
 use Ajthinking\PHPFileManipulator\Support\BaseResource;
-use Ajthinking\PHPFileManipulator\Support\LaravelSnippet;
+use LaravelFile;
+use Illuminate\Support\Str;
 
 class HasOneMethodsResource extends BaseResource
 {
@@ -11,7 +12,10 @@ class HasOneMethodsResource extends BaseResource
     {
         $this->file->addClassMethods(
             collect($targets)->map(function($target) {
-                return LaravelSnippet::hasOneMethod($target);     
+                return LaravelFile::snippet('___HAS_ONE_METHOD___', [
+                    '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
+                    '___TARGET_IN_DOC_BLOCK___' => Str::hasOneDocBlockName($target)
+                ]);
             })->toArray()
         );
 
