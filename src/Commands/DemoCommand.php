@@ -4,6 +4,7 @@ namespace Ajthinking\PHPFileManipulator\Commands;
 
 use Illuminate\Console\Command;
 use PHPFile;
+use Ajthinking\PHPFileManipulator\Support\Exceptions\NotImplementedYetException;
 
 class DemoCommand extends Command
 {
@@ -55,6 +56,7 @@ class DemoCommand extends Command
 
         $method = $this->choice('Select a demo >>', $names , 0);
         
+        if($method != 'stats') throw new NotImplementedYetException('Coming soon');
         $this->$method();
     }
 
