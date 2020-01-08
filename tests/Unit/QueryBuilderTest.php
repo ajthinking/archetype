@@ -37,7 +37,12 @@ class QueryBuilderTest extends TestCase
         $this->assertInstanceOf(
             Collection::class,
             LaravelFile::in('app')->get()
-        );        
+        ); 
+        
+        $this->assertInstanceOf(
+            Collection::class,
+            LaravelFile::get()
+        ); 
     }
     
     /** @test */
@@ -76,7 +81,7 @@ class QueryBuilderTest extends TestCase
     
     /** @test */
     public function it_can_query_non_class_files_and_files_missing_extend()
-    {
+    {        
         $files = LaravelFile::where('classExtends', 'Controller')->get();
         $this->assertTrue(
             $files->count() > 0
@@ -85,15 +90,15 @@ class QueryBuilderTest extends TestCase
     
     /** @test */
     public function it_can_chain()
-    {
+    {        
         $files = LaravelFile::where('classExtends', 'Controller')
             ->where('namespace', 'App\Http\Controllers\Auth')
             ->where(function($file) {
-                return Str::length($file->contents) > 1000; 
+                return $file->className() == 'LoginController'; 
             })->get();
 
         $this->assertCount(
-            2, $files
+            1, $files
         );
     }     
 }
