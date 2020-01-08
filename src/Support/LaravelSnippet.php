@@ -12,6 +12,8 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Name;
 use Illuminate\Support\Str;
 
+use LaravelFile;
+
 class LaravelSnippet
 {
     public static function hasOneMethod($target, $docComment = false)
@@ -38,12 +40,16 @@ class LaravelSnippet
             )
         );
 
-        return static::relationshipMethod(
-            $methodName,
-            $type,
-            $target,
-            $docComment 
-        );
+        // return static::relationshipMethod(
+        //     $methodName,
+        //     $type,
+        //     $target,
+        //     $docComment 
+        // );
+
+        return LaravelFile::snippet('___HAS_MANY_METHOD___', [
+            '___HAS_MANY_METHOD___' => $methodName
+        ]);
     }
 
     public static function belongsToMethod($target, $docComment = false)
