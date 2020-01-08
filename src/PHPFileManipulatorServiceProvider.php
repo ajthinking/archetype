@@ -2,11 +2,12 @@
 
 namespace Ajthinking\PHPFileManipulator;
 
+use Ajthinking\PHPFileManipulator\Commands\DemoCommand;
 use Illuminate\Support\ServiceProvider;
 use App;
 use Ajthinking\PHPFileManipulator\Factories\PHPFileFactory;
 use Ajthinking\PHPFileManipulator\Factories\LaravelFileFactory;
-
+use Ajthinking\PHPFileManipulator\Commands\ListAPICommand;
 
 class PHPFileManipulatorServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,11 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerFacades();
+
+        $this->commands([
+            ListAPICommand::class,
+            DemoCommand::class,
+        ]);
     }
 
     public function boot()
