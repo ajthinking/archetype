@@ -99,16 +99,9 @@ PHPFile::load('app/User.php')
 ```
 
 ## Example Artisan commands
-This package provides a few artisan commands to showcase possible use cases 
+This package provides a demo commands to showcase possible use cases. Try `php artisan file:demo`
 
-### `php artisan file:demo soft-deletes {model}`
-Sets soft-deletes on model and migration
-
-### `php artisan file:demo guess-relationships`
-Sets upp any missing relationships
-
-### `php artisan file:demo package`
-A step by step tutorial on how to provide an installer for your package
+<img src="docs/DemoCommand.png">
 
 ## Running tests
 ```bash
