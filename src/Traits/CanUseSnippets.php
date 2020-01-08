@@ -6,6 +6,8 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Identifier;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Name;
 
 trait CanUseSnippets
 {
@@ -15,6 +17,7 @@ trait CanUseSnippets
             'packages/Ajthinking/PHPFileManipulator/src/Snippets/defaults.php'
         )->getNodeByName($name);
 
+        // REPLACE IDENTIFIERS
         collect($replacementPairs)->each(function($replacementValue, $toBeReplaced) use($node) {
             collect((new NodeFinder)->findInstanceOf(
                 $node, Identifier::class
@@ -24,6 +27,19 @@ trait CanUseSnippets
                 }
             });            
         });
+
+        // REPLACE NAMES
+        // collect($replacementPairs)->each(function($replacementValue, $toBeReplaced) use($node) {
+        //     collect((new NodeFinder)->findInstanceOf(
+        //         $node, Identifier::class
+        //     ))->each(function($identifier) use($toBeReplaced, $replacementValue) {
+        //         if($identifier->name == $toBeReplaced) {
+        //             $identifier->name = $replacementValue;
+        //         }
+        //     });            
+        // });
+        
+        // REPLACE COMMENTS
 
         return $node;
     }
