@@ -122,6 +122,7 @@ PRs and issues are welcome.
 
 | task | status |
 |------|--------|
+| Replace Identifiers, Names, Comments when templating/snippeting | - |
 | Add methods get/find in QueryBuilder to fetch AST instances | - |
 | Let resources provide aliases to get a more fluent api | - |
 | Make the test work without being inside a host application| - |
