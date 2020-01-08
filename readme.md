@@ -105,7 +105,7 @@ This package provides a demo command to showcase possible use cases:
  php artisan file:demo
  ```
 
-<img src="docs/DemoCommand.png" width="400px">
+<img src="docs/DemoCommand.png" width="600px">
 
 
 
