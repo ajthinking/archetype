@@ -2,23 +2,49 @@
 
 namespace Ajthinking\PHPFileManipulator\Traits;
 
-use BadMethodCallException;
-
-use Ajthinking\PHPFileManipulator\Resolvers\ResourceResolver;
-use Ajthinking\PHPFileManipulator\Resolvers\TemplateResolver;
-use Ajthinking\PHPFileManipulator\Resolvers\QueryBuilderResolver;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
+use PhpParser\NodeFinder;
+use PhpParser\Node\Identifier;
 
 trait CanUseSnippets
 {
-    public function snippet($name, $replacementPairs = []) {
+    public function snippet($name, $replacementPairs = [])
+    {
+        $node = $this->load(
+            'packages/Ajthinking/PHPFileManipulator/src/Snippets/defaults.php'
+        )->getNodeByName($name);
 
-        // $file = $this->in(
-        //     base_path('packages/Ajthinking/PHPFileManipulator/src/Snippets')
-        // )->get('classMethod', '___HAS_MANY_METHOD___');
+        collect($replacementPairs)->each(function($replacementValue, $toBeReplaced) use($node) {
+            collect((new NodeFinder)->findInstanceOf(
+                $node, Identifier::class
+            ))->each(function($identifier) use($toBeReplaced, $replacementValue) {
+                if($identifier->name == $toBeReplaced) {
+                    $identifier->name = $replacementValue;
+                }
+            });            
+        });
 
-        // This is how we want it to work
-        $instance = $this->in(
-            'packages/Ajthinking/PHPFileManipulator/src/Snippets'
-        )->getNode('___HAS_MANY_METHOD___');
-    } 
+        return $node;
+
+
+    }
+    
+    private function getNodeByName($name)
+    {
+        return collect([
+            $this->getMethodByName($name)
+            // add more findable types here
+        ])->filter()->first();
+    }
+
+    public function getMethodByName($requestedName)
+    {
+        return collect((new NodeFinder)->findInstanceOf(
+            $this->ast(),
+            ClassMethod::class
+        ))->filter(function($node) use($requestedName) {
+            return $node->name->name == $requestedName;
+        })->first();
+    }
 }
