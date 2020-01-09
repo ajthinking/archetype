@@ -90,7 +90,7 @@ $snippet = PHPFile::snippet('myMethod',
 ```
 
 Your snippet is instantly available elsewhere:
-```
+```php
 PHPFile::load('app/User.php')
     ->addSnippet('myMethod');
 ```
