@@ -71,11 +71,11 @@ LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 
 ```
 
-### Experimental feature: inline method builder
+### Build your own compilable templates
+
+
+Go to snippets.php
 ```php
-
-// Go to snippets.php
-
 // if needed set up fake names
 use PHPFile\FakeName as User;
 use PHPFile\FakeName as Car;
@@ -89,13 +89,12 @@ $snippet = PHPFile::snippet('myMethod',
         return $this::static('anything') ? 13 : 37;
     }
 );
+```
 
-// Your snippet is instantly available elsewhere
+Your snippet is instantly available elsewhere
+```
 PHPFile::load('app/User.php')
     ->addSnippet('myMethod');
-
-
-
 ```
 
 ## Example Artisan command
@@ -103,7 +102,8 @@ A command ```php artisan file:demo``` is supplied to showcase some practical use
 
 <img src="docs/DemoCommand.png" width="600px">
 
-
+## Notes
+* Currently when reading, the package will not traverse into includes, traits or parent classes
 
 ## Running tests
 ```bash
@@ -117,34 +117,6 @@ MIT
 ## Contributing
 PRs and issues are welcome. 
 
-## TODO
-
-
-| task | status |
-|------|--------|
-| Replace Identifiers, Names, Comments when templating/snippeting | - |
-| Add methods get/find in QueryBuilder to fetch AST instances | - |
-| Let resources provide aliases to get a more fluent api | - |
-| Make the test work without being inside a host application| - |
-| How handle base_path() when not in a Laravel app? | - |
-| Create a dedicated Storage disk (storage/php-file-manipulator/preview etc) ??? | - |
-| It should be able to add use statements with aliases | - |
-| It should be capable of reading/writing `GroupUse`, example:  `use Package\{Alfa, Beta};` | - |
-| Simplify adding multiline docblocks on methods | - |
-| Group related resources (PHP/Laravel Reources in separate folders) | - |
-| Can it resolve resources from parent classes and traits??? | - |
-| Add the missing relationships: https://laravel.com/docs/6.x/eloquent-relationships#introduction | - |
-
-## API
-
-| Resource | GET | SET | ADD | REMOVE |
-|------|--------|--------|--------|--------|
-| Namespace | yes | yes | | |
-| Uses | yes | yes | | |
-| ClassName | ```$file->className()``` | ```$file->className('newName)``` | | |
-| ClassExtends | yes | yes | yes | yes |
-| ClassImplements | yes | yes | yes | yes |
-| HasManyMethods |  |  | ```$file->addHasManyMethods(['App\Car'])``` |  |
 
 ## Acknowledgements
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
