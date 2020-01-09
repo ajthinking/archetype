@@ -101,11 +101,11 @@ PHPFile::load('app/User.php')
 ```
 
 ## Notes
-* Currently when reading, the package will not traverse into includes, traits or parent classes
+> Currently when reading, the package will not traverse into includes, traits or parent classes
 
 
 ## Contributing
-PRs and issues are welcome. 
+PRs and issues are welcome. See https://trello.com/b/1M2VRnoQ/php-file-manipulator
 
 ### Running tests
 ```bash
