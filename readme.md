@@ -69,6 +69,11 @@ LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 
 ```
 
+### Example Artisan command
+A command ```php artisan file:demo``` is supplied to showcase some practical use cases. Check out the source [here](src/Commands/DemoCommand.php).
+
+<img src="docs/DemoCommand.png" width="600px">
+
 ### Build your own compilable templates
 
 
@@ -94,11 +99,6 @@ Your snippet is instantly available elsewhere:
 PHPFile::load('app/User.php')
     ->addSnippet('myMethod');
 ```
-
-### Example Artisan command
-A command ```php artisan file:demo``` is supplied to showcase some practical use cases. Check out the source [here](src/Commands/DemoCommand.php).
-
-<img src="docs/DemoCommand.png" width="600px">
 
 ## Notes
 * Currently when reading, the package will not traverse into includes, traits or parent classes
