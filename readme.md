@@ -6,9 +6,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 composer require ajthinking/php-file-manipulator
 ```
 
-## Quick start examples
-
-### 
+## Quick start examples 
 ```php
 use PHPFile;
 use LaravelFile;
@@ -97,7 +95,7 @@ PHPFile::load('app/User.php')
     ->addSnippet('myMethod');
 ```
 
-## Example Artisan command
+### Example Artisan command
 A command ```php artisan file:demo``` is supplied to showcase some practical use cases. Check out the source [here](src/Commands/DemoCommand.php).
 
 <img src="docs/DemoCommand.png" width="600px">
@@ -105,7 +103,11 @@ A command ```php artisan file:demo``` is supplied to showcase some practical use
 ## Notes
 * Currently when reading, the package will not traverse into includes, traits or parent classes
 
-## Running tests
+
+## Contributing
+PRs and issues are welcome. 
+
+### Running tests
 ```bash
 # the test suite requires that you have the package installed in a laravel project
 vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
@@ -114,8 +116,6 @@ vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
 ## License
 MIT
 
-## Contributing
-PRs and issues are welcome. 
 
 
 ## Acknowledgements
