@@ -72,7 +72,7 @@ LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 ### Build your own compilable templates
 
 
-Go to snippets.php
+Go to `snippets.php`
 ```php
 // if needed set up fake names
 use PHPFile\FakeName as User;
@@ -89,7 +89,7 @@ $snippet = PHPFile::snippet('myMethod',
 );
 ```
 
-Your snippet is instantly available elsewhere
+Your snippet is instantly available elsewhere:
 ```
 PHPFile::load('app/User.php')
     ->addSnippet('myMethod');
