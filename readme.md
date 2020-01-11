@@ -9,13 +9,13 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 
 <img src="https://i.imgur.com/U9NnDix.gif" title="source: imgur.com" />
 
+## Contents
   * [Installation](#installation)
   * [Quick start examples](#quick-start-examples)
-    + [Example Artisan command](#example-artisan-command)
-    + [Build your own templates](#build-your-own-templates)
+  * [Example Artisan command](#example-artisan-command)
+  * [Build your own templates](#build-your-own-templates)
   * [Gotchas](#gotchas)
   * [Contributing](#contributing)
-    + [Running tests](#running-tests)
   * [License](#license)
   * [Acknowledgements](#acknowledgements)
   * [Like this package?](#like-this-package-)
