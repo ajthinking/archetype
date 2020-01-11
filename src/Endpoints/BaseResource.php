@@ -1,31 +1,15 @@
 <?php
 
-namespace PHPFileManipulator\Resources;
+namespace PHPFileManipulator\Endpoints;
 
 use PHPFileManipulator\PHPFile;
+use PHPFileManipulator\Support\Endpoint;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 
-abstract class BaseResource
+abstract class BaseResource extends Endpoint
 {
-    public static function alias()
-    {
-        return Str::camel(
-            Str::afterLast(Str::replaceLast('Resource', '', static::class), '\\')
-        );
-    }
-
-    public static function aliases()
-    {
-        return [Str::camel(
-            Str::afterLast(Str::replaceLast('Resource', '', static::class), '\\')
-        )];
-    }    
-
-    public function __construct(PHPFile $file)
-    {
-        $this->file = $file;      
-    }
+    const NOT_IMPLEMENTED = 'Method not implemented for this resource';
 
     public function getResourceName()
     {
@@ -53,8 +37,6 @@ abstract class BaseResource
 
         throw new BadMethodCallException("Resource " . static::class . " could not resolve method " . $method);
     }
-
-    const NOT_IMPLEMENTED = 'Method not implemented for this resource';
 
     public function get()
     {

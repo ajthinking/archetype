@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Resolvers;
 
 use PHPFileManipulator\PHPFile;
-use PHPFileManipulator\Resources\Fillable;
+use PHPFileManipulator\Endpoints\Fillable;
 use Illuminate\Support\Str;
 
 class ResourceResolver

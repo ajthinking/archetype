@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit\Resources;
+namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
-use PHPFileManipulator\Resources\Fillable;
+use PHPFileManipulator\Endpoints\Fillable;
 use PHPFileManipulator\Tests\TestCase;
 
 class AliasTest extends TestCase

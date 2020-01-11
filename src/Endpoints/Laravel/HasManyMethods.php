@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Resources\Laravel;
+namespace PHPFileManipulator\Endpoints\Laravel;
 
-use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Endpoints\BaseResource;
 use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 

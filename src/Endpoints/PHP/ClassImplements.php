@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Resources\PHP;
+namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Endpoints\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Class_;
 

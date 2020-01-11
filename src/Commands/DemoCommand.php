@@ -8,8 +8,6 @@ use PHPFileManipulator\Support\Exceptions\NotImplementedYetException;
 
 class DemoCommand extends Command
 {
-    const PATH_TO_RESOURCES = 'packages/Ajthinking/PHPFileManipulator/src/Resources';
-
     /**
      * The name and signature of the console command.
      *

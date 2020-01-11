@@ -1,21 +1,21 @@
 <?php
 
-namespace PHPFileManipulator\Resources\Laravel;
+namespace PHPFileManipulator\Endpoints\Laravel;
 
-use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Endpoints\BaseResource;
 use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 
-class HasOneMethods extends BaseResource
+class BelongsToManyMethods extends BaseResource
 {
     public function add($targets)
     {
         $this->file->addClassMethods(
             collect($targets)->map(function($target) {
-                return Snippet::___HAS_ONE_METHOD___([
-                    '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
+                return Snippet::___BELONGS_TO_MANY_METHOD___([
+                    '___BELONGS_TO_MANY_METHOD___' => Str::belongsToManyMethodName($target),
                     '___TARGET_CLASS___' => collect(explode('\\', $target))->last(),
-                    '___TARGET_IN_DOC_BLOCK___' => Str::hasOneDocBlockName($target)
+                    '___TARGET_IN_DOC_BLOCK___' => Str::belongsToManyDocBlockName($target)
                 ]);
             })->toArray()
         );

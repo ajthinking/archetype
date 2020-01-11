@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Resources;
+namespace PHPFileManipulator\Endpoints;
 
-use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Endpoints\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Expr\Array_;

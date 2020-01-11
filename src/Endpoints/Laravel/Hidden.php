@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Resources\Laravel;
+namespace PHPFileManipulator\Endpoints\Laravel;
 
-use PHPFileManipulator\Resources\ArrayPropertyResource;
+use PHPFileManipulator\Endpoints\ArrayPropertyResource;
 
 class Hidden extends ArrayPropertyResource
 {

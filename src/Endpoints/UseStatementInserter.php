@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Resources;
+namespace PHPFileManipulator\Endpoints;
 
 use PhpParser\Node;
 use PhpParser\NodeFinder;

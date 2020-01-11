@@ -11,12 +11,12 @@ class LaravelFile extends PHPFile
     }
 
     protected $endpoints = [
-        Resources\Laravel\Fillable::class,
-        Resources\Laravel\Hidden::class,
-        Resources\Laravel\HasOneMethods::class,
-        Resources\Laravel\HasManyMethods::class,
-        Resources\Laravel\BelongsToMethods::class,
-        Resources\Laravel\BelongsToManyMethods::class,
+        Endpoints\Laravel\Fillable::class,
+        Endpoints\Laravel\Hidden::class,
+        Endpoints\Laravel\HasOneMethods::class,
+        Endpoints\Laravel\HasManyMethods::class,
+        Endpoints\Laravel\BelongsToMethods::class,
+        Endpoints\Laravel\BelongsToManyMethods::class,
     ];
 
     public function templates() {

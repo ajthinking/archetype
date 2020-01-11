@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Resources\PHP;
+namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Resources\BaseResource;
-use PHPFileManipulator\Resources\UseStatementInserter;
+use PHPFileManipulator\Endpoints\BaseResource;
+use PHPFileManipulator\Endpoints\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_;

@@ -13,13 +13,13 @@ class PHPFile
     use HasTemplates;
 
     protected $endpoints = [
-        Resources\PHP\NamespaceResource::class,
-        Resources\PHP\Uses::class,
-        Resources\PHP\ClassName::class,
-        Resources\PHP\ClassExtends::class,
-        Resources\PHP\ClassImplements::class,
-        Resources\PHP\ClassMethods::class,
-        Resources\PHP\ClassMethodNames::class,            
+        Endpoints\PHP\NamespaceResource::class,
+        Endpoints\PHP\Uses::class,
+        Endpoints\PHP\ClassName::class,
+        Endpoints\PHP\ClassExtends::class,
+        Endpoints\PHP\ClassImplements::class,
+        Endpoints\PHP\ClassMethods::class,
+        Endpoints\PHP\ClassMethodNames::class,            
     ];
 
     public function endpoints() {

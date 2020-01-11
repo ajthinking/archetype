@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit\Resources;
+namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\TestCase;
 

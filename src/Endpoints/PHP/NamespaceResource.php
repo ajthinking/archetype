@@ -1,14 +1,21 @@
 <?php
 
-namespace PHPFileManipulator\Resources\PHP;
+namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Endpoints\BaseResource;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\BuilderFactory;
 
 class NamespaceResource extends BaseResource
 {
+    public static function aliases()
+    {
+        return [
+            'namespace'
+        ];
+    }
+
     public function get()
     {
         $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
