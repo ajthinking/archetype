@@ -13,7 +13,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
   * [Installation](#installation)
   * [Usage](#usage)
     + [Quick start examples](#quick-start-examples)
-    + [Example Artisan command](#example-artisan-command)
+    + [Artisan demo command](#artisan-demo-command)
     + [Build your own templates](#build-your-own-templates)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
@@ -91,8 +91,8 @@ LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 
 ```
 
-### Example Artisan command
-A command ```php artisan file:demo``` is supplied to showcase some practical use cases. Check out the source [here](src/Commands/DemoCommand.php).
+### Artisan demo command
+So what can we build with this package? A command ```php artisan file:demo``` is supplied just to showcase some practical use cases. Check out the source [here](src/Commands/DemoCommand.php) and build your own!
 
 <img src="docs/DemoCommand.png" width="600px">
 
