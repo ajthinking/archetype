@@ -1,12 +1,5 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Snippets;
-
-/**
- * Setup any REAL names we need
- */
-use PHPFile;
-
 /**
  * Setup any FAKE names we need
  */
@@ -18,11 +11,6 @@ use Ajthinking\PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
  */
 class _ extends FakeName
 {
-    protected $___PROTECTED_ARRAY_PROPERY___ = [];
-    protected $fillable = [];
-    protected $hidden = [];
-    protected $casts = [];
-
     /**
     * Get the associated ___TARGET_IN_DOC_BLOCK___
     */
