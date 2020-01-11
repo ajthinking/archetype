@@ -17,6 +17,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
     + [Build your own templates](#build-your-own-templates)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
+    + [Roadmap](#roadmap)  
     + [Running tests](#running-tests)
   * [License](#license)
   * [Acknowledgements](#acknowledgements)
@@ -156,6 +157,7 @@ The `Snippet` class currently only supports templates on *class methods*.
 
 
 ## Contributing
+### Roadmap
 PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/php-file-manipulator) for planned features.
 
 <a href="https://trello.com/b/1M2VRnoQ/php-file-manipulator">
