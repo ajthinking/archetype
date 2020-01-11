@@ -82,5 +82,12 @@ trait HasIO
     {
         $prettyPrinter = new PSR2PrettyPrinter;
         return $prettyPrinter->prettyPrintFile($this->ast);
-    }    
+    }
+    
+    public function dd($method = false)
+    {
+        dd(
+            $method ? $this->$method() : $this
+        );
+    }
 }

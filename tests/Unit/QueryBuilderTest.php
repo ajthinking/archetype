@@ -66,7 +66,23 @@ class QueryBuilderTest extends TestCase
         
         $this->assertCount(
             1, LaravelFile::in('app')->where('className', '=', 'User')->get()
+        );
+
+        $this->assertCount(
+            1, LaravelFile::in('app')->where('uses', 'contains', 'Illuminate\Contracts\Auth\MustVerifyEmail')->get()
+        );
+
+        $this->assertCount(
+            6, LaravelFile::in('app')->where('className', 'like', 'Controller')->get()
+        );
+
+        $this->assertCount(
+            6, LaravelFile::in('app')->where('className', 'like', 'controller')->get()
         );        
+        
+        $this->assertCount(
+            1, LaravelFile::in('app')->where('className', 'matches', '/^Controller/')->get()
+        );      
     }
     
     /** @test */

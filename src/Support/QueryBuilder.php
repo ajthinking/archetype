@@ -7,12 +7,25 @@ use RecursiveIteratorIterator;
 use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
+use Ajthinking\PHPFileManipulator\Traits\HasOperators;
 
 class QueryBuilder
 {
+    use HasOperators;
+
     static $PHPSignature = '/\.php$/';
     
-    const EQUALS = "=";
+    const operators = [
+        // tested
+        "=" => "equals",
+        "equals" => "equals",
+        "contains" => "contains",
+        "like" => "like",
+        "matches" => "matches",
+        // untested
+        ">" => "greaterthan",
+        "<" => "lessthan",
+    ];
 
     public function __construct()
     {
@@ -52,12 +65,17 @@ class QueryBuilder
 
         // If its a resource where query
         $property = $arg1;
-        $operator = $arg3 ? $arg2 : $this::EQUALS;
-        if($operator != $this::EQUALS) throw new InvalidArgumentException("Only EQUALS operator supported rigth now.");
+        $operator = $arg3 ? $arg2 : "=";
+        if(!collect($this::operators)->has($operator)) throw new InvalidArgumentException("Operator not supported");
         $value = $arg3 ? $arg3 : $arg2;
 
-        $this->result = $this->result->filter(function($file) use($property, $value) {
-            return $file->$property() == $value;
+        // Dispatch to HasOperators trait method
+        $this->result = $this->result->filter(function($file) use($property, $operator, $value) {
+            $operatorMethod = $this::operators[$operator];
+            return $this->$operatorMethod(
+                $file->$property(),
+                $value
+            );
         });
 
         return $this;
