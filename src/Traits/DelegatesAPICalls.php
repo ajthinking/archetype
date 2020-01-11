@@ -4,28 +4,36 @@ namespace PHPFileManipulator\Traits;
 
 use BadMethodCallException;
 
-use PHPFileManipulator\Resolvers\EndpointResolver;
 use PHPFileManipulator\Resolvers\TemplateResolver;
 use PHPFileManipulator\Resolvers\QueryBuilderResolver;
 
 trait DelegatesAPICalls
 {
     /**
-     * This method is called when no matching method is found on $this
      * Time to delegate!
      */
     public function __call($method, $args) {
-        /** if resource */
-        $resource = EndpointResolver::getHandler($this, $method);
-        if($resource) return $resource->$method(...$args);
+        $handler = $this->endpoints()->filter(function($endpoint) use($method, $args) {
+            return (new $endpoint($this))->canHandle($method, $args);
+        })->first();
 
-        /** if template */
-        if(TemplateResolver::canHandle($this, $method)) return $this->fromTemplate($method, ...$args); 
+        if($handler) {
+            return (new $handler($this))->$method(...$args);
+        }
 
         /** if querybuilder */
         $queryBuilder = QueryBuilderResolver::getHandler($this, $method); 
         if($queryBuilder) return $queryBuilder->$method(...$args); 
 
         throw new BadMethodCallException("Could not find a handler for method $method");
-    } 
+    }
+    
+    public function getAPIMap()
+    {
+        return $this->endpoints()->map(function($endpoint) {
+            return collect($endpoint::aliases())->flatMap(function($alias) use($endpoint) {
+                return [$alias => $endpoint];
+            });
+        })->collapse();
+    }    
 }
