@@ -53,7 +53,7 @@ class ServiceProvider extends BaseServiceProvider
     private function bootConfig()
     {
         $this->publishes([
-            __DIR__.'/Config/default_config.php' => config_path('php-file-manipulator.php'),
+            __DIR__.'/config/default_config.php' => config_path('php-file-manipulator.php'),
         ]);
     } 
     
