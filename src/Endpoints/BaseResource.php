@@ -18,25 +18,38 @@ abstract class BaseResource extends Endpoint
         );
     }
 
-    public function __call($method, $args)
-    {
-        $resource = $this->getResourceName();
+    public function __call($signature, $args)
+    {        
+        $handler = $this->getHandlerMethod($signature, $args);
 
-        // exact matches are getters/setters
-        if(preg_match("/^$resource\$/i", $method)) {
-            return $args ? $this->set(...$args) : $this->get();
+        if(!$handler) {
+            throw new BadMethodCallException("Endpoint " . static::class . " could not resolve method " . $signature);
         }
-        // adders
-        if(preg_match("/^add$resource\$/i", $method)) {
-            return $this->add(...$args);
-        }
-        // removers
-        if(preg_match("/^remove$resource\$/i", $method)) {
-            return $this->remove(...$args);
-        }        
 
-        throw new BadMethodCallException("Resource " . static::class . " could not resolve method " . $method);
+        return $this->$handler(...$args);
     }
+
+    public function getHandlerMethod($signature, $args)
+    {
+        return collect(static::aliases())->map(function($alias) use($signature, $args) {
+            // getters / setters
+            if(preg_match("/^$alias\$/i", $signature)) {
+                return $args ? 'set' : 'get';
+            }
+
+            // adders
+            if(preg_match("/^add$alias\$/i", $signature)) {
+                return 'add';
+            }
+            // removers
+            if(preg_match("/^remove$alias\$/i", $signature)) {
+                return 'remove';
+            }
+
+            // Could not handle the candidate
+            return false;
+        })->filter()->first();
+    }    
 
     public function get()
     {

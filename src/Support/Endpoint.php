@@ -14,6 +14,16 @@ abstract class Endpoint
         ];
     }    
 
+    public function canHandle($signature, $args)
+    {
+        return (boolean) $this->getHandlerMethod($signature, $args);
+    }
+
+    public function getHandlerMethod($signature, $args)
+    {
+        return false;
+    }
+
     public function __construct(PHPFile $file)
     {
         $this->file = $file;      
