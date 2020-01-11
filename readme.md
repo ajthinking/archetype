@@ -74,8 +74,8 @@ A command ```php artisan file:demo``` is supplied to showcase some practical use
 
 <img src="docs/DemoCommand.png" width="600px">
 
-### Build your own compilable templates
-Go to `snippets.php` and add your templates:
+### Build your own templates
+Let's make a snippet for a method we want to insert. Create a file `storage/php-file-manipulator/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
 ```php
 <?php
@@ -95,20 +95,36 @@ class _ extends FakeName
     /**
     * ___DOC_BLOCK___
     */
-    public function ___METHOD_NAME___($arg)
+    public function mySpecialMethod($arg)
     {
         $want = abs($arg);
         return $this->doSomethingWith(___TARGET_CLASS___::class, 'my template')
             ->use(ANY::thing(new static('you' . $want)));
-    }
+    }    
 }
 ```
 
-Your snippet is instantly available elsewhere:
+Your snippet is then instantly available anywhere in your code:
 ```php
+use Ajthinking\PHPFileManipulator\Support\Snippet;
+
+// Get the snippet
+Snippet::mySpecialMethod()
+
+// Pass an array of replacement pairs to replace any handles:
+Snippet::mySpecialMethod([
+    '___TARGET_CLASS___' => 'App\Rocket'
+]);
+
+// Integrated example
 PHPFile::load('app/User.php')
-    ->addSnippet('myMethod');
-```
+    ->addMethod(
+        Snippet::mySpecialMethod([
+            '___TARGET_CLASS___' => 'App\Rocket'
+        ])
+    )->save();
+````
+
 
 ## Notes
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
