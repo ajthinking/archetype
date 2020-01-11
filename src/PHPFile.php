@@ -12,7 +12,6 @@ class PHPFile
     use DelegatesAPICalls;
     use HasIO;
     use HasTemplates;
-    use CanUseSnippets;
 
     protected $resources = [
         Resources\PHP\NamespaceResource::class,
