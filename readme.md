@@ -135,7 +135,7 @@ The `Snippet` class currently only supports templates on *class methods*.
 
 
 ## Contributing
-PRs and issues are welcome. Ask me for invitation to [Trello](https://trello.com/b/1M2VRnoQ/php-file-manipulator)  
+PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/php-file-manipulator) for planned features.
 
 <a href="https://trello.com/b/1M2VRnoQ/php-file-manipulator">
     <img src="docs/trello.png" width="600px">
