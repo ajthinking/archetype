@@ -62,6 +62,14 @@ class QueryBuilder
         // Ensure we are in a directory context - default to base path
         if(!isset($this->baseDir)) $this->in('');
 
+        // If an array is passed
+        if(is_array($arg1)) {
+            collect($arg1)->each(function($clause) {
+                $this->where(...$clause);
+            });
+            return $this;
+        }
+
         // If a function is passed
         if(is_callable($arg1)) {
             $this->result = $this->result->filter($arg1);
@@ -85,6 +93,11 @@ class QueryBuilder
 
         return $this;
     }
+
+    public function andWhere(...$args)
+    {
+        return $this->where(...$args);
+    }    
 
     public function get()
     {
