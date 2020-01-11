@@ -14,7 +14,7 @@ class HasOneMethods extends BaseResource
             collect($targets)->map(function($target) {
                 return Snippet::___HAS_ONE_METHOD___([
                     '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
-                    '___TARGET_CLASS___' => collect(explode('\\', $target))->last(),
+                    '___TARGET_CLASS___' => class_basename($target),
                     '___TARGET_IN_DOC_BLOCK___' => Str::hasOneDocBlockName($target)
                 ]);
             })->toArray()

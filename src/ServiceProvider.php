@@ -69,56 +69,56 @@ class ServiceProvider extends BaseServiceProvider
     {
         Str::macro('hasOneMethodName', function ($target) {
             return static::camel(
-                collect(explode('\\', $target))->last()
+                class_basename($target)
             );
         });
         
         Str::macro('hasManyMethodName', function ($target) {
             return static::camel(
                 static::plural(
-                    collect(explode('\\', $target))->last()
+                    class_basename($target)
                 )
             );
         });
 
         Str::macro('belongsToMethodName', function ($target) {
             return static::camel(
-                collect(explode('\\', $target))->last()
+                class_basename($target)
             );
         });
 
         Str::macro('belongsToManyMethodName', function ($target) {
             return static::camel(
                 static::plural(
-                    collect(explode('\\', $target))->last()
+                    class_basename($target)
                 )
             );
         });        
 
         Str::macro('hasOneDocBlockName', function ($target) {
             return static::studly(
-                collect(explode('\\', $target))->last()
+                class_basename($target)
             );
         });
 
         Str::macro('hasManyDocBlockName', function ($target) {
             return static::studly(
                 static::plural(
-                    collect(explode('\\', $target))->last()
+                    class_basename($target)
                 )
             );
         });        
 
         Str::macro('belongsToDocBlockName', function ($target) {
             return static::studly(
-                collect(explode('\\', $target))->last()
+                class_basename($target)
             );
         });
         
         Str::macro('belongsToManyDocBlockName', function ($target) {
             return static::studly(
                 static::plural(
-                    collect(explode('\\', $target))->last()
+                    class_basename($target)
                 )
             );
         });        

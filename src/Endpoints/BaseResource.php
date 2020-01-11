@@ -14,7 +14,7 @@ abstract class BaseResource extends Endpoint
     public function getResourceName()
     {
         return Str::replaceLast(
-            'Resource', '', collect(explode('\\', static::class))->last()
+            'Resource', '', class_basename(static::class)
         );
     }
 
@@ -56,10 +56,5 @@ abstract class BaseResource extends Endpoint
     public function remove($args = null)
     {
         throw new BadMethodCallException($this::NOT_IMPLEMENTED);
-    }
-    
-    public function ast()
-    {
-        return $this->file->ast();
     }
 }

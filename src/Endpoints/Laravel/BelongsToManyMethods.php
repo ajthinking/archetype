@@ -14,7 +14,7 @@ class BelongsToManyMethods extends BaseResource
             collect($targets)->map(function($target) {
                 return Snippet::___BELONGS_TO_MANY_METHOD___([
                     '___BELONGS_TO_MANY_METHOD___' => Str::belongsToManyMethodName($target),
-                    '___TARGET_CLASS___' => collect(explode('\\', $target))->last(),
+                    '___TARGET_CLASS___' => class_basename($target),
                     '___TARGET_IN_DOC_BLOCK___' => Str::belongsToManyDocBlockName($target)
                 ]);
             })->toArray()

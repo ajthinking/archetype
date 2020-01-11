@@ -2,11 +2,7 @@
 
 namespace PHPFileManipulator\Resolvers;
 
-use PHPFileManipulator\PHPFile;
-use PHPFileManipulator\Endpoints\Fillable;
-use Illuminate\Support\Str;
-
-class ResourceResolver
+class EndpointResolver
 {
     public static function canHandle($file, $name)
     {

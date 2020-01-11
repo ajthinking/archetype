@@ -9,13 +9,18 @@ abstract class Endpoint
 {
     public static function aliases()
     {
-        return [Str::camel(
-            Str::afterLast(static::class, '\\')
-        )];
+        return [
+            Str::camel(class_basename(static::class))
+        ];
     }    
 
     public function __construct(PHPFile $file)
     {
         $this->file = $file;      
+    }
+
+    public function ast()
+    {
+        return $this->file->ast();
     }
 }

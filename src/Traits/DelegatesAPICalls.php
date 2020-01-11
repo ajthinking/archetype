@@ -4,7 +4,7 @@ namespace PHPFileManipulator\Traits;
 
 use BadMethodCallException;
 
-use PHPFileManipulator\Resolvers\ResourceResolver;
+use PHPFileManipulator\Resolvers\EndpointResolver;
 use PHPFileManipulator\Resolvers\TemplateResolver;
 use PHPFileManipulator\Resolvers\QueryBuilderResolver;
 
@@ -16,7 +16,7 @@ trait DelegatesAPICalls
      */
     public function __call($method, $args) {
         /** if resource */
-        $resource = ResourceResolver::getHandler($this, $method);
+        $resource = EndpointResolver::getHandler($this, $method);
         if($resource) return $resource->$method(...$args);
 
         /** if template */
