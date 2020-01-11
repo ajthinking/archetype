@@ -22,9 +22,11 @@ class QueryBuilder
         "!=" => "notEquals",
         "not" => "notEquals",
         "contains" => "contains",
+        "has" => "contains",
         "in" => "inOperator",
         "like" => "like",
         "matches" => "matches",
+        "count" => "count",
         // untested
         ">" => "greaterThan",
         "<" => "lessThan",

@@ -43,5 +43,10 @@ trait HasOperators
     public function lessThan($candidate, $length)
     {
         return $candidate < $length;
+    }
+    
+    public function count($candidate, $expected)
+    {
+        return collect($candidate)->count() == $expected;
     }    
 }

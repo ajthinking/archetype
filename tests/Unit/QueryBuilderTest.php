@@ -90,6 +90,10 @@ class QueryBuilderTest extends TestCase
         
         $this->assertCount(
             1, LaravelFile::in('app')->where('className', 'in', ['Dog', 'User', 'Cat'])->get()
+        );
+        
+        $this->assertCount(
+            2, LaravelFile::in('app')->where('uses', 'count', 4)->get()
         );        
     }
     
