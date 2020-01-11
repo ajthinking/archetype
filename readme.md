@@ -126,7 +126,10 @@ MIT
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
 * PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
 
-## Stay tuned!
-Follow me on twitter: [@ajthinking](https://twitter.com/ajthinking)
+## Like this package?
 
-<a href="https://www.patreon.com/ajthinking" >Help me continue this work | Patreon</a>
+<a href="https://www.patreon.com/ajthinking" >Patreon :rocket: </a>
+
+<a href="https://www.https://github.com/sponsors/ajthinking" >GitHub Sponsors :heart: :octocat: </a>
+
+[@ajthinking on Twitter :gem:](https://twitter.com/ajthinking)
