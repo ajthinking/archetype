@@ -1,9 +1,9 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources\PHP;
+namespace PHPFileManipulator\Resources\PHP;
 
-use Ajthinking\PHPFileManipulator\Resources\BaseResource;
-use Ajthinking\PHPFileManipulator\Resources\UseStatementInserter;
+use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Resources\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_;

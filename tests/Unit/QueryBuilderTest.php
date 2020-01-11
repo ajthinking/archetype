@@ -1,11 +1,11 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests\Unit;
+namespace PHPFileManipulator\Tests\Unit;
 
-use Ajthinking\PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\TestCase;
 use PHPFile;
 use LaravelFile;
-use Ajthinking\PHPFileManipulator\Support\QueryBuilder;
+use PHPFileManipulator\Support\QueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

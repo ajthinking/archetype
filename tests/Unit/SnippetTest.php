@@ -1,12 +1,12 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests\Unit;
+namespace PHPFileManipulator\Tests\Unit;
 
-use Ajthinking\PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\TestCase;
 use PhpParser\Node\Stmt\ClassMethod;
 
 
-use Ajthinking\PHPFileManipulator\Support\Snippet;
+use PHPFileManipulator\Support\Snippet;
 
 class SnippetTest extends TestCase
 {

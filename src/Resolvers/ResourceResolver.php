@@ -1,9 +1,9 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resolvers;
+namespace PHPFileManipulator\Resolvers;
 
-use Ajthinking\PHPFileManipulator\PHPFile;
-use Ajthinking\PHPFileManipulator\Resources\Fillable;
+use PHPFileManipulator\PHPFile;
+use PHPFileManipulator\Resources\Fillable;
 use Illuminate\Support\Str;
 
 class ResourceResolver
@@ -15,22 +15,22 @@ class ResourceResolver
 
     public static function getHandler($file, $method)
     {
-        $resourceMap = static::getResourceMap($file->resources());
+        $apiMap = static::getAPIMap($file->endpoints());
 
-        $accessor = $resourceMap->keys()->filter(function($accessor) use($method) {
+        $accessor = $apiMap->keys()->filter(function($accessor) use($method) {
             return preg_match("/^$accessor\$/i", $method)
                 || preg_match("/^add$accessor\$/i", $method)
                 || preg_match("/^remove$accessor\$/i", $method);
         })->first();
 
-        return $accessor ? new $resourceMap[$accessor]($file) : false;
+        return $accessor ? new $apiMap[$accessor]($file) : false;
     }
 
-    public static function getResourceMap($resources)
+    public static function getAPIMap($endpoints)
     {
-        return $resources->map(function($resource) {
-            return collect($resource::aliases())->flatMap(function($alias) use($resource) {
-                return [$alias => $resource];
+        return $endpoints->map(function($endpoint) {
+            return collect($endpoint::aliases())->flatMap(function($alias) use($endpoint) {
+                return [$alias => $endpoint];
             });
         })->collapse();
     }

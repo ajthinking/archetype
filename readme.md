@@ -105,9 +105,9 @@ Let's make a snippet for a method we want to insert. Start by creating a file `s
 /**
  * Optionally use FAKE names to silence IDE warnings
  */
-use Ajthinking\PHPFileManipulator\Support\FakeName; 
-use Ajthinking\PHPFileManipulator\Support\FakeName as ANY;
-use Ajthinking\PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
+use PHPFileManipulator\Support\FakeName; 
+use PHPFileManipulator\Support\FakeName as ANY;
+use PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
 
 /**
  * This is just a placeholder class where we can add our snippets
@@ -128,7 +128,7 @@ class _ extends FakeName
 
 Your snippet is then instantly available anywhere in your code:
 ```php
-use Ajthinking\PHPFileManipulator\Support\Snippet;
+use PHPFileManipulator\Support\Snippet;
 
 // Get the snippet
 Snippet::mySpecialMethod()

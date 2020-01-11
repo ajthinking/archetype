@@ -3,8 +3,8 @@
 /**
  * Setup any FAKE names we need
  */
-use Ajthinking\PHPFileManipulator\Support\FakeName; 
-use Ajthinking\PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
+use PHPFileManipulator\Support\FakeName; 
+use PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
 
 /**
  * This is just a placeholder class where we can add our snippets

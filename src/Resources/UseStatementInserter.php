@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace PHPFileManipulator\Resources;
 
 use PhpParser\Node;
 use PhpParser\NodeFinder;

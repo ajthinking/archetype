@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Factories;
+namespace PHPFileManipulator\Factories;
 
-use Ajthinking\PHPFileManipulator\LaravelFile;
+use PHPFileManipulator\LaravelFile;
 
 class LaravelFileFactory
 {

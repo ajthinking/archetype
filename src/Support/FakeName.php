@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Support;
+namespace PHPFileManipulator\Support;
 
 class FakeName {
     public static function __callStatic($method, $args) {}

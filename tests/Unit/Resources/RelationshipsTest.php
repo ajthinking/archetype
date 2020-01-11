@@ -1,9 +1,9 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests\Unit\Resources;
+namespace PHPFileManipulator\Tests\Unit\Resources;
 
-use Ajthinking\PHPFileManipulator\Tests\TestCase;
-use Ajthinking\PHPFileManipulator\LaravelFile;
+use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\LaravelFile;
 
 class RelationshipsTest extends TestCase
 {

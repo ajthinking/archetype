@@ -1,13 +1,13 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Support;
+namespace PHPFileManipulator\Support;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
-use Ajthinking\PHPFileManipulator\Traits\HasOperators;
+use PHPFileManipulator\Traits\HasOperators;
 
 class QueryBuilder
 {

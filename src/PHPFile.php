@@ -1,11 +1,10 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator;
+namespace PHPFileManipulator;
 
-use Ajthinking\PHPFileManipulator\Traits\DelegatesAPICalls;
-use Ajthinking\PHPFileManipulator\Traits\HasIO;
-use Ajthinking\PHPFileManipulator\Traits\HasTemplates;
-use Ajthinking\PHPFileManipulator\Traits\CanUseSnippets;
+use PHPFileManipulator\Traits\DelegatesAPICalls;
+use PHPFileManipulator\Traits\HasIO;
+use PHPFileManipulator\Traits\HasTemplates;
 
 class PHPFile
 {
@@ -13,7 +12,7 @@ class PHPFile
     use HasIO;
     use HasTemplates;
 
-    protected $resources = [
+    protected $endpoints = [
         Resources\PHP\NamespaceResource::class,
         Resources\PHP\Uses::class,
         Resources\PHP\ClassName::class,
@@ -23,8 +22,8 @@ class PHPFile
         Resources\PHP\ClassMethodNames::class,            
     ];
 
-    public function resources() {
-        return collect((new self)->resources);
+    public function endpoints() {
+        return collect((new self)->endpoints);
     }
 
     public function templates() {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources\Laravel;
+namespace PHPFileManipulator\Resources\Laravel;
 
-use Ajthinking\PHPFileManipulator\Resources\BaseResource;
-use Ajthinking\PHPFileManipulator\Support\Snippet;
+use PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 
 class HasOneMethods extends BaseResource

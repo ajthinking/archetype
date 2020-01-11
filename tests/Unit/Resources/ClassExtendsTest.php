@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests\Unit\Resources;
+namespace PHPFileManipulator\Tests\Unit\Resources;
 
-use Ajthinking\PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\TestCase;
 
 class ClassExtendsTest extends TestCase
 {

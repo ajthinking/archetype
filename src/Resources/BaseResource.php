@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace PHPFileManipulator\Resources;
 
-use Ajthinking\PHPFileManipulator\PHPFile;
+use PHPFileManipulator\PHPFile;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 

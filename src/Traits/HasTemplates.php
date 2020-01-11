@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Traits;
+namespace PHPFileManipulator\Traits;
 
 use Illuminate\Support\Str;
 

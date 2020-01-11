@@ -1,16 +1,16 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator;
+namespace PHPFileManipulator;
 
-use Ajthinking\PHPFileManipulator\Commands\DemoCommand;
-use Illuminate\Support\ServiceProvider;
+use PHPFileManipulator\Commands\DemoCommand;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use App;
-use Ajthinking\PHPFileManipulator\Factories\PHPFileFactory;
-use Ajthinking\PHPFileManipulator\Factories\LaravelFileFactory;
-use Ajthinking\PHPFileManipulator\Commands\ListAPICommand;
+use PHPFileManipulator\Factories\PHPFileFactory;
+use PHPFileManipulator\Factories\LaravelFileFactory;
+use PHPFileManipulator\Commands\ListAPICommand;
 Use Illuminate\Support\Str;
 
-class PHPFileManipulatorServiceProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Register any application services.

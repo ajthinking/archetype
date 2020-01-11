@@ -1,12 +1,12 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Traits;
+namespace PHPFileManipulator\Traits;
 
 use BadMethodCallException;
 
-use Ajthinking\PHPFileManipulator\Resolvers\ResourceResolver;
-use Ajthinking\PHPFileManipulator\Resolvers\TemplateResolver;
-use Ajthinking\PHPFileManipulator\Resolvers\QueryBuilderResolver;
+use PHPFileManipulator\Resolvers\ResourceResolver;
+use PHPFileManipulator\Resolvers\TemplateResolver;
+use PHPFileManipulator\Resolvers\QueryBuilderResolver;
 
 trait DelegatesAPICalls
 {

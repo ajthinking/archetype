@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources\PHP;
+namespace PHPFileManipulator\Resources\PHP;
 
-use Ajthinking\PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Resources\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\ClassMethod;
 

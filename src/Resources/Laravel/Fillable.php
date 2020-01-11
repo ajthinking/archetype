@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources\Laravel;
+namespace PHPFileManipulator\Resources\Laravel;
 
-use Ajthinking\PHPFileManipulator\Resources\ArrayPropertyResource;
+use PHPFileManipulator\Resources\ArrayPropertyResource;
 
 class Fillable extends ArrayPropertyResource
 {   

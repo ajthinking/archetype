@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests\Unit;
+namespace PHPFileManipulator\Tests\Unit;
 
-use Ajthinking\PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\TestCase;
 
 use LaravelFile;
 use PHPFile;
@@ -17,7 +17,7 @@ class PHPFileTest extends TestCase
         );
 
         $this->assertTrue(
-            get_class($file) === 'Ajthinking\PHPFileManipulator\PHPFile'
+            get_class($file) === 'PHPFileManipulator\PHPFile'
         );
     }
 
@@ -29,7 +29,7 @@ class PHPFileTest extends TestCase
         );
 
         $this->assertInstanceOf(
-            \Ajthinking\PHPFileManipulator\LaravelFile::class, $file
+            \PHPFileManipulator\LaravelFile::class, $file
         );
     }
 
@@ -65,7 +65,7 @@ class PHPFileTest extends TestCase
 
         // Ensuring it is valid
         $this->assertTrue(
-            get_class($copy) === 'Ajthinking\PHPFileManipulator\PHPFile'
+            get_class($copy) === 'PHPFileManipulator\PHPFile'
         );
 
         // NOTE: When pretty printing some of the array formatting may change
@@ -85,7 +85,7 @@ class PHPFileTest extends TestCase
 
         // It is valid
         $this->assertTrue(
-            get_class($preview) === 'Ajthinking\PHPFileManipulator\PHPFile'
+            get_class($preview) === 'PHPFileManipulator\PHPFile'
         );        
     }   
 }

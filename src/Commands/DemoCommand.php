@@ -1,10 +1,10 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Commands;
+namespace PHPFileManipulator\Commands;
 
 use Illuminate\Console\Command;
 use PHPFile;
-use Ajthinking\PHPFileManipulator\Support\Exceptions\NotImplementedYetException;
+use PHPFileManipulator\Support\Exceptions\NotImplementedYetException;
 
 class DemoCommand extends Command
 {

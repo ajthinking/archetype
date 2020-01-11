@@ -1,11 +1,11 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resolvers;
+namespace PHPFileManipulator\Resolvers;
 
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
-use Ajthinking\PHPFileManipulator\Support\QueryBuilder;
+use PHPFileManipulator\Support\QueryBuilder;
 
 class QueryBuilderResolver
 {

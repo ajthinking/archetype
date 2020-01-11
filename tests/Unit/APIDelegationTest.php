@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests\Unit;
+namespace PHPFileManipulator\Tests\Unit;
 
-use Ajthinking\PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\TestCase;
 use PHPFile;
 
 use BadMethodCallException;

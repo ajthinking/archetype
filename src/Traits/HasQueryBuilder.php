@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Traits;
+namespace PHPFileManipulator\Traits;
 
-use Ajthinking\PHPFileManipulator\Support\QueryBuilder;
+use PHPFileManipulator\Support\QueryBuilder;
 
 trait HasQueryBuilder
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Tests;
+namespace PHPFileManipulator\Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use PHPFile;

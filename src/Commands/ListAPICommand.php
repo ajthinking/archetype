@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Commands;
+namespace PHPFileManipulator\Commands;
 
 use Illuminate\Console\Command;
 use PHPFile;

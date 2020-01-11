@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Traits;
+namespace PHPFileManipulator\Traits;
 
-use Ajthinking\PHPFileManipulator\Support\PSR2PrettyPrinter;
+use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;

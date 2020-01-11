@@ -1,9 +1,9 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resolvers;
+namespace PHPFileManipulator\Resolvers;
 
 use Illuminate\Support\Str;
-use Ajthinking\PHPFileManipulator\Template;
+use PHPFileManipulator\Template;
 
 class TemplateResolver
 {

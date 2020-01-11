@@ -38,17 +38,18 @@
         "laravel": {
             "dont-discover": [],
             "providers": [
-                "Ajthinking\\PHPFileManipulator\\PHPFileManipulatorServiceProvider"
+                "PHPFileManipulator\\ServiceProvider"
             ],
             "aliases": {
-                "PHPFile": "Ajthinking\\PHPFileManipulator\\Facades\\PHPFile",
-                "LaravelFile": "Ajthinking\\PHPFileManipulator\\Facades\\LaravelFile"
+                "PHPFile": "PHPFileManipulator\\Facades\\PHPFile",
+                "LaravelFile": "PHPFileManipulator\\Facades\\LaravelFile"
             }            
         }
     },
     "autoload": {
         "psr-4": {
-            "Ajthinking\\PHPFileManipulator\\": "src/"
+            "PHPFileManipulator\\": "src/",
+            "PHPFileManipulator\\Tests\\": "tests/"
         }
     },
     "autoload-dev": {

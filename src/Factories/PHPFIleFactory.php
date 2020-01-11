@@ -1,8 +1,8 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Factories;
+namespace PHPFileManipulator\Factories;
 
-use Ajthinking\PHPFileManipulator\PHPFile;
+use PHPFileManipulator\PHPFile;
 
 class PHPFileFactory
 {

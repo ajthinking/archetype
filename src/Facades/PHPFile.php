@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Facades;
+namespace PHPFileManipulator\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

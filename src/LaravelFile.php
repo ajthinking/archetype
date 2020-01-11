@@ -1,16 +1,16 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator;
+namespace PHPFileManipulator;
 
-use Ajthinking\PHPFileManipulator\PHPFile;
+use PHPFileManipulator\PHPFile;
 
 class LaravelFile extends PHPFile 
 {
-    public function resources() {
-        return parent::resources()->concat($this->resources);
+    public function endpoints() {
+        return parent::endpoints()->concat($this->endpoints);
     }
 
-    protected $resources = [
+    protected $endpoints = [
         Resources\Laravel\Fillable::class,
         Resources\Laravel\Hidden::class,
         Resources\Laravel\HasOneMethods::class,

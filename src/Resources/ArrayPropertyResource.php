@@ -1,14 +1,14 @@
 <?php
 
-namespace Ajthinking\PHPFileManipulator\Resources;
+namespace PHPFileManipulator\Resources;
 
-use Ajthinking\PHPFileManipulator\Resources\BaseResource;
+use PHPFileManipulator\Resources\BaseResource;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Expr\ArrayItem;
-use Ajthinking\PHPFileManipulator\Exceptions\NotImplementedYetException;
+use PHPFileManipulator\Exceptions\NotImplementedYetException;
 
 class ArrayPropertyResource extends BaseResource
 {
