@@ -128,7 +128,7 @@ PHPFile::load('app/User.php')
 
 The `Snippet` class currently only supports templates on *class methods*.
 
-## Notes
+## Gotchas
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
 
 > :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
