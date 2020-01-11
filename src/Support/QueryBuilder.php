@@ -79,7 +79,7 @@ class QueryBuilder
          * @param RecursiveCallbackFilterIterator $iterator
          * @return bool True if you need to recurse or if the item is acceptable
          */
-        $filter = function ($file, $key, $iterator) use ($exclude) {
+        $filter = function ($file, $key, $iterator) {
             // Exclude some folders/files
             $exclude = config('php-file-manipulator.ignored_paths');
             if (in_array($file->getFilename(), $exclude)) {
