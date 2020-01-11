@@ -126,7 +126,7 @@ PHPFile::load('app/User.php')
     )->save();
 ````
 
-The `Snippet` class currently only supports templates on `class method`.
+The `Snippet` class currently only supports templates on class methods.
 
 ## Notes
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
