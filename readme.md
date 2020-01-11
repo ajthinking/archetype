@@ -11,11 +11,13 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 
 ## Contents
   * [Installation](#installation)
-  * [Quick start examples](#quick-start-examples)
-  * [Example Artisan command](#example-artisan-command)
-  * [Build your own templates](#build-your-own-templates)
-  * [Gotchas](#gotchas)
+  * [Usage](#usage)
+    + [Quick start examples](#quick-start-examples)
+    + [Example Artisan command](#example-artisan-command)
+    + [Build your own templates](#build-your-own-templates)
+    + [Gotchas](#gotchas)
   * [Contributing](#contributing)
+    + [Running tests](#running-tests)
   * [License](#license)
   * [Acknowledgements](#acknowledgements)
   * [Like this package?](#like-this-package-)
@@ -24,8 +26,8 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 ```
 composer require ajthinking/php-file-manipulator
 ```
-
-## Quick start examples 
+## Usage
+### Quick start examples 
 ```php
 use PHPFile;
 use LaravelFile;
@@ -147,7 +149,7 @@ PHPFile::load('app/User.php')
 
 The `Snippet` class currently only supports templates on *class methods*.
 
-## Gotchas
+### Gotchas
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
 
 > :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
