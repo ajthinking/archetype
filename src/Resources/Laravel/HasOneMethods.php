@@ -14,6 +14,7 @@ class HasOneMethods extends BaseResource
             collect($targets)->map(function($target) {
                 return LaravelFile::snippet('___HAS_ONE_METHOD___', [
                     '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
+                    '___TARGET_CLASS___' => collect(explode('\\', $target))->last(),
                     '___TARGET_IN_DOC_BLOCK___' => Str::hasOneDocBlockName($target)
                 ]);
             })->toArray()

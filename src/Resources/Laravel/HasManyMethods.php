@@ -14,7 +14,7 @@ class HasManyMethods extends BaseResource
             collect($targets)->map(function($target) {
                 return LaravelFile::snippet('___HAS_MANY_METHOD___', [
                     '___HAS_MANY_METHOD___' => Str::hasManyMethodName($target),
-                    '___TARGET_CLASS___' => $target,
+                    '___TARGET_CLASS___' => collect(explode('\\', $target))->last(),
                     '___TARGET_IN_DOC_BLOCK___' => Str::hasManyDocBlockName($target)
                 ]);     
             })->toArray()

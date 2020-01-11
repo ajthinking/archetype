@@ -14,6 +14,7 @@ class BelongsToMethods extends BaseResource
             collect($targets)->map(function($target) {
                 return LaravelFile::snippet('___BELONGS_TO_METHOD___', [
                     '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
+                    '___TARGET_CLASS___' => collect(explode('\\', $target))->last(),
                     '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
                 ]);
             })->toArray()
