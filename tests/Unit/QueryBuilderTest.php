@@ -96,7 +96,29 @@ class QueryBuilderTest extends TestCase
             2, LaravelFile::in('app')->where('uses', 'count', 4)->get()
         );        
     }
-    
+
+    /** @test */
+    public function it_can_filter_with_where_method_using_an_array()
+    {
+        $this->assertCount(
+            1, LaravelFile::in('app')->where([
+                ['className', 'like', 'controller'],
+                ['classMethodNames', 'contains', 'create']
+            ])->get()
+        );        
+    }
+
+    /** @test */
+    public function it_can_add_filters_with_andWhere()
+    {
+        $this->assertCount(
+            1, LaravelFile::in('app')
+                ->where('className', 'like', 'controller')
+                ->andWhere('classMethodNames', 'contains', 'create')
+                ->get()
+        );        
+    }    
+
     /** @test */
     public function it_can_filter_with_closure()
     {
