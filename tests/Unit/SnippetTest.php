@@ -38,18 +38,5 @@ class SnippetTest extends TestCase
         $this->assertNull(
             LaravelFile::snippet('NoSUchSnippet')
         );            
-    }
-    
-    /** @wip-test */
-    public function it_inserts_comments()
-    {
-        $file = $this->laravelUserFile();
-        $file->addHasManyMethods(['App\Gun']);        
-        dd(
-                $file->ast()
-        );
-
-        // FIX ALL REPLACEMENTS!!!
-        
-    }    
+    }   
 }
