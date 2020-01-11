@@ -113,6 +113,7 @@ Snippet::mySpecialMethod()
 
 // Pass an array of replacement pairs to replace any handles:
 Snippet::mySpecialMethod([
+    '___DOC_BLOCK___' => 'Inserted with php-file-manipulator :)',
     '___TARGET_CLASS___' => 'App\Rocket'
 ]);
 
@@ -120,7 +121,7 @@ Snippet::mySpecialMethod([
 PHPFile::load('app/User.php')
     ->addMethod(
         Snippet::mySpecialMethod([
-            '___TARGET_CLASS___' => 'App\Rocket'
+            // replacement pairs ...
         ])
     )->save();
 ````
