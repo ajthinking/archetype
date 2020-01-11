@@ -75,23 +75,33 @@ A command ```php artisan file:demo``` is supplied to showcase some practical use
 <img src="docs/DemoCommand.png" width="600px">
 
 ### Build your own compilable templates
+Go to `snippets.php` and add your templates:
 
-
-Go to `snippets.php`
 ```php
-// if needed set up fake names
-use PHPFile\FakeName as User;
-use PHPFile\FakeName as Car;
+<?php
 
-// name your snippet
-$snippet = PHPFile::snippet('myMethod',
-    // put snippet code
-    function($any, $nbr, $of, Car $params) {
-        Car::wow()->also(User $user)
-            ->many()->write_inline('CODE');
-        return $this::static('anything') ? 13 : 37;
+/**
+ * Optionally use FAKE names to silence IDE warnings
+ */
+use Ajthinking\PHPFileManipulator\Support\FakeName; 
+use Ajthinking\PHPFileManipulator\Support\FakeName as ANY;
+use Ajthinking\PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
+
+/**
+ * This is just a placeholder class where we can add our snippets
+ */
+class _ extends FakeName
+{
+    /**
+    * ___DOC_BLOCK___
+    */
+    public function ___METHOD_NAME___($arg)
+    {
+        $want = abs($arg);
+        return $this->doSomethingWith(___TARGET_CLASS___::class, 'my template')
+            ->use(ANY::thing(new static('you' . $want)));
     }
-);
+}
 ```
 
 Your snippet is instantly available elsewhere:
