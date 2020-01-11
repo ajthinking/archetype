@@ -7,6 +7,19 @@
 
 Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include a file QueryBuilder, Template engine and categorization of read/write operations into `Resource` endpoints.
 
+<img src="https://i.imgur.com/U9NnDix.gif" title="source: imgur.com" />
+
+  * [Installation](#installation)
+  * [Quick start examples](#quick-start-examples)
+    + [Example Artisan command](#example-artisan-command)
+    + [Build your own templates](#build-your-own-templates)
+  * [Gotchas](#gotchas)
+  * [Contributing](#contributing)
+    + [Running tests](#running-tests)
+  * [License](#license)
+  * [Acknowledgements](#acknowledgements)
+  * [Like this package?](#like-this-package-)
+
 ## Installation
 ```
 composer require ajthinking/php-file-manipulator
