@@ -75,23 +75,33 @@ A command ```php artisan file:demo``` is supplied to showcase some practical use
 <img src="docs/DemoCommand.png" width="600px">
 
 ### Build your own compilable templates
+Go to `snippets.php` and add your templates:
 
-
-Go to `snippets.php`
 ```php
-// if needed set up fake names
-use PHPFile\FakeName as User;
-use PHPFile\FakeName as Car;
+<?php
 
-// name your snippet
-$snippet = PHPFile::snippet('myMethod',
-    // put snippet code
-    function($any, $nbr, $of, Car $params) {
-        Car::wow()->also(User $user)
-            ->many()->write_inline('CODE');
-        return $this::static('anything') ? 13 : 37;
+/**
+ * Optionally use FAKE names to silence IDE warnings
+ */
+use Ajthinking\PHPFileManipulator\Support\FakeName; 
+use Ajthinking\PHPFileManipulator\Support\FakeName as ANY;
+use Ajthinking\PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
+
+/**
+ * This is just a placeholder class where we can add our snippets
+ */
+class _ extends FakeName
+{
+    /**
+    * ___DOC_BLOCK___
+    */
+    public function ___METHOD_NAME___($arg)
+    {
+        $want = abs($arg);
+        return $this->doSomethingWith(___TARGET_CLASS___::class, 'my template')
+            ->use(ANY::thing(new static('you' . $want)));
     }
-);
+}
 ```
 
 Your snippet is instantly available elsewhere:
@@ -101,7 +111,9 @@ PHPFile::load('app/User.php')
 ```
 
 ## Notes
-> Currently when reading, the package will not traverse into includes, traits or parent classes
+> :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
+
+> :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
 
 
 ## Contributing
@@ -133,4 +145,4 @@ MIT
 
 <a href="https://www.https://github.com/sponsors/ajthinking" >GitHub Sponsors :heart: :octocat: </a>
 
-[@ajthinking on Twitter :gem:](https://twitter.com/ajthinking)
+[Follow @ajthinking :gem:](https://twitter.com/ajthinking)
