@@ -69,6 +69,10 @@ class QueryBuilderTest extends TestCase
         );
 
         $this->assertCount(
+            1, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
+        );        
+
+        $this->assertCount(
             1, LaravelFile::in('app')->where('uses', 'contains', 'Illuminate\Contracts\Auth\MustVerifyEmail')->get()
         );
 
@@ -82,7 +86,11 @@ class QueryBuilderTest extends TestCase
         
         $this->assertCount(
             1, LaravelFile::in('app')->where('className', 'matches', '/^Controller/')->get()
-        );      
+        );
+        
+        $this->assertCount(
+            1, LaravelFile::in('app')->where('className', 'in', ['Dog', 'User', 'Cat'])->get()
+        );        
     }
     
     /** @test */

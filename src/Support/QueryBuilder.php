@@ -19,12 +19,15 @@ class QueryBuilder
         // tested
         "=" => "equals",
         "equals" => "equals",
+        "!=" => "notEquals",
+        "not" => "notEquals",
         "contains" => "contains",
+        "in" => "inOperator",
         "like" => "like",
         "matches" => "matches",
         // untested
-        ">" => "greaterthan",
-        "<" => "lessthan",
+        ">" => "greaterThan",
+        "<" => "lessThan",
     ];
 
     public function __construct()
