@@ -2,7 +2,6 @@
 
 namespace PHPFileManipulator\Resolvers;
 
-use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
 use PHPFileManipulator\Support\QueryBuilder;
