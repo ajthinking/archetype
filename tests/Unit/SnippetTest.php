@@ -6,7 +6,7 @@ use Ajthinking\PHPFileManipulator\Tests\TestCase;
 use PhpParser\Node\Stmt\ClassMethod;
 
 
-use LaravelFile;
+use Ajthinking\PHPFileManipulator\Support\Snippet;
 
 class SnippetTest extends TestCase
 {
@@ -15,14 +15,14 @@ class SnippetTest extends TestCase
     {
         $this->assertInstanceOf(
             ClassMethod::class,
-            LaravelFile::snippet('___HAS_MANY_METHOD___')
+            Snippet::___HAS_MANY_METHOD___()
         );            
     }
 
     /** @test */
     public function it_can_replace_snippet_names()
     {
-        $method = LaravelFile::snippet('___HAS_MANY_METHOD___', [
+        $method = Snippet::___HAS_MANY_METHOD___([
             '___HAS_MANY_METHOD___' => 'guitars'
         ]);
 
@@ -36,7 +36,7 @@ class SnippetTest extends TestCase
     public function it_cant_load_non_existing_snippets_from_defaults()
     {
         $this->assertNull(
-            LaravelFile::snippet('NoSUchSnippet')
+            Snippet::NoSUchSnippet()
         );            
     }   
 }
