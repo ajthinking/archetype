@@ -26,7 +26,27 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootStrMacros();
+        $this->bootConfig();
     }
+
+
+    private function registerFacades()
+    {
+        App::bind('PHPFile',function() {
+            return new PHPFileFactory;
+        });
+
+        App::bind('LaravelFile',function() {
+            return new LaravelFileFactory;
+        });
+    }    
+
+    private function bootConfig()
+    {
+        $this->publishes([
+            __DIR__.'/Config/default_config.php' => config_path('php-file-manipulator.php'),
+        ]);
+    } 
     
     private function registerCommands()
     {
@@ -38,10 +58,6 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
 
     private function bootStrMacros()
     {
-        // Str::hasOneMethodName($target);
-        // Str::tableName($target);
-        // Str::attributeName($target);
-
         Str::macro('hasOneMethodName', function ($target) {
             return static::camel(
                 collect(explode('\\', $target))->last()
@@ -97,16 +113,5 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
                 )
             );
         });        
-    }
-
-    private function registerFacades()
-    {
-        App::bind('PHPFile',function() {
-            return new PHPFileFactory;
-        });
-
-        App::bind('LaravelFile',function() {
-            return new LaravelFileFactory;
-        });
     }
 }
