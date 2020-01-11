@@ -3,16 +3,18 @@
 namespace PHPFileManipulator;
 
 use PHPFileManipulator\Traits\DelegatesAPICalls;
-use PHPFileManipulator\Traits\HasIO;
-use PHPFileManipulator\Traits\HasTemplates;
 
 class PHPFile
 {
     use DelegatesAPICalls;
-    use HasIO;
-    use HasTemplates;
 
     protected $endpoints = [
+
+        // Utillities
+        Endpoints\PHP\IO::class,
+        Endpoints\PHP\Template::class,
+
+        // Resources
         Endpoints\PHP\NamespaceResource::class,
         Endpoints\PHP\Uses::class,
         Endpoints\PHP\ClassName::class,
