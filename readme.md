@@ -133,4 +133,4 @@ MIT
 
 <a href="https://www.https://github.com/sponsors/ajthinking" >GitHub Sponsors :heart: :octocat: </a>
 
-Stay tuned: [@ajthinking:gem:](https://twitter.com/ajthinking)
+[twitter.com/ajthinking:gem:](https://twitter.com/ajthinking)
