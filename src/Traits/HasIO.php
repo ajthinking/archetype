@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use Error;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
-use File as BoringRegularFile;
 
 trait HasIO
 {
@@ -50,7 +49,7 @@ trait HasIO
 
         if(!$this->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        BoringRegularFile::put($this->path, $code);
+        Storage::disk('root')->put($this->path, $code);
 
         return $this;
     }

@@ -27,6 +27,15 @@ class PHPFileManipulatorServiceProvider extends ServiceProvider
     {
         $this->bootStrMacros();
         $this->bootConfig();
+        $this->bootRootStorageDisk();
+    }
+
+    private function bootRootStorageDisk()
+    {
+        $this->app['config']["filesystems.disks.root"] = [
+            'driver' => 'local',
+            'root' => base_path(),
+        ];
     }
 
 
