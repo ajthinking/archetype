@@ -112,15 +112,16 @@ PRs and issues are welcome. Ask me for invitation to [Trello](https://trello.com
 </a>
 
 ### Running tests
+The test suite currently requires that you have the package installed in a laravel project:
+> packages/Ajthinking/PHPFileManipulator
+
+Then, from the host project root run
 ```bash
-# the test suite requires that you have the package installed in a laravel project
 vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
 ```
 
 ## License
 MIT
-
-
 
 ## Acknowledgements
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
