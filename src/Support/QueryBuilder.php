@@ -71,10 +71,7 @@ class QueryBuilder
     
     private function recursiveFileSearch($directory) {
         
-        $directory = base_path($directory);
-
-        // Will exclude everything under these directories
-        $exclude = array('_ide_helper.php', 'vendor', '.git', 'node_modules');
+        $directory = base_path($directory);        
         
         /**
          * @param SplFileInfo $file
@@ -83,7 +80,8 @@ class QueryBuilder
          * @return bool True if you need to recurse or if the item is acceptable
          */
         $filter = function ($file, $key, $iterator) use ($exclude) {
-            // Exclude some folders
+            // Exclude some folders/files
+            $exclude = config('php-file-manipulator.ignored_paths');
             if (in_array($file->getFilename(), $exclude)) {
                 return false;
             }
