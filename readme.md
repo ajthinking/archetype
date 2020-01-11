@@ -157,7 +157,7 @@ MIT
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
 * PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
 
-## Like this package? :pray:
+## Like this package?
 
 <a href="https://www.https://github.com/sponsors/ajthinking" >GitHub Sponsors :heart: :octocat: </a>
 
