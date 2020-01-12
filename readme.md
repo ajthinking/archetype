@@ -7,7 +7,7 @@
 
 Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include a file QueryBuilder, Template engine and categorization of read/write operations into `Resource` endpoints.
 
-<img src="https://i.imgur.com/Lrs8Cyy.gif" title="source: imgur.com" />
+<img src="https://i.imgur.com/Ldqa1RP.gif" title="source: imgur.com" />
 
 ## Contents
   * [Installation](#installation)
