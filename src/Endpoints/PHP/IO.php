@@ -66,7 +66,8 @@ class IO extends Endpoint
 
         if(!$this->file->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        Storage::disk('root')->put($this->file->path, $code);
+        $relativePath = Str::replaceFirst(base_path(), '', $this->file->path);
+        Storage::disk('root')->put($relativePath, $code);
 
         return $this->file;
     }
