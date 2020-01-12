@@ -38,7 +38,6 @@ class ServiceProvider extends BaseServiceProvider
         ];
     }
 
-
     private function registerFacades()
     {
         App::bind('PHPFile',function() {
