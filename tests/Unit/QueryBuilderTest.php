@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Tests\Unit;
 use PHPFileManipulator\Tests\TestCase;
 use PHPFile;
 use LaravelFile;
-use PHPFileManipulator\Support\QueryBuilder;
+use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -21,12 +21,12 @@ class QueryBuilderTest extends TestCase
     public function it_can_instanciate_via_php_or_laravel_file_with_in_method()
     {
         $this->assertInstanceOf(
-            QueryBuilder::class,
+            FileQueryBuilder::class,
             PHPFile::in('app')
         );
 
         $this->assertInstanceOf(
-            QueryBuilder::class,
+            FileQueryBuilder::class,
             LaravelFile::in('app')
         );        
     }

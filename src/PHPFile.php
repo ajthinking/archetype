@@ -13,6 +13,7 @@ class PHPFile
         // Utillities
         Endpoints\PHP\IO::class,
         Endpoints\PHP\Template::class,
+        Endpoints\PHP\FileQueryBuilder::class,
 
         // Resources
         Endpoints\PHP\NamespaceResource::class,

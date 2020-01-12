@@ -4,8 +4,6 @@ namespace PHPFileManipulator\Traits;
 
 use BadMethodCallException;
 
-use PHPFileManipulator\Resolvers\QueryBuilderResolver;
-
 trait DelegatesAPICalls
 {
     /**
@@ -17,11 +15,6 @@ trait DelegatesAPICalls
         })->first();
 
         if($handler) return (new $handler($this))->$method(...$args);
-
-
-        /** if querybuilder */
-        $queryBuilder = QueryBuilderResolver::getHandler($this, $method); 
-        if($queryBuilder) return $queryBuilder->$method(...$args); 
 
         throw new BadMethodCallException("Could not find a handler for method $method");
     }   
