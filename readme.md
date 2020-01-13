@@ -156,24 +156,23 @@ Example: how can we fetch the table name in a migration file?
 ```php
 
 (new ASTQueryBuilder($file->ast()))
-    ->class()
-    ->method()
-        ->where('name->name', 'up')
-    ->statements()
-    ->staticCall()
-        ->where('class->parts', ['Schema'])
-        ->where('name->name', ['call'])
+    ->methods()
+        ->named('up')
+    ->staticCalls()
+        ->whereClass('Schema')
+        ->named('call')
     ->firstArg()
-
-    ->get('value->name');
+    ->getValue();
 ```
 
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
-The ASTQueryBuilder examine all possible paths and automatically halt any paths that does not match the query. The extra indentation implies there are kinds of methods:
-* Traversing (`class`,`method`,`statemnets` ...)
-* Filtering (`where` ...)
-* Resolving (`get`)
+The ASTQueryBuilder examine all possible paths and automatically halt any paths that does not match the query. 
+
+Three kinds of methods are provided (hinted with indentation in the code example)
+* Traversing (`methods`,`staticCalls`,`firstArg` ...)
+* Filtering (`named`, `whereClass` ...)
+* Resolving (`getValue`)
 
 ### Gotchas
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
