@@ -153,7 +153,7 @@ PHPFile::load('app/User.php')
     )->save();
 ````
 
-> :monkey_face: The `Snippet` class currently only supports templates on *class methods*.
+> :heavy_minus_sign: The `Snippet` class currently only supports templates on *class methods*.
 
 
 ### Querying the Abstract Syntax Tree
@@ -176,7 +176,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
     ->first() // 'users'
 ```
 
-> :monkey_face: The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query.
+> :heavy_minus_sign: The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query.
 
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
