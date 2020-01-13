@@ -174,7 +174,7 @@ The ASTQueryBuilder examines all possible paths and automatically halt any paths
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
-    * Three kinds of methods are provided (hinted with indentation in the code example)
+* Three kinds of methods are provided (hinted with indentation in the code example)
     * Traversing (`methods`,`staticCalls`,`firstArg` ...)
     * Filtering (`named`, `whereClass` ...)
     * Resolving (`getValue`)
