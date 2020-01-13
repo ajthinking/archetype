@@ -8,13 +8,12 @@ use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassMethod;
 use PHPFileManipulator\Traits\HasOperators;
 use PHPFileManipulator\Support\AST\Terminator;
 use PHPFileManipulator\Support\AST\Killable;
+use PHPFileManipulator\Support\AST\Traversable;
 
-class ASTQueryBuilder
+class ASTQueryBuilder extends Traversable
 {
     use HasOperators;
 
@@ -27,35 +26,42 @@ class ASTQueryBuilder
         ];
     }
 
-    public function class()
+    public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
     {
-        $nextLevel = collect($this->tree[$this->depth])->map(function($item) {
-            $classes = (new NodeFinder)->findInstanceOf($item, Class_::class);
-            return $classes ? $classes : new Killable;
+        $next = collect($this->tree[$this->depth])->map(function($item) use($expectedClass, $finderMethod) {
+            $results = (new NodeFinder)->$finderMethod($item, $expectedClass);
+            return $results ? $results : new Killable;
         })->filter(function($results) {
             return !Terminator::kills($results);
         })->flatten()->toArray();
 
-        array_push($this->tree, $nextLevel);
+        array_push($this->tree, $next);
         
         $this->depth++;
 
-        return $this;
+        return $this;        
     }
+
+    public function traverseFirst($class)
+    {
+        return $this->traverse(
+            static::UNTIL[$class],
+            'findFirstInstanceOf'
+        );        
+    }
+
+    public function class()
+    {
+        return $this->traverse(
+            static::UNTIL['class']
+        );
+    }    
 
     public function method()
     {
-        $nextLevel = collect($this->tree[$this->depth])->map(function($item) {
-            $classes = (new NodeFinder)->findInstanceOf($item, ClassMethod::class);
-            return $classes ? $classes : new Killable;
-        })->filter(function($results) {
-            return !Terminator::kills($results);
-        })->flatten()->toArray();
-
-        array_push($this->tree, $nextLevel);
-        $this->depth++;
-
-        return $this;
+        return $this->traverse(
+            static::UNTIL['method']
+        );
     }
 
     public function where($path, $expected)
