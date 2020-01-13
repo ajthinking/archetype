@@ -156,7 +156,8 @@ Example: how can we fetch the table name in a migration file?
 ```php
 
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
-    ->class() // Get a ASTQueryBuilder by fetching a complex resource
+    ->astQuery() // get a ASTQueryBuilder
+    
     ->methods()
         ->named('up')
     ->staticCalls()
@@ -164,7 +165,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
         ->named('call')
     ->firstArg()
     
-    ->getValue() // Exit ASTQueryBuilder, get a Collection
+    ->getValue() // exit ASTQueryBuilder, get a Collection
     ->first() // 'users'
 ```
 
