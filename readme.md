@@ -23,11 +23,16 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
   * [Acknowledgements](#acknowledgements)
   * [Like this package?](#like-this-package-)
 
+
 ## Installation
 ```
 composer require ajthinking/php-file-manipulator
 ```
+
+
 ## Usage
+
+
 ### Quick start examples 
 ```php
 use PHPFile;
@@ -87,13 +92,14 @@ LaravelFile::controller('BeerController')
 
 // many in one go
 LaravelFile::create('Beer', ['model', 'controller', 'migration'])
-
 ```
+
 
 ### Artisan demo command
 So what can we build with this package? A command ```php artisan file:demo``` is supplied to showcase some possible use cases. Check out the source [here](src/Commands/DemoCommand.php) and add your own :rocket:
 
 <img src="docs/DemoCommand.png" width="600px">
+
 
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/php-file-manipulator/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
@@ -149,6 +155,7 @@ PHPFile::load('app/User.php')
 
 > :monkey_face: The `Snippet` class currently only supports templates on *class methods*.
 
+
 ### Querying the Abstract Syntax Tree
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
@@ -203,12 +210,15 @@ Then, from the host project root run
 vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
 ```
 
+
 ## License
 MIT
+
 
 ## Acknowledgements
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
 * PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
+
 
 ## Like this package?
 
