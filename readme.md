@@ -151,10 +151,10 @@ The `Snippet` class currently only supports templates on *class methods*.
 
 ### Querying the Abstract Syntax Tree
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
+
 Example: how can we fetch the table name in a migration file?
 
 ```php
-
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
     ->astQuery() // get a ASTQueryBuilder
     
@@ -169,14 +169,17 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
     ->first() // 'users'
 ```
 
+The ASTQueryBuilder examines all possible paths and automatically halt any paths that cant complete the query.
+
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
-The ASTQueryBuilder examine all possible paths and automatically halt any paths that does not match the query. 
+* The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
+    * Three kinds of methods are provided (hinted with indentation in the code example)
+    * Traversing (`methods`,`staticCalls`,`firstArg` ...)
+    * Filtering (`named`, `whereClass` ...)
+    * Resolving (`getValue`)
 
-Three kinds of methods are provided (hinted with indentation in the code example)
-* Traversing (`methods`,`staticCalls`,`firstArg` ...)
-* Filtering (`named`, `whereClass` ...)
-* Resolving (`getValue`)
+
 
 ### Gotchas
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
