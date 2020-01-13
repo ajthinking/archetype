@@ -150,9 +150,13 @@ PHPFile::load('app/User.php')
 The `Snippet` class currently only supports templates on *class methods*.
 
 ### Querying the Abstract Syntax Tree
-As seen in the previous examples we can query and manipulate nodes with primitive values, such as strings.
-If we want to perform more in dept queries we must use the `ASTQueryBuilder`.
-Example: lets fetch the table name in a migration file.
+As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
+Example: how can we fetch the table name in a migration file?
+
+<img src="docs/ASTQueryBuilder.png" width="600px">
+
+Solution:
+
 ```php
 
 (new ASTQueryBuilder($file->ast()))
@@ -167,13 +171,13 @@ Example: lets fetch the table name in a migration file.
 
     ->get('value->name');
 ```
+
+We use the ASTQueryBuilder to examine all possible paths. It will automatically halt any path that does not match the query.
+
 As the extra indentation suggests there are different kinds of methods:
 * Traversing (`class`,`method`,`statemnets` ...)
 * Filtering (`where` ...)
 * Resolving (`get`)
-
-The ASTQueryBuilder examines all paths and halt the ones that dont matches the query. An illustration of our example might look something like:
-<img src="docs/ASTQueryBuilder.png" width="600px">
 
 
 ### Gotchas
