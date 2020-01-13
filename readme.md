@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/ajthinking/php-file-manipulator/license)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 
 
-Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include *File-* and *Code* QueryBuilders, an inline PHP Template engine and categorization of File read/write operations in `Resource` endpoints.
+Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include *File-* and *Code* QueryBuilders, an inline PHP Template engine and categorization of read/write operations in `Resource` endpoints.
 
 <img src="http://drive.google.com/uc?export=view&id=1A-upJZ9g_ANh0AxvN6HAg_EGsl5-WPds" alt="Google Logo">
 
