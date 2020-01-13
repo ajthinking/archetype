@@ -91,11 +91,11 @@ LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 ```
 
 ### Artisan demo command
-So what can we build with this package? A command ```php artisan file:demo``` is supplied just to showcase some practical use cases. Check out the source [here](src/Commands/DemoCommand.php) and build your own!
+So what can we build with this package? A command ```php artisan file:demo``` is supplied to showcase some possible use cases. Check out the source [here](src/Commands/DemoCommand.php) and add your own :rocket:
 
 <img src="docs/DemoCommand.png" width="600px">
 
-### Build your own templates
+### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/php-file-manipulator/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
 ```php
@@ -173,12 +173,11 @@ The ASTQueryBuilder examines all possible paths and automatically halt any paths
 
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
-* The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 * Three kinds of methods are provided (hinted with indentation in the code example)
     * Traversing (`methods`,`staticCalls`,`firstArg` ...)
     * Filtering (`named`, `whereClass` ...)
     * Resolving (`getValue`)
-
+* The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
 
 ### Gotchas
