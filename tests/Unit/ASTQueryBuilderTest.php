@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Tests\Unit;
 use PHPFileManipulator\Tests\TestCase;
 use PHPFile;
 use LaravelFile;
-use PHPFileManipulator\Support\ASTQueryBuilder;
+use PHPFileManipulator\Support\AST\ASTQueryBuilder;
 use PHPFileManipulator\Support\QueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -25,6 +25,22 @@ class ASTQueryBuilderTest extends TestCase
             $ASTQB
         );
     }
+
+    /** @test
+     * @group only
+    */
+    public function it_will_return_instance_of_itself_on_chain()
+    {
+        $ast = $this->laravelUserFile()->ast;
+
+        $result = (new ASTQueryBuilder($ast))
+            ->class();
+
+        $this->assertInstanceOf(
+            ASTQueryBuilder::class,
+            $result
+        );
+    }    
     
     /** @wiptest
     */
