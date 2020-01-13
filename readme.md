@@ -217,4 +217,6 @@ MIT
 
 <a href="https://www.patreon.com/ajthinking" >Patreon :rocket: </a>
 
-[Follow @ajthinking :gem:](https://twitter.com/ajthinking)
+[Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
+
+<a href="https://github.com/ajthinking/php-file-manipulator/stargazers" >Star it :star: </a>
