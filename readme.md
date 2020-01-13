@@ -147,7 +147,7 @@ PHPFile::load('app/User.php')
     )->save();
 ````
 
-The `Snippet` class currently only supports templates on *class methods*.
+> :monkey_face: The `Snippet` class currently only supports templates on *class methods*.
 
 ### Querying the Abstract Syntax Tree
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
