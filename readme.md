@@ -153,10 +153,6 @@ The `Snippet` class currently only supports templates on *class methods*.
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 Example: how can we fetch the table name in a migration file?
 
-<img src="docs/ASTQueryBuilder.png" width="600px">
-
-Solution:
-
 ```php
 
 (new ASTQueryBuilder($file->ast()))
@@ -172,13 +168,12 @@ Solution:
     ->get('value->name');
 ```
 
-We use the ASTQueryBuilder to examine all possible paths. It will automatically halt any path that does not match the query.
+<img src="docs/ASTQueryBuilder.png" width="600px">
 
-As the extra indentation suggests there are different kinds of methods:
+The ASTQueryBuilder examine all possible paths and automatically halt any paths that does not match the query. The extra indentation implies there are kinds of methods:
 * Traversing (`class`,`method`,`statemnets` ...)
 * Filtering (`where` ...)
 * Resolving (`get`)
-
 
 ### Gotchas
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
