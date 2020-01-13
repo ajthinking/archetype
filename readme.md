@@ -169,7 +169,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
     ->first() // 'users'
 ```
 
-The ASTQueryBuilder examines all possible paths and automatically halt any paths that cant complete the query.
+The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query.
 
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
