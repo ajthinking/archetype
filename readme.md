@@ -155,14 +155,17 @@ Example: how can we fetch the table name in a migration file?
 
 ```php
 
-(new ASTQueryBuilder($file->ast()))
+LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
+    ->class() // Get a ASTQueryBuilder by fetching a complex resource
     ->methods()
         ->named('up')
     ->staticCalls()
         ->whereClass('Schema')
         ->named('call')
     ->firstArg()
-    ->getValue();
+    
+    ->getValue() // Exit ASTQueryBuilder, get a Collection
+    ->first() // 'users'
 ```
 
 <img src="docs/ASTQueryBuilder.png" width="600px">
