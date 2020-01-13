@@ -169,7 +169,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
     ->first() // 'users'
 ```
 
-> :white_check_mark: The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query.
+> :monkey_face: The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query.
 
 <img src="docs/ASTQueryBuilder.png" width="600px">
 
