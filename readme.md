@@ -202,7 +202,7 @@ cd host
 git clone git@github.com:ajthinking/php-file-manipulator.git packages/Ajthinking/PHPFileManipulator
 ```
 Add this to the host projects `composer.json`
-```
+```json
     "repositories": [
         {
             "type": "path",
@@ -211,7 +211,7 @@ Add this to the host projects `composer.json`
     ],
 ```
 Then,
-```
+```bash
 composer require ajthinking/php-file-manipulator @dev
 php artisan vendor:publish --provider=PHPFileManipulator\ServiceProvider
 ```
