@@ -17,8 +17,8 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
     + [Build your own templates](#build-your-own-templates)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
+    + [Development installation](#development-installation)
     + [Roadmap](#roadmap)  
-    + [Running tests](#running-tests)
   * [License](#license)
   * [Acknowledgements](#acknowledgements)
   * [Like this package?](#like-this-package-)
@@ -194,22 +194,39 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 
 
 ## Contributing
+### Development installation
+The test suite requires that you are inside laravel application
+```bash
+laravel new host
+cd host
+git clone git@github.com:ajthinking/php-file-manipulator.git packages/Ajthinking/PHPFileManipulator
+```
+Add this to the host projects `composer.json`
+```json
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/PATH/TO/PROJECTS/host/packages/Ajthinking/PHPFileManipulator"
+        }
+    ],
+```
+Then,
+```bash
+composer require ajthinking/php-file-manipulator @dev
+php artisan vendor:publish --provider=PHPFileManipulator\ServiceProvider
+```
+Finally in host root run
+```bash
+vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
+```
+
+
 ### Roadmap
 PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/php-file-manipulator) for planned features.
 
 <a href="https://trello.com/b/1M2VRnoQ/php-file-manipulator">
     <img src="docs/trello.png" width="600px">
 </a>
-
-### Running tests
-The test suite currently requires that you have the package installed in a laravel project:
-> packages/Ajthinking/PHPFileManipulator
-
-Then, from the host project root run
-```bash
-vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
-```
-
 
 ## License
 MIT
