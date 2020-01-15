@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Error;
 use UnexpectedValueException;
 use Config;
+use PHPFileManipulator\Support\PHPFileStorage;
 
 class IO extends Endpoint
 {
@@ -34,55 +35,43 @@ class IO extends Endpoint
 
     public function load($path)
     {
-        $this->file->path = $this->fullInputPath($path);
-        $this->file->relativePath = Str::replaceFirst(
-            $this->getStorageRootPath('input'),
-            '',
-            $this->file->path
-        );
-
-        $this->file->contents = $this->getStorageDisk('input')->get($this->file->relativePath);
-        
+        $this->file->path = PHPFileStorage::fullInputPath($path);
+        $this->file->contents = PHPFileStorage::get($this->file->path);
         $this->file->ast = $this->parse();        
-
         return $this->file;
     }
     
     public function fromString($code)
     {        
         $this->file->contents = $code;
-
         $this->file->path = null;
-        
         $this->file->ast = $this->parse();        
-
         return $this->file;        
     }
 
     public function path()
     {
         return $this->file->path;
-    }        
+    }
+    
+    public function relativePath()
+    {
+        return PHPFileStorage::relativeInputPath($this->file->path);
+    }    
 
     public function save($path = false)
     {
         // optionally update path
-        if($path) $this->file->path = $this->fullOutputPath($path);
+        if($path) $this->file->path = PHPFileStorage::fullOutputPath($path);
+        
+        // unknown path - might be a file created from a string
+        if(!$this->file->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
         // write current ast to file
         $prettyPrinter = new PSR2PrettyPrinter;
         $code = $prettyPrinter->prettyPrintFile($this->file->ast);
 
-        if(!$this->file->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
-
-        $this->file->relativePath = Str::replaceFirst(
-            $this->getStorageRootPath('output'),
-            '',
-            $this->file->path
-        );
-
-        $this->getStorageDisk('output')->put($this->file->relativePath, $code);
-
+        PHPFileStorage::put($this->file->path, $code);
         return $this->file;
     }
 
@@ -106,12 +95,6 @@ class IO extends Endpoint
         Config::set("php-file-manipulator.roots.output.root", $path);        
         return $this->file;
     }    
-    
-    public function preview()
-    {
-        Storage::put(".preview/" . $this->file->relativePath, $this->print());
-        return $this->file;
-    }
 
     public function ast()
     {
@@ -143,30 +126,4 @@ class IO extends Endpoint
             $method ? $this->file->$method() : $this
         );
     }
-    
-    private function getStorageDisk($name)
-    {        
-        $disk = Config::get("php-file-manipulator.roots.$name");
-
-        Config::set("filesystems.disks.roots.$name", $disk);
-
-        return Storage::disk("roots.$name");
-    }
-
-    private function getStorageRootPath($name)
-    {
-        return Config::get("php-file-manipulator.roots.$name.root");
-    }
-    
-    private function fullInputPath($path)
-    {
-        return Str::startsWith($path, '/') ? $path 
-        : $this->getStorageRootPath('input') . "/$path";
-    }
-
-    private function fullOutputPath($path)
-    {
-        return Str::startsWith($path, '/') ? $path 
-        : $this->getStorageRootPath('output') . "/$path";
-    }    
 }
