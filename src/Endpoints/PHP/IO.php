@@ -25,6 +25,9 @@ class IO extends Endpoint
             "preview",
             "print",
             "save",
+            "setInputRoot",
+            "setOutputRoot",
+            "setDebugRoot",
 
         ])->contains($signature) ? $signature : false;
     }
@@ -83,19 +86,25 @@ class IO extends Endpoint
         return $this->file;
     }
 
-    public function debug()
+    public function setDebugRoot($path = false)
     {
-
+        $path = $path ? $path : Config::get("php-file-manipulator.roots.debug.root");
+        Config::set("php-file-manipulator.roots.output.root", $path);
+        
+        return $this->file;
     }
 
-    public function setInputRoot()
+    public function setInputRoot($path)
     {
-        
+        Config::set("php-file-manipulator.roots.input.root", $path);        
+
+        return $this->file;
     }
     
-    public function setOutputRoot()
+    public function setOutputRoot($path)
     {
-        
+        Config::set("php-file-manipulator.roots.output.root", $path);        
+        return $this->file;
     }    
     
     public function preview()

@@ -27,5 +27,26 @@ class PHPFileTest extends TestCase
         $this->assertInstanceOf(
             \PHPFileManipulator\LaravelFile::class, $file
         );
-    }  
+    }
+
+    /** @wip-test */
+    public function it_can_write_to_a_debug_location()
+    {
+        // THE PATHS SHOULD OPTIONALLY BE RELATIVE ROOT!!!!!!!!!!!!!!!
+
+        $file = LaravelFile::load('app/User.php')
+            ->setDebugRoot('/Users/anders/Code/php-file-manipulator/packages/Ajthinking/PHPFileManipulator/src/tests/.preview/extra/levels')
+            ->save();
+
+        $previewFile = LaravelFile::setInputRoot(
+            '/Users/anders/Code/php-file-manipulator/packages/Ajthinking/PHPFileManipulator/src/tests/.preview'
+        )->load('extra/levels/app/User.php');
+
+
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class, $previewFile
+        );
+    }    
+    
+    
 }
