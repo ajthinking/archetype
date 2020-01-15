@@ -9,9 +9,14 @@ use PHPFileManipulator\Factories\PHPFileFactory;
 use PHPFileManipulator\Factories\LaravelFileFactory;
 use PHPFileManipulator\Commands\ListAPICommand;
 Use Illuminate\Support\Str;
+use Config;
+use Illuminate\Support\Arr;
+use PHPFileManipulator\Traits\AddsLaravelStringsToStrWithMacros;
 
 class ServiceProvider extends BaseServiceProvider
 {
+    use AddsLaravelStringsToStrWithMacros;
+    
     /**
      * Register any application services.
      *
@@ -26,17 +31,17 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->bootStrMacros();
-        $this->bootConfig();
-        $this->bootRootStorageDisk();
+        $this->publishConfig();
+        $this->bootDevelopmentRootDisks();
     }
 
-    private function bootRootStorageDisk()
+    private function isIinProduction()
     {
-        $this->app['config']["filesystems.disks.root"] = [
-            'driver' => 'local',
-            'root' => base_path(),
-        ];
-    }
+        return preg_match(
+            '/vendor\/ajthinking\/php-file-manipulator/',
+            realpath(__DIR__)
+        );
+    } 
 
     private function registerFacades()
     {
@@ -49,12 +54,22 @@ class ServiceProvider extends BaseServiceProvider
         });
     }    
 
-    private function bootConfig()
+    private function publishConfig()
     {
         $this->publishes([
-            __DIR__.'/config/default_config.php' => config_path('php-file-manipulator.php'),
+            __DIR__.'/config/php-file-manipulator.php' => config_path('php-file-manipulator.php'),
+        ]);        
+    }
+    
+    private function bootDevelopmentRootDisks()
+    {
+        if($this->isIinProduction()) return;
+
+        config([
+            'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.preview',
+            'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.preview',
         ]);
-    } 
+    }    
     
     private function registerCommands()
     {
@@ -62,64 +77,5 @@ class ServiceProvider extends BaseServiceProvider
             ListAPICommand::class,
             DemoCommand::class,
         ]);
-    }
-
-    private function bootStrMacros()
-    {
-        Str::macro('hasOneMethodName', function ($target) {
-            return static::camel(
-                class_basename($target)
-            );
-        });
-        
-        Str::macro('hasManyMethodName', function ($target) {
-            return static::camel(
-                static::plural(
-                    class_basename($target)
-                )
-            );
-        });
-
-        Str::macro('belongsToMethodName', function ($target) {
-            return static::camel(
-                class_basename($target)
-            );
-        });
-
-        Str::macro('belongsToManyMethodName', function ($target) {
-            return static::camel(
-                static::plural(
-                    class_basename($target)
-                )
-            );
-        });        
-
-        Str::macro('hasOneDocBlockName', function ($target) {
-            return static::studly(
-                class_basename($target)
-            );
-        });
-
-        Str::macro('hasManyDocBlockName', function ($target) {
-            return static::studly(
-                static::plural(
-                    class_basename($target)
-                )
-            );
-        });        
-
-        Str::macro('belongsToDocBlockName', function ($target) {
-            return static::studly(
-                class_basename($target)
-            );
-        });
-        
-        Str::macro('belongsToManyDocBlockName', function ($target) {
-            return static::studly(
-                static::plural(
-                    class_basename($target)
-                )
-            );
-        });        
     }
 }
