@@ -194,22 +194,39 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 
 
 ## Contributing
+### Development installation
+The test suite requires that you are inside laravel host application
+```bash
+laravel new host
+cd host
+git clone git@github.com:ajthinking/php-file-manipulator.git packages/Ajthinking/PHPFileManipulator
+```
+Add this to the host projects `composer.json`
+```
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/PATH/TO/PROJECTS/host/packages/Ajthinking/PHPFileManipulator"
+        }
+    ],
+```
+Then,
+```
+composer require ajthinking/php-file-manipulator @dev
+php artisan vendor:publish # select PHPFileManipulator
+```
+Finally in host root run
+```bash
+vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
+```
+
+
 ### Roadmap
 PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/php-file-manipulator) for planned features.
 
 <a href="https://trello.com/b/1M2VRnoQ/php-file-manipulator">
     <img src="docs/trello.png" width="600px">
 </a>
-
-### Running tests
-The test suite currently requires that you have the package installed in a laravel project:
-> packages/Ajthinking/PHPFileManipulator
-
-Then, from the host project root run
-```bash
-vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
-```
-
 
 ## License
 MIT
