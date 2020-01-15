@@ -9,6 +9,7 @@ use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;
 use UnexpectedValueException;
+use Config;
 
 class IO extends Endpoint
 {
@@ -30,9 +31,14 @@ class IO extends Endpoint
 
     public function load($path)
     {
-        $this->file->path = Str::startsWith($path, '/') ? $path : base_path($path);
-        
-        $this->file->contents = file_get_contents($this->file->path);
+        $this->file->path = $this->fullInputPath($path);
+        $this->file->relativePath = Str::replaceFirst(
+            $this->getStorageRootPath('input'),
+            '',
+            $this->file->path
+        );
+
+        $this->file->contents = $this->getStorageDisk('input')->get($this->file->relativePath);
         
         $this->file->ast = $this->parse();        
 
@@ -58,7 +64,7 @@ class IO extends Endpoint
     public function save($path = false)
     {
         // optionally update path
-        if($path) $this->file->path = $path;
+        if($path) $this->file->path = $this->fullOutputPath($path);
 
         // write current ast to file
         $prettyPrinter = new PSR2PrettyPrinter;
@@ -66,11 +72,31 @@ class IO extends Endpoint
 
         if(!$this->file->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        $relativePath = Str::replaceFirst(base_path(), '', $this->file->path);
-        Storage::disk('root')->put($relativePath, $code);
+        $this->file->relativePath = Str::replaceFirst(
+            $this->getStorageRootPath('output'),
+            '',
+            $this->file->path
+        );
+
+        $this->getStorageDisk('output')->put($this->file->relativePath, $code);
 
         return $this->file;
     }
+
+    public function debug()
+    {
+
+    }
+
+    public function setInputRoot()
+    {
+        
+    }
+    
+    public function setOutputRoot()
+    {
+        
+    }    
     
     public function preview()
     {
@@ -107,5 +133,31 @@ class IO extends Endpoint
         dd(
             $method ? $this->file->$method() : $this
         );
+    }
+    
+    private function getStorageDisk($name)
+    {        
+        $disk = Config::get("php-file-manipulator.roots.$name");
+
+        Config::set("filesystems.disks.roots.$name", $disk);
+
+        return Storage::disk("roots.$name");
+    }
+
+    private function getStorageRootPath($name)
+    {
+        return Config::get("php-file-manipulator.roots.$name.root");
+    }
+    
+    private function fullInputPath($path)
+    {
+        return Str::startsWith($path, '/') ? $path 
+        : $this->getStorageRootPath('input') . "/$path";
+    }
+
+    private function fullOutputPath($path)
+    {
+        return Str::startsWith($path, '/') ? $path 
+        : $this->getStorageRootPath('output') . "/$path";
     }    
 }
