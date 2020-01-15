@@ -221,11 +221,12 @@ MIT
 
 
 ## Like this package?
-
-<a href="https://www.https://github.com/sponsors/ajthinking" >GitHub Sponsors :heart: :octocat: </a>
-
-<a href="https://www.patreon.com/ajthinking" >Patreon :rocket: </a>
+<a href="https://github.com/ajthinking/php-file-manipulator/stargazers" >Star it :star: </a>
 
 [Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
 
-<a href="https://github.com/ajthinking/php-file-manipulator/stargazers" >Star it :star: </a>
+<a href="https://www.patreon.com/ajthinking" >Patreon :rocket: </a>
+
+
+
+
