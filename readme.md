@@ -195,7 +195,7 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 
 ## Contributing
 ### Development installation
-The test suite requires that you are inside laravel host application
+The test suite requires that you are inside laravel application
 ```bash
 laravel new host
 cd host
