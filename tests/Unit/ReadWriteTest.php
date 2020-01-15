@@ -32,20 +32,31 @@ class PHPFileTest extends TestCase
     /** @wip-test */
     public function it_can_write_to_a_debug_location()
     {
-        // THE PATHS SHOULD OPTIONALLY BE RELATIVE ROOT!!!!!!!!!!!!!!!
+        LaravelFile::load('app/User.php')->debug();
+        // See it in debug
 
-        $file = LaravelFile::load('app/User.php')
-            ->setDebugRoot('/Users/anders/Code/php-file-manipulator/packages/Ajthinking/PHPFileManipulator/src/tests/.preview/extra/levels')
+        LaravelFile::load('app/User.php')->debug('/full/path/to/custom/debug');
+        // See it in custom debug
+
+        LaravelFile::load('app/User.php')->debug('relative/path/to/debug');
+        // See it in X ?
+
+        LaravelFile::setInputRoot('app')->load('User.php');
+        // Assert insance
+        
+        LaravelFile::load('app/User.php')
             ->save();
+        // Assert it is there        
 
-        $previewFile = LaravelFile::setInputRoot(
-            '/Users/anders/Code/php-file-manipulator/packages/Ajthinking/PHPFileManipulator/src/tests/.preview'
-        )->load('extra/levels/app/User.php');
+        LaravelFile::load('app/User.php')
+            ->setOutputRoot('/full/path/to/output')
+            ->save();
+        // Assert it is there
 
-
-        $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $previewFile
-        );
+        LaravelFile::load('app/User.php')
+            ->setOutputRoot('relative/path/to/output')
+            ->save();
+        // Assert it is there
     }    
     
     
