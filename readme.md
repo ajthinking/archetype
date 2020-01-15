@@ -19,7 +19,6 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
     + [Roadmap](#roadmap)  
-    + [Running tests](#running-tests)
   * [License](#license)
   * [Acknowledgements](#acknowledgements)
   * [Like this package?](#like-this-package-)
