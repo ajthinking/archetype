@@ -32,16 +32,20 @@ class PHPFileTest extends TestCase
     /** @wip-test */
     public function it_can_write_to_a_debug_location()
     {
-        LaravelFile::load('app/User.php')->debug();
+        LaravelFile::load('app/User.php')
+            ->debug();
         // See it in debug
 
-        LaravelFile::load('app/User.php')->debug('/full/path/to/custom/debug');
+        LaravelFile::load('app/User.php')
+            ->debug('/full/path/to/custom/debug');
         // See it in custom debug
 
-        LaravelFile::load('app/User.php')->debug('relative/path/to/debug');
+        LaravelFile::load('app/User.php')
+            ->debug('relative/path/to/debug');
         // See it in X ?
 
-        LaravelFile::setInputRoot('app')->load('User.php');
+        LaravelFile::setInputRoot('app')
+            ->load('User.php');
         // Assert insance
         
         LaravelFile::load('app/User.php')
@@ -58,6 +62,4 @@ class PHPFileTest extends TestCase
             ->save();
         // Assert it is there
     }    
-    
-    
 }
