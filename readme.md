@@ -17,6 +17,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
     + [Build your own templates](#build-your-own-templates)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
+    + [Development installation](#development-installation)
     + [Roadmap](#roadmap)  
     + [Running tests](#running-tests)
   * [License](#license)
@@ -213,7 +214,7 @@ Add this to the host projects `composer.json`
 Then,
 ```
 composer require ajthinking/php-file-manipulator @dev
-php artisan vendor:publish # select PHPFileManipulator
+php artisan vendor:publish --provider=PHPFileManipulator\ServiceProvider
 ```
 Finally in host root run
 ```bash
