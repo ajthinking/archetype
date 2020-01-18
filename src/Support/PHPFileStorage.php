@@ -10,9 +10,13 @@ class PHPFileStorage
 {
     public static function get($path)
     {
-        return static::getStorageDisk('input')->get(
+        $disk = static::getStorageDisk('input');
+        $pathPrefix = $disk->getDriver()->getAdapter()->getPathPrefix();
+        $result =  $disk->get(
             static::relativeInputPath($path)
         );
+
+        return $result;
     }
 
     public static function put($path, $content)
@@ -66,7 +70,7 @@ class PHPFileStorage
     private static function getStorageDisk($name)
     {        
         $disk = Config::get("php-file-manipulator.roots.$name");
-
+        
         Config::set("filesystems.disks.roots.$name", $disk);
 
         return Storage::disk("roots.$name");

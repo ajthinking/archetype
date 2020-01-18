@@ -41,18 +41,23 @@ class IO extends Endpoint
     public function load($path)
     {
         $this->file->inputName = basename($path);
-        $this->file->inputPath = PHPFileStorage::fullInputPath($path);
+        
+        $this->file->inputPath = PHPFileStorage::fullInputPath($path);   
         $this->file->contents = PHPFileStorage::get($this->file->inputPath);
-        $this->file->ast = $this->parse();
+        $this->file->ast = $this->parse();                
+        
         $this->setOutputPath();        
+        
         return $this->file;
     }
     
     public function fromString($code)
     {        
         $this->file->contents = $code;
-        $this->file->inputPath = null;
+        $this->file->inputPath = null;        
         $this->file->ast = $this->parse();
+
+
         $this->setOutputPath();
         return $this->file;        
     }
@@ -127,7 +132,6 @@ class IO extends Endpoint
     public function setInputRoot($path)
     {
         Config::set("php-file-manipulator.roots.input.root", $path);        
-
         return $this->file;
     }
     

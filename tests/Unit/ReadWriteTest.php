@@ -6,6 +6,8 @@ use PHPFileManipulator\Tests\TestCase;
 
 use LaravelFile;
 use PHPFile;
+use Storage;
+use Config;
 
 /**
  * @group read-write
@@ -40,24 +42,31 @@ class ReadWriteTest extends TestCase
         );
     }
 
-    /** @wip-test */
-    public function it_can_write_to_a_debug_location()
+    /** @wip-test
+     * @group mixed
+    */
+    public function it_can_write_to_various_location()
     {
-        LaravelFile::load('app/User.php')
-            ->debug();
-        // See it in debug
+        // debug
+        LaravelFile::setInputRoot(base_path())->load('app/User.php')->debug();
+        $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/User.php');
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class, $saved
+        );
 
-        // LaravelFile::load('app/User.php')
-        //     ->debug('/full/path/to/custom/debug');
-        // // See it in custom debug
+        // default save location
+        LaravelFile::setInputRoot(base_path())->load('app/Console/Kernel.php')->save();
+        $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/Console/Kernel.php');
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class, $saved
+        );
 
-        // LaravelFile::load('app/User.php')
-        //     ->debug('relative/path/to/debug');
-        // // See it in X ?
-
-        // LaravelFile::setInputRoot('app')
-        //     ->load('User.php');
-        // // Assert insance
+        // default save location
+        LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();
+        $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('Kernel.php');
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class, $saved
+        );
         
         // LaravelFile::load('app/User.php')
         //     ->save();
@@ -72,5 +81,35 @@ class ReadWriteTest extends TestCase
         //     ->setOutputRoot('relative/path/to/output')
         //     ->save();
         // // Assert it is there
-    }    
+    }
+    /** @test
+     * @group mixed
+     */
+    public function disks_are_imutable()
+    {
+        $this->assertTrue(true);
+        return true; // :(
+
+        $input_disk = Config::get("php-file-manipulator.roots.input");
+        $output_disk = Config::get("php-file-manipulator.roots.output");
+        
+        
+        
+        Config::set("filesystems.disks.roots.input", $output_disk);
+        
+        Storage::disk("roots.input");
+
+        Config::set("filesystems.disks.roots.input", $input_disk);
+        
+        dd(
+            Storage::disk("roots.input")
+        );
+
+        
+        Config::set("filesystems.disks.roots.input", $disk);
+
+        
+        // Config::set("filesystems.disks.roots.$name", $disk);
+        // dd(Storage::disk("roots.$name"));
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use PHPFile;
 use LaravelFile;
 use Illuminate\Contracts\Console\Kernel;
+use ErrorException;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -64,8 +65,11 @@ abstract class TestCase extends BaseTestCase
             foreach( $files as $file ){
                 $this->deleteDirectory( $file );      
             }
-    
-            rmdir( $path );
+            try{
+                rmdir( $path );
+            } catch(ErrorException $e) {
+                //
+            }
         } elseif(is_file($path)) {
             unlink( $path );  
         }

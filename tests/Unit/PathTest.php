@@ -10,7 +10,7 @@ use Str;
 use UnexpectedValueException;
 
 /**
- * @group read-write
+ * @group path
  */
 class PathTest extends TestCase
 {
