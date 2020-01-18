@@ -46,7 +46,7 @@ class PHPFileStorage
     private static function relativePathFor($type, $path)
     {
         return Str::replaceFirst(
-            static::getStorageRootPath($type),
+            static::getStorageRootPath($type) . '/',
             '',
             $path
         );

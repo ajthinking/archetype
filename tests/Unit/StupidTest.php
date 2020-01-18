@@ -13,5 +13,13 @@ class StupidTest extends TestCase
     public function it_can_run_tests()
     {
         $this->assertTrue(true);
-    }  
+    }
+    
+    /** @test */
+    public function it_is_aware_of_laravel_stuff()
+    {
+        $this->assertTrue(
+            base_path() && app()
+        );
+    }    
 }

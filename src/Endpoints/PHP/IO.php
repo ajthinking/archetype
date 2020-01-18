@@ -22,9 +22,14 @@ class IO extends Endpoint
             "fromString",
             "load",
             "parse",
+            "inputPath",
+            "inputName",
+            "inputDir",
             "path",
+            "outputPath",
             "preview",
             "print",
+            "debug",
             "save",
             "setInputRoot",
             "setOutputRoot",
@@ -35,44 +40,80 @@ class IO extends Endpoint
 
     public function load($path)
     {
-        $this->file->path = PHPFileStorage::fullInputPath($path);
-        $this->file->contents = PHPFileStorage::get($this->file->path);
-        $this->file->ast = $this->parse();        
+        $this->file->inputName = basename($path);
+        $this->file->inputPath = PHPFileStorage::fullInputPath($path);
+        $this->file->contents = PHPFileStorage::get($this->file->inputPath);
+        $this->file->ast = $this->parse();
+        $this->setOutputPath();        
         return $this->file;
     }
     
     public function fromString($code)
     {        
         $this->file->contents = $code;
-        $this->file->path = null;
-        $this->file->ast = $this->parse();        
+        $this->file->inputPath = null;
+        $this->file->ast = $this->parse();
+        $this->setOutputPath();
         return $this->file;        
     }
 
-    public function path()
+    public function inputName()
     {
-        return $this->file->path;
+        return basename($this->file->inputPath);
     }
-    
-    public function relativePath()
+
+    public function inputDir()
     {
-        return PHPFileStorage::relativeInputPath($this->file->path);
+        return dirname($this->file->inputPath);
     }    
 
-    public function save($path = false)
+    public function inputPath()
     {
-        // optionally update path
-        if($path) $this->file->path = PHPFileStorage::fullOutputPath($path);
-        
-        // unknown path - might be a file created from a string
-        if(!$this->file->path) throw new UnexpectedValueException('Could not save because we dont have a path!');
+        return $this->file->inputPath;
+    }
+    
+    public function relativeInputPath()
+    {
+        return PHPFileStorage::relativeInputPath($this->file->inputPath);
+    }    
 
-        // write current ast to file
+    public function save($outputPath = false)
+    {
         $prettyPrinter = new PSR2PrettyPrinter;
         $code = $prettyPrinter->prettyPrintFile($this->file->ast);
 
-        PHPFileStorage::put($this->file->path, $code);
+        $this->setOutputPath($outputPath);
+        if(!$this->file->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
+
+        PHPFileStorage::put(
+            $this->file->outputPath,
+            $code
+        );
+    
         return $this->file;
+    }
+
+    protected function setOutputPath($outputPath = false)
+    {
+        if($outputPath) {
+            return $this->file->outputPath = PHPFileStorage::fullOutputPath($outputPath);
+        }
+        
+        if($this->relativeInputPath()) {
+            return $this->file->outputPath = PHPFileStorage::fullOutputPath($this->relativeInputPath());
+        }
+
+        $this->file->outputPath = null;
+    }
+
+    public function outputPath()
+    {
+        return $this->file->outputPath;
+    }
+
+    public function debug($path = false)
+    {
+        return $this->setDebugRoot($path)->save();
     }
 
     public function setDebugRoot($path = false)

@@ -9,6 +9,13 @@ use Illuminate\Contracts\Console\Kernel;
 
 abstract class TestCase extends BaseTestCase
 {
+    public function setUp() : void
+    {
+        parent::setUp();
+        $preview = __DIR__ . '/.preview';
+        is_dir($preview) ? $this->deleteDirectory($preview) : null;
+    }
+
     /**
      * Creates the application.
      *
@@ -47,5 +54,20 @@ abstract class TestCase extends BaseTestCase
         return LaravelFile::load(
             $this->samplePath('routes/web.php')
         );        
+    }
+    
+    protected function deleteDirectory($path)
+    {
+        if(is_dir($path)){
+            $files = glob( $path . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+    
+            foreach( $files as $file ){
+                $this->deleteDirectory( $file );      
+            }
+    
+            rmdir( $path );
+        } elseif(is_file($path)) {
+            unlink( $path );  
+        }
     }    
 }

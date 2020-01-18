@@ -13,6 +13,14 @@ use PHPFile;
 class ReadWriteTest extends TestCase
 {
     /** @test */
+    public function it_wont_see_preview_folder_because_it_is_removed_at_start_up()
+    {
+        $this->assertFalse(
+            is_dir(__DIR__ . '/../.preview')
+        );
+    }
+
+    /** @test */
     public function it_can_load_php_files()
     {
         $file = PHPFile::load('public/index.php');
@@ -39,30 +47,30 @@ class ReadWriteTest extends TestCase
             ->debug();
         // See it in debug
 
-        LaravelFile::load('app/User.php')
-            ->debug('/full/path/to/custom/debug');
-        // See it in custom debug
+        // LaravelFile::load('app/User.php')
+        //     ->debug('/full/path/to/custom/debug');
+        // // See it in custom debug
 
-        LaravelFile::load('app/User.php')
-            ->debug('relative/path/to/debug');
-        // See it in X ?
+        // LaravelFile::load('app/User.php')
+        //     ->debug('relative/path/to/debug');
+        // // See it in X ?
 
-        LaravelFile::setInputRoot('app')
-            ->load('User.php');
-        // Assert insance
+        // LaravelFile::setInputRoot('app')
+        //     ->load('User.php');
+        // // Assert insance
         
-        LaravelFile::load('app/User.php')
-            ->save();
-        // Assert it is there        
+        // LaravelFile::load('app/User.php')
+        //     ->save();
+        // // Assert it is there        
 
-        LaravelFile::load('app/User.php')
-            ->setOutputRoot('/full/path/to/output')
-            ->save();
-        // Assert it is there
+        // LaravelFile::load('app/User.php')
+        //     ->setOutputRoot('/full/path/to/output')
+        //     ->save();
+        // // Assert it is there
 
-        LaravelFile::load('app/User.php')
-            ->setOutputRoot('relative/path/to/output')
-            ->save();
-        // Assert it is there
+        // LaravelFile::load('app/User.php')
+        //     ->setOutputRoot('relative/path/to/output')
+        //     ->save();
+        // // Assert it is there
     }    
 }
