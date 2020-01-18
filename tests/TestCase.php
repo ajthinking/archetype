@@ -25,7 +25,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function samplePath($name)
     {
-        return "tests/FileSamples/$name";
+        return "tests/samples/$name";
     }
 
     protected function userFile()
