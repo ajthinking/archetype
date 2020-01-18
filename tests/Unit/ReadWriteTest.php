@@ -7,7 +7,10 @@ use PHPFileManipulator\Tests\TestCase;
 use LaravelFile;
 use PHPFile;
 
-class PHPFileTest extends TestCase
+/**
+ * @group read-write
+ */
+class ReadWriteTest extends TestCase
 {
     /** @test */
     public function it_can_load_php_files()
