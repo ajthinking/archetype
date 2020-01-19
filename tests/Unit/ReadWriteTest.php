@@ -9,9 +9,6 @@ use PHPFile;
 use Storage;
 use Config;
 
-/**
- * @group ok
- */
 class ReadWriteTest extends TestCase
 {
     /** @test */
