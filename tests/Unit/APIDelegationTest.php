@@ -12,9 +12,7 @@ class APIDelegationTest extends TestCase
     /** @test */
     public function it_can_delegate_method_calls()
     {
-        $file = PHPFile::load(
-            $this->samplePath('app/User.php')
-        );
+        $file = PHPFile::load('app/User.php');
 
         // Existing method on $this
         $this->assertTrue(

@@ -4,13 +4,16 @@ namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\TestCase;
 
+use PHPFile;
+use LaravelFile;
+
 class UsesTest extends TestCase
 {
     /** @test */
     public function it_can_retrieve_use_statements()
     {
         // A file with use statements
-        $file = $this->userFile();
+        $file = PHPFile::load('app/User.php');
         $useStatements = $file->uses();
         $expectedUseStatements = collect([
             "Illuminate\Notifications\Notifiable",
@@ -25,7 +28,7 @@ class UsesTest extends TestCase
         });
 
         // A file without use statements
-        $file = $this->routesFile();
+        $file = PHPFile::load('public/index.php');
         $useStatements = $file->uses();
 
         $this->assertTrue(
@@ -38,7 +41,7 @@ class UsesTest extends TestCase
     public function it_can_add_use_statements_in_a_namespace()
     {
         // on a file with use statements        
-        $file = $this->userFile();
+        $file = PHPFile::load('app/User.php');
 
         $useStatements = $file->addUses(['Add\This'])->uses();
 
@@ -60,7 +63,7 @@ class UsesTest extends TestCase
     public function it_can_add_use_statements_when_not_in_a_namespace()
     {
                 
-        $file = $this->routesFile();
+        $file = PHPFile::load('public/index.php');
         
         $useStatements = $file->addUses(['Add\This'])->uses();
         
@@ -78,7 +81,7 @@ class UsesTest extends TestCase
     /** @wip-test */
     public function it_can_add_use_statements_with_alias()
     {        
-        $file = $this->routesFile();
+        $file = PHPFile::load('public/index.php');
         $useStatements = $file->addUses(['Add\This as Wow'])->uses();
         $expectedUseStatements = collect([            
             "Add\This as Wow",            
@@ -95,7 +98,7 @@ class UsesTest extends TestCase
     /** @wip-test */
     public function it_can_overwrite_use_statements()
     {
-        $file = $this->userFile();
+        $file = PHPFile::load('app/User.php');
 
         $useStatements = $file->uses(['Only\This'])->uses();
         $expectedUseStatements = collect([

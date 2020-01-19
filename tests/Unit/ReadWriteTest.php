@@ -10,7 +10,7 @@ use Storage;
 use Config;
 
 /**
- * @group read-write
+ * @group ok
  */
 class ReadWriteTest extends TestCase
 {
@@ -49,13 +49,9 @@ class ReadWriteTest extends TestCase
 
         $this->assertEquals($file->inputPath(), base_path('app/User.php'));
         $this->assertEquals($file->inputName(), 'User.php');
-
-        dd(
-            $file->outputPath()
-        );
     }    
 
-    /** @wip-test
+    /** @todo-test
      * @group mixed
     */
     public function it_can_write_to_various_location()
@@ -94,35 +90,5 @@ class ReadWriteTest extends TestCase
         //     ->setOutputRoot('relative/path/to/output')
         //     ->save();
         // // Assert it is there
-    }
-    /** @test
-     * @group mixed
-     */
-    public function disks_are_imutable()
-    {
-        $this->assertTrue(true);
-        return true; // :(
-
-        $input_disk = Config::get("php-file-manipulator.roots.input");
-        $output_disk = Config::get("php-file-manipulator.roots.output");
-        
-        
-        
-        Config::set("filesystems.disks.roots.input", $output_disk);
-        
-        Storage::disk("roots.input");
-
-        Config::set("filesystems.disks.roots.input", $input_disk);
-        
-        dd(
-            Storage::disk("roots.input")
-        );
-
-        
-        Config::set("filesystems.disks.roots.input", $disk);
-
-        
-        // Config::set("filesystems.disks.roots.$name", $disk);
-        // dd(Storage::disk("roots.$name"));
     }
 }

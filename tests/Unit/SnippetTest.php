@@ -5,6 +5,8 @@ namespace PHPFileManipulator\Tests\Unit;
 use PHPFileManipulator\Tests\TestCase;
 use PhpParser\Node\Stmt\ClassMethod;
 
+use PHPFile;
+use LaravelFile;
 
 use PHPFileManipulator\Support\Snippet;
 
@@ -27,8 +29,8 @@ class SnippetTest extends TestCase
         ]);
 
         $this->assertEquals(
-            $this->laravelUserFile()->addClassMethods([$method])->classMethodNames(),
-            ['cars', 'guitars']
+            LaravelFile::load('app/User.php')->addClassMethods([$method])->classMethodNames(),
+            ['guitars']
         );            
     }    
     

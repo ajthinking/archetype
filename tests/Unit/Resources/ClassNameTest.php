@@ -4,12 +4,15 @@ namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\TestCase;
 
+use PHPFile;
+use LaravelFile;
+
 class ClassNameTest extends TestCase
 {
     /** @test */
     public function it_can_retrieve_class_name()
     {
-        $file = $this->userFile();
+        $file = PHPFile::load('app/User.php');
 
         $this->assertTrue(
             $file->className() === "User"
@@ -21,12 +24,12 @@ class ClassNameTest extends TestCase
     {
         // on a file with a class
         $this->assertTrue(
-            $this->userFile()->className("NewName")->className() === "NewName"
+            PHPFile::load('app/User.php')->className("NewName")->className() === "NewName"
         );
 
         // on a file without a class
         $this->assertTrue(
-            $this->routesFile()->className("NewName")->className() === null
+            PHPFile::load('public/index.php')->className("NewName")->className() === null
         );        
     }
 }

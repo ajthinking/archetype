@@ -12,7 +12,7 @@ use UnexpectedValueException;
 use Config;
 use PHPFileManipulator\Support\PHPFileStorage;
 use PHPFileManipulator\PHPFile;
-use PHPFileManipulaot\Support\Path;
+use PHPFileManipulator\Support\Path;
 
 class IO extends Endpoint
 {
@@ -48,7 +48,7 @@ class IO extends Endpoint
 
     public function load($path)
     {
-        $this->file->inputPath = Path::make($path)->withRoot($this->roots['input']);
+        $this->file->inputPath = Path::make($path)->withDefaultRoot($this->file->roots['input']['root']);
         $this->file->inputPath = PHPFileStorage::fullInputPath($path);
         $this->file->inputName = basename($path);   
         $this->file->contents = PHPFileStorage::get($this->file->inputPath);

@@ -4,6 +4,9 @@ namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\TestCase;
 
+use PHPFile;
+use LaravelFile;
+
 class NamespaceTest extends TestCase
 {
     /** @test */
@@ -11,12 +14,12 @@ class NamespaceTest extends TestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            $this->userFile()->namespace() === 'App'
+            PHPFile::load('app/User.php')->namespace() === 'App'
         );
 
         // on a file without namespace
         $this->assertTrue(
-            $this->routesFile()->namespace() === null
+            PHPFile::load('public/index.php')->namespace() === null
         );
     }
 
@@ -25,12 +28,12 @@ class NamespaceTest extends TestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            $this->userFile()->namespace('New\Namespace')->namespace() === 'New\Namespace'
+            PHPFile::load('app/User.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
         );
 
         // on a file without namespace
         $this->assertTrue(
-            $this->routesFile()->namespace('New\Namespace')->namespace() === 'New\Namespace'
+            PHPFile::load('public/index.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
         );        
     }
     
@@ -39,12 +42,12 @@ class NamespaceTest extends TestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            $this->userFile()->removeNamespace()->namespace() === null
+            PHPFile::load('app/User.php')->removeNamespace()->namespace() === null
         );
 
         // on a file without namespace
         $this->assertTrue(
-            $this->routesFile()->removeNamespace()->namespace() === null
+            PHPFile::load('public/index.php')->removeNamespace()->namespace() === null
         );        
     }        
 }

@@ -4,13 +4,16 @@ namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\TestCase;
 
+use PHPFile;
+use LaravelFile;
+
 class ClassPropertyTest extends TestCase
 {
     /** @test */
     public function it_can_retrieve_fillables()
     {
         $this->assertTrue(
-            $this->laravelUserFile()->fillable() == ['name', 'email', 'password',]
+            LaravelFile::load('app/User.php')->fillable() == ['name', 'email', 'password',]
         );
     }
 
@@ -18,7 +21,7 @@ class ClassPropertyTest extends TestCase
     public function it_can_retrieve_hidden()
     {
         $this->assertTrue(
-            $this->laravelUserFile()->hidden() == ['password', 'remember_token',]
+            LaravelFile::load('app/User.php')->hidden() == ['password', 'remember_token',]
         );
     }
     
@@ -26,7 +29,7 @@ class ClassPropertyTest extends TestCase
     public function it_wont_break_if_properties_are_missing()
     {
         $this->assertNull(
-            $this->routesFile()->hidden()
+            LaravelFile::load('public/index.php')->hidden()
         );
     }
     
@@ -34,7 +37,7 @@ class ClassPropertyTest extends TestCase
     public function it_can_set_fillables()
     {
         $this->assertEquals(
-            $this->laravelUserFile()->fillable(['guns', 'roses'])->fillable(),
+            LaravelFile::load('app/User.php')->fillable(['guns', 'roses'])->fillable(),
             ['guns', 'roses',]
         );
     }
@@ -43,7 +46,7 @@ class ClassPropertyTest extends TestCase
     public function it_can_set_hidden()
     {
         $this->assertEquals(
-            $this->laravelUserFile()->hidden(['metallica', 'ozzy'])->hidden(),
+            LaravelFile::load('app/User.php')->hidden(['metallica', 'ozzy'])->hidden(),
             ['metallica', 'ozzy',]
         );
     }    

@@ -5,6 +5,9 @@ namespace PHPFileManipulator\Tests\Unit\Endpoints;
 use PHPFileManipulator\Endpoints\Fillable;
 use PHPFileManipulator\Tests\TestCase;
 
+use PHPFile;
+use LaravelFile;
+
 class AliasTest extends TestCase
 {
     /** @test */

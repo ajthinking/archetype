@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Tests\Unit;
 use PHPFileManipulator\Tests\TestCase;
 
 /**
- * @group stupid
+ * @group ok
  */
 class StupidTest extends TestCase
 {

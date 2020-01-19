@@ -3,14 +3,16 @@
 namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\TestCase;
-use PHPFileManipulator\LaravelFile;
+
+use LaravelFile;
+use PHPFile;
 
 class RelationshipsTest extends TestCase
 {
     /** @test */
     public function it_can_insert_belongs_to_methods()
     {
-        $file = $this->laravelUserFile();
+        $file = LaravelFile::load('app/User.php');
         $file->addBelongsToMethods(['App\Department']);
 
         $this->assertContains(
@@ -22,7 +24,7 @@ class RelationshipsTest extends TestCase
     /** @test */
     public function it_can_insert_belongs_to_many_methods()
     {
-        $file = $this->laravelUserFile();
+        $file = LaravelFile::load('app/User.php');
         $file->addBelongsToManyMethods(['App\Visit']);
 
         $this->assertContains(
@@ -34,7 +36,7 @@ class RelationshipsTest extends TestCase
     /** @test */
     public function it_can_insert_has_many_methods()
     {
-        $file = $this->laravelUserFile();
+        $file = LaravelFile::load('app/User.php');
         $file->addHasManyMethods(['App\Gun', 'App\Rose']);
 
         $this->assertContains(
@@ -51,7 +53,7 @@ class RelationshipsTest extends TestCase
     /** @test */
     public function it_can_insert_has_one_methods()
     {
-        $file = $this->laravelUserFile();
+        $file = LaravelFile::load('app/User.php');
         $file->addHasOneMethods(['App\Phone']);
 
         $this->assertContains(

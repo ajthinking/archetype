@@ -16,7 +16,7 @@ class ASTQueryBuilderTest extends TestCase
     */
     public function it_can_be_instanciated_using_an_ast_object()
     {
-        $ast = $this->laravelUserFile()->ast;
+        $ast = LaravelFile::load('app/User.php')->ast;
         
         $ASTQB = new ASTQueryBuilder($ast);
 
@@ -31,7 +31,7 @@ class ASTQueryBuilderTest extends TestCase
     */
     public function it_will_return_instance_of_itself_on_chain()
     {
-        $ast = $this->laravelUserFile()->ast;
+        $ast = LaravelFile::load('app/User.php')->ast;
 
         $result = (new ASTQueryBuilder($ast))
             ->class();
@@ -46,7 +46,7 @@ class ASTQueryBuilderTest extends TestCase
     */
     public function it_can_be_query_deep()
     {
-        $ast = $this->laravelUserFile()->ast;
+        $ast = LaravelFile::load('app/User.php')->ast;
         
         $ASTQB = new ASTQueryBuilder($ast);
 

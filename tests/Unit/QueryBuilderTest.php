@@ -53,7 +53,7 @@ class QueryBuilderTest extends TestCase
         );
 
         $this->assertCount(
-            5, LaravelFile::in('app/Http/Controllers/Auth')->get()
+            6, LaravelFile::in('app/Http/Controllers/Auth')->get()
         );        
     }
     
@@ -69,7 +69,7 @@ class QueryBuilderTest extends TestCase
         );
 
         $this->assertCount(
-            1, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
+            2, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
         );        
 
         $this->assertCount(
@@ -77,11 +77,11 @@ class QueryBuilderTest extends TestCase
         );
 
         $this->assertCount(
-            6, LaravelFile::in('app')->where('className', 'like', 'Controller')->get()
+            7, LaravelFile::in('app')->where('className', 'like', 'Controller')->get()
         );
 
         $this->assertCount(
-            6, LaravelFile::in('app')->where('className', 'like', 'controller')->get()
+            7, LaravelFile::in('app')->where('className', 'like', 'controller')->get()
         );        
         
         $this->assertCount(
@@ -123,7 +123,7 @@ class QueryBuilderTest extends TestCase
     public function it_can_filter_with_closure()
     {
         $this->assertCount(
-            2, LaravelFile::in('database/migrations')->where(function($file) {
+            3, LaravelFile::in('database/migrations')->where(function($file) {
                 return preg_match('/^Create.*Table$/', $file->className()); 
             })->get()
         );

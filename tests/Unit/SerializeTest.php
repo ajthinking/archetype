@@ -6,6 +6,9 @@ use PHPFileManipulator\Tests\TestCase;
 use PhpParser\ParserFactory;
 use PhpParser\JsonDecoder;
 
+use PHPFile;
+use LaravelFile;
+
 class SerializeTest extends TestCase
 {
     /** @test */

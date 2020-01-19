@@ -7,6 +7,7 @@ use BadMethodCallException;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
 
+use PHPFile;
 use LaravelFile;
 
 class TemplateTest extends TestCase
