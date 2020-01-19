@@ -11,9 +11,16 @@ use Error;
 use UnexpectedValueException;
 use Config;
 use PHPFileManipulator\Support\PHPFileStorage;
+use PHPFileManipulator\PHPFile;
 
 class IO extends Endpoint
 {
+    public function __construct(PHPFile $file)
+    {
+        parent::__construct($file);
+        $this->file->roots = config('php-file-manipulator.roots');
+    }
+
     public function getHandlerMethod($signature, $args)
     {
         return collect([
@@ -40,9 +47,8 @@ class IO extends Endpoint
 
     public function load($path)
     {
-        $this->file->inputName = basename($path);
-        
-        $this->file->inputPath = PHPFileStorage::fullInputPath($path);   
+        $this->file->inputPath = PHPFileStorage::fullInputPath($path);
+        $this->file->inputName = basename($path);   
         $this->file->contents = PHPFileStorage::get($this->file->inputPath);
         $this->file->ast = $this->parse();                
         
@@ -118,26 +124,25 @@ class IO extends Endpoint
 
     public function debug($path = false)
     {
+        $this->file->roots['output'] = $this->file->roots['debug'];
         return $this->setDebugRoot($path)->save();
-    }
-
-    public function setDebugRoot($path = false)
-    {
-        $path = $path ? $path : Config::get("php-file-manipulator.roots.debug.root");
-        Config::set("php-file-manipulator.roots.output.root", $path);
-        
-        return $this->file;
     }
 
     public function setInputRoot($path)
     {
-        Config::set("php-file-manipulator.roots.input.root", $path);        
+        $this->file->roots['input'] = $path;        
         return $this->file;
     }
     
     public function setOutputRoot($path)
     {
-        Config::set("php-file-manipulator.roots.output.root", $path);        
+        $this->file->roots['output'] = $path;        
+        return $this->file;
+    }
+    
+    public function setDebugRoot($path)
+    {
+        $this->file->roots['debug'] = $path;        
         return $this->file;
     }    
 
@@ -170,5 +175,5 @@ class IO extends Endpoint
         dd(
             $method ? $this->file->$method() : $this
         );
-    }
+    }    
 }
