@@ -4,10 +4,7 @@ namespace PHPFileManipulator\Tests\Unit;
 
 use PHPFileManipulator\Tests\TestCase;
 
-use LaravelFile;
-use PHPFile;
-use Str;
-use UnexpectedValueException;
+use PHPFileManipulator\Support\Path;
 
 /**
  * @group path
@@ -15,80 +12,22 @@ use UnexpectedValueException;
 class PathTest extends TestCase
 {
     /** @test */
-    public function a_file_has_an_input_path()
+    public function it_can_create_paths_with_explicit_root()
     {
-        // relative
-        $file = PHPFile::load('app/User.php');
-        $this->assertTrue(
-            $file->inputPath() == base_path('app/User.php')
-        );
-
-        // absolute
-        $path = base_path('app/User.php');
-        $file = PHPFile::load($path);
-        $this->assertTrue(
-            $file->inputPath() == base_path('app/User.php')
-        );        
+        $expected = base_path('app/User.php');
+        $relative = Path::make('app/User.php')->withRoot(base_path())->full();
+        $absolute = Path::make('/app/User.php')->withRoot(base_path())->full();
+        $this->assertEquals($expected, $relative);
+        $this->assertEquals($expected, $absolute);
     }
 
     /** @test */
-    public function a_file_has_an_input_dir()
+    public function it_can_create_paths_with_assumed_root()
     {
-        // relative
-        $file = PHPFile::load('app/User.php');
-        $this->assertTrue(
-            $file->inputDir() == app_path()
-        );
-
-        // absolute
-        $path = base_path('app/User.php');
-        $file = PHPFile::load($path);
-        $this->assertTrue(
-            $file->inputDir() == app_path()
-        );        
-    }    
-    
-    /** @test */
-    public function a_file_has_an_input_name()
-    {
-        // relative
-        $file = PHPFile::load('app/User.php');
-        $this->assertTrue(
-            $file->inputName() == 'User.php'
-        );
-
-        // absolute
-        $path = base_path('app/User.php');
-        $file = PHPFile::load($path);
-        $this->assertTrue(
-            $file->inputName() == 'User.php'
-        );        
-    }
-    
-    /** @test */
-    public function a_file_has_an_output_path()
-    {
-        // relative
-        $file = PHPFile::load('app/User.php');
-        $this->assertTrue(
-            Str::contains($file->outputPath(), '/.preview/app/User.php')
-        );
-
-        // absolute
-        $path = base_path('app/User.php');
-        $file = PHPFile::load($path);
-        $this->assertTrue(
-            Str::contains($file->outputPath(), '/.preview/app/User.php')
-        );        
-    }
-    
-    /** @test */
-    public function files_created_with_fromString_must_be_explicitly_named()
-    {
-        $file = PHPFile::fromString('<?php');
-        
-        $this->expectException(UnexpectedValueException::class);
-
-        $file->save(); // It dont know where to save!
+        $expected = '/app/User.php';
+        $relative = Path::make('app/User.php')->full();
+        $absolute = Path::make('/app/User.php')->full();
+        $this->assertEquals($expected, $relative);
+        $this->assertEquals($expected, $absolute);
     }    
 }

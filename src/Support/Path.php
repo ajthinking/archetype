@@ -2,24 +2,39 @@
 
 namespace PHPFileManipulator\Support;
 
+use Illuminate\Support\Str;
+
 class Path
 {
-    public function __construct($inputPath, $root = false)
+    public function __construct($inputPath)
     {
-        $this->path = 0;
+        $this->path = Str::start($this->getAbsolute($inputPath), '/');
+        $this->root = null;
     }
 
-    public static function make($inputPath, $root = false)
+    public static function make($inputPath)
     {
         return new static($inputPath);
     }
 
-    public function __toString()
+    public function withRoot($root)
     {
+        $this->root = $this->getAbsolute($root);
 
+        return $this;
     }
 
-    protected function getAbsoluteFilename($filename) {
+    public function full()
+    {
+        return $this->root . $this->path;
+    }
+
+    public function __toString()
+    {
+        return $this->root . $this->path;
+    }
+
+    protected function getAbsolute($filename) {
         $path = [];
         foreach(explode('/', $filename) as $part) {
           // ignore parts that have no value
@@ -38,9 +53,6 @@ class Path
           }
         }
       
-        // prepend my root directory
-        array_unshift($path, $this->getPath());
-      
-        return join('/', $path);
+        return Str::start(join('/', $path), '/');
       }    
 }
