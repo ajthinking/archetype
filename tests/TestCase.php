@@ -13,8 +13,11 @@ abstract class TestCase extends BaseTestCase
     public function setUp() : void
     {
         parent::setUp();
-        $preview = __DIR__ . '/.preview';
-        is_dir($preview) ? $this->deleteDirectory($preview) : null;
+        $debug = __DIR__ . '/.debug';
+        $output = __DIR__ . '/.output';
+
+        is_dir($debug) ? $this->deleteDirectory($debug) : null;
+        is_dir($output) ? $this->deleteDirectory($output) : null;              
     }
 
     /**

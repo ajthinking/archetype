@@ -35,7 +35,6 @@ class IO extends Endpoint
             "inputDir",
             "path",
             "outputPath",
-            "preview",
             "print",
             "debug",
             "save",
@@ -124,10 +123,10 @@ class IO extends Endpoint
         return $this->file->outputPath;
     }
 
-    public function debug($path = false)
+    public function debug()
     {
         $this->file->roots['output'] = $this->file->roots['debug'];
-        return $this->setDebugRoot($path)->save();
+        return $this->save();
     }
 
     public function setInputRoot($path)

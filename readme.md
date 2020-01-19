@@ -73,10 +73,10 @@ LaravelFile::load('routes/web.php')
     ->addRoute('dummy', 'Controller@method')
     ->save()
     
-// preview will write result relative to storage/.preview
+// debug will write result relative to storage/.debug
 LaravelFile::load('app/User.php')
     ->setClassName('Mistake')
-    ->preview()
+    ->debug()
 
 // add items to protected properties
 LaravelFile::load('app/User.php')

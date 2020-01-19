@@ -1,1 +1,3 @@
+tests/.debug/*
+tests/.output/*
 tests/.preview/*

@@ -66,8 +66,8 @@ class ServiceProvider extends BaseServiceProvider
         if($this->isIinProduction()) return;
 
         config([
-            'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.preview',
-            'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.preview',
+            'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
+            'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
         ]);
     }    
     

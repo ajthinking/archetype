@@ -18,7 +18,7 @@ return [
         ],
         'debug' => [
             'driver' => 'local',
-            'root' => storage_path('php-file-manipulator/preview'),
+            'root' => storage_path('php-file-manipulator/debug'),
         ],                                
     ],
 

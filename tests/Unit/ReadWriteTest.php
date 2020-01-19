@@ -15,11 +15,15 @@ use Config;
 class ReadWriteTest extends TestCase
 {
     /** @test */
-    public function it_wont_see_preview_folder_because_it_is_removed_at_start_up()
+    public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()
     {
         $this->assertFalse(
-            is_dir(__DIR__ . '/../.preview')
+            is_dir(__DIR__ . '/../.debug')
         );
+
+        $this->assertFalse(
+            is_dir(__DIR__ . '/../.output')
+        );        
     }
 
     /** @test */
@@ -54,23 +58,23 @@ class ReadWriteTest extends TestCase
     /** @test */
     public function it_can_write_to_various_location()
     {
-        // debug
-        LaravelFile::load('app/User.php')->debug();
-        $saved = LaravelFile::load(__DIR__ . '/../.preview/app/User.php');
-        $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $saved
-        );
+        // // debug
+        // LaravelFile::load('app/User.php')->debug();
+        // $saved = LaravelFile::load(__DIR__ . '/../.debug/app/User.php');
+        // $this->assertInstanceOf(
+        //     \PHPFileManipulator\LaravelFile::class, $saved
+        // );
 
-        // default save location is in .preview when in development mode
+        // default save location is in .output when in development mode
         LaravelFile::load('app/Console/Kernel.php')->save();
-        $saved = LaravelFile::load(__DIR__ . '/../.preview/app/Console/Kernel.php');
+        $saved = LaravelFile::load(__DIR__ . '/../.output/app/Console/Kernel.php');
         $this->assertInstanceOf(
             \PHPFileManipulator\LaravelFile::class, $saved
         );
 
         // // default save location
         // LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();
-        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('Kernel.php');
+        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.output')->load('Kernel.php');
         // $this->assertInstanceOf(
         //     \PHPFileManipulator\LaravelFile::class, $saved
         // );
