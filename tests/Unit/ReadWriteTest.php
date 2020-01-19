@@ -42,31 +42,44 @@ class ReadWriteTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_has_attached_input_paths()
+    {
+        $file = LaravelFile::load('app/User.php');
+
+        $this->assertEquals($file->inputPath(), base_path('app/User.php'));
+        $this->assertEquals($file->inputName(), 'User.php');
+
+        dd(
+            $file->outputPath()
+        );
+    }    
+
     /** @wip-test
      * @group mixed
     */
     public function it_can_write_to_various_location()
     {
-        // debug
-        LaravelFile::setInputRoot(base_path())->load('app/User.php')->debug();
-        $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/User.php');
-        $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $saved
-        );
+        // // debug
+        // LaravelFile::setInputRoot(base_path())->load('app/User.php')->debug();
+        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/User.php');
+        // $this->assertInstanceOf(
+        //     \PHPFileManipulator\LaravelFile::class, $saved
+        // );
 
-        // default save location
-        LaravelFile::setInputRoot(base_path())->load('app/Console/Kernel.php')->save();
-        $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/Console/Kernel.php');
-        $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $saved
-        );
+        // // default save location
+        // LaravelFile::setInputRoot(base_path())->load('app/Console/Kernel.php')->save();
+        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/Console/Kernel.php');
+        // $this->assertInstanceOf(
+        //     \PHPFileManipulator\LaravelFile::class, $saved
+        // );
 
-        // default save location
-        LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();
-        $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('Kernel.php');
-        $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $saved
-        );
+        // // default save location
+        // LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();
+        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('Kernel.php');
+        // $this->assertInstanceOf(
+        //     \PHPFileManipulator\LaravelFile::class, $saved
+        // );
         
         // LaravelFile::load('app/User.php')
         //     ->save();
