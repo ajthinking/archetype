@@ -12,12 +12,15 @@ use PHPFileManipulator\Support\Path;
 class PathTest extends TestCase
 {
     /** @test */
-    public function it_can_create_paths_with_explicit_root()
+    public function it_can_create_paths_with_explicit_default_root()
     {
+        $relative = Path::make('app/User.php')->withDefaultRoot(base_path())->full();
         $expected = base_path('app/User.php');
-        $relative = Path::make('app/User.php')->withRoot(base_path())->full();
-        $absolute = Path::make('/app/User.php')->withRoot(base_path())->full();
         $this->assertEquals($expected, $relative);
+
+        $absolute = Path::make('/app/User.php')->withDefaultRoot(base_path())->full();
+        $expected = '/app/User.php';
+
         $this->assertEquals($expected, $absolute);
     }
 

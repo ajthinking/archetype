@@ -8,7 +8,7 @@ class Path
 {
     public function __construct($inputPath)
     {
-        $this->path = Str::start($this->getAbsolute($inputPath), '/');
+        $this->path = $this->getAbsolute($inputPath);
         $this->root = null;
     }
 
@@ -17,24 +17,27 @@ class Path
         return new static($inputPath);
     }
 
-    public function withRoot($root)
+    public function withDefaultRoot($root)
     {
-        $this->root = $this->getAbsolute($root);
+        if(!Str::startsWith($this->path, '/')) {
+            $this->root = Str::start($this->getAbsolute($root), '/');
+        }
 
         return $this;
     }
 
     public function full()
     {
-        return $this->root . $this->path;
+        return $this->root . Str::start($this->path, '/');
     }
 
     public function __toString()
     {
-        return $this->root . $this->path;
+        return $this->full();
     }
 
     protected function getAbsolute($filename) {
+        $isAbsolute = Str::startsWith($filename, '/');
         $path = [];
         foreach(explode('/', $filename) as $part) {
           // ignore parts that have no value
@@ -53,6 +56,6 @@ class Path
           }
         }
       
-        return Str::start(join('/', $path), '/');
+        return ($isAbsolute ? '/' : '') . join('/', $path);
       }    
 }
