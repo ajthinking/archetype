@@ -51,24 +51,22 @@ class ReadWriteTest extends TestCase
         $this->assertEquals($file->inputName(), 'User.php');
     }    
 
-    /** @todo-test
-     * @group mixed
-    */
+    /** @test */
     public function it_can_write_to_various_location()
     {
-        // // debug
-        // LaravelFile::setInputRoot(base_path())->load('app/User.php')->debug();
-        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/User.php');
-        // $this->assertInstanceOf(
-        //     \PHPFileManipulator\LaravelFile::class, $saved
-        // );
+        // debug
+        LaravelFile::load('app/User.php')->debug();
+        $saved = LaravelFile::load(__DIR__ . '/../.preview/app/User.php');
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class, $saved
+        );
 
-        // // default save location
-        // LaravelFile::setInputRoot(base_path())->load('app/Console/Kernel.php')->save();
-        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.preview')->load('app/Console/Kernel.php');
-        // $this->assertInstanceOf(
-        //     \PHPFileManipulator\LaravelFile::class, $saved
-        // );
+        // default save location is in .preview when in development mode
+        LaravelFile::load('app/Console/Kernel.php')->save();
+        $saved = LaravelFile::load(__DIR__ . '/../.preview/app/Console/Kernel.php');
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class, $saved
+        );
 
         // // default save location
         // LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();
