@@ -24,6 +24,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Configure if we are allowed to write outside of the default roots
+    |--------------------------------------------------------------------------
+    */
+    //'allow_writing_outside_default_roots' => false, // not implemented!!!
+
+    /*
+    |--------------------------------------------------------------------------
     | The QueryBuilder will ignore these files or folders
     |--------------------------------------------------------------------------
     */    
