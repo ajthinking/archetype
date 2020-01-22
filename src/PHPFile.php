@@ -14,6 +14,7 @@ class PHPFile
         Endpoints\PHP\IO::class,
         Endpoints\PHP\Template::class,
         Endpoints\PHP\FileQueryBuilder::class,
+        Endpoints\PHP\AstQuery::class,
 
         // Resources
         Endpoints\PHP\NamespaceResource::class,
