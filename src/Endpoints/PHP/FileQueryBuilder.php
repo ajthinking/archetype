@@ -64,7 +64,8 @@ class FileQueryBuilder extends Endpoint
         $this->baseDir = $directory;
                       
         $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) { 
-            return LaravelFile::load($filePath);
+            $type = '\\PHPFileManipulator\\Facades\\' . class_basename(get_class($this->file));
+            return $type::load($filePath);
         });
         
         return $this;    
