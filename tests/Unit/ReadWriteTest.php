@@ -36,6 +36,32 @@ class ReadWriteTest extends TestCase
     }
 
     /** @test */
+    public function it_can_load_files_with_absolute_path()
+    {
+        $file = PHPFile::load(
+                base_path('vendor/ajthinking/php-file-manipulator/src/snippets/relationships.php')
+        );
+
+        $this->assertTrue(
+            get_class($file) === 'PHPFileManipulator\PHPFile'
+        );
+    }
+
+    /** @test
+     * @group need
+    */
+    public function it_will_accept_forbidden_directories_when_explicitly_passed()
+    {
+        $file = PHPFile::in(
+            'vendor/ajthinking/php-file-manipulator/src/snippets'
+        )->get()->first();
+
+        $this->assertTrue(
+            get_class($file) === 'PHPFileManipulator\PHPFile'
+        );
+    }    
+
+    /** @test */
     public function it_can_also_load_laravel_specific_files()
     {
         $file = LaravelFile::load('app/User.php');
@@ -54,45 +80,19 @@ class ReadWriteTest extends TestCase
         $this->assertEquals($file->inputName(), 'User.php');
     }    
 
-    /** @wip-test
-     * @group weird */
-    public function it_can_write_to_various_location()
+    /** @test */
+    public function it_can_write_to_default_location()
     {
         // debug
-        LaravelFile::load('app/User.php')->debug();
+        LaravelFile::load('app/User.php')->debug();        
+        $this->assertTrue(
+            is_file(__DIR__ . '/../.debug/app/User.php')
+        );
 
-        //$saved = LaravelFile::load(__DIR__ . '/../.debug/app/User.php');
-        
-        // $this->assertInstanceOf(
-        //     \PHPFileManipulator\LaravelFile::class, $saved
-        // );
-
-        // // default save location is in .output when in development mode
-        // LaravelFile::load('app/Console/Kernel.php')->save();
-        // $saved = LaravelFile::load(__DIR__ . '/../.output/app/Console/Kernel.php');
-        // $this->assertInstanceOf(
-        //     \PHPFileManipulator\LaravelFile::class, $saved
-        // );
-
-        // // default save location
-        // LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();
-        // $saved = LaravelFile::setInputRoot(__DIR__ . '/../.output')->load('Kernel.php');
-        // $this->assertInstanceOf(
-        //     \PHPFileManipulator\LaravelFile::class, $saved
-        // );
-        
-        // LaravelFile::load('app/User.php')
-        //     ->save();
-        // // Assert it is there        
-
-        // LaravelFile::load('app/User.php')
-        //     ->setOutputRoot('/full/path/to/output')
-        //     ->save();
-        // // Assert it is there
-
-        // LaravelFile::load('app/User.php')
-        //     ->setOutputRoot('relative/path/to/output')
-        //     ->save();
-        // // Assert it is there
-    }
+        // default save location is in .output when in development mode
+        LaravelFile::load('app/User.php')->save();        
+        $this->assertTrue(
+            is_file(__DIR__ . '/../.output/app/User.php')
+        );
+    }   
 }
