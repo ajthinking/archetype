@@ -6,73 +6,59 @@ use Config;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+use PHPFileManipulator\Support\Path;
+
 class PHPFileStorage
 {
-    public static function get($path)
+    public function __construct($roots)
     {
-        $disk = static::getStorageDisk('input');
-        $pathPrefix = $disk->getDriver()->getAdapter()->getPathPrefix();
-        $result =  $disk->get(
-            static::relativeInputPath($path)
-        );
-
-        return $result;
+        $this->roots = $roots;
     }
 
-    public static function put($path, $content)
+    public function get($path)
     {
-        return static::getStorageDisk('output')->put(
-            static::relativeOutputPath($path),
+        return $this->getStorageDisk('input')->get(
+            $this->relative($path, 'input')
+        );
+    }
+
+    public function put($path, $content)
+    {
+        return $this->getStorageDisk('output')->put(
+            $this->relative($path, 'output'),
             $content
         );
     }    
 
-    public static function relativeInputPath($path)
+    public function relative($path, $rootName)
     {
-        return static::relativePathFor('input', $path);
+        $root = Path::make($this->roots[$rootName]['root'])->full();
+
+        return Path::make($path)->relative($root);
     }
 
-    public static function fullInputPath($path)
-    {
-        return static::fullPathFor('input', $path);
-    }
-
-    public static function relativeOutputPath($path)
-    {
-        return static::relativePathFor('output', $path);
-    }
-
-    public static function fullOutputPath($path)
-    {
-        return static::fullPathFor('output', $path);
-    }
-    
-    private static function relativePathFor($type, $path)
-    {
-        return Str::replaceFirst(
-            static::getStorageRootPath($type) . '/',
-            '',
-            $path
-        );
-    }
-
-    public static function fullPathFor($type, $path)
+    public function fullPathFor($type, $path)
     {
         return Str::startsWith($path, '/') ? $path 
         : static::getStorageRootPath($type) . "/$path";        
     }    
 
-    private static function getStorageRootPath($name)
+    private function getStorageRootPath($name)
     {
         return Config::get("php-file-manipulator.roots.$name.root");
     }
     
-    private static function getStorageDisk($name)
-    {        
-        $disk = Config::get("php-file-manipulator.roots.$name");
-        
-        Config::set("filesystems.disks.roots.$name", $disk);
+    private function getStorageDisk($name)
+    {
+        $root = $this->roots[$name]['root'];
+        $unique_id = Str::slug($root);
 
-        return Storage::disk("roots.$name");
+        // Laravel config is imutable, so use the actual root as the key
+        Config::set("filesystems.disks.roots.$unique_id", [
+            'driver' => 'local',
+            'root' => $root,
+        ]);
+
+        return Storage::disk("roots.$unique_id");
     }    
 }

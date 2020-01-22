@@ -62,11 +62,11 @@ class FileQueryBuilder extends Endpoint
     public function in($directory)
     {
         $this->baseDir = $directory;
-                
+                      
         $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) { 
             return LaravelFile::load($filePath);
         });
-
+        
         return $this;    
     }
     /**
@@ -125,7 +125,7 @@ class FileQueryBuilder extends Endpoint
     private function recursiveFileSearch($directory) {
         
         $directory = base_path($directory);        
-        
+
         /**
          * @param SplFileInfo $file
          * @param mixed $key
@@ -148,6 +148,7 @@ class FileQueryBuilder extends Endpoint
             return $file->isFile() && preg_match(static::$PHPSignature, $file->getFilename());
         };
         
+
         $innerIterator = new RecursiveDirectoryIterator(
             $directory,
             RecursiveDirectoryIterator::SKIP_DOTS
@@ -155,12 +156,13 @@ class FileQueryBuilder extends Endpoint
         $iterator = new RecursiveIteratorIterator(
             new RecursiveCallbackFilterIterator($innerIterator, $filter)
         );
-        
+
         foreach ($iterator as $pathname => $fileInfo) {
             // do your insertion here
         }
         
         return collect(iterator_to_array($iterator))->map(function($file) {
+            
             return $file->getFilename();
         })->keys();
     }    

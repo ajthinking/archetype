@@ -11,7 +11,7 @@ use Config;
 
 class ReadWriteTest extends TestCase
 {
-    /** @test */
+    /** @wip-test */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()
     {
         $this->assertFalse(
@@ -52,22 +52,25 @@ class ReadWriteTest extends TestCase
         $this->assertEquals($file->inputName(), 'User.php');
     }    
 
-    /** @test */
+    /** @wip-test
+     * @group weird */
     public function it_can_write_to_various_location()
     {
-        // // debug
-        // LaravelFile::load('app/User.php')->debug();
-        // $saved = LaravelFile::load(__DIR__ . '/../.debug/app/User.php');
+        // debug
+        LaravelFile::load('app/User.php')->debug();
+
+        //$saved = LaravelFile::load(__DIR__ . '/../.debug/app/User.php');
+        
         // $this->assertInstanceOf(
         //     \PHPFileManipulator\LaravelFile::class, $saved
         // );
 
-        // default save location is in .output when in development mode
-        LaravelFile::load('app/Console/Kernel.php')->save();
-        $saved = LaravelFile::load(__DIR__ . '/../.output/app/Console/Kernel.php');
-        $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $saved
-        );
+        // // default save location is in .output when in development mode
+        // LaravelFile::load('app/Console/Kernel.php')->save();
+        // $saved = LaravelFile::load(__DIR__ . '/../.output/app/Console/Kernel.php');
+        // $this->assertInstanceOf(
+        //     \PHPFileManipulator\LaravelFile::class, $saved
+        // );
 
         // // default save location
         // LaravelFile::setInputRoot(base_path('app/Http'))->load('Kernel.php')->save();

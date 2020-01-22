@@ -19,7 +19,9 @@ class IO extends Endpoint
     public function __construct(PHPFile $file)
     {
         parent::__construct($file);
-        $this->file->roots = config('php-file-manipulator.roots');
+        $this->storage = new PHPFileStorage(
+            config('php-file-manipulator.roots')
+        );
     }
 
     public function getHandlerMethod($signature, $args)
@@ -30,6 +32,7 @@ class IO extends Endpoint
             "fromString",
             "load",
             "parse",
+            "relativeInputPath",
             "inputPath",
             "inputName",
             "inputDir",
@@ -47,10 +50,8 @@ class IO extends Endpoint
 
     public function load($path)
     {
-        $this->file->inputPath = Path::make($path)->withDefaultRoot($this->file->roots['input']['root']);
-        $this->file->inputPath = PHPFileStorage::fullInputPath($path);
-        $this->file->inputName = basename($path);   
-        $this->file->contents = PHPFileStorage::get($this->file->inputPath);
+        $this->file->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
+        $this->file->contents = $this->storage->get($this->file->inputPath);
         $this->file->ast = $this->parse();                
         
         $this->setOutputPath();        
@@ -86,7 +87,9 @@ class IO extends Endpoint
     
     public function relativeInputPath()
     {
-        return PHPFileStorage::relativeInputPath($this->file->inputPath);
+        return $this->file->inputPath ?
+            Path::make($this->file->inputPath)->relative($this->root('input'))
+            : null;
     }    
 
     public function save($outputPath = false)
@@ -97,7 +100,7 @@ class IO extends Endpoint
         $this->setOutputPath($outputPath);
         if(!$this->file->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        PHPFileStorage::put(
+        $this->storage->put(
             $this->file->outputPath,
             $code
         );
@@ -108,11 +111,12 @@ class IO extends Endpoint
     protected function setOutputPath($outputPath = false)
     {
         if($outputPath) {
-            return $this->file->outputPath = PHPFileStorage::fullOutputPath($outputPath);
+            return $this->file->outputPath = Path::make($outputPath)->withDefaultRoot($this->root('output'))->full();
         }
         
         if($this->relativeInputPath()) {
-            return $this->file->outputPath = PHPFileStorage::fullOutputPath($this->relativeInputPath());
+            return $this->file->outputPath = Path::make($this->relativeInputPath())
+                ->withDefaultRoot($this->root('output'))->full();
         }
 
         $this->file->outputPath = null;
@@ -125,19 +129,19 @@ class IO extends Endpoint
 
     public function debug()
     {
-        $this->file->roots['output'] = $this->file->roots['debug'];
+        $this->storage->roots['output'] = $this->storage->roots['debug'];
         return $this->save();
     }
 
     public function setInputRoot($path)
     {
-        $this->file->roots['input'] = $path;        
+        $this->storage->roots['input'] = $path;        
         return $this->file;
     }
     
     public function setOutputRoot($path)
     {
-        $this->file->roots['output'] = $path;        
+        $this->file->storage['output'] = $path;        
         return $this->file;
     }
     
@@ -176,5 +180,10 @@ class IO extends Endpoint
         dd(
             $method ? $this->file->$method() : $this
         );
-    }    
+    }
+    
+    private function root($name)
+    {
+        return $this->storage->roots[$name]['root'];
+    }
 }

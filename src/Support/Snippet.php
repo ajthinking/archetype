@@ -22,7 +22,7 @@ class Snippet
         $containers = PHPFile::in(
             'packages/Ajthinking/PHPFileManipulator/src/snippets'
         )->get()->mapInto(static::class);
-
+        
         // Find the first matching node
         $node = $containers->map(function($container) use($name) {
             return $container->getNodeByName($name);
