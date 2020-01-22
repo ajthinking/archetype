@@ -20,7 +20,7 @@ class Snippet
         $replacementPairs = $args ? $args[0] : [];
         // Get all files containing snippets
         $containers = PHPFile::in(
-            'packages/Ajthinking/PHPFileManipulator/src/snippets'
+            'vendor/ajthinking/php-file-manipulator/src/snippets'
         )->get()->mapInto(static::class);
         
         // Find the first matching node
