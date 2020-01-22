@@ -7,6 +7,7 @@ use PHPFile;
 use LaravelFile;
 use Illuminate\Contracts\Console\Kernel;
 use ErrorException;
+use Illuminate\Support\Str;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -19,6 +20,16 @@ abstract class TestCase extends BaseTestCase
         is_dir($debug) ? $this->deleteDirectory($debug) : null;
         is_dir($output) ? $this->deleteDirectory($output) : null;              
     }
+
+    public function tearDown() : void
+    {
+        parent::tearDown();
+        $debug = __DIR__ . '/.debug';
+        $output = __DIR__ . '/.output';
+
+        is_dir($debug) ? $this->deleteDirectory($debug) : null;
+        is_dir($output) ? $this->deleteDirectory($output) : null;              
+    }    
 
     /**
      * Creates the application.
@@ -68,13 +79,13 @@ abstract class TestCase extends BaseTestCase
             $files = glob( $path . '*', GLOB_MARK|GLOB_BRACE );
     
             foreach( $files as $file ){
-                echo $file . PHP_EOL;
                 $this->deleteDirectory( $file );      
             }
             try{
                 rmdir( $path );
             } catch(ErrorException $e) {
-                dd("I could not delete!");
+                if(Str::endsWith($e->getMessage(), 'No such file or directory')) return;
+                throw $e;
             }
         } elseif(is_file($path)) {
             unlink( $path );  
