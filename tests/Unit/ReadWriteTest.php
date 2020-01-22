@@ -11,7 +11,9 @@ use Config;
 
 class ReadWriteTest extends TestCase
 {
-    /** @wip-test */
+    /** @test
+     * @group deletion
+     */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()
     {
         $this->assertFalse(

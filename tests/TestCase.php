@@ -63,15 +63,18 @@ abstract class TestCase extends BaseTestCase
     protected function deleteDirectory($path)
     {
         if(is_dir($path)){
-            $files = glob( $path . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+            //GLOB_MARK adds a slash to directories returned
+            //GLOB_BRACE includes hidden files
+            $files = glob( $path . '*', GLOB_MARK|GLOB_BRACE );
     
             foreach( $files as $file ){
+                echo $file . PHP_EOL;
                 $this->deleteDirectory( $file );      
             }
             try{
                 rmdir( $path );
             } catch(ErrorException $e) {
-                //
+                dd("I could not delete!");
             }
         } elseif(is_file($path)) {
             unlink( $path );  
