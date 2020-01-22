@@ -43,10 +43,8 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | The Snippet class will search for snippets here
+    | The Snippet class will search for snippets here (relative base path)
     |--------------------------------------------------------------------------
     */    
-    'snippet_search_paths' => [
-        'some/path',
-    ],    
+    'snippets_path' => 'resources/snippets',
 ];

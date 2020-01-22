@@ -22,6 +22,14 @@ class Snippet
         $containers = PHPFile::in(
             'vendor/ajthinking/php-file-manipulator/src/snippets'
         )->get()->mapInto(static::class);
+
+        $hasCustoms = is_dir(base_path(config('php-file-manipulator.snippets_path')));
+        if($hasCustoms) {
+            $containers = $containers->concat(PHPFile::in(
+                config('php-file-manipulator.snippets_path')
+            )->get()->mapInto(static::class));
+        }
+        
         
         // Find the first matching node
         $node = $containers->map(function($container) use($name) {
