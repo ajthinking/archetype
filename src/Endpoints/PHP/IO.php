@@ -133,24 +133,6 @@ class IO extends Endpoint
         return $this->save();
     }
 
-    public function setInputRoot($path)
-    {
-        $this->storage->roots['input'] = $path;        
-        return $this->file;
-    }
-    
-    public function setOutputRoot($path)
-    {
-        $this->file->storage['output'] = $path;        
-        return $this->file;
-    }
-    
-    public function setDebugRoot($path)
-    {
-        $this->file->roots['debug'] = $path;        
-        return $this->file;
-    }    
-
     public function ast()
     {
         return $this->file->ast;
