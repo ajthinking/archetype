@@ -11,7 +11,12 @@ use PhpParser\NodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
 use PHPFileManipulator\Support\AST\Terminator;
 use PHPFileManipulator\Support\AST\Killable;
+use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\Traversable;
+use PHPFileManipulator\Support\AST\NodeReplacer;
+use PHPFileManipulator\Support\AST\SplObjectHashInserter;
+use PhpParser\Node\Stmt\Use_;
+use PhpParser\NodeTraverser;
 
 class ASTQueryBuilder extends Traversable
 {
@@ -19,7 +24,13 @@ class ASTQueryBuilder extends Traversable
 
     public function __construct($ast)
     {
-        $this->initial = $ast;
+        $this->ast = $ast;
+        $traverser = new NodeTraverser();
+        $visitor = new SplObjectHashInserter;
+        $traverser->addVisitor($visitor);
+        $this->initial = $traverser->traverse($this->ast);
+
+        $this->manipulations = [];
         $this->depth = 0;
         $this->tree = [
             [$this->initial],
@@ -82,9 +93,26 @@ class ASTQueryBuilder extends Traversable
 
         return $this;
     }
-    
+
+    // public function remove()
+    // {
+    //     foreach($this->tree[$this->depth] as $node) {       
+    //         $this->manipulations[$node->spl_object_hash] = new RemovedNode;
+    //     };
+
+    //     return $this;
+    // }
+
     public function get()
     {
         return end($this->tree);
+    }
+
+    public function exec()
+    {
+        // $traverser = new NodeTraverser();
+        // $visitor = new NodeReplacer($this->manipulations);
+        // $traverser->addVisitor($visitor);
+        // return $traverser->traverse($this->initial);
     }
 }
