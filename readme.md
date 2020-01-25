@@ -13,7 +13,6 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
   * [Installation](#installation)
   * [Usage](#usage)
     + [Quick start examples](#quick-start-examples)
-    + [Artisan demo command](#artisan-demo-command)
     + [Build your own templates](#build-your-own-templates)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
@@ -93,12 +92,6 @@ LaravelFile::controller('BeerController')
 // many in one go
 LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 ```
-
-
-### Artisan demo command
-So what can we build with this package? A command ```php artisan file:demo``` is supplied to showcase some possible use cases. Check out the source [here](src/Commands/DemoCommand.php) and add your own :rocket:
-
-<img src="docs/DemoCommand.png" width="600px">
 
 
 ### Template engine
