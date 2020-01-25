@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Endpoints;
 
-use PHPFileManipulator\Endpoints\BaseResource;
+use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Expr\Array_;
@@ -10,7 +10,7 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Expr\ArrayItem;
 use PHPFileManipulator\Exceptions\NotImplementedYetException;
 
-class ArrayPropertyResource extends BaseResource
+class ArrayPropertyResource extends ResourceEndpointProvider
 {
     public function items($requestedName)
     {

@@ -3,11 +3,11 @@
 namespace PHPFileManipulator\Endpoints;
 
 use PHPFileManipulator\PHPFile;
-use PHPFileManipulator\Support\Endpoint;
+use PHPFileManipulator\Support\EndpointProvider;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 
-abstract class BaseResource extends Endpoint
+abstract class ResourceEndpointProvider extends EndpointProvider
 {
     const NOT_IMPLEMENTED = 'Method not implemented for this resource';
 
@@ -23,7 +23,7 @@ abstract class BaseResource extends Endpoint
         $handler = $this->getHandlerMethod($signature, $args);
 
         if(!$handler) {
-            throw new BadMethodCallException("Endpoint " . static::class . " could not resolve method " . $signature);
+            throw new BadMethodCallException("EndpointProvider " . static::class . " could not resolve method " . $signature);
         }
 
         return $this->$handler(...$args);

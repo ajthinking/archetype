@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Support;
 use PHPFileManipulator\PHPFile;
 use Illuminate\Support\Str;
 
-abstract class Endpoint
+abstract class EndpointProvider
 {
     public static function aliases()
     {

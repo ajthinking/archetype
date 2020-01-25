@@ -2,12 +2,12 @@
 
 namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\BaseResource;
+use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\BuilderFactory;
 
-class NamespaceResource extends BaseResource
+class NamespaceResource extends ResourceEndpointProvider
 {
     public static function aliases()
     {

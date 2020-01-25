@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\Endpoint;
+use PHPFileManipulator\Support\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +14,7 @@ use PHPFileManipulator\Support\PHPFileStorage;
 use PHPFileManipulator\PHPFile;
 use PHPFileManipulator\Support\Path;
 
-class IO extends Endpoint
+class IO extends EndpointProvider
 {
     public function __construct(PHPFile $file)
     {

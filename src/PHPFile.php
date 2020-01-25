@@ -8,7 +8,7 @@ class PHPFile
 {
     use DelegatesAPICalls;
 
-    protected $endpoints = [
+    protected $endpoint_providers = [
 
         // Utillities
         Endpoints\PHP\IO::class,
@@ -26,8 +26,8 @@ class PHPFile
         Endpoints\PHP\ClassMethodNames::class,            
     ];
 
-    public function endpoints() {
-        return collect((new self)->endpoints);
+    public function endpointProviders() {
+        return collect((new self)->endpoint_providers);
     }
 
     public function templates() {

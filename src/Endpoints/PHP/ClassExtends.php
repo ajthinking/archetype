@@ -2,11 +2,11 @@
 
 namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\BaseResource;
+use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Class_;
 
-class ClassExtends extends BaseResource
+class ClassExtends extends ResourceEndpointProvider
 {
     public function get()
     {

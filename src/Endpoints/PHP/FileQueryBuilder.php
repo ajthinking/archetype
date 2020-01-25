@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\Endpoint;
+use PHPFileManipulator\Support\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +18,7 @@ use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 
-class FileQueryBuilder extends Endpoint
+class FileQueryBuilder extends EndpointProvider
 {
     use HasOperators;
 

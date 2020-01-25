@@ -6,11 +6,11 @@ use PHPFileManipulator\PHPFile;
 
 class LaravelFile extends PHPFile 
 {
-    public function endpoints() {
-        return parent::endpoints()->concat($this->endpoints);
+    public function endpointProviders() {
+        return parent::endpointProviders()->concat($this->endpoint_providers);
     }
 
-    protected $endpoints = [
+    protected $endpoint_providers = [
         Endpoints\Laravel\Fillable::class,
         Endpoints\Laravel\Hidden::class,
         Endpoints\Laravel\HasOneMethods::class,

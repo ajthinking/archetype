@@ -10,7 +10,7 @@ trait DelegatesAPICalls
      * Time to delegate! This class is just a gateway.
      */
     public function __call($method, $args) {
-        $handler = $this->endpoints()->filter(function($endpoint) use($method, $args) {
+        $handler = $this->endpointProviders()->filter(function($endpoint) use($method, $args) {
             return (new $endpoint($this))->canHandle($method, $args);
         })->first();
 

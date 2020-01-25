@@ -2,11 +2,11 @@
 
 namespace PHPFileManipulator\Endpoints\Laravel;
 
-use PHPFileManipulator\Endpoints\BaseResource;
+use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 
-class HasManyMethods extends BaseResource
+class HasManyMethods extends ResourceEndpointProvider
 {
     public function add($targets)
     {

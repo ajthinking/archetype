@@ -4,9 +4,9 @@ namespace PHPFileManipulator\Endpoints\PHP;
 
 use Illuminate\Support\Str;
 use PHPFileManipulator\Support\AST\ASTQueryBuilder;
-use PHPFileManipulator\Support\Endpoint;
+use PHPFileManipulator\Support\EndpointProvider;
 
-class AstQuery extends Endpoint
+class AstQuery extends EndpointProvider
 {
     public function getHandlerMethod($signature, $args)
     {

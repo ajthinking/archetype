@@ -3,9 +3,9 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\Endpoint;
+use PHPFileManipulator\Support\EndpointProvider;
 
-class Template extends Endpoint
+class Template extends EndpointProvider
 {
     public function getHandlerMethod($signature, $args)
     {
