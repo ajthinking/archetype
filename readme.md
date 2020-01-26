@@ -214,7 +214,7 @@ Add this to the host projects `composer.json`
 Then,
 ```bash
 composer require ajthinking/php-file-manipulator @dev
-php artisan vendor:publish --provider=PHPFileManipulator\ServiceProvider
+php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
 ```
 Finally in host root run
 ```bash
