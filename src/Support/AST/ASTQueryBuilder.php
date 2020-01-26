@@ -53,6 +53,36 @@ class ASTQueryBuilder extends Traversable
         return $this;        
     }
 
+    public function traverseInto($property)
+    {
+        $next = collect($this->tree[$this->depth])->map(function($item) use($property) {
+            return $item->$property ?? new Killable;
+        })->filter(function($results) {
+            return !Terminator::kills($results);
+        })->flatten()->toArray();
+
+        array_push($this->tree, $next);
+        
+        $this->depth++;
+
+        return $this;
+    }
+
+    public function traverseIntoArray($index)
+    {
+        $next = collect($this->tree[$this->depth])->map(function($item) use($index) {
+            return $item[$index] ?? new Killable;
+        })->filter(function($results) {
+            return !Terminator::kills($results);
+        })->flatten()->toArray();
+
+        array_push($this->tree, $next);
+        
+        $this->depth++;
+
+        return $this;
+    }    
+
     public function traverseFirst($class)
     {
         return $this->traverse(
@@ -75,6 +105,43 @@ class ASTQueryBuilder extends Traversable
         );
     }
 
+    public function staticCall()
+    {
+        return $this->traverse(
+            static::UNTIL['staticCall']
+        );
+    }    
+
+    public function named($string)
+    {
+        return $this->where('name->name', $string);
+    }
+
+    public function args()
+    {
+        return $this->traverseInto('args');
+    }
+
+    public function value()
+    {
+        return $this->traverseInto('value');
+    }    
+    
+    public function first()
+    {
+        return $this->traverseIntoArray(0);
+    }
+    
+    public function second()
+    {
+        return $this->traverseIntoArray(1);
+    }
+    
+    public function third()
+    {
+        return $this->traverseIntoArray(2);
+    }    
+
     public function where($path, $expected)
     {
         $nextLevel = collect($this->tree[$this->depth])->map(function($item) use($path, $expected) {
@@ -94,25 +161,8 @@ class ASTQueryBuilder extends Traversable
         return $this;
     }
 
-    // public function remove()
-    // {
-    //     foreach($this->tree[$this->depth] as $node) {       
-    //         $this->manipulations[$node->spl_object_hash] = new RemovedNode;
-    //     };
-
-    //     return $this;
-    // }
-
     public function get()
     {
-        return end($this->tree);
-    }
-
-    public function exec()
-    {
-        // $traverser = new NodeTraverser();
-        // $visitor = new NodeReplacer($this->manipulations);
-        // $traverser->addVisitor($visitor);
-        // return $traverser->traverse($this->initial);
+        return collect(end($this->tree));
     }
 }

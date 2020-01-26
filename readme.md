@@ -157,16 +157,17 @@ Example: how can we fetch the table name in a migration file?
 ```php
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
     ->astQuery() // get a ASTQueryBuilder
-    
-    ->methods()
+
+    ->method()
         ->named('up')
-    ->staticCalls()
-        ->whereClass('Schema')
-        ->named('call')
-    ->firstArg()
-    
-    ->getValue() // exit ASTQueryBuilder, get a Collection
-    ->first() // 'users'
+    ->staticCall()
+        ->where('class', 'Schema')
+        ->named('create')
+    ->args()
+    ->value()
+    ->value()
+    ->get() // exit ASTQueryBuilder, get a Collection
+    ->first(); // 'users'
 ```
 
 The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
