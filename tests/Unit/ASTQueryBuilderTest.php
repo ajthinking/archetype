@@ -42,25 +42,25 @@ class ASTQueryBuilderTest extends TestCase
         );
     }    
     
-    /** @wiptest
+    /** @test
     */
     public function it_can_be_query_deep()
     {
-        $ast = LaravelFile::load('app/User.php')->ast;
-        
-        $ASTQB = new ASTQueryBuilder($ast);
-
-        $ASTQB              // [Namespace_]
-            ->class()       // Class_
-            ->property()    // [Property,                             Property,                 Property]
-            ->array()       // [Array_,                               Array_,                   BRANCH_TERMINATED]
-            ->items()       // [[ArrayItem, ArrayItem, ArrayItem],    [ArrayItem, ArrayItem]]
-            ->get();        // return AST
-
+        $result = LaravelFile::load(
+            'database/migrations/2014_10_12_000000_create_users_table.php'
+        )
+            ->astQuery() // get a ASTQueryBuilder
+            ->method()
+                ->named('up')
+            ->staticCall()
+                ->where('class', 'Schema')
+                ->named('create')
+            ->args()
+            ->value()
+            ->value()
+            ->get() // exit ASTQueryBuilder, get a Collection   
+            ->first();
             
-        $this->assertInstanceOf(
-            ASTQueryBuilder::class,
-            $ASTQB
-        );
+        $this->assertEquals($result, 'users');
     }    
 }
