@@ -153,7 +153,7 @@ PHPFile::load('app/User.php')
 ### Querying the Abstract Syntax Tree
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
-Example: how can we fetch the column names in a migration file?
+Example: how can we fetch explicit column names in a migration file?
 
 ```php
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
