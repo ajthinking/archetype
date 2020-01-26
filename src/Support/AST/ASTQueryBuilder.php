@@ -25,10 +25,7 @@ class ASTQueryBuilder extends Traversable
     public function __construct($ast)
     {
         $this->ast = $ast;
-        $traverser = new NodeTraverser();
-        $visitor = new SplObjectHashInserter;
-        $traverser->addVisitor($visitor);
-        $this->initial = $traverser->traverse($this->ast);
+        $this->initial = $this->ast;
 
         $this->manipulations = [];
         $this->depth = 0;
@@ -105,10 +102,24 @@ class ASTQueryBuilder extends Traversable
         );
     }
 
+    public function methodCall()
+    {
+        return $this->traverse(
+            static::UNTIL['methodCall']
+        );
+    }
+
     public function staticCall()
     {
         return $this->traverse(
             static::UNTIL['staticCall']
+        );
+    }    
+    
+    public function closure()
+    {
+        return $this->traverse(
+            static::UNTIL['closure']
         );
     }    
 
@@ -122,9 +133,19 @@ class ASTQueryBuilder extends Traversable
         return $this->traverseInto('args');
     }
 
+    public function stmts()
+    {
+        return $this->traverseInto('stmts');
+    }
+
     public function value()
     {
         return $this->traverseInto('value');
+    }
+    
+    public function name()
+    {
+        return $this->traverseInto('name');
     }    
     
     public function first()
@@ -165,4 +186,9 @@ class ASTQueryBuilder extends Traversable
     {
         return collect(end($this->tree));
     }
+
+    public function dd()
+    {
+        return collect(end($this->tree));
+    }    
 }
