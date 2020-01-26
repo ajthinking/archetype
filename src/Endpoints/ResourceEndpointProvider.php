@@ -73,7 +73,17 @@ abstract class ResourceEndpointProvider extends EndpointProvider
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
             if ($method->class == $reflection->getName())
                  $methods[] = $method->name;
-        
-        return $methods;
+
+        return collect($methods)->map(function($verb) {
+            $resourceSignature = collect($this->aliases())->first();
+            $verbMap = [
+                'get' => $resourceSignature,
+                'set' => $resourceSignature,
+                'add' => 'add' . $resourceSignature,
+                'remove' => 'remove' . $resourceSignature,
+            ];
+
+            return $verbMap[$verb];
+        });
     }
 }
