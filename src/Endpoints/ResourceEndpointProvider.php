@@ -6,17 +6,12 @@ use PHPFileManipulator\PHPFile;
 use PHPFileManipulator\Support\EndpointProvider;
 use BadMethodCallException;
 use Illuminate\Support\Str;
+use ReflectionClass;
+use ReflectionMethod;
 
 abstract class ResourceEndpointProvider extends EndpointProvider
 {
     const NOT_IMPLEMENTED = 'Method not implemented for this resource';
-
-    public function getResourceName()
-    {
-        return Str::replaceLast(
-            'Resource', '', class_basename(static::class)
-        );
-    }
 
     public function __call($signature, $args)
     {        
@@ -69,5 +64,16 @@ abstract class ResourceEndpointProvider extends EndpointProvider
     public function remove($args = null)
     {
         throw new BadMethodCallException($this::NOT_IMPLEMENTED);
+    }
+
+    public function getPublicMethodsOnChild()
+    {
+        $reflection = new ReflectionClass(static::class);
+        $methods = [];
+        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
+            if ($method->class == $reflection->getName())
+                 $methods[] = $method->name;
+        
+        return $methods;
     }
 }

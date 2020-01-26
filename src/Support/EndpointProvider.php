@@ -24,6 +24,11 @@ abstract class EndpointProvider
         return false;
     }
 
+    public function getEndpoints()
+    {
+        return [];
+    }
+
     public function __construct(PHPFile $file)
     {
         $this->file = $file;      
