@@ -14,6 +14,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
   * [Usage](#usage)
     + [Quick start examples](#quick-start-examples)
     + [Build your own templates](#build-your-own-templates)
+    + [Querying the Abstract Syntax Tree](#querying-the-abstract-syntax-tree)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
@@ -152,7 +153,7 @@ PHPFile::load('app/User.php')
 ### Querying the Abstract Syntax Tree
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
-Example: how can we fetch the table name in a migration file?
+Example: how can we fetch the column names in a migration file?
 
 ```php
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
@@ -164,11 +165,17 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
         ->where('class', 'Schema')
         ->named('create')
     ->args()
-    ->value()
-    ->value()
-    ->get() // exit ASTQueryBuilder, get a Collection
-    ->first(); // 'users'
+    ->closure()
+    ->stmts()
+    ->methodCall()
+        ->where('var->name', 'table')
+    ->args()
+	->value()
+	->value()
+	->get(); // exit ASTQueryBuilder, get a Collection        
 ```
+
+
 
 The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
 
