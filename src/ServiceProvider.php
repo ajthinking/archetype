@@ -8,6 +8,7 @@ use App;
 use PHPFileManipulator\Factories\PHPFileFactory;
 use PHPFileManipulator\Factories\LaravelFileFactory;
 use PHPFileManipulator\Commands\ListAPICommand;
+use PHPFileManipulator\Commands\TypeWriterCommand;
 Use Illuminate\Support\Str;
 use Config;
 use Illuminate\Support\Arr;
@@ -75,6 +76,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->commands([
             ListAPICommand::class,
+            TypeWriterCommand::class,
             DemoCommand::class,
         ]);
     }

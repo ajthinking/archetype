@@ -1,0 +1,4 @@
+PHPFile::load('app/User.php')
+->addMethod(
+    Snippet::myGloriousMethod()
+)->save();

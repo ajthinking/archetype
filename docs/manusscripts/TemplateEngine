@@ -1,0 +1,5 @@
+public function myGloriousMethod($args)
+{
+return $this->stupid($___TEMPLATABLE___, function($needs) {
+  To::be('EVERYWHERE');
+}

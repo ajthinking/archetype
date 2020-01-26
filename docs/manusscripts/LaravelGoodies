@@ -1,0 +1,6 @@
+// Laravel specific shortcuts...
+$file->addFillable('color')
+->addHidden('secret')
+->addHasManyMethod('App\Book')
+//...
+->save()

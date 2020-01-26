@@ -1,0 +1,20 @@
+// lets fetch something deep down in a file
+$path = 'database/migrations/2014_10_12_000000_create_users_table.php'
+
+LaravelFile::load($path)
+->astQuery() // get a ASTQueryBuilder
+
+->method()
+    ->named('up')
+->staticCall()
+    ->where('class', 'Schema')
+    ->named('create')
+->args()
+->closure()
+->stmts()
+->methodCall()
+    ->where('var->name', 'table')
+->args()
+->value()
+->value()
+->get(); // exit ASTQueryBuilder, get a Collection
