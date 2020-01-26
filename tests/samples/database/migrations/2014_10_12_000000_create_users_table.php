@@ -22,17 +22,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
-        $dude = [
-            'hej',
-            'hej',
-            'hej',
-            'hej',
-            'hej',
-            'hej',
-            'hej',
-            'hej',
-            'hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej','hej'];
     }
 
     /**
