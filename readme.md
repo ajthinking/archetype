@@ -1,6 +1,6 @@
 # ```PHPFile::manipulator```(:fire::fire::fire:);
 
-
+[![Latest Unstable Version](https://poser.pugx.org/ajthinking/php-file-manipulator/v/unstable)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 [![Latest Stable Version](https://poser.pugx.org/ajthinking/php-file-manipulator/v/stable)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 [![Total Downloads](https://poser.pugx.org/ajthinking/php-file-manipulator/downloads)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 [![License](https://poser.pugx.org/ajthinking/php-file-manipulator/license)](https://packagist.org/packages/ajthinking/php-file-manipulator)
@@ -8,7 +8,7 @@
 
 Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include *File-* and *Code/AST* QueryBuilders, an inline PHP Template engine and categorization of read/write operations in `Resource` endpoints.
 
-<img src="https://drive.google.com/uc?export=view&id=1kH35819dPJFauEuEFhAswOAKq3hXbYRJ" alt="Intro gif">
+<img src="https://user-images.githubusercontent.com/3457668/73186486-1973cd80-4120-11ea-82a1-757014e0f963.gif" alt="Intro gif">
 
 ## Contents
   * [Installation](#installation)
