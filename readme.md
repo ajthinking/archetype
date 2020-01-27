@@ -8,7 +8,7 @@
 
 Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include *File-* and *Code/AST* QueryBuilders, an inline PHP Template engine and categorization of read/write operations in `Resource` endpoints.
 
-<img src="https://drive.google.com/uc?export=view&id=1kH35819dPJFauEuEFhAswOAKq3hXbYRJ" alt="Intro gif">
+<img src="https://drive.google.com/uc?export=view&id=1aH80RIRVttuu8JtriCeT73u7lS4tNRmT" alt="Intro gif">
 
 ## Contents
   * [Installation](#installation)
