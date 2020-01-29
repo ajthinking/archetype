@@ -205,8 +205,6 @@ Use the `--provider` flag to only view methods from a specific `EndpointProvider
 php artisan file:api --provider=IO
 ```
 
-There is also a dump <a href="/docs/available-methods.md">here</a>
-
 
 ### Gotchas
 > :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
