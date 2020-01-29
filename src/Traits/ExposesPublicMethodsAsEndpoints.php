@@ -37,6 +37,6 @@ trait ExposesPublicMethodsAsEndpoints
                 return $endpoint->name . "($args)";
         });
 
-        return $endpoints->toArray();
+        return $endpoints->unique()->toArray();
     }  
 }

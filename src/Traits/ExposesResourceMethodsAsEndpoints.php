@@ -29,6 +29,7 @@ trait ExposesResourceMethodsAsEndpoints
 
     public function getEndpoints()
     {
+        
         $methods = $this->ownNonReservedPublicMethods();
 
         return collect($methods)->map(function($verb) {
@@ -41,19 +42,6 @@ trait ExposesResourceMethodsAsEndpoints
             ];
             
             return $verbMap[$verb];
-        });        
-
-        return $this->ownNonReservedPublicMethods();
-
-        $endpoints = $this->supportedEndpointMethods()
-            ->map(function($endpoint) {
-                $args = collect($endpoint->getParameters())->map(function($parameter) {
-                    return '$' . $parameter->getName();
-                })->join(', ');
-
-                return $endpoint->name . "($args)";
-        });
-
-        return $endpoints->toArray();
+        })->unique()->toArray();
     }  
 }

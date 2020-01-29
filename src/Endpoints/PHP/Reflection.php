@@ -70,6 +70,6 @@ class Reflection extends EndpointProvider
                 return $endpoint->name . "($args)";
         });
 
-        return $endpoints->toArray();
+        return $endpoints->unique()->toArray();
     }
 }
