@@ -25,6 +25,13 @@ class Reflection extends EndpointProvider
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $signature
+     * @param [type] $args
+     * @return void
+     */
     public function getHandlerMethod($signature, $args)
     {
         return $this->supportedReflectionMethods()
