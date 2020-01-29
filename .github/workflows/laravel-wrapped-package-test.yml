@@ -1,0 +1,10 @@
+name: Laravel-wrapped-package-test
+
+on: [pull_request]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install host app
+      run: composer create-project --prefer-dist laravel/laravel host
