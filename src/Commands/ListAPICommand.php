@@ -44,8 +44,32 @@ class ListAPICommand extends Command
                 return [
                     $provider => (new $provider())->getEndpoints()
                 ];
+            });
+
+        
+
+        $formattedAPI = $api->map(function($endpoints, $provider) {
+            return collect($endpoints)->map(function($endpoint) use($endpoints, $provider) {
+                return [
+                    $endpoint,
+                    '',
+                    $provider
+                ];
             })->toArray();
-            
-        dd($api);
+        });
+
+        $formattedAPI->each(function($endpoints, $provider) {
+            $this->info(PHP_EOL . $provider);
+            $this->table(
+                ['method', 'parameters', 'description'],
+                $endpoints
+            );
+        });
+
+
+
+
+
+        //dd($api);
     }
 }
