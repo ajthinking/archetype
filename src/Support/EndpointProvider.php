@@ -4,10 +4,18 @@ namespace PHPFileManipulator\Support;
 
 use PHPFileManipulator\PHPFile;
 use Illuminate\Support\Str;
+use PHPFileManipulator\Traits\ExposesPublicMethodsAsEndpoints;
 use ReflectionClass;
+use ReflectionMethod;
 
 abstract class EndpointProvider
 {
+    use ExposesPublicMethodsAsEndpoints;
+
+    protected $reserved_methods = [
+        'aliases'
+    ];
+    
     public function __construct(PHPFile $file = null)
     {
         $this->file = $file;      
@@ -30,40 +38,27 @@ abstract class EndpointProvider
         return false;
     }
 
-    public function supportedEndpointMethods()
-    {
-        $reflection = new ReflectionClass(static::class);
-        return collect($reflection->getMethods())
-            ->filter(function($method) {
-                if(collect([
-                    '__call',
-                    '__construct',
-                    'canHandle',
-                    'getHandlerMethod',
-                    'aliases',
-                ])->contains($method->name)) return false;
-
-
-                if($method->isPublic()) return true;
-            })->values();        
-    }
-
-    public function getEndpoints()
-    {
-        $endpoints = $this->supportedEndpointMethods()
-            ->map(function($endpoint) {
-                $args = collect($endpoint->getParameters())->map(function($parameter) {
-                    return '$' . $parameter->getName();
-                })->join(', ');
-
-                return $endpoint->name . "($args)";
-        });
-
-        return $endpoints->toArray();
-    }
-
-    public function ast()
+    protected function ast()
     {
         return $this->file->ast();
+    }
+
+    protected function ownPublicMethods()
+    {
+        $reflection = new ReflectionClass(static::class);
+        $methods = [];
+        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
+            if ($method->class == $reflection->getName())
+                 $methods[] = $method->name;
+                 
+        return $methods;
+    }    
+
+    protected function ownNonReservedPublicMethods()
+    {
+        return collect($this->ownPublicMethods())
+            ->filter(function($method) {
+                return !collect($this->reserved_methods)->contains($method);
+            })->values();
     }
 }
