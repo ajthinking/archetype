@@ -194,6 +194,8 @@ To list all the available methods A-Z on `LaravelFile`, run:
 php artisan file:api
 ```
 
+![image](https://user-images.githubusercontent.com/3457668/73381863-c8520e00-42c6-11ea-9f9e-2f9e93fe8818.png)
+
 To group methods by `EndpointProvider` use the `--group` flag:
 ```
 php artisan file:api --group
