@@ -13,10 +13,10 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 ## Contents
   * [Installation](#installation)
   * [Usage](#usage)
-    + [Quick start examples](#quick-start-examples)
-    + [Available methods](#available-methods)    
+    + [Quick start examples](#quick-start-examples)    
     + [Build your own templates](#build-your-own-templates)
     + [Querying the Abstract Syntax Tree](#querying-the-abstract-syntax-tree)
+    + [LaravelFile available methods](#laravelfile-available-methods)    
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
@@ -94,22 +94,6 @@ LaravelFile::controller('BeerController')
 
 // many in one go
 LaravelFile::create('Beer', ['model', 'controller', 'migration'])
-```
-
-### LaravelFile available methods
-To list all the available methods A-Z on `LaravelFile`, run: 
-```
-php artisan file:api
-```
-
-To group methods by `EndpointProvider` use the `--group` flag:
-```
-php artisan file:api --group
-```
-
-Use the `--provider` flag to only view methods from a specific `EndpointProvider`, for instance `IO`:
-```
-php artisan file:api --provider=IO
 ```
 
 ### Template engine
@@ -203,6 +187,22 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
     * Filtering (`named`, `whereClass` ...)
     * Resolving (`getValue`)
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
+
+### LaravelFile available methods
+To list all the available methods A-Z on `LaravelFile`, run: 
+```
+php artisan file:api
+```
+
+To group methods by `EndpointProvider` use the `--group` flag:
+```
+php artisan file:api --group
+```
+
+Use the `--provider` flag to only view methods from a specific `EndpointProvider`, for instance `IO`:
+```
+php artisan file:api --provider=IO
+```
 
 ### Gotchas
 > :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
