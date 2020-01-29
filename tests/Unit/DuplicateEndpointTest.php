@@ -3,14 +3,14 @@
 namespace PHPFileManipulator\Tests\Unit;
 
 use PHPFileManipulator\Tests\TestCase;
-use LaravelFile;
+use PHPFileManipulator\LaravelFile;
 
 class DuplicateEndpointTest extends TestCase
 {
     /** @test */
     public function there_are_no_duplicated_endpoints()
     {
-        $endpoints = (new \PHPFileManipulator\LaravelFile)
+        $endpoints = (new LaravelFile)
             ->endpointProviders()
             ->map(function ($provider) {
                 return (new $provider())->getEndpoints();

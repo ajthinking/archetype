@@ -37,8 +37,8 @@ trait ExposesResourceMethodsAsEndpoints
             $verbMap = [
                 'get' => $resourceSignature,
                 'set' => $resourceSignature,
-                'add' => 'add' . $resourceSignature,
-                'remove' => 'remove' . $resourceSignature,
+                'add' => 'add' . Str::studly($resourceSignature),
+                'remove' => 'remove' . Str::studly($resourceSignature),
             ];
             
             return $verbMap[$verb];
