@@ -11,6 +11,10 @@ class LaravelFile extends PHPFile
     }
 
     protected $endpoint_providers = [
+        // Utillities
+        Endpoints\Laravel\Template::class,
+
+        // Resources
         Endpoints\Laravel\Fillable::class,
         Endpoints\Laravel\Hidden::class,
         Endpoints\Laravel\HasOneMethods::class,

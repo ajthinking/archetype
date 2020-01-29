@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace PHPFileManipulator\Endpoints\Laravel;
 
 use Illuminate\Support\Str;
 use PHPFileManipulator\Support\EndpointProvider;
