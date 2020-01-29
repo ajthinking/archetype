@@ -14,9 +14,9 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
   * [Installation](#installation)
   * [Usage](#usage)
     + [Quick start examples](#quick-start-examples)
+    + [Available methods](#available-methods)    
     + [Build your own templates](#build-your-own-templates)
     + [Querying the Abstract Syntax Tree](#querying-the-abstract-syntax-tree)
-    + [Available methods](#available-methods)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
@@ -96,6 +96,21 @@ LaravelFile::controller('BeerController')
 LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 ```
 
+### LaravelFile available methods
+To list all the available methods A-Z on `LaravelFile`, run: 
+```
+php artisan file:api
+```
+
+To group methods by `EndpointProvider` use the `--group` flag:
+```
+php artisan file:api --group
+```
+
+Use the `--provider` flag to only view methods from a specific `EndpointProvider`, for instance `IO`:
+```
+php artisan file:api --provider=IO
+```
 
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/php-file-manipulator/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
@@ -188,23 +203,6 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
     * Filtering (`named`, `whereClass` ...)
     * Resolving (`getValue`)
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
-
-### Available methods
-To list all the available methods A-Z on `LaravelFile`, run: 
-```
-php artisan file:api
-```
-
-To group methods by `EndpointProvider` use the `--group` flag:
-```
-php artisan file:api --group
-```
-
-Use the `--provider` flag to only view methods from a specific `EndpointProvider`, for instance `IO`:
-```
-php artisan file:api --provider=IO
-```
-
 
 ### Gotchas
 > :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
