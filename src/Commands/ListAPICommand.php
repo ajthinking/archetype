@@ -7,8 +7,6 @@ use PHPFile;
 
 class ListAPICommand extends Command
 {
-    const PATH_TO_ENDPOINTS = 'packages/Ajthinking/PHPFileManipulator/src/Endpoints';
-
     /**
      * The name and signature of the console command.
      *
@@ -40,15 +38,14 @@ class ListAPICommand extends Command
      */
     public function handle()
     {
-        PHPFile::in(static::PATH_TO_ENDPOINTS)->get()
-            ->each(function($file) {
-                $this->info(
-                    $file->className() . " --> " . 
-                    collect($file->classMethodNames())->implode(' | ')
-                );
-            });
-
-
-        
+        $api = (new \PHPFileManipulator\LaravelFile)
+            ->endpointProviders()
+            ->mapWithKeys(function ($provider, $key) {
+                return [
+                    $provider => (new $provider())->getEndpoints()
+                ];
+            })->toArray();
+            
+        dd($api);
     }
 }
