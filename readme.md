@@ -190,11 +190,20 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
 ### Available methods
-To list all the available methods, run: 
-```php artisan file:api```
+To list all the available methods A-Z, run: 
+```
+php artisan file:api
+```
 
-To list a specific group of methods, run for instance:
-```php artisan file:api --provider=IO```
+To group methods by `EndpointProvider` run for instance:
+```
+php artisan file:api --group
+```
+
+Use the `--provider` flag to only view methods from a specific `EndpointProvider`:
+```
+php artisan file:api --provider=IO
+```
 
 There is also a dump <a href="/docs/available-methods.md">here</a>
 
