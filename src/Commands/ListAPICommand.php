@@ -55,7 +55,7 @@ class ListAPICommand extends Command
                 return [
                     $endpoint,
                     '',
-                    $provider
+                    ''
                 ];
             })->toArray();
         });
