@@ -9,7 +9,6 @@ class PHPFile
     use DelegatesAPICalls;
 
     protected $endpoint_providers = [
-
         // Utillities
         Endpoints\PHP\IO::class,
         Endpoints\PHP\FileQueryBuilder::class,

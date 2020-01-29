@@ -193,6 +193,9 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 To list all the available methods, run: 
 ```php artisan file:api```
 
+To list a specific group of methods, run for instance:
+```php artisan file:api --provider=IO```
+
 There is also a dump <a href="/docs/available-methods.md">here</a>
 
 

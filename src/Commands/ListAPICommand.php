@@ -12,7 +12,7 @@ class ListAPICommand extends Command
      *
      * @var string
      */
-    protected $signature = 'file:api';
+    protected $signature = 'file:api {--provider=}';
 
     /**
      * The console command description.
@@ -39,7 +39,9 @@ class ListAPICommand extends Command
     public function handle()
     {
         $api = (new \PHPFileManipulator\LaravelFile)
-            ->endpointProviders()
+            ->endpointProviders()->filter(function($provider){
+                return !$this->option('provider') || class_basename($provider) == $this->option('provider');
+            })
             ->mapWithKeys(function ($provider, $key) {
                 return [
                     $provider => (new $provider())->getEndpoints()
