@@ -190,8 +190,10 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
 ### Available methods
-Run `php artisan file:api` to list the `PHPFile` / `LaravelFile` API endpoints.
-You can also see a dump here <a href="/docs/available-methods.md">Here</a>
+To list all the available methods, run: 
+```php artisan file:api```
+
+There is also a dump <a href="/docs/available-methods.md">here</a>
 
 
 ### Gotchas
