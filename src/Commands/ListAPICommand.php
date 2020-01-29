@@ -4,6 +4,7 @@ namespace PHPFileManipulator\Commands;
 
 use Illuminate\Console\Command;
 use PHPFile;
+use Illuminate\Support\Collection;
 
 class ListAPICommand extends Command
 {
@@ -12,7 +13,7 @@ class ListAPICommand extends Command
      *
      * @var string
      */
-    protected $signature = 'file:api {--provider=}';
+    protected $signature = 'file:api {--provider=} {--group}';
 
     /**
      * The console command description.
@@ -38,24 +39,17 @@ class ListAPICommand extends Command
      */
     public function handle()
     {
-        $api = (new \PHPFileManipulator\LaravelFile)
-            ->endpointProviders()->filter(function($provider){
-                return !$this->option('provider') || class_basename($provider) == $this->option('provider');
-            })
-            ->mapWithKeys(function ($provider, $key) {
-                return [
-                    $provider => (new $provider())->getEndpoints()
-                ];
-            });
+        return $this->option('group') ? $this->showGrouped() : $this->showAtoZ();
+    }
 
-        
-
-        $formattedAPI = $api->map(function($endpoints, $provider) {
+    protected function showGrouped()
+    {
+        $formattedAPI = $this->api()->map(function($endpoints, $provider) {
             return collect($endpoints)->map(function($endpoint) use($endpoints, $provider) {
                 return [
                     $endpoint,
-                    '',
-                    ''
+                    'N/A',
+                    'N/A'
                 ];
             })->toArray();
         });
@@ -67,11 +61,44 @@ class ListAPICommand extends Command
                 $endpoints
             );
         });
+    }
 
+    protected function showAtoZ()
+    {
+        Collection::macro('flattenOneLevel', function() {
+            return $this->reduce(function($flattened, $item) {
+                return $flattened->concat($item);
+            }, collect());
+        });
 
+        $formattedAPI = $this->api()->map(function($endpoints, $provider) {
+            return collect($endpoints)->map(function($endpoint) use($endpoints, $provider) {
+                return [
+                    $endpoint,
+                    'N/A',
+                    'N/A',
+                    $provider,
+                ];
+            })->toArray();
+        })->flattenOneLevel()->sort();
 
+        $this->info(PHP_EOL . 'AVAILABLE ENDPOINTS A-Z');
+        $this->table(
+            ['method', 'parameters', 'description', 'provider'],
+            $formattedAPI
+        );
+    }    
 
-
-        //dd($api);
+    protected function api()
+    {
+        return (new \PHPFileManipulator\LaravelFile)
+        ->endpointProviders()->filter(function($provider){
+            return !$this->option('provider') || class_basename($provider) == $this->option('provider');
+        })
+        ->mapWithKeys(function ($provider, $key) {
+            return [
+                $provider => (new $provider())->getEndpoints()
+            ];
+        });
     }
 }
