@@ -13,7 +13,7 @@ class PHPFile
         Endpoints\PHP\IO::class,
         Endpoints\PHP\FileQueryBuilder::class,
         Endpoints\PHP\AstQuery::class,
-        Endpoints\PHP\Reflection::class,
+        Endpoints\PHP\ReflectionProxy::class,
 
         // Resources
         Endpoints\PHP\NamespaceResource::class,
