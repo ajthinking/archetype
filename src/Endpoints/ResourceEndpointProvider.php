@@ -8,9 +8,12 @@ use BadMethodCallException;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
+use PHPFileManipulator\Traits\ExposesResourceMethodsAsEndpoints;
 
 abstract class ResourceEndpointProvider extends EndpointProvider
 {
+    use ExposesResourceMethodsAsEndpoints;
+
     const NOT_IMPLEMENTED = 'Method not implemented for this resource';
 
     public function __call($signature, $args)
@@ -64,26 +67,5 @@ abstract class ResourceEndpointProvider extends EndpointProvider
     public function remove($args = null)
     {
         throw new BadMethodCallException($this::NOT_IMPLEMENTED);
-    }
-
-    public function getPublicMethodsOnChild()
-    {
-        $reflection = new ReflectionClass(static::class);
-        $methods = [];
-        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
-            if ($method->class == $reflection->getName())
-                 $methods[] = $method->name;
-
-        return collect($methods)->map(function($verb) {
-            $resourceSignature = collect($this->aliases())->first();
-            $verbMap = [
-                'get' => $resourceSignature,
-                'set' => $resourceSignature,
-                'add' => 'add' . $resourceSignature,
-                'remove' => 'remove' . $resourceSignature,
-            ];
-
-            return $verbMap[$verb];
-        });
     }
 }
