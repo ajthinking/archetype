@@ -16,7 +16,7 @@ use PHPFileManipulator\Support\Path;
 
 class IO extends EndpointProvider
 {
-    public function __construct(PHPFile $file)
+    public function __construct(PHPFile $file = null)
     {
         parent::__construct($file);
         $this->storage = new PHPFileStorage(

@@ -48,7 +48,7 @@ class FileQueryBuilder extends EndpointProvider
         return collect($methods)->contains($signature) ? $signature : false;
     }
     
-    public function __construct($file)
+    public function __construct($file = null)
     {
         parent::__construct($file);
         $this->result = collect();
