@@ -5,6 +5,7 @@ namespace PHPFileManipulator\Commands;
 use Illuminate\Console\Command;
 use PHPFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class ListAPICommand extends Command
 {
@@ -77,14 +78,14 @@ class ListAPICommand extends Command
                     $endpoint,
                     'N/A',
                     'N/A',
-                    $provider,
+                    Str::replaceFirst('PHPFileManipulator\\Endpoints\\', '', $provider),
                 ];
             })->toArray();
         })->flattenOneLevel()->sort();
 
         $this->info(PHP_EOL . 'AVAILABLE ENDPOINTS A-Z');
         $this->table(
-            ['method', 'parameters', 'description', 'provider'],
+            ['method', 'parameters', 'description', 'EndpointProvider'],
             $formattedAPI
         );
     }    
