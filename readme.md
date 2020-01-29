@@ -16,6 +16,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
     + [Quick start examples](#quick-start-examples)
     + [Build your own templates](#build-your-own-templates)
     + [Querying the Abstract Syntax Tree](#querying-the-abstract-syntax-tree)
+    + [Available methods](#available-methods)
     + [Gotchas](#gotchas)
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
@@ -188,6 +189,9 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
     * Resolving (`getValue`)
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
+### Available methods
+<a href="/docs/available-methods.md">Here</a> you can see a complete listing of the available `PHPFile` / `LaravelFile` endpoints. TypeHints and default argument are not documented - please refer to each EndpointProvider source for more details.
+
 
 ### Gotchas
 > :warning: Currently when reading, the package will not traverse into includes, traits or parent classes. It is up to you ta handle that.
@@ -221,10 +225,6 @@ Finally in host root run
 ```bash
 vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
 ```
-
-### Available methods
-<a href="/docs/available-methods.md">Here</a> you can see a simple listing of the available `PHPFile` / `LaravelFile` endpoints. Please refer to each EndpointProvider source for more details.
-
 
 ### Roadmap
 PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/php-file-manipulator) for planned features.
