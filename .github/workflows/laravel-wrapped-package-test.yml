@@ -8,3 +8,8 @@ jobs:
     steps:
     - name: Install host app
       run: composer create-project --prefer-dist laravel/laravel host
+    - name: Install package (this repo)
+      uses: actions/checkout@v2
+      with:
+        path: packages/Ajthinking/PHPFileManipulator
+    
