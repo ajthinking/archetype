@@ -24,3 +24,9 @@ jobs:
         KEY: repositories.as.object.url
         VALUE: "packages/Ajthinking/PHPFileManipulator"
         FILE: composer.json
+    - name: Require the package
+      run: composer require ajthinking/php-file-manipulator @dev
+    - name: Publish things
+      run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+    - name: Run tests
+      run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
