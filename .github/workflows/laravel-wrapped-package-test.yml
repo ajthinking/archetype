@@ -12,4 +12,15 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: packages/Ajthinking/PHPFileManipulator
-    
+    - name: Add path type to package to composer.json
+      uses: deef0000dragon1/json-edit-action/@v1
+      env:
+        KEY: repositories.as.object.type
+        VALUE: "path"
+        FILE: composer.json
+    - name: Add url to package to composer.json
+      uses: deef0000dragon1/json-edit-action/@v1
+      env:
+        KEY: repositories.as.object.url
+        VALUE: "packages/Ajthinking/PHPFileManipulator"
+        FILE: composer.json
