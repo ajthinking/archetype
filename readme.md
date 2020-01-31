@@ -259,4 +259,4 @@ MIT
 
 [Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
 
-<a href="https://www.patreon.com/ajthinking" >Patreon :rocket: </a>
+[Github Sponsors :octocat::heart:](https://github.com/sponsors/ajthinking)
