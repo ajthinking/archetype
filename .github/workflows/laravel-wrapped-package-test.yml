@@ -1,0 +1,32 @@
+name: Laravel-wrapped-package-test
+
+on: [pull_request]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install host app
+      run: composer create-project --prefer-dist laravel/laravel host
+    - name: Install package (this repo)
+      uses: actions/checkout@v2
+      with:
+        path: packages/Ajthinking/PHPFileManipulator
+    - name: Add path type to package to composer.json
+      uses: deef0000dragon1/json-edit-action/@v1
+      env:
+        KEY: repositories.as.object.type
+        VALUE: "path"
+        FILE: composer.json
+    - name: Add url to package to composer.json
+      uses: deef0000dragon1/json-edit-action/@v1
+      env:
+        KEY: repositories.as.object.url
+        VALUE: "packages/Ajthinking/PHPFileManipulator"
+        FILE: composer.json
+    - name: Require the package
+      run: composer require ajthinking/php-file-manipulator @dev
+    - name: Publish things
+      run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+    - name: Run tests
+      run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
