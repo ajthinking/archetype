@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 abstract class FileTestCase extends BaseTestCase 
 {
-    protected function setup() : void
+    protected function setUp() : void
     {
         parent::setUp();
         $this->cleanupDirectories();        
