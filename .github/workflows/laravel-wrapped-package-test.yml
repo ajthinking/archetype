@@ -20,21 +20,21 @@ jobs:
         repo_relative_path: 'host/packages/Ajthinking/PHPFileManipulator'
 
     - name: Require this package
-      working-directory: host
+      working-directory: ./host
       run: composer require ajthinking/php-file-manipulator @dev
 
     - name: Publish things
-      working-directory: host
+      working-directory: ./host
       run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
 
     - name: Clear up cache and autoload
-      working-directory: host
+      working-directory: ./host
       run: composer dumpautoload && php artisan cache:clear  
 
     - name: Reinstalling
-      working-directory: host
+      working-directory: ./host
       run: composer install        
       
     - name: Run tests
-      working-directory: host      
+      working-directory: ./host      
       run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
