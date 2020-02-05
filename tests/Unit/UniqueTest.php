@@ -16,4 +16,4 @@ class UniqueTest extends TestCase
     {
         $this->assertTrue(false);
     }
-}
+} 
