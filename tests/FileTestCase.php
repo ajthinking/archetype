@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Tests;
+namespace PHPFileManipulator\Tests; 
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use PHPFile;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Console\Kernel;
 use ErrorException;
 use Illuminate\Support\Str;
 
-abstract class FileTestCase extends BaseTestCase
+abstract class FileTestCase extends BaseTestCase 
 {
     protected function setup() : void
     {
