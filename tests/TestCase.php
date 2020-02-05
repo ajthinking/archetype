@@ -13,7 +13,6 @@ abstract class TestCase extends BaseTestCase
 {
     public function setUp() : void
     {
-        exit();
         parent::setUp();
         $this->cleanupDirectories();        
         $this->bootDevelopmentRootDisks();

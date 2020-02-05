@@ -9,9 +9,6 @@ use PHPFile;
 use Str;
 use UnexpectedValueException;
 
-/**
- * @group
- */
 class FilePathTest extends TestCase
 {
     /** @test */
