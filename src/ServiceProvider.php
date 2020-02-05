@@ -33,18 +33,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->bootStrMacros();
         $this->publishConfig();
-        $this->bootDevelopmentRootDisks();
     }
 
-    private function isIinProduction()
-    {
-        return preg_match(
-            '/vendor\/ajthinking\/php-file-manipulator/',
-            realpath(__DIR__)
-        );
-    } 
-
-    private function registerFacades()
+    protected function registerFacades()
     {
         App::bind('PHPFile',function() {
             return new PHPFileFactory;
@@ -55,24 +46,14 @@ class ServiceProvider extends BaseServiceProvider
         });
     }    
 
-    private function publishConfig()
+    protected function publishConfig()
     {
         $this->publishes([
             __DIR__.'/config/php-file-manipulator.php' => config_path('php-file-manipulator.php'),
         ]);        
-    }
+    }   
     
-    private function bootDevelopmentRootDisks()
-    {
-        if($this->isIinProduction()) return;
-
-        config([
-            'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
-            'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
-        ]);
-    }    
-    
-    private function registerCommands()
+    protected function registerCommands()
     {
         $this->commands([
             ListAPICommand::class,

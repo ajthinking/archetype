@@ -14,11 +14,8 @@ abstract class TestCase extends BaseTestCase
     public function setUp() : void
     {
         parent::setUp();
-        $debug = __DIR__ . '/.debug';
-        $output = __DIR__ . '/.output';
-
-        is_dir($debug) ? $this->deleteDirectory($debug) : null;
-        is_dir($output) ? $this->deleteDirectory($output) : null;              
+        $this->cleanupDirectories();        
+        $this->bootDevelopmentRootDisks();
     }
 
     public function tearDown() : void
@@ -44,6 +41,23 @@ abstract class TestCase extends BaseTestCase
 
         return $app;
     }
+
+    protected function cleanupDirectories()
+    {
+        $debug = __DIR__ . '/.debug';
+        $output = __DIR__ . '/.output';
+
+        is_dir($debug) ? $this->deleteDirectory($debug) : null;
+        is_dir($output) ? $this->deleteDirectory($output) : null;        
+    }
+
+    protected function bootDevelopmentRootDisks()
+    {
+        config([
+            'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
+            'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
+        ]);
+    }     
 
     protected function samplePath($name)
     {
