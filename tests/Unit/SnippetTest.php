@@ -12,9 +12,7 @@ use PHPFileManipulator\Support\Snippet;
 
 class SnippetTest extends TestCase
 {
-    /** @test
-     * @group onnly
-     */
+    /** @test */
     public function it_can_load_class_methods_from_snippet_defaults()
     {
         $this->assertInstanceOf(

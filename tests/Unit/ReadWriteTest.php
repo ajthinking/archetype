@@ -11,9 +11,7 @@ use Config;
 
 class ReadWriteTest extends TestCase
 {
-    /** @test
-     * @group deletion
-     */
+    /** @test */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()
     {
         $this->assertFalse(
@@ -47,9 +45,7 @@ class ReadWriteTest extends TestCase
         );
     }
 
-    /** @test
-     * @group need
-    */
+    /** @test */
     public function it_will_accept_forbidden_directories_when_explicitly_passed()
     {
         $file = PHPFile::in(

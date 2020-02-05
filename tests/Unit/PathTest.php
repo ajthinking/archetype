@@ -6,9 +6,6 @@ use PHPFileManipulator\Tests\TestCase;
 
 use PHPFileManipulator\Support\Path;
 
-/**
- * @group ok
- */
 class PathTest extends TestCase
 {
     /** @test */

@@ -26,9 +26,7 @@ class ASTQueryBuilderTest extends TestCase
         );
     }
 
-    /** @test
-     * @group only
-    */
+    /** @test */
     public function it_will_return_instance_of_itself_on_chain()
     {
         $ast = LaravelFile::load('app/User.php')->ast;
