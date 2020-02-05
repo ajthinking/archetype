@@ -1,0 +1,22 @@
+Run vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
+PHPUnit 8.5.2 by Sebastian Bergmann and contributors.
+
+.......F...................F....................................  64 / 64 (100%)
+
+Time: 5.33 seconds, Memory: 50.00 MB
+
+There were 2 failures:
+
+1) PHPFileManipulator\Tests\Unit\FilePathTest::a_file_has_an_output_path
+Failed asserting that false is true.
+
+/home/runner/work/php-file-manipulator/php-file-manipulator/host/packages/Ajthinking/PHPFileManipulator/tests/Unit/FilePathTest.php:75
+
+2) PHPFileManipulator\Tests\Unit\ReadWriteTest::it_can_write_to_default_location
+Failed asserting that false is true.
+
+/home/runner/work/php-file-manipulator/php-file-manipulator/host/packages/Ajthinking/PHPFileManipulator/tests/Unit/ReadWriteTest.php:89
+
+FAILURES!
+Tests: 64, Assertions: 155, Failures: 2.
+##[error]Process completed with exit code 1.
