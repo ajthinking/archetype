@@ -11,15 +11,17 @@ jobs:
     - name: Install package (this repo)
       uses: actions/checkout@v2
       with:
-        path: packages/Ajthinking/PHPFileManipulator
+        path: host/packages/Ajthinking/PHPFileManipulator
     - name: Add the repo to composer.json
-      uses: ajthinking/merge-json-files@v1.0.19
+      uses: ajthinking/merge-json-files@v1.0.20
       with:
-        repo_relative_path: 'packages/Ajthinking/PHPFileManipulator'
+        repo_relative_path: 'host/packages/Ajthinking/PHPFileManipulator'
     - name: Require the package
-      working-directory: src
+      working-directory: host
       run: composer require ajthinking/php-file-manipulator @dev
     - name: Publish things
+      working-directory: host
       run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
     - name: Run tests
+      working-directory: host      
       run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
