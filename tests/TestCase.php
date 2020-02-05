@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 abstract class TestCase extends BaseTestCase
 {
-    protected function setup() : void
+    public function setup() : void
     {
         exit("IM KILLING IT!");
         parent::setUp();
@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
         $this->bootDevelopmentRootDisks();
     }
 
-    protected function tearDown() : void
+    public function tearDown() : void
     {
         parent::tearDown();
         $this->cleanupDirectories();
