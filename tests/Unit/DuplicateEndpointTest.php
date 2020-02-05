@@ -10,7 +10,6 @@ class DuplicateEndpointTest extends TestCase
     /** @test */
     public function there_are_no_duplicated_endpoints()
     {
-        dd("PHP VERSION IS : " . phpversion());
         $endpoints = (new LaravelFile)
             ->endpointProviders()
             ->map(function ($provider) {

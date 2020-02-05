@@ -26,6 +26,10 @@ jobs:
     - name: Publish things
       working-directory: host
       run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+
+    - name: Clear up cache and autoload
+      working-directory: host
+      run: composer dumpautoload && php artisan cache:clear  
       
     - name: Run tests
       working-directory: host      
