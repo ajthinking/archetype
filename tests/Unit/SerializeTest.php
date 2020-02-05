@@ -38,7 +38,7 @@ class SerializeTest extends TestCase
     public function it_can_serialize_complex_files()
     {
         $code = file_get_contents(
-            __DIR__ . '/../samples/app/User.php'
+            base_path('app/User.php')
         );
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
