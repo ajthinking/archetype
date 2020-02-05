@@ -9,7 +9,7 @@ use Illuminate\Contracts\Console\Kernel;
 use ErrorException;
 use Illuminate\Support\Str;
 
-abstract class FileTestCase extends BaseTestCase 
+abstract class FileTestCase extends BaseTestCase  
 {
     protected function setUp() : void
     {
