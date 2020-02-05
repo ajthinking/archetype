@@ -29,4 +29,4 @@ jobs:
       
     - name: Run tests
       working-directory: host      
-      run: phpunit packages/Ajthinking/PHPFileManipulator/tests
+      run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
