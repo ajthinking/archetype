@@ -71,6 +71,11 @@ class FilePathTest extends TestCase
         // relative
         $file = PHPFile::load('app/User.php');
 
+        dd(
+            $file->outputPath(),
+            'expected something like: /.output/app/User.php' 
+        );
+
         $this->assertTrue(
             Str::contains($file->outputPath(), '/.output/app/User.php')
         );

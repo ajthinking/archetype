@@ -10,7 +10,6 @@ class DuplicateEndpointTest extends TestCase
     /** @test */
     public function there_are_no_duplicated_endpoints()
     {
-        dd("DIR is " . __DIR__);
         $endpoints = (new LaravelFile)
             ->endpointProviders()
             ->map(function ($provider) {
