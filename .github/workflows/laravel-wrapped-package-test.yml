@@ -30,6 +30,10 @@ jobs:
     - name: Clear up cache and autoload
       working-directory: host
       run: composer dumpautoload && php artisan cache:clear  
+
+    - name: Reinstalling
+      working-directory: host
+      run: composer install        
       
     - name: Run tests
       working-directory: host      
