@@ -11,15 +11,14 @@ use Illuminate\Support\Str;
 
 abstract class TestCase extends BaseTestCase
 {
-    public function setup() : void
+    protected function setup() : void
     {
-        exit("IM KILLING IT!");
         parent::setUp();
         $this->cleanupDirectories();        
         $this->bootDevelopmentRootDisks();
     }
 
-    public function tearDown() : void
+    protected function tearDown() : void
     {
         parent::tearDown();
         $this->cleanupDirectories();
