@@ -2,11 +2,11 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
 use PHPFileManipulator\Support\Path;
 
-class PathTest extends TestCase
+class PathTest extends FileTestCase
 {
     /** @test */
     public function it_can_create_paths_with_explicit_default_root()

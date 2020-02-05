@@ -2,14 +2,14 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use PhpParser\ParserFactory;
 use PhpParser\JsonDecoder;
 
 use PHPFile;
 use LaravelFile;
 
-class SerializeTest extends TestCase
+class SerializeTest extends FileTestCase
 {
     /** @test */
     public function it_can_serialize_simple_files()

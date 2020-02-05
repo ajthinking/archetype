@@ -2,14 +2,14 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
 use LaravelFile;
 use PHPFile;
 use Str;
 use UnexpectedValueException;
 
-class FilePathTest extends TestCase
+class FilePathTest extends FileTestCase
 {
     /** @test */
     public function a_file_has_an_input_path()

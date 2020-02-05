@@ -2,14 +2,14 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
 use LaravelFile;
 use PHPFile;
 use Storage;
 use Config;
 
-class ReadWriteTest extends TestCase
+class ReadWriteTest extends FileTestCase
 {
     /** @test */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()

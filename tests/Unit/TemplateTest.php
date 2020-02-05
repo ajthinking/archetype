@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
@@ -10,7 +10,7 @@ use UnexpectedValueException;
 use PHPFile;
 use LaravelFile;
 
-class TemplateTest extends TestCase
+class TemplateTest extends FileTestCase
 {
     /** @test */
     public function it_can_load_templates()

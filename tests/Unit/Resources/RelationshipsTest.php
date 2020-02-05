@@ -2,12 +2,12 @@
 
 namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
 use LaravelFile;
 use PHPFile;
 
-class RelationshipsTest extends TestCase
+class RelationshipsTest extends FileTestCase
 {
     /** @test */
     public function it_can_insert_belongs_to_methods()

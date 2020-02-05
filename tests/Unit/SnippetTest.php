@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use PhpParser\Node\Stmt\ClassMethod;
 
 use PHPFile;
@@ -10,7 +10,7 @@ use LaravelFile;
 
 use PHPFileManipulator\Support\Snippet;
 
-class SnippetTest extends TestCase
+class SnippetTest extends FileTestCase
 {
     /** @test */
     public function it_can_load_class_methods_from_snippet_defaults()

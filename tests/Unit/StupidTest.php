@@ -2,9 +2,9 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
-class StupidTest extends TestCase
+class StupidTest extends FileTestCase
 {
     /** @test */
     public function it_can_run_tests()

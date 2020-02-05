@@ -2,10 +2,10 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use PHPFileManipulator\LaravelFile;
 
-class DuplicateEndpointTest extends TestCase
+class DuplicateEndpointTest extends FileTestCase
 {
     /** @test */
     public function there_are_no_duplicated_endpoints()

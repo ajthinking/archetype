@@ -2,14 +2,14 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
 use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class QueryBuilderTest extends TestCase
+class QueryBuilderTest extends FileTestCase
 {
     /** @test */
     public function pass()

@@ -2,12 +2,12 @@
 
 namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
 use PHPFile;
 use LaravelFile;
 
-class ClassImplementsTest extends TestCase
+class ClassImplementsTest extends FileTestCase
 {
     /** @test */
     public function it_can_retrieve_class_implements()

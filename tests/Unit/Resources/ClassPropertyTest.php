@@ -2,12 +2,12 @@
 
 namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 
 use PHPFile;
 use LaravelFile;
 
-class ClassPropertyTest extends TestCase
+class ClassPropertyTest extends FileTestCase
 {
     /** @test */
     public function it_can_retrieve_fillables()

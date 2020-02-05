@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
 use PHPFileManipulator\Support\AST\ASTQueryBuilder;
@@ -10,7 +10,7 @@ use PHPFileManipulator\Support\QueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ASTQueryBuilderTest extends TestCase
+class ASTQueryBuilderTest extends FileTestCase
 {
     /** @test
     */

@@ -2,12 +2,12 @@
 
 namespace PHPFileManipulator\Tests\Unit;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 
 use BadMethodCallException;
 
-class APIDelegationTest extends TestCase
+class APIDelegationTest extends FileTestCase
 {
     /** @test */
     public function it_can_delegate_method_calls()

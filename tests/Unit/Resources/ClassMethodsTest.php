@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
-use PHPFileManipulator\Tests\TestCase;
+use PHPFileManipulator\Tests\FileTestCase;
 use LaravelFile;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\BuilderFactory;
@@ -11,7 +11,7 @@ use PhpParser\Node\Expr\Variable;
 
 use PHPFile;
 
-class ClassMethodsTest extends TestCase
+class ClassMethodsTest extends FileTestCase
 {
     /** @test */
     public function it_can_retrieve_class_method_names()
