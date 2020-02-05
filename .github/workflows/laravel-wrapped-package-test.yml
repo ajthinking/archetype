@@ -29,7 +29,7 @@ jobs:
 
     - name: Clear up cache and autoload
       working-directory: ./host
-      run: composer dumpautoload && php artisan cache:clear  
+      run: composer dumpautoload && php artisan cache:clear && artisan config:clear 
 
     - name: Reinstalling
       working-directory: ./host
