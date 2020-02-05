@@ -8,20 +8,25 @@ jobs:
     steps:
     - name: Install host app
       run: composer create-project --prefer-dist laravel/laravel host
+      
     - name: Install package (this repo)
       uses: actions/checkout@v2
       with:
         path: host/packages/Ajthinking/PHPFileManipulator
-    - name: Add the repo to composer.json
+
+    - name: Add this package to composer.json repositories
       uses: ajthinking/merge-json-files@v1.0.20
       with:
         repo_relative_path: 'host/packages/Ajthinking/PHPFileManipulator'
-    - name: Require the package
+
+    - name: Require this package
       working-directory: host
       run: composer require ajthinking/php-file-manipulator @dev
+
     - name: Publish things
       working-directory: host
       run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+      
     - name: Run tests
       working-directory: host      
       run: phpunit packages/Ajthinking/PHPFileManipulator/tests
