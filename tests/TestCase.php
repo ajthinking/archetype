@@ -50,7 +50,6 @@ abstract class TestCase extends BaseTestCase
     protected function bootDevelopmentRootDisks()
     {
         dd("DIR is " . __DIR__);
-
         config([
             'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
             'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
