@@ -21,11 +21,7 @@ abstract class TestCase extends BaseTestCase
     public function tearDown() : void
     {
         parent::tearDown();
-        $debug = __DIR__ . '/.debug';
-        $output = __DIR__ . '/.output';
-
-        is_dir($debug) ? $this->deleteDirectory($debug) : null;
-        is_dir($output) ? $this->deleteDirectory($output) : null;              
+        $this->cleanupDirectories();
     }    
 
     /**
@@ -53,6 +49,8 @@ abstract class TestCase extends BaseTestCase
 
     protected function bootDevelopmentRootDisks()
     {
+        dd("DIR is " . __DIR__);
+
         config([
             'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
             'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
