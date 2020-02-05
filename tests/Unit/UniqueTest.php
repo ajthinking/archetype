@@ -6,7 +6,7 @@ use PHPFileManipulator\Tests\TestCase;
 
 class UniqueTest extends TestCase
 {
-    protected function setUp() : void
+    public function setUp() : void
     {
         exit("Hey, im dying here, inside child!");
     }
