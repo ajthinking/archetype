@@ -10,10 +10,6 @@ class DuplicateEndpointTest extends TestCase
     /** @test */
     public function there_are_no_duplicated_endpoints()
     {
-        dd(
-            config('dummy')
-        );
-
         $endpoints = (new LaravelFile)
             ->endpointProviders()
             ->map(function ($provider) {

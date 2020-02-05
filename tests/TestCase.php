@@ -16,7 +16,6 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         $this->cleanupDirectories();        
         $this->bootDevelopmentRootDisks();
-        config(['dummy' => 'hey im here!']);
     }
 
     protected function tearDown() : void
