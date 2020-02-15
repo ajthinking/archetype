@@ -1,4 +1,4 @@
-name: Laravel-wrapped-package-test
+name: tests
 
 on: [push]
 
