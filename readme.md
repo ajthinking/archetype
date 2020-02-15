@@ -1,7 +1,6 @@
 # ```PHPFile::manipulator```(:fire::fire::fire:);
 
-![Laravel-wrapped-package-test](https://github.com/ajthinking/php-file-manipulator/workflows/tests/badge.svg)
-[![Latest Unstable Version](https://poser.pugx.org/ajthinking/php-file-manipulator/v/unstable)](https://packagist.org/packages/ajthinking/php-file-manipulator)
+![tests](https://github.com/ajthinking/php-file-manipulator/workflows/tests/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/ajthinking/php-file-manipulator/v/stable)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 [![Total Downloads](https://poser.pugx.org/ajthinking/php-file-manipulator/downloads)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 [![License](https://poser.pugx.org/ajthinking/php-file-manipulator/license)](https://packagist.org/packages/ajthinking/php-file-manipulator)
