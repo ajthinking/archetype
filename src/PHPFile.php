@@ -22,7 +22,7 @@ class PHPFile
         Endpoints\PHP\ClassExtends::class,
         Endpoints\PHP\ClassImplements::class,
         Endpoints\PHP\ClassMethods::class,
-        Endpoints\PHP\ClassMethodNames::class,            
+        Endpoints\PHP\ClassMethodNames::class,
     ];
 
     public function endpointProviders() {
