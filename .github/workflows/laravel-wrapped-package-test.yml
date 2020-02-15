@@ -35,6 +35,10 @@ jobs:
       working-directory: ./host
       run: composer install
 
+    - name: Dumping current pwd (from ./host)
+      working-directory: ./host
+      run: pwd
+
     - name: Dumping composer.json
       working-directory: ./host
       run: cat composer.json
