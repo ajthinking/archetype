@@ -1,7 +1,7 @@
 # ```PHPFile::manipulator```(:fire::fire::fire:);
 
 ![tests](https://github.com/ajthinking/php-file-manipulator/workflows/tests/badge.svg)
-![version](https://img.shields.io/badge/version-1.2.3-blue)(https://packagist.org/packages/ajthinking/php-file-manipulator)
+![version](https://img.shields.io/packagist/v/ajthinking/php-file-manipulator?color=blue)
 [![Total Downloads](https://poser.pugx.org/ajthinking/php-file-manipulator/downloads)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 [![License](https://poser.pugx.org/ajthinking/php-file-manipulator/license)](https://packagist.org/packages/ajthinking/php-file-manipulator)
 
