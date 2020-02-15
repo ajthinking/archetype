@@ -9,7 +9,7 @@ class StupidTest extends FileTestCase
     /** @test */
     public function it_can_run_tests()
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
     
     /** @test */
