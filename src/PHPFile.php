@@ -8,10 +8,11 @@ class PHPFile
 {
     use DelegatesAPICalls;
 
+    protected $file_query_builder = Endpoints\PHP\FileQueryBuilder::class;
+
     protected $endpoint_providers = [
         // Utillities
         Endpoints\PHP\IO::class,
-        Endpoints\PHP\FileQueryBuilder::class,
         Endpoints\PHP\AstQuery::class,
         Endpoints\PHP\ReflectionProxy::class,
 
@@ -26,7 +27,9 @@ class PHPFile
     ];
 
     public function endpointProviders() {
-        return collect((new self)->endpoint_providers);
+        return collect((new self)->endpoint_providers)->push(
+            $this->file_query_builder
+        );
     }
 
     public function templates() {
