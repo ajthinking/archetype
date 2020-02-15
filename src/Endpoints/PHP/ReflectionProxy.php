@@ -18,11 +18,7 @@ class ReflectionProxy extends EndpointProvider
     {
         $class = "\\" . $this->file->namespace() ."\\" . $this->file->className();
 
-        try {
-            return new ReflectionClass($class);
-        } catch(Exception $e) {
-            dd("Could not reflect class $class");
-        }
+        return new ReflectionClass($class);
     }
 
     /**
@@ -36,6 +32,7 @@ class ReflectionProxy extends EndpointProvider
     {
         return $this->supportedReflectionMethods()
             ->pluck('name')->filter()->values()
+            ->push('getReflection')
             ->first(function($name) use($signature) {
                 return $name == $signature;
             });
