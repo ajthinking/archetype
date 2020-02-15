@@ -35,6 +35,10 @@ jobs:
       working-directory: ./host
       run: composer install
 
+    - name: Dumping composer.json
+      working-directory: ./host
+      run: cat composer.json
+
     - name: Run tests
       working-directory: ./host      
       run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
