@@ -15,7 +15,7 @@ jobs:
         path: host/packages/Ajthinking/PHPFileManipulator
 
     - name: Add this package to composer.json repositories
-      uses: ajthinking/merge-json-files@v1.0.20
+      uses: ajthinking/merge-json-files@v1.0.21
       with:
         repo_relative_path: 'host/packages/Ajthinking/PHPFileManipulator'
 
