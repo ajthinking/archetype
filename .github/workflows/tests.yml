@@ -6,18 +6,16 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
-    - name: Install host app
+    - name: Install a containing host app
       run: composer create-project --prefer-dist laravel/laravel host
       
-    - name: Install package (this repo)
+    - name: Checkout the package - this repo - into a packages folder
       uses: actions/checkout@v2
       with:
         path: host/packages/Ajthinking/PHPFileManipulator
 
-    - name: Add this package to composer.json repositories
-      uses: ajthinking/merge-json-files@v1.0.22
-      with:
-        repo_relative_path: 'host/packages/Ajthinking/PHPFileManipulator'
+    - name: Add the package to host composer.json repositories
+      run: composer config repositories.php-file-manipulator path "/home/runner/work/php-file-manipulator/php-file-manipulator/host/packages/Ajthinking/PHPFileManipulator"
 
     - name: Require this package
       working-directory: ./host
