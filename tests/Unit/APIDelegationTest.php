@@ -7,8 +7,6 @@ use PHPFile;
 
 use BadMethodCallException;
 
-dd("Fresh!");
-
 class APIDelegationTest extends FileTestCase 
 {
     /** @test */
