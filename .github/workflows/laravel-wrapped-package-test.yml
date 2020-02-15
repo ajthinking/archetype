@@ -33,7 +33,11 @@ jobs:
 
     - name: Reinstalling
       working-directory: ./host
-      run: composer install        
+      run: composer install
+      
+    - name: Dumping Base test to ensure right content
+      working-directory: ./host
+      run: cat packages/Ajthinking/PHPFileManipulator/tests/FileTestCase.php        
       
     - name: Run tests
       working-directory: ./host      
