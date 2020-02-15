@@ -21,4 +21,36 @@ use LaravelFile;
 use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
 
 class LaravelFileQueryBuilder extends FileQueryBuilder
-{}
+{
+    public function models()
+    {
+        return $this->instanceof('Illuminate\Database\Eloquent\Model');
+    }
+
+    public function controllers()
+    {
+        return $this->instanceof('Illuminate\Routing\Controller');
+    }
+
+    // PLEASE TAYLOR MAKE MIGRATIONS NAMESPACED
+    // public function migrations()
+    // {
+    //     return $this->instanceof('Illuminate\Database\Migrations\Migration');
+    // }    
+
+    protected function instanceof($class)
+    {
+        // Ensure we are in a directory context - default to base path
+        if(!isset($this->baseDir)) $this->in('');
+
+        $this->result = $this->result->filter(function($file) use($class) {
+            try {
+                return $file->getReflection()->isSubclassOf($class);
+            } catch(\Exception $e) {
+                return false;
+            }
+        });
+
+        return $this;
+    }
+}
