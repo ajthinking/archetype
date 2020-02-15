@@ -6,6 +6,8 @@ use PHPFileManipulator\PHPFile;
 
 class LaravelFile extends PHPFile 
 {
+    protected $file_query_builder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
+
     public function endpointProviders() {
         return parent::endpointProviders()->concat($this->endpoint_providers);
     }
