@@ -59,5 +59,5 @@ class ArrayPropertyResource extends ResourceEndpointProvider
         );
 
         return $this->file;
-    }     
+    }
 }
