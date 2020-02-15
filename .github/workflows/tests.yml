@@ -15,6 +15,7 @@ jobs:
         path: host/packages/Ajthinking/PHPFileManipulator
 
     - name: Add the package to host composer.json repositories
+      working-directory: ./host      
       run: composer config repositories.php-file-manipulator path "/home/runner/work/php-file-manipulator/php-file-manipulator/host/packages/Ajthinking/PHPFileManipulator"
 
     - name: Require this package
