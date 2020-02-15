@@ -2,10 +2,18 @@
 
 namespace PHPFileManipulator\Tests\Unit; 
 
+use PHPFileManipulator\Tests\Epic;
 use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 
 use BadMethodCallException;
+
+class EpicInstance extends Epic {}
+
+dd(
+    EpicInstance::imRolling()
+);
+
 
 class APIDelegationTest extends FileTestCase 
 {
