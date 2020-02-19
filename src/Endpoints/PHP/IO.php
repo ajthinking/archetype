@@ -30,6 +30,7 @@ class IO extends EndpointProvider
             "ast",
             "dd",
             "fromString",
+            "hasModifications",
             "load",
             "parse",
             "relativeInputPath",
@@ -52,8 +53,8 @@ class IO extends EndpointProvider
     {
         $this->file->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
         $this->file->contents = $this->storage->get($this->file->inputPath);
-        $this->file->ast = $this->parse();                
-        
+        $this->file->ast = $this->parse();
+        $this->file->initialModificationHash = $this->getModificationHash();
         $this->setOutputPath();        
         
         return $this->file;
@@ -61,12 +62,12 @@ class IO extends EndpointProvider
     
     public function fromString($code)
     {        
-        $this->file->contents = $code;
         $this->file->inputPath = null;        
+        $this->file->contents = $code;
         $this->file->ast = $this->parse();
-
-
+        $this->file->initialModificationHash = $this->getModificationHash();
         $this->setOutputPath();
+        
         return $this->file;        
     }
 
@@ -149,6 +150,16 @@ class IO extends EndpointProvider
         }
 
         return $ast;
+    }
+
+    public function hasModifications()
+    {
+        return $this->getModificationHash() != $this->file->initialModificationHash;
+    }
+
+    protected function getModificationHash()
+    {
+        return md5(json_encode($this->file->ast));
     }
     
     public function print()

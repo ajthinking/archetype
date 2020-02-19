@@ -10,10 +10,7 @@ class Fillable extends ArrayPropertyResource
     {
         $reflection = $this->file->getReflection();
         
-        return $this->getWithParser();
-
-        // THERE IS A PROBLEM! REFLECTION CANT BE USED AFTER MODIFICATION!
-        //return $reflection ? $this->getWithReflection() : $this->getWithParser();
+        return ($reflection && !$this->file->hasModifications()) ? $this->getWithReflection() : $this->getWithParser();
     }
 
     protected function getWithReflection()
