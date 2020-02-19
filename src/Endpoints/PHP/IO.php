@@ -154,7 +154,8 @@ class IO extends EndpointProvider
 
     public function hasModifications()
     {
-        return $this->getModificationHash() != $this->file->initialModificationHash;
+
+        return (!isset($this->file->ast)) || $this->getModificationHash() != $this->file->initialModificationHash;
     }
 
     protected function getModificationHash()
