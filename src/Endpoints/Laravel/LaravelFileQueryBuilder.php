@@ -44,11 +44,8 @@ class LaravelFileQueryBuilder extends FileQueryBuilder
         if(!isset($this->baseDir)) $this->in('');
 
         $this->result = $this->result->filter(function($file) use($class) {
-            try {
-                return $file->getReflection()->isSubclassOf($class);
-            } catch(\Exception $e) {
-                return false;
-            }
+            $reflection = $file->getReflection();
+            return $reflection && $reflection->isSubclassOf($class);
         });
 
         return $this;
