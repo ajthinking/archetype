@@ -18,7 +18,11 @@ class ReflectionProxy extends EndpointProvider
     {
         $class = "\\" . $this->file->namespace() ."\\" . $this->file->className();
 
-        return new ReflectionClass($class);
+        try {
+            return new ReflectionClass($class);
+        } catch(Exception $e) {
+           return null;
+        }
     }
 
     /**
