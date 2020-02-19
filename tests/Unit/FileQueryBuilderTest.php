@@ -9,7 +9,7 @@ use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class QueryBuilderTest extends FileTestCase
+class FileQueryBuilderTest extends FileTestCase
 {
     /** @test */
     public function pass()

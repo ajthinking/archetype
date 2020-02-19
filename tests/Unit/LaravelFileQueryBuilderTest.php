@@ -9,7 +9,7 @@ use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class LaravelQueryBuilderTest extends FileTestCase
+class LaravelFileQueryBuilderTest extends FileTestCase
 {    
     /** @test */
     public function it_can_scope_on_models()
