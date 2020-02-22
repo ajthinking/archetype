@@ -12,11 +12,6 @@ use PHPFileManipulator\Exceptions\NotImplementedYetException;
 
 abstract class ArrayPropertyResource extends ResourceEndpointProvider
 {
-    protected function canUseReflection()
-    {
-        return $this->file->getReflection() && !$this->file->hasModifications();
-    }
-
     protected function getWithReflection($name)
     {
         return $this->file->getReflection()->getDefaultProperties()[$name];

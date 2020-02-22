@@ -43,22 +43,8 @@ abstract class EndpointProvider
         return $this->file->ast();
     }
 
-    protected function ownPublicMethods()
+    protected function canUseReflection()
     {
-        $reflection = new ReflectionClass(static::class);
-        $methods = [];
-        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
-            if ($method->class == $reflection->getName())
-                 $methods[] = $method->name;
-                 
-        return $methods;
-    }    
-
-    protected function ownNonReservedPublicMethods()
-    {
-        return collect($this->ownPublicMethods())
-            ->filter(function($method) {
-                return !collect($this->reserved_methods)->contains($method);
-            })->values();
+        return $this->file->getReflection() && !$this->file->hasModifications();
     }
 }

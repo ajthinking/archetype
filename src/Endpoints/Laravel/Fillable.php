@@ -5,7 +5,14 @@ namespace PHPFileManipulator\Endpoints\Laravel;
 use PHPFileManipulator\Endpoints\ArrayPropertyResource;
 
 class Fillable extends ArrayPropertyResource
-{   
+{
+    public static function aliases() 
+    {
+        return [
+            'fillable', 'fillables'
+        ];
+    }
+
     public function get()
     {
         return $this->canUseReflection() ? $this->getWithReflection('fillable') : $this->getWithParser('fillable');
