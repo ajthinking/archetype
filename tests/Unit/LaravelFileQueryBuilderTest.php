@@ -25,5 +25,13 @@ class LaravelFileQueryBuilderTest extends FileTestCase
         $this->assertCount(
             7, LaravelFile::controllers()->get()
         );
+    }
+    
+    /** @test */
+    public function it_can_get_user()
+    {        
+        $this->assertTrue(
+            get_class(LaravelFile::user()) === 'PHPFileManipulator\LaravelFile'
+        );
     }    
 }

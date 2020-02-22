@@ -22,6 +22,11 @@ use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
 
 class LaravelFileQueryBuilder extends FileQueryBuilder
 {
+    public function user()
+    {
+        return $this->where('className', 'User')->get()->first();
+    }
+
     public function models()
     {
         return $this->instanceof('Illuminate\Database\Eloquent\Model');
