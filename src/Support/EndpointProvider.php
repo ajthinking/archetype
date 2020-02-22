@@ -18,7 +18,7 @@ abstract class EndpointProvider
     
     public function __construct(PHPFile $file = null)
     {
-        $this->file = $file;      
+        $this->file = $file;
     }
 
     public static function aliases()

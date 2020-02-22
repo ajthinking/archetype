@@ -41,6 +41,15 @@ class ClassPropertyTest extends FileTestCase
             ['guns', 'roses',]
         );
     }
+
+    /** @test */
+    public function it_can_add_fillables()
+    {
+        $this->assertEquals(
+            LaravelFile::load('app/User.php')->fillable(['guns', 'roses'])->addFillable(['metallica'])->fillable(),
+            ['guns', 'roses', 'metallica']
+        );
+    }    
     
     /** @test */
     public function it_can_set_hidden()

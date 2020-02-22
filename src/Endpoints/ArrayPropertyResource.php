@@ -12,7 +12,22 @@ use PHPFileManipulator\Exceptions\NotImplementedYetException;
 
 abstract class ArrayPropertyResource extends ResourceEndpointProvider
 {
-    public function items($requestedName)
+    protected function canUseReflection()
+    {
+        return $this->file->getReflection() && !$this->file->hasModifications();
+    }
+
+    protected function getWithReflection($name)
+    {
+        return $this->file->getReflection()->getDefaultProperties()[$name];
+    }
+
+    protected function getWithParser($name)
+    {
+        return $this->items($name);
+    }
+
+    protected function items($requestedName)
     {
         $propertyGroups = (new NodeFinder)->findInstanceOf($this->ast(), Property::class);
         if(!$propertyGroups) return null;
@@ -33,7 +48,7 @@ abstract class ArrayPropertyResource extends ResourceEndpointProvider
         })->toArray();
     }
     
-    public function setItems($requestedName, $items)
+    protected function setItems($requestedName, $items)
     {
         $propertyGroups = (new NodeFinder)->findInstanceOf($this->ast(), Property::class);
         if(!$propertyGroups) return null;

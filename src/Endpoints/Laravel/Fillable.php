@@ -8,23 +8,19 @@ class Fillable extends ArrayPropertyResource
 {   
     public function get()
     {
-        $reflection = $this->file->getReflection();
-        
-        return ($reflection && !$this->file->hasModifications()) ? $this->getWithReflection() : $this->getWithParser();
+        return $this->canUseReflection() ? $this->getWithReflection('fillable') : $this->getWithParser('fillable');
     }
-
-    protected function getWithReflection()
-    {
-        return $this->file->getReflection()->getDefaultProperties()['fillable'];
-    }
-
-    protected function getWithParser()
-    {
-        return $this->items('fillable');
-    }    
 
     public function set($values)
     {
         return $this->setItems('fillable', $values);
     }
+
+    public function add($values)
+    {
+        return $this->setItems(
+            'fillable',
+            collect($this->get())->concat($values)->toArray()
+        );
+    }    
 }
