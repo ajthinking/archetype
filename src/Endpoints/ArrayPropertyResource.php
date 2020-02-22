@@ -10,7 +10,7 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Expr\ArrayItem;
 use PHPFileManipulator\Exceptions\NotImplementedYetException;
 
-class ArrayPropertyResource extends ResourceEndpointProvider
+abstract class ArrayPropertyResource extends ResourceEndpointProvider
 {
     public function items($requestedName)
     {
