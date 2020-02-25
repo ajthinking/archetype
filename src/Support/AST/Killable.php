@@ -2,4 +2,6 @@
 
 namespace PHPFileManipulator\Support\AST;
 
-class Killable {}
+use PHPFileManipulator\Support\AST\QueryNode;
+
+class Killable extends QueryNode {} 

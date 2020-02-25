@@ -2,7 +2,9 @@
 
 namespace PHPFileManipulator\Support\AST;
 
-class Survivor {
+use PHPFileManipulator\Support\AST\QueryNode;
+
+class Survivor extends QueryNode {
 
     public $memory;
 
