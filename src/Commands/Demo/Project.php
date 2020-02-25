@@ -14,7 +14,14 @@ class Project
 
     public function __construct()
     {   
-        $this->schema = $this->makeSchema();
+        //$this->schema = $this->makeSchema();
+    }
+
+    public function missingRelationshipMethods()
+    {
+        return collect([
+            1,2,3
+        ]);
     }
     
     protected function makeSchema()

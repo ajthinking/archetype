@@ -39,10 +39,13 @@ class RelationshipsDemo extends Command
      */
     public function handle()
     {
-        $p = new Project();
-        
-        dd(
-            $p->schema
-        );
+        // read your application into a Project class
+        $project = new Project();
+
+        $project->missingRelationshipMethods()->each(function($suggestion) {
+            if($this->confirm("Do you want to add User HasMany Cars?")) {
+                $this->info("Cool!");
+            }
+        });
     }
 }
