@@ -14,7 +14,7 @@ use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\Traversable;
 use PHPFileManipulator\Support\AST\NodeReplacer;
-use PHPFileManipulator\Support\AST\SplObjectHashInserter;
+use PHPFileManipulator\Support\AST\HashInserter;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeTraverser;
 
@@ -25,6 +25,11 @@ class ASTQueryBuilder extends Traversable
     public function __construct($ast)
     {
         $this->ast = $ast;
+
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new HashInserter);
+        $this->ast = $traverser->traverse($ast);
+        
         $this->initial = $this->ast;
 
         $this->manipulations = [];
