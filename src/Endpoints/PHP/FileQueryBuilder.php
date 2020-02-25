@@ -64,12 +64,13 @@ class FileQueryBuilder extends EndpointProvider
         $this->baseDir = $directory;
                       
         $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) { 
-            $type = '\\PHPFileManipulator\\Facades\\' . class_basename(get_class($this->file));
-            return $type::load($filePath);
+            $type = get_class($this->file);
+            return (new $type)->load($filePath);
         });
         
         return $this;    
     }
+
     /**
      * Supported signatures:
      * where('something', <value>)
