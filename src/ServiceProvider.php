@@ -9,6 +9,7 @@ use PHPFileManipulator\Factories\PHPFileFactory;
 use PHPFileManipulator\Factories\LaravelFileFactory;
 use PHPFileManipulator\Commands\ListAPICommand;
 use PHPFileManipulator\Commands\TypeWriterCommand;
+use PHPFileManipulator\Commands\RelationshipsDemo;
 Use Illuminate\Support\Str;
 use Config;
 use Illuminate\Support\Arr;
@@ -43,7 +44,7 @@ class ServiceProvider extends BaseServiceProvider
 
         App::bind('LaravelFile',function() {
             return new LaravelFileFactory;
-        });
+        });        
     }    
 
     protected function publishConfig()
@@ -59,6 +60,8 @@ class ServiceProvider extends BaseServiceProvider
             ListAPICommand::class,
             TypeWriterCommand::class,
             DemoCommand::class,
+            RelationshipsDemo::class,
+            // prepare for development            
         ]);
     }
 }
