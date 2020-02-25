@@ -39,7 +39,7 @@ class RelationshipsDemo extends Command
      */
     public function handle()
     {
-        // read your application into a Project class
+        // read our application into a Project class
         $project = new Project();
 
         $project->missingRelationshipMethods()->each(function($suggestion) {
