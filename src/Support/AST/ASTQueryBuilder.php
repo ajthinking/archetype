@@ -29,27 +29,27 @@ class ASTQueryBuilder extends Traversable
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new HashInserter);
         $this->ast = $traverser->traverse($ast);
-        
-        $this->initial = $this->ast;
 
         $this->manipulations = [];
         $this->depth = 0;
         $this->tree = [
-            [$this->initial],
+            [new Survivor($this->ast)],
         ];
     }
 
     public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
     {
-        $next = collect($this->tree[$this->depth])->map(function($item) use($expectedClass, $finderMethod) {
-            $results = (new NodeFinder)->$finderMethod($item, $expectedClass);
-            return $results ? $results : new Killable;
-        })->filter(function($results) {
-            return !Terminator::kills($results);
+        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($expectedClass, $finderMethod) {
+            // Search the abstract syntax tree
+            $results = (new NodeFinder)->$finderMethod($queryNode->results, $expectedClass);
+            // Wrap matches in Survivor object
+            return collect($results)->map(function($result) {
+                return new Survivor($result);
+            })->toArray();
         })->flatten()->toArray();
-
-        array_push($this->tree, $next);
         
+        array_push($this->tree, $next);
+
         $this->depth++;
 
         return $this;        
@@ -57,14 +57,21 @@ class ASTQueryBuilder extends Traversable
 
     public function traverseInto($property)
     {
-        $next = collect($this->tree[$this->depth])->map(function($item) use($property) {
-            return $item->$property ?? new Killable;
-        })->filter(function($results) {
-            return !Terminator::kills($results);
+        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property) {
+            if(!isset($queryNode->results->$property)) return new Killable;
+            $value = $queryNode->results->$property;
+            
+            if(is_array($value)) {
+                return collect($value)->map(function($item) use($value) {
+                    return new Survivor($item);
+                })->toArray();
+            }
+
+            return new Survivor($value);
         })->flatten()->toArray();
 
         array_push($this->tree, $next);
-        
+
         $this->depth++;
 
         return $this;
@@ -170,15 +177,13 @@ class ASTQueryBuilder extends Traversable
 
     public function where($path, $expected)
     {
-        $nextLevel = collect($this->tree[$this->depth])->map(function($item) use($path, $expected) {
+        $nextLevel = collect($this->tree[$this->depth])->map(function($queryNode) use($path, $expected) {
             $steps = collect(explode('->', $path));
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
-            }, $item);
+            }, $queryNode->results);
 
-            return $result == $expected ? $item : new Killable;
-        })->filter(function($results) {
-            return !Terminator::kills($results);
+            return $result == $expected ? $queryNode : new Killable;
         })->flatten()->toArray();
 
         array_push($this->tree, $nextLevel);
@@ -189,7 +194,7 @@ class ASTQueryBuilder extends Traversable
 
     public function get()
     {
-        return collect(end($this->tree));
+        return collect(end($this->tree))->pluck('results')->flatten();
     }
 
     public function dd()
