@@ -8,10 +8,10 @@ class Survivor extends QueryNode {
 
     public $memory;
 
-    public $result;    
+    public $results;    
 
-    public function __construct($result)
+    public function __construct($results)
     {
-        $this->result = $result;
+        $this->results = $results;
     }
 }
