@@ -43,8 +43,8 @@ class ASTQueryBuilder extends Traversable
             // Search the abstract syntax tree
             $results = (new NodeFinder)->$finderMethod($queryNode->results, $expectedClass);
             // Wrap matches in Survivor object
-            return collect($results)->map(function($result) {
-                return new Survivor($result);
+            return collect($results)->map(function($result, $queryNode) {
+                return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
         })->flatten()->toArray();
         
@@ -62,12 +62,12 @@ class ASTQueryBuilder extends Traversable
             $value = $queryNode->results->$property;
             
             if(is_array($value)) {
-                return collect($value)->map(function($item) use($value) {
-                    return new Survivor($item);
+                return collect($value)->map(function($item) use($value, $queryNode) {
+                    return Survivor::fromParent($queryNode)->withResult($item);
                 })->toArray();
             }
 
-            return new Survivor($value);
+            return Survivor::fromParent($queryNode)->withResult($value);
         })->flatten()->toArray();
 
         array_push($this->tree, $next);
@@ -98,6 +98,15 @@ class ASTQueryBuilder extends Traversable
             static::UNTIL[$class],
             'findFirstInstanceOf'
         );        
+    }
+
+    public function remember($key, $callback)
+    {
+        collect($this->tree[$this->depth])->each(function($queryNode) use($key, $callback) {
+            $queryNode->memory[$key] = $callback($queryNode);
+        });
+
+        return $this;
     }
 
     public function class()

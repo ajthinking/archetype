@@ -14,4 +14,19 @@ class Survivor extends QueryNode {
     {
         $this->results = $results;
     }
+
+    public static function fromParent($parent)
+    {
+        $survivor = new static([]);
+        $survivor->parent = $parent;
+        return $survivor;
+    }
+
+    public function withResult($result)
+    {
+        $this->results = $result;
+        return $this;
+    }
+
+
 }
