@@ -192,6 +192,11 @@ class ASTQueryBuilder extends Traversable
         return $this;
     }
 
+    public function recall()
+    {
+        collect(end($this->tree))->pluck('memory')->flatten();
+    }
+
     public function get()
     {
         return collect(end($this->tree))->pluck('results')->flatten();
