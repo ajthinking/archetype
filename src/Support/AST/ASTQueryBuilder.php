@@ -43,7 +43,7 @@ class ASTQueryBuilder extends Traversable
             // Search the abstract syntax tree
             $results = (new NodeFinder)->$finderMethod($queryNode->results, $expectedClass);
             // Wrap matches in Survivor object
-            return collect($results)->map(function($result, $queryNode) {
+            return collect($results)->map(function($result) use($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
         })->flatten()->toArray();
@@ -203,7 +203,7 @@ class ASTQueryBuilder extends Traversable
 
     public function recall()
     {
-        collect(end($this->tree))->pluck('memory')->flatten();
+        return collect(end($this->tree))->pluck('memory')->flatten();
     }
 
     public function get()

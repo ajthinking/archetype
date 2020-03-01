@@ -19,6 +19,7 @@ class Survivor extends QueryNode {
     {
         $survivor = new static([]);
         $survivor->parent = $parent;
+        $survivor->memory = $parent->memory ? $parent->memory : [];
         return $survivor;
     }
 
