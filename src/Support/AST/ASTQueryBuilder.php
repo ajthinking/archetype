@@ -59,6 +59,7 @@ class ASTQueryBuilder extends Traversable
     {
         $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property) {
             if(!isset($queryNode->results->$property)) return new Killable;
+            
             $value = $queryNode->results->$property;
             
             if(is_array($value)) {
@@ -77,16 +78,17 @@ class ASTQueryBuilder extends Traversable
         return $this;
     }
 
-    public function traverseIntoArray($index)
+    public function traverseIntoArrayIndex($property, $index)
     {
-        $next = collect($this->tree[$this->depth])->map(function($item) use($index) {
-            return $item[$index] ?? new Killable;
-        })->filter(function($results) {
-            return !Terminator::kills($results);
+        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property, $index) {
+            if(!isset($queryNode->results->$property)) return new Killable;
+            return Survivor::fromParent($queryNode)->withResult(
+                $queryNode->results->$property[$index]
+            );
         })->flatten()->toArray();
 
         array_push($this->tree, $next);
-        
+
         $this->depth++;
 
         return $this;
@@ -103,7 +105,7 @@ class ASTQueryBuilder extends Traversable
     public function remember($key, $callback)
     {
         collect($this->tree[$this->depth])->each(function($queryNode) use($key, $callback) {
-            $queryNode->memory[$key] = $callback($queryNode);
+            $queryNode->memory[$key] = $callback(clone $this);
         });
 
         return $this;
@@ -147,6 +149,11 @@ class ASTQueryBuilder extends Traversable
     public function named($string)
     {
         return $this->where('name->name', $string);
+    }
+
+    public function arg($index)
+    {
+        return $this->traverseIntoArrayIndex('args', $index);
     }
 
     public function args()
@@ -203,7 +210,17 @@ class ASTQueryBuilder extends Traversable
 
     public function recall()
     {
-        return collect(end($this->tree))->pluck('memory')->flatten();
+        return collect(end($this->tree))->filter(fn($item) => $item->results)->map(function($item) {
+            $memory = (object) [
+                "results" => $item->results,
+            ];
+
+            foreach($item->memory as $key => $value) {
+                $memory->$key = $value;
+            }
+
+            return $memory;
+        });
     }
 
     public function get()
@@ -213,6 +230,8 @@ class ASTQueryBuilder extends Traversable
 
     public function dd()
     {
-        return collect(end($this->tree));
+        return dd(
+            $this->get()
+        );
     }    
 }
