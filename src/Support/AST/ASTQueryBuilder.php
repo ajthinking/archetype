@@ -116,6 +116,13 @@ class ASTQueryBuilder extends Traversable
         return $this->traverse(
             static::UNTIL['class']
         );
+    }
+    
+    public function const()
+    {
+        return $this->traverse(
+            static::UNTIL['const']
+        );
     }    
 
     public function method()
@@ -137,7 +144,14 @@ class ASTQueryBuilder extends Traversable
         return $this->traverse(
             static::UNTIL['staticCall']
         );
-    }    
+    }
+    
+    public function string()
+    {
+        return $this->traverse(
+            static::UNTIL['string']
+        );        
+    }
     
     public function closure()
     {
