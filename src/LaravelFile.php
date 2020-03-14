@@ -34,7 +34,6 @@ class LaravelFile extends PHPFile
             "exceptionRender",
             "exceptionReport",
             "exception",
-            "jobQueued",
             "job",
             "listenerDuck",
             "listenerQueuedDuck",
@@ -47,7 +46,6 @@ class LaravelFile extends PHPFile
             "notification",
             "observer_plain",
             "observer",
-            "pivot_model",
             "policy_plain",
             "policy",
             "provider",
@@ -56,7 +54,7 @@ class LaravelFile extends PHPFile
             "resource",
             "rule",
             "test",
-            "unitTest",
+            "test_unit",
         ]);
     }    
 }

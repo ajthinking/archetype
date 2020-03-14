@@ -23,7 +23,7 @@ class LaravelFileQueryBuilderTest extends FileTestCase
     public function it_can_scope_on_controllers()
     {        
         $this->assertCount(
-            7, LaravelFile::controllers()->get()
+            1, LaravelFile::controllers()->get()
         );
     }
     

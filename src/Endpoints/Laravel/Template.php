@@ -17,7 +17,7 @@ class Template extends EndpointProvider
         return $this->fromTemplate($method, ...$args);
     }
 
-    public function fromTemplate($name, $path, $replacementPairs = [])
+    public function fromTemplate($name, $path)
     {
         $result = $this->file->fromString($this->getTemplate($name));
 
@@ -31,16 +31,18 @@ class Template extends EndpointProvider
 
     private function getTemplate($name)
     {
-        // First, see if the user have supplied their own templates (not implemented yet)
-
-        // Otherwise, get default stub from Illuminate
+        // Get default stub from Illuminate
         $laravelStubDir = 'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/';
         $fileName = str_replace('_', '.', $name);
         $fileName = Str::kebab($fileName) . '.stub';
 
-        // Return contents
-        return file_get_contents(
-            base_path($laravelStubDir . $fileName)
+        // Make it parsable by replacing by removing blade syntax, ie {{ namespace }} -> ___namespace___
+        return preg_replace_callback(
+            '/\{\{\s(\w*)\s\}\}/m',
+            function ($matches) {
+                return "___$matches[1]___";
+            },
+            file_get_contents(base_path($laravelStubDir . $fileName))
         );
     }    
 }

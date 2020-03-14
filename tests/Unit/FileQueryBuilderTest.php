@@ -53,7 +53,7 @@ class FileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            6, LaravelFile::in('app/Http/Controllers/Auth')->get()
+            7, LaravelFile::in('app/Http/Middleware')->get()
         );        
     }
     
@@ -69,7 +69,7 @@ class FileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            2, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
+            1, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
         );        
 
         $this->assertCount(
@@ -77,11 +77,11 @@ class FileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            7, LaravelFile::in('app')->where('className', 'like', 'Controller')->get()
+            1, LaravelFile::in('app')->where('className', 'like', 'Controller')->get()
         );
 
         $this->assertCount(
-            7, LaravelFile::in('app')->where('className', 'like', 'controller')->get()
+            1, LaravelFile::in('app')->where('className', 'like', 'controller')->get()
         );        
         
         $this->assertCount(
@@ -91,7 +91,7 @@ class FileQueryBuilderTest extends FileTestCase
         $this->assertCount(
             1, LaravelFile::in('app')->where('className', 'in', ['Dog', 'User', 'Cat'])->get()
         );
-        
+
         $this->assertCount(
             2, LaravelFile::in('app')->where('uses', 'count', 4)->get()
         );        
@@ -102,8 +102,8 @@ class FileQueryBuilderTest extends FileTestCase
     {
         $this->assertCount(
             1, LaravelFile::in('app')->where([
-                ['className', 'like', 'controller'],
-                ['classMethodNames', 'contains', 'create']
+                ['className', 'like', 'provider'],
+                ['classMethodNames', 'contains', 'mapWebRoutes']
             ])->get()
         );        
     }
@@ -113,8 +113,8 @@ class FileQueryBuilderTest extends FileTestCase
     {
         $this->assertCount(
             1, LaravelFile::in('app')
-                ->where('className', 'like', 'controller')
-                ->andWhere('classMethodNames', 'contains', 'create')
+                ->where('className', 'like', 'provider')
+                ->andWhere('classMethodNames', 'contains', 'mapWebRoutes')
                 ->get()
         );        
     }    
@@ -123,7 +123,7 @@ class FileQueryBuilderTest extends FileTestCase
     public function it_can_filter_with_closure()
     {
         $this->assertCount(
-            3, LaravelFile::in('database/migrations')->where(function($file) {
+            2, LaravelFile::in('database/migrations')->where(function($file) {
                 return preg_match('/^Create.*Table$/', $file->className()); 
             })->get()
         );
@@ -132,7 +132,7 @@ class FileQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_can_query_non_class_files_and_files_missing_extend()
     {        
-        $files = LaravelFile::where('classExtends', 'Controller')->get();
+        $files = LaravelFile::where('classExtends', 'Authenticatable')->get();
         $this->assertTrue(
             $files->count() > 0
         );
@@ -141,10 +141,10 @@ class FileQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_can_chain()
     {        
-        $files = LaravelFile::where('classExtends', 'Controller')
-            ->where('namespace', 'App\Http\Controllers\Auth')
+        $files = LaravelFile::where('classExtends', 'ServiceProvider')
+            ->where('classMethodNames', 'contains', 'boot')
             ->where(function($file) {
-                return $file->className() == 'LoginController'; 
+                return $file->className() == 'AuthServiceProvider'; 
             })->get();
 
         $this->assertCount(
