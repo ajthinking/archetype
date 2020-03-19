@@ -1,17 +1,13 @@
 <?php
 
-const MY_GLOBAL_CONST = 123;
-
-function() {
-    "first";
+function first() {
+    $data = "first function";
+    return $data;
 };
 
-function() {
-    "second";
-};
-
-function() {
-    "third";
+function second() {
+    $data = "second function";
+    return $data;
 };
 
 /*
