@@ -12,13 +12,13 @@ use PHPFileManipulator\Traits\HasOperators;
 use PHPFileManipulator\Support\AST\Terminator;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
-use PHPFileManipulator\Support\AST\Traversable;
+use PHPFileManipulator\Support\AST\ASTTraverser;
 use PHPFileManipulator\Support\AST\NodeReplacer;
 use PHPFileManipulator\Support\AST\HashInserter;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeTraverser;
 
-class ASTQueryBuilder extends Traversable
+class ASTQueryBuilder extends ASTTraverser
 {
     use HasOperators;
 
@@ -37,75 +37,10 @@ class ASTQueryBuilder extends Traversable
         ];
     }
 
-    public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
-    {
-        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($expectedClass, $finderMethod) {
-            // Search the abstract syntax tree
-            $results = (new NodeFinder)->$finderMethod($queryNode->results, $expectedClass);
-            // Wrap matches in Survivor object
-            return collect($results)->map(function($result) use($queryNode) {
-                return Survivor::fromParent($queryNode)->withResult($result);
-            })->toArray();
-        })->flatten()->toArray();
-        
-        array_push($this->tree, $next);
-
-        $this->depth++;
-
-        return $this;        
-    }
-
-    public function traverseInto($property)
-    {
-        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property) {
-            if(!isset($queryNode->results->$property)) return new Killable;
-            
-            $value = $queryNode->results->$property;
-            
-            if(is_array($value)) {
-                return collect($value)->map(function($item) use($value, $queryNode) {
-                    return Survivor::fromParent($queryNode)->withResult($item);
-                })->toArray();
-            }
-
-            return Survivor::fromParent($queryNode)->withResult($value);
-        })->flatten()->toArray();
-
-        array_push($this->tree, $next);
-
-        $this->depth++;
-
-        return $this;
-    }
-
-    public function traverseIntoArrayIndex($property, $index)
-    {
-        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property, $index) {
-            if(!isset($queryNode->results->$property)) return new Killable;
-            return Survivor::fromParent($queryNode)->withResult(
-                $queryNode->results->$property[$index]
-            );
-        })->flatten()->toArray();
-
-        array_push($this->tree, $next);
-
-        $this->depth++;
-
-        return $this;
-    }    
-
-    public function traverseFirst($class)
-    {
-        return $this->traverse(
-            static::UNTIL[$class],
-            'findFirstInstanceOf'
-        );        
-    }
-
     public function remember($key, $callback)
     {
         collect($this->tree[$this->depth])->each(function($queryNode) use($key, $callback) {
-            $queryNode->memory[$key] = $callback(clone $this);
+            $queryNode->memory[$key] = $callback((clone $queryNode)->results);
         });
 
         return $this;
@@ -157,6 +92,13 @@ class ASTQueryBuilder extends Traversable
     {
         return $this->traverse(
             static::UNTIL['closure']
+        );
+    }
+    
+    public function function()
+    {
+        return $this->traverse(
+            static::UNTIL['function']
         );
     }    
 
@@ -212,7 +154,6 @@ class ASTQueryBuilder extends Traversable
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
             }, $queryNode->results);
-
             return $result == $expected ? $queryNode : new Killable;
         })->flatten()->toArray();
 
@@ -225,15 +166,7 @@ class ASTQueryBuilder extends Traversable
     public function recall()
     {
         return collect(end($this->tree))->filter(fn($item) => $item->results)->map(function($item) {
-            $memory = (object) [
-                "results" => $item->results,
-            ];
-
-            foreach($item->memory as $key => $value) {
-                $memory->$key = $value;
-            }
-
-            return $memory;
+            return (object) $item->memory;
         });
     }
 
