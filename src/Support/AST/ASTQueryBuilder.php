@@ -8,6 +8,7 @@ use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 use PhpParser\NodeFinder;
+use PHPFileManipulator\Support\AST\ShallowNodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
@@ -52,7 +53,7 @@ class ASTQueryBuilder
     {
         $next = collect($this->tree[$this->depth])->map(function($queryNode) use($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
-            $results = (new NodeFinder)->$finderMethod($queryNode->results, $expectedClass);
+            $results = $this->nodeFinder()->$finderMethod($queryNode->results, $expectedClass);
             // Wrap matches in Survivor object
             return collect($results)->map(function($result) use($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
@@ -123,6 +124,11 @@ class ASTQueryBuilder
     {
         $this->allow_deep_queries = true;
         return $this;
+    }
+
+    protected function nodeFinder()
+    {
+        return $this->allow_deep_queries ? new NodeFinder : new ShallowNodeFinder;
     }
 
     public function remember($key, $callback)
