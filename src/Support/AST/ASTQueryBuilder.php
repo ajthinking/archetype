@@ -10,6 +10,7 @@ use LaravelFile;
 use PhpParser\NodeFinder;
 use PHPFileManipulator\Support\AST\ShallowNodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
+use PHPFileManipulator\Traits\HasClassMap;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\NodeReplacer;
@@ -19,22 +20,12 @@ use PhpParser\Node\Stmt\Use_;
 class ASTQueryBuilder
 {
     use HasOperators;
+    
+    use HasClassMap;
 
     public $allowDeepQueries = true;
 
     public $currentDepth = 0;
-    
-    protected const classMap = [
-        'class' => \PhpParser\Node\Stmt\Class_::class,
-        'closure' => \PhpParser\Node\Expr\Closure::class,
-        'const' => \PhpParser\Node\Stmt\Const_::class,
-        'function' => \PhpParser\Node\Stmt\Function_::class,
-        'method' => \PhpParser\Node\Stmt\ClassMethod::class,
-        'methodCall' => \PhpParser\Node\Expr\MethodCall::class,
-        'staticCall' => \PhpParser\Node\Expr\StaticCall::class,
-        'string' => \PhpParser\Node\Scalar\String_::class,
-    ];
-
 
     public function __construct($ast)
     {
@@ -104,7 +95,7 @@ class ASTQueryBuilder
     public function traverseFirst($class)
     {
         return $this->traverse(
-            static::classMap[$class],
+            $this->classMap($class),
             'findFirstInstanceOf'
         );        
     }   
@@ -138,56 +129,56 @@ class ASTQueryBuilder
     public function class()
     {
         return $this->traverse(
-            static::classMap['class']
+            $this->classMap('class')
         );
     }
     
     public function const()
     {
         return $this->traverse(
-            static::classMap['const']
+            $this->classMap('const')
         );
     }    
 
     public function method()
     {
         return $this->traverse(
-            static::classMap['method']
+            $this->classMap('method')
         );
     }
 
     public function methodCall()
     {
         return $this->traverse(
-            static::classMap['methodCall']
+            $this->classMap('methodCall')
         );
     }
 
     public function staticCall()
     {
         return $this->traverse(
-            static::classMap['staticCall']
+            $this->classMap('staticCall')
         );
     }
     
     public function string()
     {
         return $this->traverse(
-            static::classMap['string']
+            $this->classMap('string')
         );        
     }
     
     public function closure()
     {
         return $this->traverse(
-            static::classMap['closure']
+            $this->classMap('closure')
         );
     }
     
     public function function()
     {
         return $this->traverse(
-            static::classMap['function']
+            $this->classMap('function')
         );
     }    
 
