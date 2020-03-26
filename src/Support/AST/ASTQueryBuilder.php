@@ -11,17 +11,28 @@ use PhpParser\NodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
-use PHPFileManipulator\Support\AST\ASTTraverser;
 use PHPFileManipulator\Support\AST\NodeReplacer;
 use PHPFileManipulator\Support\AST\HashInserter;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeTraverser;
 
-class ASTQueryBuilder extends ASTTraverser
+class ASTQueryBuilder
 {
     use HasOperators;
 
     public $allow_deep_queries = true;
+    
+    protected const classMap = [
+        'class' => \PhpParser\Node\Stmt\Class_::class,
+        'closure' => \PhpParser\Node\Expr\Closure::class,
+        'const' => \PhpParser\Node\Stmt\Const_::class,
+        'function' => \PhpParser\Node\Stmt\Function_::class,
+        'method' => \PhpParser\Node\Stmt\ClassMethod::class,
+        'methodCall' => \PhpParser\Node\Expr\MethodCall::class,
+        'staticCall' => \PhpParser\Node\Expr\StaticCall::class,
+        'string' => \PhpParser\Node\Scalar\String_::class,
+    ];
+
 
     public function __construct($ast)
     {
@@ -36,6 +47,71 @@ class ASTQueryBuilder extends ASTTraverser
             [new Survivor($this->ast)],
         ];
     }
+
+    public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
+    {
+        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($expectedClass, $finderMethod) {
+            // Search the abstract syntax tree
+            $results = (new NodeFinder)->$finderMethod($queryNode->results, $expectedClass);
+            // Wrap matches in Survivor object
+            return collect($results)->map(function($result) use($queryNode) {
+                return Survivor::fromParent($queryNode)->withResult($result);
+            })->toArray();
+        })->flatten()->toArray();
+        
+        array_push($this->tree, $next);
+
+        $this->depth++;
+
+        return $this;        
+    }
+
+    public function traverseInto($property)
+    {
+        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property) {
+            if(!isset($queryNode->results->$property)) return new Killable;
+            
+            $value = $queryNode->results->$property;
+            
+            if(is_array($value)) {
+                return collect($value)->map(function($item) use($value, $queryNode) {
+                    return Survivor::fromParent($queryNode)->withResult($item);
+                })->toArray();
+            }
+
+            return Survivor::fromParent($queryNode)->withResult($value);
+        })->flatten()->toArray();
+
+        array_push($this->tree, $next);
+
+        $this->depth++;
+
+        return $this;
+    }
+
+    public function traverseIntoArrayIndex($property, $index)
+    {
+        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property, $index) {
+            if(!isset($queryNode->results->$property)) return new Killable;
+            return Survivor::fromParent($queryNode)->withResult(
+                $queryNode->results->$property[$index]
+            );
+        })->flatten()->toArray();
+
+        array_push($this->tree, $next);
+
+        $this->depth++;
+
+        return $this;
+    }    
+
+    public function traverseFirst($class)
+    {
+        return $this->traverse(
+            static::classMap[$class],
+            'findFirstInstanceOf'
+        );        
+    }   
 
     public function shallow()
     {
@@ -61,56 +137,56 @@ class ASTQueryBuilder extends ASTTraverser
     public function class()
     {
         return $this->traverse(
-            static::UNTIL['class']
+            static::classMap['class']
         );
     }
     
     public function const()
     {
         return $this->traverse(
-            static::UNTIL['const']
+            static::classMap['const']
         );
     }    
 
     public function method()
     {
         return $this->traverse(
-            static::UNTIL['method']
+            static::classMap['method']
         );
     }
 
     public function methodCall()
     {
         return $this->traverse(
-            static::UNTIL['methodCall']
+            static::classMap['methodCall']
         );
     }
 
     public function staticCall()
     {
         return $this->traverse(
-            static::UNTIL['staticCall']
+            static::classMap['staticCall']
         );
     }
     
     public function string()
     {
         return $this->traverse(
-            static::UNTIL['string']
+            static::classMap['string']
         );        
     }
     
     public function closure()
     {
         return $this->traverse(
-            static::UNTIL['closure']
+            static::classMap['closure']
         );
     }
     
     public function function()
     {
         return $this->traverse(
-            static::UNTIL['function']
+            static::classMap['function']
         );
     }    
 
