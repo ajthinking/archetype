@@ -29,9 +29,10 @@ class ASTQueryBuilder
 
     public function __construct($ast)
     {
-        $this->ast = HashInserter::on($ast);
         $this->tree = [
-            [new Survivor($this->ast)],
+            [new Survivor(
+                HashInserter::on($ast)
+            )],
         ];
     }
 
