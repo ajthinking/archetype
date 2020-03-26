@@ -15,13 +15,14 @@ use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\NodeReplacer;
 use PHPFileManipulator\Support\AST\HashInserter;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\NodeTraverser;
 
 class ASTQueryBuilder
 {
     use HasOperators;
 
-    public $allow_deep_queries = true;
+    public $allowDeepQueries = true;
+
+    public $currentDepth = 0;
     
     protected const classMap = [
         'class' => \PhpParser\Node\Stmt\Class_::class,
@@ -37,13 +38,7 @@ class ASTQueryBuilder
 
     public function __construct($ast)
     {
-        $this->ast = $ast;
-
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new HashInserter);
-        $this->ast = $traverser->traverse($ast);
-
-        $this->depth = 0;
+        $this->ast = HashInserter::on($ast);
         $this->tree = [
             [new Survivor($this->ast)],
         ];
@@ -51,7 +46,7 @@ class ASTQueryBuilder
 
     public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
     {
-        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($expectedClass, $finderMethod) {
+        $next = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
             $results = $this->nodeFinder()->$finderMethod($queryNode->results, $expectedClass);
             // Wrap matches in Survivor object
@@ -62,14 +57,14 @@ class ASTQueryBuilder
         
         array_push($this->tree, $next);
 
-        $this->depth++;
+        $this->currentDepth++;
 
         return $this;        
     }
 
     public function traverseInto($property)
     {
-        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property) {
+        $next = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($property) {
             if(!isset($queryNode->results->$property)) return new Killable;
             
             $value = $queryNode->results->$property;
@@ -85,14 +80,14 @@ class ASTQueryBuilder
 
         array_push($this->tree, $next);
 
-        $this->depth++;
+        $this->currentDepth++;
 
         return $this;
     }
 
     public function traverseIntoArrayIndex($property, $index)
     {
-        $next = collect($this->tree[$this->depth])->map(function($queryNode) use($property, $index) {
+        $next = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($property, $index) {
             if(!isset($queryNode->results->$property)) return new Killable;
             return Survivor::fromParent($queryNode)->withResult(
                 $queryNode->results->$property[$index]
@@ -101,7 +96,7 @@ class ASTQueryBuilder
 
         array_push($this->tree, $next);
 
-        $this->depth++;
+        $this->currentDepth++;
 
         return $this;
     }    
@@ -116,24 +111,24 @@ class ASTQueryBuilder
 
     public function shallow()
     {
-        $this->allow_deep_queries = false;
+        $this->allowDeepQueries = false;
         return $this;
     }
 
     public function deep()
     {
-        $this->allow_deep_queries = true;
+        $this->allowDeepQueries = true;
         return $this;
     }
 
     protected function nodeFinder()
     {
-        return $this->allow_deep_queries ? new NodeFinder : new ShallowNodeFinder;
+        return $this->allowDeepQueries ? new NodeFinder : new ShallowNodeFinder;
     }
 
     public function remember($key, $callback)
     {
-        collect($this->tree[$this->depth])->each(function($queryNode) use($key, $callback) {
+        collect($this->tree[$this->currentDepth])->each(function($queryNode) use($key, $callback) {
             $queryNode->memory[$key] = $callback((clone $queryNode)->results);
         });
 
@@ -243,7 +238,7 @@ class ASTQueryBuilder
 
     public function where($path, $expected)
     {
-        $nextLevel = collect($this->tree[$this->depth])->map(function($queryNode) use($path, $expected) {
+        $nextLevel = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($path, $expected) {
             $steps = collect(explode('->', $path));
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
@@ -252,7 +247,7 @@ class ASTQueryBuilder
         })->flatten()->toArray();
 
         array_push($this->tree, $nextLevel);
-        $this->depth++;
+        $this->currentDepth++;
 
         return $this;
     }
