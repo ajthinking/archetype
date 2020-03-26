@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use LaravelFile;
 use PhpParser\NodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
-use PHPFileManipulator\Support\AST\Terminator;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\ASTTraverser;
