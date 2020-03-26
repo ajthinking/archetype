@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use LaravelFile;
 use PhpParser\NodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
-use PHPFileManipulator\Support\AST\Terminator;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\ASTTraverser;
@@ -22,6 +21,8 @@ class ASTQueryBuilder extends ASTTraverser
 {
     use HasOperators;
 
+    public $allow_deep_queries = true;
+
     public function __construct($ast)
     {
         $this->ast = $ast;
@@ -30,11 +31,22 @@ class ASTQueryBuilder extends ASTTraverser
         $traverser->addVisitor(new HashInserter);
         $this->ast = $traverser->traverse($ast);
 
-        $this->manipulations = [];
         $this->depth = 0;
         $this->tree = [
             [new Survivor($this->ast)],
         ];
+    }
+
+    public function shallow()
+    {
+        $this->allow_deep_queries = false;
+        return $this;
+    }
+
+    public function deep()
+    {
+        $this->allow_deep_queries = true;
+        return $this;
     }
 
     public function remember($key, $callback)
@@ -175,10 +187,23 @@ class ASTQueryBuilder extends ASTTraverser
         return collect(end($this->tree))->pluck('results')->flatten();
     }
 
+    public function getChain()
+    {
+        return [
+            'm1' => ['p1', 'p2', 'p3'],
+            'm2' => ['p1', 'p2'],
+        ];
+    }
+
     public function dd()
     {
+        dd($this->get());
+    }
+    
+    public function ddFirst()
+    {
         return dd(
-            $this->get()
+            $this->get()[0] ?? "NO RESULTS AVAILABLE"
         );
     }    
 }
