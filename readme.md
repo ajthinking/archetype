@@ -30,6 +30,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 ## Installation
 ```
 composer require ajthinking/php-file-manipulator
+php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
 ```
 
 
