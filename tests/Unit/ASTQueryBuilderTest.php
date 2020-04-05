@@ -42,7 +42,7 @@ class ASTQueryBuilderTest extends FileTestCase
     
     /** @test
     */
-    public function it_can_be_query_deep()
+    public function it_can_query_deep()
     {
         $result = LaravelFile::load(
             'database/migrations/2014_10_12_000000_create_users_table.php'
@@ -60,5 +60,18 @@ class ASTQueryBuilderTest extends FileTestCase
             ->first();
             
         $this->assertEquals($result, 'users');
-    }    
+    }
+    
+    /** @test */
+    public function it_can_flatten_method_call_chains()
+    {
+        $result = LaravelFile::load(__DIR__ . '/../samples/chained_migration_table_statement.php')
+            ->astQuery()
+            ->methodCall()
+            ->whereChainingOn('table')
+            ->flatten()
+            ->get();
+
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $result);
+    }
 }

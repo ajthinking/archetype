@@ -244,6 +244,16 @@ class ASTQueryBuilder
         return $this;
     }
 
+    public function whereChainingOn($name)
+    {
+        return $this;
+    }
+
+    public function flatten()
+    {
+        return $this;
+    }
+
     public function recall()
     {
         return collect(end($this->tree))->filter(fn($item) => $item->results)->map(function($item) {
