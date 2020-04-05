@@ -4,9 +4,9 @@ namespace PHPFileManipulator\Traits;
 
 trait HasClassMap
 {
-    public function classMap($class)
+    public function classMap($class = null)
     {
-        return [
+        $map = [
             // SHORTCUTS AND CUSTOMIZATIONS
             'method' => '\PhpParser\Node\Stmt\ClassMethod',
     
@@ -112,6 +112,12 @@ trait HasClassMap
             'useUse' => '\PhpParser\Node\Stmt\UseUse',
             'use' => '\PhpParser\Node\Stmt\Use_',
             'while' => '\PhpParser\Node\Stmt\While_',        
-        ][$class];
+        ];
+        
+        if(!$class) return $map;
+
+        if(isset($map[$class])) return $map[$class];
+
+        return null;
     }    
 }
