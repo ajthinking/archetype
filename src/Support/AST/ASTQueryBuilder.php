@@ -133,6 +133,13 @@ class ASTQueryBuilder
             $this->classMap('class')
         );
     }
+
+    public function expression()
+    {
+        return $this->traverse(
+            $this->classMap('expression')
+        )->traverseInto('expr');
+    }
     
     public function const()
     {
@@ -246,6 +253,18 @@ class ASTQueryBuilder
 
     public function whereChainingOn($name)
     {
+        $nextLevel = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($name) {
+            $current = $queryNode->results;
+            do {
+                $current = $current->var ?? dd($current);
+            } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
+
+            return $current->name == $name ? $queryNode : new Killable;
+        })->flatten()->toArray();
+
+        array_push($this->tree, $nextLevel);
+        $this->currentDepth++;
+
         return $this;
     }
 
