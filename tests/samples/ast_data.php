@@ -38,13 +38,13 @@ $result = LaravelFile::load(
     ->remember('table_name', function ($node) {
         return $node
             ->arg(0)
-            ->value()
-            ->value()
+            ->value
+            ->value
             ->get()
             ->first();
     })
     ->arg(1)
-    ->value()
+    ->value
     ->stmts()
     ->methodCall()
     ->where('var->name', 'table')
@@ -55,9 +55,9 @@ $result = LaravelFile::load(
             ->get()
             ->first();
     })
-    ->args()
-    ->value()
-    ->value()
+    ->args
+    ->value
+    ->value
     ->remember('column_name', function ($node) {
         return $node->get();
     })

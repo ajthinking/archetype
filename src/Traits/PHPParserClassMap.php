@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Traits;
 
-trait HasClassMap
+trait PHPParserClassMap
 {
     public function classMap($class = null)
     {
@@ -132,7 +132,7 @@ trait HasClassMap
         // 86 => "static",
         // 91 => "trait",
         
-        // TEMPORARY FIX WITH NAMESPACING ___
+        // TEMPORARY FIX WITH NAMESPACING $1___
         // CONSIDER USING A MAGIC GETTER TO ALLOW SAME NAME AS METHOD?
 
         $map = [

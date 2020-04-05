@@ -53,9 +53,9 @@ class ASTQueryBuilderTest extends FileTestCase
             ->staticCall()
                 ->where('class', 'Schema')
                 ->named('create')
-            ->args()
-            ->value()
-            ->value()
+            ->args
+            ->value
+            ->value
             ->get() // exit ASTQueryBuilder, get a Collection   
             ->first();
             

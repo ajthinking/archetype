@@ -10,7 +10,7 @@ use LaravelFile;
 use PhpParser\NodeFinder;
 use PHPFileManipulator\Support\AST\ShallowNodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
-use PHPFileManipulator\Traits\HasClassMap;
+use PHPFileManipulator\Traits\PHPParserClassMap;
 use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\NodeReplacer;
@@ -22,7 +22,7 @@ class ASTQueryBuilder
 {
     use HasOperators;
     
-    use HasClassMap;
+    use PHPParserClassMap;
 
     public $allowDeepQueries = true;
 
@@ -39,11 +39,19 @@ class ASTQueryBuilder
 
     public function __call($method, $args)
     {
-        // exists in classMap
+        // exists in classMap?
         if($this->classMap($method)) return $this->traverse($this->classMap($method));        
 
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
+
+    public function __get($property)
+    {
+        // exists in propertyMap?
+        if($this->propertyMap($property)) return $this->traverseInto($this->propertyMap($property));        
+
+        throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
+    }    
 
     public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
     {
@@ -136,6 +144,8 @@ class ASTQueryBuilder
         return $this;
     }
 
+
+    /** OUTSIDE CONVENTION */
     public function expression()
     {
         return $this->traverse(
@@ -143,35 +153,17 @@ class ASTQueryBuilder
         )->traverseInto('expr');
     }    
 
+    /** OUTSIDE CONVENTION */
     public function named($string)
     {
         return $this->where('name->name', $string);
     }
 
+    /** OUTSIDE CONVENTION */
     public function arg($index)
     {
         return $this->traverseIntoArrayIndex('args', $index);
     }
-
-    public function args()
-    {
-        return $this->traverseInto('args');
-    }
-
-    public function stmts()
-    {
-        return $this->traverseInto('stmts');
-    }
-
-    public function value()
-    {
-        return $this->traverseInto('value');
-    }
-    
-    public function name()
-    {
-        return $this->traverseInto('name');
-    }    
     
     public function first()
     {
