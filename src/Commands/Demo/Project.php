@@ -54,14 +54,14 @@ class Project
             ->staticCall()
                 ->where('class', 'Schema')
                 ->named('create')
-            ->args()
+            ->args
             ->closure()
             ->stmts()
             ->methodCall()
                 ->where('var->name', 'table')
-            ->args()
-            ->value()
-            ->value()
+            ->args
+            ->value
+            ->value
             ->get();
 
         // Result
