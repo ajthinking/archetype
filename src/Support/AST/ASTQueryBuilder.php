@@ -238,24 +238,9 @@ class ASTQueryBuilder
     {
         return collect(end($this->tree))->pluck('results')->flatten();
     }
-
-    public function getChain()
-    {
-        return [
-            'm1' => ['p1', 'p2', 'p3'],
-            'm2' => ['p1', 'p2'],
-        ];
-    }
-
+    
     public function dd()
     {
         dd($this->get());
-    }
-    
-    public function ddFirst()
-    {
-        return dd(
-            $this->get()[0] ?? "NO RESULTS AVAILABLE"
-        );
     }    
 }
