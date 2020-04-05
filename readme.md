@@ -167,14 +167,14 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
     ->staticCall()
         ->where('class', 'Schema')
         ->named('create')
-    ->args()
+    ->args
     ->closure()
     ->stmts()
     ->methodCall()
         ->where('var->name', 'table')
-    ->args()
-	->value()
-	->value()
+    ->args
+	->value
+	->value
 	->get(); // exit ASTQueryBuilder, get a Collection        
 ```
 
