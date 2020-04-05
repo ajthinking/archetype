@@ -75,7 +75,7 @@ class ASTQueryBuilderTest extends FileTestCase
             ->get();
 
 
-        dd($result);
+        //dd($result);
 
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $result);
     }
