@@ -42,7 +42,6 @@ class ASTQueryBuilder
         // exists in classMap
         if($this->classMap($method)) return $this->traverse($this->classMap($method));        
 
-        // no fallback!
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
 
