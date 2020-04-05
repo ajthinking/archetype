@@ -119,5 +119,86 @@ trait HasClassMap
         if(isset($map[$class])) return $map[$class];
 
         return null;
-    }    
+    }
+
+    public function propertyMap($property)
+    {
+        // Collisions:
+        // 0 => "method",
+        // 58 => "class",
+        // 66 => "else",
+        // 68 => "finally",
+        // 76 => "if",
+        // 86 => "static",
+        // 91 => "trait",
+        
+        // TEMPORARY FIX WITH NAMESPACING ___
+        // CONSIDER USING A MAGIC GETTER TO ALLOW SAME NAME AS METHOD?
+
+        $map = [
+            'expr' => 'expr',
+            'attributes' => 'attributes',
+            'type' => 'type',
+            'name' => 'name',
+            'alias' => 'alias',
+            'vars' => 'vars',
+            'stmts' => 'stmts',
+            'traits' => 'traits',
+            'adaptations' => 'adaptations',
+            'insteadof' => 'insteadof',
+            'trait___' => 'trait',
+            'method___' => 'method',
+            'newModifier' => 'newModifier',
+            'newName' => 'newName',
+            'types' => 'types',
+            'var' => 'var',
+            'flags' => 'flags',
+            'extends' => 'extends',
+            'implements' => 'implements',
+            'default' => 'default',
+            'cond' => 'cond',
+            'num' => 'num',
+            'byRef' => 'byRef',
+            'params' => 'params',
+            'returnType' => 'returnType',
+            'magicNames' => 'magicNames',
+            'remaining' => 'remaining',
+            'key' => 'key',
+            'value' => 'value',
+            'catches' => 'catches',
+            'finally___' => 'finally',
+            'exprs' => 'exprs',
+            'declares' => 'declares',
+            'props' => 'props',
+            'elseifs' => 'elseifs',
+            'else___' => 'else',
+            'consts' => 'consts',
+            'cases' => 'cases',
+            'keyVar' => 'keyVar',
+            'valueVar' => 'valueVar',
+            'init' => 'init',
+            'loop' => 'loop',
+            'prefix' => 'prefix',
+            'uses' => 'uses',
+            'specialClassNames' => 'specialClassNames',
+            'variadic' => 'variadic',
+            'left' => 'left',
+            'right' => 'right',
+            'items' => 'items',
+            'parts' => 'parts',
+            'class___' => 'class',
+            'args' => 'args',
+            'static___' => 'static',
+            'dim' => 'dim',
+            'if___' => 'if',
+            'unpack' => 'unpack',
+            'replacements' => 'replacements',            
+        ];
+
+        if(!$property) return $map;
+
+        if(isset($map[$property])) return $map[$property];
+
+        return null;        
+    }
 }
