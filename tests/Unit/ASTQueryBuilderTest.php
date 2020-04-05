@@ -71,7 +71,7 @@ class ASTQueryBuilderTest extends FileTestCase
             ->shallow()
             ->methodCall()
             ->whereChainingOn('table')
-            //->flatten()
+            ->flatten() // this will later return a formatted response and we must exit the query
             ->get();
 
 
