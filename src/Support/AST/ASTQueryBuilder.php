@@ -16,6 +16,7 @@ use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\NodeReplacer;
 use PHPFileManipulator\Support\AST\HashInserter;
 use PhpParser\Node\Stmt\Use_;
+use Exception;
 
 class ASTQueryBuilder
 {
@@ -34,6 +35,15 @@ class ASTQueryBuilder
                 HashInserter::on($ast)
             )],
         ];
+    }
+
+    public function __call($method, $args)
+    {
+        // exists in classMap
+        if($this->classMap($method)) return $this->traverse($this->classMap($method));        
+
+        // no fallback!
+        throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
 
     public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
@@ -127,67 +137,11 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function class()
-    {
-        return $this->traverse(
-            $this->classMap('class')
-        );
-    }
-
     public function expression()
     {
         return $this->traverse(
             $this->classMap('expression')
         )->traverseInto('expr');
-    }
-    
-    public function const()
-    {
-        return $this->traverse(
-            $this->classMap('const')
-        );
-    }    
-
-    public function method()
-    {
-        return $this->traverse(
-            $this->classMap('method')
-        );
-    }
-
-    public function methodCall()
-    {
-        return $this->traverse(
-            $this->classMap('methodCall')
-        );
-    }
-
-    public function staticCall()
-    {
-        return $this->traverse(
-            $this->classMap('staticCall')
-        );
-    }
-    
-    public function string()
-    {
-        return $this->traverse(
-            $this->classMap('string')
-        );        
-    }
-    
-    public function closure()
-    {
-        return $this->traverse(
-            $this->classMap('closure')
-        );
-    }
-    
-    public function function()
-    {
-        return $this->traverse(
-            $this->classMap('function')
-        );
     }    
 
     public function named($string)
