@@ -169,7 +169,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
         ->named('create')
     ->args
     ->closure()
-    ->stmts()
+    ->stmts
     ->methodCall()
         ->where('var->name', 'table')
     ->args
