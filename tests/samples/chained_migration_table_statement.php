@@ -1,3 +1,5 @@
 <?php
 
-$table->string('id', 255)->nullable()->unique()->references('id')->on('users');
+$table->integer('id');
+$table->text('name');
+$table->string('description', 255)->nullable()->unique()->references('id')->on('users');

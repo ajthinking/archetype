@@ -68,15 +68,26 @@ class ASTQueryBuilderTest extends FileTestCase
         $result = LaravelFile::load(__DIR__ . '/../samples/chained_migration_table_statement.php')
             ->astQuery()
             ->expression()
+            
             ->shallow()
             ->methodCall()
             ->whereChainingOn('table')
-            ->flatten() // this will later return a formatted response and we must exit the query
-            ->get();
-
-
-        //dd($result);
+            ->remember('migration_statement', function($node) {
+                return $node->flattenChain();
+            })
+            ->recall();
 
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $result);
+        $this->assertCount(3, $result);
+        $this->assertTrue(
+            $result[0]->migration_statement['integer'] == ['id']
+        );
+        $this->assertTrue(
+            $result[1]->migration_statement['text'] == ['name']
+        );
+        $this->assertTrue(
+            $result[2]->migration_statement['string'] == ['description', 255]
+        );                
+        
     }
 }

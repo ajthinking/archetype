@@ -138,19 +138,21 @@ class ASTQueryBuilder
     public function remember($key, $callback)
     {
         collect($this->tree[$this->currentDepth])->each(function($queryNode) use($key, $callback) {
-            $queryNode->memory[$key] = $callback((clone $queryNode)->results);
+
+            $subAST = [(clone $queryNode)->results];
+            $subQueryBuilder = new static($subAST);
+
+            $queryNode->memory[$key] = $callback($subQueryBuilder);
         });
 
         return $this;
     }
 
-
-    /** OUTSIDE CONVENTION */
     public function expression()
     {
         return $this->traverse(
             $this->classMap('expression')
-        )->traverseInto('expr');
+        );
     }    
 
     /** OUTSIDE CONVENTION */
@@ -201,7 +203,7 @@ class ASTQueryBuilder
         $nextLevel = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($name) {
             $current = $queryNode->results;
             do {
-                $current = $current->var ?? dd($current);
+                $current = $current->var ?? false;
             } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
 
             return $current->name == $name ? $queryNode : new Killable;
@@ -213,9 +215,33 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function flatten()
+    public function flattenChain()
     {
-        return $this;
+        $flattened = collect($this->tree[$this->currentDepth])->map(function($queryNode) {
+            $results = collect();
+            $current = $queryNode->results[0];
+
+            do {
+                $results->push($current);
+                $current = $current->var ?? false;
+                
+            } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
+
+            return $results->reverse();
+            
+        })->flatten();
+
+        return $flattened->flatMap(function($methodCall) {
+            $var = $methodCall->var->name;
+            $name = $methodCall->name;
+            $args = $methodCall->args;
+
+            return [
+                $methodCall->name->name => collect($args)->map(function($arg) {
+                    return $arg->value->value;
+                })->values()->toArray()
+            ];
+        })->toArray();
     }
 
     public function recall()
