@@ -37,6 +37,11 @@ class LaravelFileQueryBuilder extends FileQueryBuilder
         return $this->instanceof('Illuminate\Routing\Controller');
     }
 
+    public function serviceProviders()
+    {
+        return $this->instanceof('Illuminate\Support\ServiceProvider');
+    }    
+
     // PLEASE TAYLOR MAKE MIGRATIONS NAMESPACED
     // public function migrations()
     // {
