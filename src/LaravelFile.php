@@ -6,7 +6,7 @@ use PHPFileManipulator\PHPFile;
 
 class LaravelFile extends PHPFile 
 {
-    protected $file_query_builder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
+    protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
 
     public function endpointProviders() {
         return parent::endpointProviders()->concat($this->endpoint_providers);
@@ -56,5 +56,14 @@ class LaravelFile extends PHPFile
             "test",
             "test_unit",
         ]);
-    }    
+    }
+    
+    public function tags()
+    {
+        return [
+            // File directories
+            'default_model_directory' => 'app',
+            'default_controller_directory' => 'app/Http/Controllers',
+        ];
+    }
 }

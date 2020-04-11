@@ -8,12 +8,7 @@ class PHPFile
 {
     use DelegatesAPICalls;
 
-    public function __construct()
-    {
-        $this->bootPropertyProxies();
-    }
-
-    protected $file_query_builder = Endpoints\PHP\FileQueryBuilder::class;
+    protected $fileQueryBuilder = Endpoints\PHP\FileQueryBuilder::class;
 
     protected $endpoint_providers = [
         // Utillities
@@ -33,7 +28,7 @@ class PHPFile
 
     public function endpointProviders() {
         return collect((new self)->endpoint_providers)->push(
-            $this->file_query_builder
+            $this->fileQueryBuilder
         );
     }
 

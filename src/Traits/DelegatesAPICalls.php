@@ -19,14 +19,6 @@ trait DelegatesAPICalls
         throw new BadMethodCallException("Could not find a handler for method $method");
     }
 
-    public function bootPropertyProxies()
-    {
-        // Here we want to map all simple API routes onto $this
-        // For instance $this->className() should also be fetchable with $this->className.
-        // Then we can use $files->pluck('className')
-        // Collection::pluck does not allow dynamic values :(
-    }
-
     /**
      * It should be able to list all endpoints...
      */    
