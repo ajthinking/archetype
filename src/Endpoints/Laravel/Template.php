@@ -19,14 +19,15 @@ class Template extends EndpointProvider
 
     public function fromTemplate($name, $path)
     {
-        $result = $this->file->fromString($this->getTemplate($name));
-
+        $file = $this->file->fromString($this->getTemplate($name));
+        $file->type = $name;
+        
         // TODO:
         // given the template type (model, controller, etc)
         // set default path and namespace letting the user do just
         // LaravelFile::controller('BeerController')->save()
         
-        return $result;
+        return $file;
     }
 
     private function getTemplate($name)

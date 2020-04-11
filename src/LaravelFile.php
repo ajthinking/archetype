@@ -62,8 +62,8 @@ class LaravelFile extends PHPFile
     {
         return [
             // File directories
-            'default_model_directory' => 'app',
-            'default_controller_directory' => 'app/Http/Controllers',
+            'model_default_directory' => 'app',
+            'controller_default__directory' => 'app/Http/Controllers',
         ];
     }
 }

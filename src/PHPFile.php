@@ -8,6 +8,8 @@ class PHPFile
 {
     use DelegatesAPICalls;
 
+    public $type;
+
     protected $fileQueryBuilder = Endpoints\PHP\FileQueryBuilder::class;
 
     protected $endpoint_providers = [
@@ -36,5 +38,12 @@ class PHPFile
         return collect(
             //
         );
+    }
+    
+    public function tags()
+    {
+        return [
+            //
+        ];
     }    
 }
