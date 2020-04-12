@@ -14,9 +14,13 @@ class PHPFile
 
     protected $ast;
 
+    protected $input;
+
+    protected $output;
+
     protected $fileQueryBuilder = Endpoints\PHP\FileQueryBuilder::class;
 
-    protected $endpoint_providers = [
+    protected $endpointProviders = [
         // Utillities
         Endpoints\PHP\IO::class,
         Endpoints\PHP\AstQuery::class,
@@ -33,7 +37,7 @@ class PHPFile
     ];
 
     public function endpointProviders() {
-        return collect((new self)->endpoint_providers)->push(
+        return collect((new self)->endpointProviders)->push(
             $this->fileQueryBuilder
         );
     }
