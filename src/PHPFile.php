@@ -3,12 +3,16 @@
 namespace PHPFileManipulator;
 
 use PHPFileManipulator\Traits\DelegatesAPICalls;
+use PHPFileManipulator\Traits\ManagesFileMetadata;
 
 class PHPFile
 {
     use DelegatesAPICalls;
+    use ManagesFileMetadata;
+    
+    protected $contents;
 
-    public $type;
+    protected $ast;
 
     protected $fileQueryBuilder = Endpoints\PHP\FileQueryBuilder::class;
 
@@ -45,5 +49,5 @@ class PHPFile
         return [
             //
         ];
-    }    
+    }   
 }

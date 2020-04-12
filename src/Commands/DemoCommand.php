@@ -65,7 +65,7 @@ class DemoCommand extends Command
         $fileCount = $files->count();
 
         $charCount = $files->sum(function($file) {
-            return strlen($file->contents);
+            return strlen($file->contents());
         });
 
         $classes = $files->filter(function($file) {

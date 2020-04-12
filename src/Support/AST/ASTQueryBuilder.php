@@ -259,5 +259,10 @@ class ASTQueryBuilder
     public function dd()
     {
         dd($this->get());
-    }    
+    }
+    
+    public function __toString()
+    {
+        return "hehehhee";
+    }
 }

@@ -7,7 +7,7 @@ use PHPFileManipulator\Tests\FileTestCase;
 use LaravelFile;
 use PHPFile;
 use Str;
-use UnexpectedValueException;
+use TypeError;
 
 class FilePathTest extends FileTestCase
 {
@@ -84,8 +84,8 @@ class FilePathTest extends FileTestCase
     public function files_created_with_fromString_must_be_explicitly_named()
     {
         $file = PHPFile::fromString('<?php');
-        
-        $this->expectException(UnexpectedValueException::class);
+
+        $this->expectException(TypeError::class);
 
         $file->save(); // It dont know where to save!
     }    

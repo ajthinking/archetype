@@ -27,7 +27,7 @@ class TemplateTest extends FileTestCase
 
             $this->assertTrue(
                 // All files should have a php tag
-                Str::contains($file->contents, '<?php')
+                Str::contains($file->contents(), '<?php')
             );            
         }        
     }

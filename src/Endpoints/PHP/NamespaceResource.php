@@ -31,10 +31,13 @@ class NamespaceResource extends ResourceEndpointProvider
             $namespace->name->parts = explode("\\", $newNamespace);
         } else {
             // Add a namespace
+            $ast = $this->file->ast();
             array_unshift(
-                $this->file->ast,
+                $ast,
                 (new BuilderFactory)->namespace($newNamespace)->getNode()
             );
+
+            $this->file->ast($ast);
         }
         
         return $this->file;
@@ -45,7 +48,7 @@ class NamespaceResource extends ResourceEndpointProvider
         $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
         
         if($namespace) {
-            $this->file->ast = $namespace->stmts;
+            $this->file->ast($namespace->stmts);
         }
 
         return $this->file;

@@ -52,8 +52,8 @@ class IO extends EndpointProvider
     public function load($path)
     {
         $this->file->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
-        $this->file->contents = $this->storage->get($this->file->inputPath);
-        $this->file->ast = $this->parse();
+        $this->file->contents($this->storage->get($this->file->inputPath));
+        $this->file->ast($this->parse());
         $this->file->initialModificationHash = $this->getModificationHash();
         $this->setOutputPath();        
         
@@ -63,8 +63,8 @@ class IO extends EndpointProvider
     public function fromString($code)
     {        
         $this->file->inputPath = null;        
-        $this->file->contents = $code;
-        $this->file->ast = $this->parse();
+        $this->file->contents($code);
+        $this->file->ast($this->parse());
         $this->file->initialModificationHash = $this->getModificationHash();
         $this->setOutputPath();
         
@@ -96,7 +96,7 @@ class IO extends EndpointProvider
     public function save($outputPath = false)
     {
         $prettyPrinter = new PSR2PrettyPrinter;
-        $code = $prettyPrinter->prettyPrintFile($this->file->ast);
+        $code = $prettyPrinter->prettyPrintFile($this->file->ast());
 
         $this->setOutputPath($outputPath);
         if(!$this->file->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
@@ -136,14 +136,14 @@ class IO extends EndpointProvider
 
     public function ast()
     {
-        return $this->file->ast;
+        return $this->file->ast();
     }    
 
     public function parse()
     {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         try {
-            $ast = $parser->parse($this->file->contents);
+            $ast = $parser->parse($this->file->contents());
         } catch (Error $error) {
             echo "Parse error: {$error->getMessage()}\n";
             return;
@@ -160,13 +160,13 @@ class IO extends EndpointProvider
 
     protected function getModificationHash()
     {
-        return md5(json_encode($this->file->ast));
+        return md5(json_encode($this->file->ast()));
     }
     
     public function print()
     {
         $prettyPrinter = new PSR2PrettyPrinter;
-        return $prettyPrinter->prettyPrintFile($this->file->ast);
+        return $prettyPrinter->prettyPrintFile($this->file->ast());
     }
     
     public function dd($method = false)
@@ -179,5 +179,10 @@ class IO extends EndpointProvider
     private function root($name)
     {
         return $this->storage->roots[$name]['root'];
+    }
+
+    public function contents($content = null)
+    {
+        //
     }
 }

@@ -47,9 +47,9 @@ class Uses extends ResourceEndpointProvider
             $newUseStatements);
         $traverser->addVisitor($visitor);
 
-        $this->file->ast = $traverser->traverse(
+        $this->file->ast($traverser->traverse(
             $namespace ? $this->ast()[0]->stmts : $this->ast()
-        );
+        ));
 
         return $this->file;
     }    
