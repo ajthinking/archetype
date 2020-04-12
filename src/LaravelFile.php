@@ -9,10 +9,10 @@ class LaravelFile extends PHPFile
     protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
 
     public function endpointProviders() {
-        return parent::endpointProviders()->concat($this->endpoint_providers);
+        return parent::endpointProviders()->concat($this->endpointProviders);
     }
 
-    protected $endpoint_providers = [
+    protected $endpointProviders = [
         // Utillities
         Endpoints\Laravel\Template::class,
 
