@@ -15,6 +15,11 @@ class FileInput implements InputInterface
 
     public function load($path = null)
     {
+        $this->extractPathProperties($path);
+    }
+
+    protected function extractPathProperties($path)
+    {
         preg_match('/(.*)\..*/', basename($path), $matches);
         $this->filename = $path ? basename($path, '.php') : null;
         
@@ -24,10 +29,5 @@ class FileInput implements InputInterface
         $this->relativeDir = dirname($path) ? dirname($path) : null;
 
         $isAbsolute = Str::startsWith($path, '/');
-
-        
-
-        //dd($filename, $extension, $relativeDir, $isAbsolute ? "is absolute" : "is not absolute");
-
     }
 }
