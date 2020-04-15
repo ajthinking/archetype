@@ -2,17 +2,10 @@
 
 namespace PHPFileManipulator\Factories;
 
+use PHPFileManipulator\Factories\PHPFileFactory;
 use PHPFileManipulator\LaravelFile;
 
-class LaravelFileFactory
+class LaravelFileFactory extends PHPFileFactory
 {
-    public function __call($method, $args)
-    {
-        return (new LaravelFile)->$method(...$args);
-    }
-
-    public static function __callStatic($method, $args)
-    {
-        return (new LaravelFile)->$method(...$args);
-    }
+    const FILE_TYPE = LaravelFile::class;
 }

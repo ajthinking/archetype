@@ -17,8 +17,11 @@ use PHPFileManipulator\Support\Path;
 trait HasIO
 {
     
-    public function __construct()
+    public function __construct($inputDriver = null, $outputDriver = null)
     {
+        $this->input = $inputDriver;
+        $this->output = $outputDriver;
+
         $this->storage = new PHPFileStorage(
             config('php-file-manipulator.roots')
         );
