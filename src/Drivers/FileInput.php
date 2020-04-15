@@ -2,7 +2,12 @@
 
 namespace PHPFileManipulator\Drivers;
 
-class FileInput
+use PHPFileManipulator\Drivers\InputInterface;
+
+class FileInput implements InputInterface
 {
-    
+    public function load($path = null)
+    {
+        //
+    }
 }
