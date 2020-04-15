@@ -20,6 +20,8 @@ class PHPFile
 
     protected $ast;
 
+    protected $initialModificationHash;
+
     protected $endpointProviders = [
         // Utillities
         Endpoints\PHP\AstQuery::class,
