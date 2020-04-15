@@ -5,9 +5,8 @@ namespace PHPFileManipulator;
 use PHPFileManipulator\Commands\DemoCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use App;
-use PHPFileManipulator\PHPFile;
-use PHPFileManipulator\LaravelFile;
-use PHPFileManipulator\Factories\Laravel;
+use PHPFileManipulator\Factories\PHPFileFactory;
+use PHPFileManipulator\Factories\LaravelFileFactory;
 use PHPFileManipulator\Commands\ListAPICommand;
 use PHPFileManipulator\Commands\TypeWriterCommand;
 use PHPFileManipulator\Commands\RelationshipsDemo;
@@ -41,11 +40,11 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerFacades()
     {
         App::bind('PHPFile', function() {
-            return app()->make(PHPFile::class);            
+            return app()->make(PHPFileFactory::class);            
         });
 
         App::bind('LaravelFile', function() {
-            return app()->make(LaravelFile::class);
+            return app()->make(LaravelFileFactory::class);
         });
     }    
 
@@ -63,7 +62,6 @@ class ServiceProvider extends BaseServiceProvider
             TypeWriterCommand::class,
             DemoCommand::class,
             RelationshipsDemo::class,
-            // prepare for development            
         ]);
     }
 
