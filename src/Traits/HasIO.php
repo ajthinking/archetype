@@ -22,24 +22,36 @@ trait HasIO
         $this->storage = new PHPFileStorage;
     }
 
-    public function inputDriver($driver)
+    public function inputDriver($driver = null)
     {
+        if(!$driver) return $this->input;
+
         $this->input = $driver;
+
+        return $this;
     }
 
     public function outputDriver($driver)
     {
+        if(!$driver) return $this->output;
+
         $this->output = $driver;
+
+        return $this;
     }    
 
     public function load($path)
     {        
         // Proposed new solution - this trait only forwards to the driver implementation:
-        $this->input->load($path);
+        $content = $this->input->load($path);
+        $this->contents($content);
+
+        
+        //$this->contents($this->storage->get($this->inputPath));
+        $this->ast($this->parse());
+
 
         $this->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
-        $this->contents($this->storage->get($this->inputPath));
-        $this->ast($this->parse());
         $this->initialModificationHash = $this->getModificationHash();
         $this->setOutputPath();        
         
@@ -55,21 +67,6 @@ trait HasIO
         $this->setOutputPath();
         
         return $this;        
-    }
-
-    public function inputName()
-    {
-        return basename($this->inputPath);
-    }
-
-    public function inputDir()
-    {
-        return dirname($this->inputPath);
-    }    
-
-    public function inputPath()
-    {
-        return $this->inputPath;
     }
     
     public function relativeInputPath()
@@ -135,7 +132,6 @@ trait HasIO
 
     public function hasModifications()
     {
-
         return ($this->ast() == null) || $this->getModificationHash() != $this->initialModificationHash;
     }
 
