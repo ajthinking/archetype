@@ -9,16 +9,16 @@ class PHPFile
 {
     use HasIO;
     use DelegatesAPICalls;
-    
-    protected $contents;
-
-    protected $ast;
 
     protected $input;
 
-    protected $output;
+    protected $output;    
+
+    protected $contents;
 
     protected $fileQueryBuilder = Endpoints\PHP\FileQueryBuilder::class;
+
+    protected $ast;
 
     protected $endpointProviders = [
         // Utillities
