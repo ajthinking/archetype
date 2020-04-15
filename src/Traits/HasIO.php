@@ -36,7 +36,7 @@ trait HasIO
 
     public function load($path)
     {        
-        // Proposed solution - this trait only forwards to the driver implementation:
+        // Proposed new solution - this trait only forwards to the driver implementation:
         $this->input->load($path);
 
         $this->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
