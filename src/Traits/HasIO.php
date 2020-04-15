@@ -17,18 +17,29 @@ use PHPFileManipulator\Support\Path;
 trait HasIO
 {
     
-    public function __construct($inputDriver = null, $outputDriver = null)
+    public function __construct()
     {
-        $this->input = $inputDriver;
-        $this->output = $outputDriver;
-
         $this->storage = new PHPFileStorage(
             config('php-file-manipulator.roots')
         );
     }
 
-    public function load($path)
+    public function inputDriver($driver)
     {
+        $this->input = $driver;
+
+    }
+
+    public function outputDriver($driver)
+    {
+        $this->output = $driver;
+    }    
+
+    public function load($path)
+    {        
+        // Proposed solution - this trait only forwards to the driver implementation:
+        // $this->input->load($path);
+
         $this->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
         $this->contents($this->storage->get($this->inputPath));
         $this->ast($this->parse());
