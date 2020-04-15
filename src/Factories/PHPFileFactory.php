@@ -8,31 +8,38 @@ class PHPFileFactory
 {
     const FILE_TYPE = PHPFile::class;
 
+    public static function make()
+    {
+        return self::__makeFileInstance();
+    }
+
     public function __call($method, $args)
     {
-        return self::__delegate($method, $args);
+        return self::__makeFileInstance()->$method(...$args);
     }
 
     public static function __callStatic($method, $args)
     {
-        return self::__delegate($method, $args);
+        return self::__makeFileInstance()->$method(...$args);
     }
 
-    protected static function __delegate($method, $args)
+    protected static function __makeFileInstance()
     {
         $class = static::FILE_TYPE;
+        $instance = new $class;
+        $instance->inputDriver(self::__driver('input'));
+        $instance->outputDriver(self::__driver('input'));
 
-        return (new $class(
-            self::__driver('input'),
-            self::__driver('output'),
-        ))->$method(...$args);
+        return $instance;
     }
 
     protected static function __driver($name)
     {
-        return [
+        $driver =[
             "input" => config('php-file-manipulator.input', \PHPFileManipulator\Drivers\FileInput::class),
-            "output" => config('php-file-manipulator.input', \PHPFileManipulator\Drivers\FileInput::class),
+            "output" => config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class),
         ][$name];
+
+        return new $driver;
     }    
 }
