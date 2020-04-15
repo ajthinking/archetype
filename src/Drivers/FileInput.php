@@ -13,9 +13,17 @@ class FileInput implements InputInterface
 
     public $relativeDir;
 
+    public $root;
+
     public function load($path = null)
     {
+        $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
+    }
+
+    protected function ensureDefaultRootExists()
+    {
+        $this->root = $this->root ?? "SOME DEFAULT ROOT";
     }
 
     protected function extractPathProperties($path)
