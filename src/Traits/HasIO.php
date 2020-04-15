@@ -31,7 +31,7 @@ trait HasIO
         return $this;
     }
 
-    public function outputDriver($driver)
+    public function outputDriver($driver = null)
     {
         if(!$driver) return $this->output;
 
