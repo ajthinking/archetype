@@ -43,12 +43,12 @@ class PHPFileStorage
         : static::getStorageRootPath($type) . "/$path";        
     }    
 
-    private function getStorageRootPath($name)
+    protected function getStorageRootPath($name)
     {
         return Config::get("php-file-manipulator.roots.$name.root");
     }
     
-    private function getStorageDisk($name)
+    protected function getStorageDisk($name)
     {
         $root = $this->roots[$name]['root'];
         $unique_id = Str::slug($root);
