@@ -2,11 +2,13 @@
 
 namespace PHPFileManipulator;
 
-use PHPFileManipulator\Traits\DelegatesAPICalls;
 use PHPFileManipulator\Traits\ManagesFileMetadata;
+use PHPFileManipulator\Traits\DelegatesAPICalls;
+use PHPFileManipulator\Traits\HasIO;
 
 class PHPFile
 {
+    use HasIO;
     use DelegatesAPICalls;
     use ManagesFileMetadata;
     
@@ -22,7 +24,6 @@ class PHPFile
 
     protected $endpointProviders = [
         // Utillities
-        Endpoints\PHP\IO::class,
         Endpoints\PHP\AstQuery::class,
         Endpoints\PHP\ReflectionProxy::class,
 
