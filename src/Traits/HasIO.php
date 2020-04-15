@@ -27,7 +27,6 @@ trait HasIO
     public function inputDriver($driver)
     {
         $this->input = $driver;
-
     }
 
     public function outputDriver($driver)
@@ -123,11 +122,6 @@ trait HasIO
         return $this->save();
     }
 
-    // public function ast()
-    // {
-    //     return $this->ast();
-    // }    
-
     public function parse()
     {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
@@ -169,9 +163,4 @@ trait HasIO
     {
         return $this->storage->roots[$name]['root'];
     }
-
-    // public function contents($content = null)
-    // {
-    //     //
-    // }
 }
