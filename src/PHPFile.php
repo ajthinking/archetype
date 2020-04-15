@@ -2,7 +2,6 @@
 
 namespace PHPFileManipulator;
 
-use PHPFileManipulator\Traits\ManagesFileMetadata;
 use PHPFileManipulator\Traits\DelegatesAPICalls;
 use PHPFileManipulator\Traits\HasIO;
 
@@ -10,7 +9,6 @@ class PHPFile
 {
     use HasIO;
     use DelegatesAPICalls;
-    use ManagesFileMetadata;
     
     protected $contents;
 

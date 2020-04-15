@@ -163,4 +163,14 @@ trait HasIO
     {
         return $this->storage->roots[$name]['root'];
     }
+
+    public function contents($contents = false)
+    {
+        return $contents ? $this->contents = $contents : $this->contents;
+    }
+
+    public function ast($ast = false)
+    {
+        return $ast ? $this->ast = $ast : $this->ast;
+    }     
 }
