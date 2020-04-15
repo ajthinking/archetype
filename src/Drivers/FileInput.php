@@ -23,7 +23,7 @@ class FileInput implements InputInterface
 
     protected function ensureDefaultRootExists()
     {
-        $this->root = $this->root ?? "SOME DEFAULT ROOT";
+        $this->root = $this->root ?? config('php-file-manipulator.roots.output');
     }
 
     protected function extractPathProperties($path)
