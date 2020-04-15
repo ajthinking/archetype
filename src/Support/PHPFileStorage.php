@@ -10,9 +10,9 @@ use PHPFileManipulator\Support\Path;
 
 class PHPFileStorage
 {
-    public function __construct($roots)
+    public function __construct()
     {
-        $this->roots = $roots;
+        $this->roots = config('php-file-manipulator.roots');
     }
 
     public function get($path)

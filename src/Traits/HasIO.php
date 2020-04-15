@@ -19,9 +19,7 @@ trait HasIO
     
     public function __construct()
     {
-        $this->storage = new PHPFileStorage(
-            config('php-file-manipulator.roots')
-        );
+        $this->storage = new PHPFileStorage;
     }
 
     public function inputDriver($driver)
