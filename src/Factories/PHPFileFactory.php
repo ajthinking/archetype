@@ -28,7 +28,7 @@ class PHPFileFactory
         $class = static::FILE_TYPE;
         $instance = new $class;
         $instance->inputDriver(self::__driver('input'));
-        $instance->outputDriver(self::__driver('input'));
+        $instance->outputDriver(self::__driver('output'));
 
         return $instance;
     }
