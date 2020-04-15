@@ -4,6 +4,7 @@ namespace PHPFileManipulator\Drivers;
 
 use PHPFileManipulator\Drivers\InputInterface;
 use Illuminate\Support\Str;
+use PHPFileManipulator\Support\PHPFileStorage;
 
 class FileInput implements InputInterface
 {
@@ -13,17 +14,48 @@ class FileInput implements InputInterface
 
     public $relativeDir;
 
+    public $absoluteDir;
+
     public $root;
 
     public function load($path = null)
     {
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
+
+        return (new PHPFileStorage)->get($this->absolutePath());
     }
+
+    protected function dumpProperties()
+    {
+        dd([
+            "path" => $path,
+            "absoluteDir" => $this->absoluteDir,
+            "filename" => $this->filename,
+            "extension" => $this->extension,
+            "relativeDir" => $this->relativeDir,
+            "root" => $this->root['root']
+        ]);
+    }
+
+    public function absolutePath()
+    {
+        return "$this->absoluteDir/$this->filename" . ($this->extension ? ".$this->extension" : "");
+    }
+
+    public function filename()
+    {
+        return $this->filename;
+    }    
+
+    protected function relativePath()
+    {
+        
+    }    
 
     protected function ensureDefaultRootExists()
     {
-        $this->root = $this->root ?? config('php-file-manipulator.roots.output');
+        $this->root = $this->root ?? config('php-file-manipulator')['roots']['input'];
     }
 
     protected function extractPathProperties($path)
@@ -33,9 +65,15 @@ class FileInput implements InputInterface
         
         preg_match('/.*\.(.*)/', basename($path), $matches);
         $this->extension = $matches[1] ?? null;
+        
+        $pathIsAbsolute = Str::startsWith($path, '/');
 
-        $this->relativeDir = dirname($path) ? dirname($path) : null;
+        if($pathIsAbsolute) {
+            $this->absoluteDir = dirname($path);
+        } else {
+            $this->absoluteDir = dirname($this->root['root'] . "/" . $path);
+        }
 
-        $isAbsolute = Str::startsWith($path, '/');
+        $this->relativeDir = Str::replaceFirst($this->root['root'] . '/', '', $this->absoluteDir);
     }
 }
