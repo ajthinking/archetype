@@ -67,14 +67,14 @@ class ReadWriteTest extends FileTestCase
         );
     }
 
-    /** @test */
-    public function it_has_attached_input_paths()
-    {
-        $file = LaravelFile::load('app/User.php');
+    // /** @test */
+    // public function it_has_attached_input_paths()
+    // {
+    //     $file = LaravelFile::load('app/User.php');
 
-        $this->assertEquals($file->inputPath(), base_path('app/User.php'));
-        $this->assertEquals($file->inputName(), 'User.php');
-    }    
+    //     $this->assertEquals($file->inputPath(), base_path('app/User.php'));
+    //     $this->assertEquals($file->inputName(), 'User.php');
+    // }    
 
     /** @test */
     public function it_can_write_to_default_location()
