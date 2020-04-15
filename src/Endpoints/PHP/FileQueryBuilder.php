@@ -63,9 +63,9 @@ class FileQueryBuilder extends EndpointProvider
     {
         $this->baseDir = $directory;
                       
-        $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) { 
-            $type = get_class($this->file);
-            return (new $type)->load($filePath);
+        $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) {
+            $type = class_basename($this->file);
+            return app()->make($type)->load($filePath);
         });
         
         return $this;    
