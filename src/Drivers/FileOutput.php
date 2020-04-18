@@ -16,18 +16,35 @@ class FileOutput implements OutputInterface
 
     public $absoluteDir;
 
-    public $root;    
-    
-    public function save($path = null, $content)
+    public $root;
+
+    public $storage;
+
+    public function __construct()
+    {
+        $this->storage = new PHPFileStorage;
+    }    
+
+    public function save($path = null, $code)
     {
         $this->ensureDefaultRootExists();
-        $this->extractPathProperties($path);        
+        $this->extractPathProperties($path);
+        
+        $this->storage->put(
+            $this->absolutePath(),
+            $code
+        );        
     }
 
     public function debug($path = null)
     {
         //
     }
+
+    public function absolutePath()
+    {
+        return "$this->absoluteDir/$this->filename" . ($this->extension ? ".$this->extension" : "");
+    }    
 
     protected function ensureDefaultRootExists()
     {

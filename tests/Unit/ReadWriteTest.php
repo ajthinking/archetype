@@ -81,6 +81,7 @@ class ReadWriteTest extends FileTestCase
     {
         // debug
         LaravelFile::load('app/User.php')->debug();        
+
         $this->assertTrue(
             is_file(__DIR__ . '/../.debug/app/User.php')
         );

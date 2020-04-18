@@ -43,8 +43,8 @@ abstract class FileTestCase extends BaseTestCase
         $debug = __DIR__ . '/.debug';
         $output = __DIR__ . '/.output';
 
-        is_dir($debug) ? $this->deleteDirectory($debug) : null;
-        is_dir($output) ? $this->deleteDirectory($output) : null;        
+        is_dir($debug) ? $this->rrmdir($debug) : null;
+        is_dir($output) ? $this->rrmdir($output) : null;        
     }
 
     protected function bootDevelopmentRootDisks()
@@ -80,18 +80,38 @@ abstract class FileTestCase extends BaseTestCase
             $this->samplePath('routes/web.php')
         );        
     }
-    
+
+    protected function rrmdir($dir)
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (
+                        is_dir($dir . DIRECTORY_SEPARATOR . $object) &&
+                        !is_link($dir . "/" . $object)
+                    ) {
+                        $this->rrmdir($dir . DIRECTORY_SEPARATOR . $object);
+                    } else {
+                        unlink($dir . DIRECTORY_SEPARATOR . $object);
+                    }
+                }
+            }
+            rmdir($dir);
+        }
+    }    
+
     protected function deleteDirectory($path)
     {
         if(is_dir($path)){
             //GLOB_MARK adds a slash to directories returned
             //GLOB_BRACE includes hidden files
             $files = glob( $path . '*', GLOB_MARK|GLOB_BRACE );
-    
             foreach( $files as $file ){
                 $this->deleteDirectory( $file );      
             }
             try{
+                dd($path);
                 rmdir( $path );
             } catch(ErrorException $e) {
                 if(Str::endsWith($e->getMessage(), 'No such file or directory')) return;

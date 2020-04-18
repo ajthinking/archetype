@@ -82,7 +82,7 @@ trait HasIO
         $this->setOutputPath($outputPath);
         if(!$this->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        $this->output->save($this->outputPath, $code);
+        //$this->output->save($this->outputPath, $code);
 
         $this->storage->put(
             $this->outputPath,
@@ -114,6 +114,9 @@ trait HasIO
     public function debug()
     {
         $this->storage->roots['output'] = $this->storage->roots['debug'];
+        $this->output->storage->roots['output'] = $this->output->storage->roots['debug'];
+        $this->output->root = $this->storage->roots['debug'];
+
         return $this->save();
     }
 
