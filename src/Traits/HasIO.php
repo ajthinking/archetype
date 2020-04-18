@@ -46,8 +46,6 @@ trait HasIO
         $content = $this->input->load($path);
         $this->contents($content);
 
-        
-        //$this->contents($this->storage->get($this->inputPath));
         $this->ast($this->parse());
 
 
@@ -78,6 +76,8 @@ trait HasIO
 
     public function save($outputPath = false)
     {
+        $this->output->save($outputPath);
+
         $prettyPrinter = new PSR2PrettyPrinter;
         $code = $prettyPrinter->prettyPrintFile($this->ast());
 
@@ -166,5 +166,5 @@ trait HasIO
     public function ast($ast = false)
     {
         return $ast ? $this->ast = $ast : $this->ast;
-    }     
+    }
 }

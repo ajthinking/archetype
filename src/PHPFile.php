@@ -12,7 +12,7 @@ class PHPFile
 
     protected $input;
 
-    protected $output;    
+    protected $output;
 
     protected $contents;
 
