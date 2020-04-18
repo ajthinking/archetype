@@ -18,10 +18,10 @@ class FileOutput implements OutputInterface
 
     public $root;    
     
-    public function save($path = null)
+    public function save($path = null, $content)
     {
         $this->ensureDefaultRootExists();
-        $this->extractPathProperties($path);
+        $this->extractPathProperties($path);        
     }
 
     public function debug($path = null)
