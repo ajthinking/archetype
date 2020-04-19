@@ -16,12 +16,6 @@ use PHPFileManipulator\Support\Path;
 
 trait HasIO
 {
-    
-    public function __construct()
-    {
-        $this->storage = new PHPFileStorage;
-    }
-
     public function inputDriver($driver = null)
     {
         if(!$driver) return $this->input;
@@ -50,69 +44,34 @@ trait HasIO
 
         $this->ast($this->parse());
 
-        $this->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
         $this->initialModificationHash = $this->getModificationHash();
-        $this->setOutputPath();        
         
         return $this;
     }
     
     public function fromString($code)
     {        
-        $this->inputPath = null;        
         $this->contents($code);
         $this->ast($this->parse());
         $this->initialModificationHash = $this->getModificationHash();
-        $this->setOutputPath();
         
         return $this;        
     }
-    
-    public function relativeInputPath()
-    {
-        return $this->inputPath ?
-            Path::make($this->inputPath)->relative($this->root('input'))
-            : null;
-    }    
 
     public function save($outputPath = false)
     {
         $prettyPrinter = new PSR2PrettyPrinter;
         $code = $prettyPrinter->prettyPrintFile($this->ast());
 
-        // $this->setOutputPath($outputPath);
-        
-        // if(!$this->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
-
         $this->output->save($outputPath, $code);
     
         return $this;
     }
 
-    protected function setOutputPath($outputPath = false)
-    {
-        if($outputPath) {
-            return $this->outputPath = Path::make($outputPath)->withDefaultRoot($this->root('output'))->full();
-        }
-        
-        if($this->relativeInputPath()) {
-            return $this->outputPath = Path::make($this->relativeInputPath())
-                ->withDefaultRoot($this->root('output'))->full();
-        }
-
-        $this->outputPath = null;
-    }
-
-    public function outputPath()
-    {
-        return $this->outputPath;
-    }
-
     public function debug()
     {
-        $this->storage->roots['output'] = $this->storage->roots['debug'];
         $this->output->storage->roots['output'] = $this->output->storage->roots['debug'];
-        $this->output->root = $this->storage->roots['debug'];
+        $this->output->root = config('php-file-manipulator.roots')['debug'];
 
         return $this->save();
     }
@@ -151,11 +110,6 @@ trait HasIO
         dd(
             $method ? $this->$method() : $this
         );
-    }
-    
-    private function root($name)
-    {
-        return $this->storage->roots[$name]['root'];
     }
 
     public function contents($contents = false)
