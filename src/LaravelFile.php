@@ -29,6 +29,7 @@ class LaravelFile extends PHPFile
         return parent::templates()->concat([
             "channel",
             "console",
+            "controller",
             "event",
             "exceptionRenderReport",
             "exceptionRender",

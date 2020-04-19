@@ -51,9 +51,20 @@ class Template extends EndpointProvider
     protected function getTemplate($name)
     {
         // Get default stub from Illuminate
-        $laravelStubDir = 'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/';
+        $laravelStubDirs = [
+            'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/',
+            'vendor/laravel/framework/src/Illuminate/Routing/Console/stubs/',
+        ];
+
         $fileName = str_replace('_', '.', $name);
         $fileName = Str::kebab($fileName) . '.stub';
+
+        $content = file_get_contents(
+            base_path(collect($laravelStubDirs)->first(function($dir) use($fileName) {
+                return is_file(base_path($dir . $fileName));
+            }) . $fileName)
+        );
+
 
         // Make it parsable by replacing by removing blade syntax, ie {{ namespace }} -> ___namespace___
         return preg_replace_callback(
@@ -61,7 +72,7 @@ class Template extends EndpointProvider
             function ($matches) {
                 return "___$matches[1]___";
             },
-            file_get_contents(base_path($laravelStubDir . $fileName))
+            $content
         );
     }
 
