@@ -26,18 +26,6 @@ class FileInput implements InputInterface
         return (new PHPFileStorage)->get($this->absolutePath());
     }
 
-    protected function dumpProperties()
-    {
-        dd([
-            "path" => $path,
-            "absoluteDir" => $this->absoluteDir,
-            "filename" => $this->filename,
-            "extension" => $this->extension,
-            "relativeDir" => $this->relativeDir,
-            "root" => $this->root['root']
-        ]);
-    }
-
     public function absolutePath()
     {
         return "$this->absoluteDir/$this->filename" . ($this->extension ? ".$this->extension" : "");
@@ -46,12 +34,7 @@ class FileInput implements InputInterface
     public function filename()
     {
         return $this->filename;
-    }    
-
-    protected function relativePath()
-    {
-        
-    }    
+    }
 
     protected function ensureDefaultRootExists()
     {
