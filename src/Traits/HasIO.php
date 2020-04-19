@@ -80,14 +80,10 @@ trait HasIO
         $code = $prettyPrinter->prettyPrintFile($this->ast());
 
         $this->setOutputPath($outputPath);
+        
         if(!$this->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        //$this->output->save($this->outputPath, $code);
-
-        $this->storage->put(
-            $this->outputPath,
-            $code
-        );
+        $this->output->save($this->outputPath, $code);
     
         return $this;
     }
