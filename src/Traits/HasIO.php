@@ -34,6 +34,11 @@ trait HasIO
         return $this;
     }    
 
+    public function find($path)
+    {
+        return $this->load($path);
+    }
+
     public function load($path)
     {        
         $content = $this->input->load($path);
