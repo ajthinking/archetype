@@ -20,7 +20,15 @@ class Template extends EndpointProvider
     public function fromTemplate($name, $path)
     {
         $file = $this->file->fromString($this->getTemplate($name));
-        $file->type = $name;
+
+        $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
+        $outputDriver = new $outputDriverClass;
+        $outputDriver->filename = $path;
+        $outputDriver->extension = 'php';
+        $outputDriver->relativeDir = 'app';
+        $file->outputDriver($outputDriver);
+
+        //$file->type = $name;
         
         // TODO:
         // given the template type (model, controller, etc)
