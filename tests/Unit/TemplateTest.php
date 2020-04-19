@@ -47,5 +47,14 @@ class TemplateTest extends FileTestCase
         $this->assertTrue(
             is_file(__DIR__ . '/../.output/app/Explosion.php')
         );        
-    }    
+    }
+    
+    /** @test */
+    public function it_can_use_intermidiate_make_when_creating_from_templates()
+    {
+        $file = LaravelFile::make()->model('Note')->save();
+        $this->assertTrue(
+            is_file(__DIR__ . '/../.output/app/Note.php')
+        );        
+    }
 }
