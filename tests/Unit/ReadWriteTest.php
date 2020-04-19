@@ -76,20 +76,23 @@ class ReadWriteTest extends FileTestCase
     //     $this->assertEquals($file->inputName(), 'User.php');
     // }    
 
-    /** @test */
+    /** @test
+     * @group mount_ai
+    */
     public function it_can_write_to_default_location()
-    {
+    {        
+        // default save location is in .output when in development mode
+        LaravelFile::load('app/User.php')->save();        
+        
+        $this->assertTrue(
+            is_file(__DIR__ . '/../.output/app/User.php')
+        );
+
         // debug
         LaravelFile::load('app/User.php')->debug();        
 
         $this->assertTrue(
             is_file(__DIR__ . '/../.debug/app/User.php')
-        );
-
-        // default save location is in .output when in development mode
-        LaravelFile::load('app/User.php')->save();        
-        $this->assertTrue(
-            is_file(__DIR__ . '/../.output/app/User.php')
         );
     }   
 }

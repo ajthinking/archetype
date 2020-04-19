@@ -23,13 +23,25 @@ class FileOutput implements OutputInterface
     public function __construct()
     {
         $this->storage = new PHPFileStorage;
+        $this->ensureDefaultRootExists();
     }    
 
     public function save($path = null, $code)
     {
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
-        
+
+        // dd(
+        //     $this->root['root'],
+        //     $this->relativeDir,
+        //     $this->absoluteDir(),
+        //     $this->filename,
+        //     $this->extension,
+        //     $this->absolutePath()
+        // ); 
+
+        //file_put_contents($this->absolutePath(), $code);
+
         $this->storage->put(
             $this->absolutePath(),
             $code
@@ -43,8 +55,15 @@ class FileOutput implements OutputInterface
 
     public function absolutePath()
     {
-        return "$this->absoluteDir/$this->filename" . ($this->extension ? ".$this->extension" : "");
+        return $this->absoluteDir() . "/$this->filename" . ($this->extension ? ".$this->extension" : "");
     }    
+
+    public function setDefaultsFrom($inputDriver)
+    {
+        $this->filename = $inputDriver->filename;
+        $this->extension = $inputDriver->extension;
+        $this->relativeDir = $inputDriver->relativeDir;
+    }
 
     protected function ensureDefaultRootExists()
     {
@@ -53,6 +72,9 @@ class FileOutput implements OutputInterface
 
     protected function extractPathProperties($path)
     {
+        // If no path is supplied, we will rely on default/mirrored input settings
+        if(!$path) return;
+
         preg_match('/(.*)\..*/', basename($path), $matches);
         $this->filename = $path ? basename($path, '.php') : null;
         
@@ -60,13 +82,10 @@ class FileOutput implements OutputInterface
         $this->extension = $matches[1] ?? null;
         
         $pathIsAbsolute = Str::startsWith($path, '/');
-
-        if($pathIsAbsolute) {
-            $this->absoluteDir = dirname($path);
-        } else {
-            $this->absoluteDir = dirname($this->root['root'] . "/" . $path);
-        }
-
-        $this->relativeDir = Str::replaceFirst($this->root['root'] . '/', '', $this->absoluteDir);
-    }    
+    }
+    
+    protected function absoluteDir()
+    {
+        return $this->root['root'] . "/" . $this->relativeDir;
+    }
 }

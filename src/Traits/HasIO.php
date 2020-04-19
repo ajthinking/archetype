@@ -42,12 +42,13 @@ trait HasIO
 
     public function load($path)
     {        
-        // Proposed new solution - this trait only forwards to the driver implementation:
         $content = $this->input->load($path);
+
+        $this->output->setDefaultsFrom($this->input);
+
         $this->contents($content);
 
         $this->ast($this->parse());
-
 
         $this->inputPath = Path::make($path)->withDefaultRoot($this->root('input'))->full();
         $this->initialModificationHash = $this->getModificationHash();
@@ -79,11 +80,11 @@ trait HasIO
         $prettyPrinter = new PSR2PrettyPrinter;
         $code = $prettyPrinter->prettyPrintFile($this->ast());
 
-        $this->setOutputPath($outputPath);
+        // $this->setOutputPath($outputPath);
         
-        if(!$this->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
+        // if(!$this->outputPath) throw new UnexpectedValueException('Could not save because we dont have a path!');
 
-        $this->output->save($this->outputPath, $code);
+        $this->output->save($outputPath, $code);
     
         return $this;
     }

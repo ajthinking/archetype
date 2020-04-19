@@ -39,12 +39,12 @@ class TemplateTest extends FileTestCase
         $file = LaravelFile::markdown('Haha');        
     }
     
-    /** @test */
-    public function it_can_not_rely_on_default_path_for_templates_yet()
-    {
-        $this->expectException(UnexpectedValueException::class);
-        $file = LaravelFile::model('Explosion')->save(
-            /* for now path is mandatory when using templates */
-        );        
-    }    
+    // /** @test */
+    // public function it_can_not_rely_on_default_path_for_templates_yet()
+    // {
+    //     //$this->expectException(UnexpectedValueException::class);
+    //     $file = LaravelFile::model('Explosion')->save(
+    //         /* for now path is mandatory when using templates */
+    //     );
+    // }    
 }
