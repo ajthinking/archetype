@@ -57,4 +57,18 @@ class TemplateTest extends FileTestCase
             is_file(__DIR__ . '/../.output/app/Note.php')
         );        
     }
+
+    /** @test */
+    public function it_will_replace_namespace_and_class_name_when_creating_a_model()
+    {
+        $file = LaravelFile::make()->model('Guitar');
+
+        $this->assertTrue(
+            $file->namespace() == 'App'
+        );
+
+        $this->assertTrue(
+            $file->className() == 'Guitar'
+        );        
+    }    
 }

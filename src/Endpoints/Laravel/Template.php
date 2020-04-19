@@ -19,26 +19,36 @@ class Template extends EndpointProvider
 
     public function fromTemplate($name, $path)
     {
-        $file = $this->file->fromString($this->getTemplate($name));
+        $file = $this->file->fromString($this->getCode($name, $path));
+        $file->outputDriver($this->createOutputDriver($path));
 
+        return $file;
+    }
+
+    protected function createOutputDriver($path)
+    {
         $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
         $outputDriver = new $outputDriverClass;
         $outputDriver->filename = $path;
         $outputDriver->extension = 'php';
         $outputDriver->relativeDir = 'app';
-        $file->outputDriver($outputDriver);
 
-        //$file->type = $name;
-        
-        // TODO:
-        // given the template type (model, controller, etc)
-        // set default path and namespace letting the user do just
-        // LaravelFile::controller('BeerController')->save()
-        
-        return $file;
+        return $outputDriver;
     }
 
-    private function getTemplate($name)
+    protected function getCode($name, $path)
+    {
+        $template = $this->getTemplate($name);
+        $replacementPairs = $this->defaultReplacementPairs($name, $path);
+        
+        foreach($replacementPairs as $key => $value) {
+            $template = str_replace($key, $value, $template);
+        }
+
+        return $template;
+    }
+
+    protected function getTemplate($name)
     {
         // Get default stub from Illuminate
         $laravelStubDir = 'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/';
@@ -53,5 +63,17 @@ class Template extends EndpointProvider
             },
             file_get_contents(base_path($laravelStubDir . $fileName))
         );
-    }    
+    }
+
+    protected function defaultReplacementPairs($type, $name)
+    {
+        $defaults = [
+            'model' => [
+                '___class___' => $name,
+                '___namespace___' => 'App',
+            ]
+        ];
+        
+        return $defaults[$type] ?? [];
+    }
 }
