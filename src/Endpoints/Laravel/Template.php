@@ -71,7 +71,11 @@ class Template extends EndpointProvider
             'model' => [
                 '___class___' => $name,
                 '___namespace___' => 'App',
-            ]
+            ],
+            'controller' => [
+                //'___class___' => $name,
+                //'___namespace___' => 'App',
+            ],            
         ];
         
         return $defaults[$type] ?? [];
