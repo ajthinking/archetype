@@ -7,7 +7,7 @@ use PHPFileManipulator\Support\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
-use Error;
+use PHPParser\Error;
 use UnexpectedValueException;
 use Config;
 use PHPFileManipulator\Support\PHPFileStorage;
@@ -40,13 +40,15 @@ trait HasIO
     }
 
     public function load($path)
-    {        
+    {   
+        
+        
         $content = $this->input->load($path);
 
         $this->output->setDefaultsFrom($this->input);
-
+        
         $this->contents($content);
-
+        
         $this->ast($this->parse());
 
         $this->initialModificationHash = $this->getModificationHash();
@@ -84,10 +86,11 @@ trait HasIO
     public function parse()
     {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
         try {
             $ast = $parser->parse($this->contents());
         } catch (Error $error) {
-            echo "Parse error: {$error->getMessage()}\n";
+            dd($error->getMessage() . " " . $this->input->absolutePath());
             return;
         }
 
