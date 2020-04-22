@@ -14,6 +14,6 @@ class AstQuery extends EndpointProvider
     }
     
     public function astQuery() {
-        return new ASTQueryBuilder($this->file->ast());
+        return ASTQueryBuilder::fromFile($this->file);
     }
 }

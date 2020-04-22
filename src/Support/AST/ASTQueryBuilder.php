@@ -28,13 +28,29 @@ class ASTQueryBuilder
 
     public $currentDepth = 0;
 
+    public $initialAST;
+
+    public $resultingAST;
+
+    public $file;
+
     public function __construct($ast)
     {
+        $this->initialAST = $ast;
+        $this->resultingAST = $ast;
+
         $this->tree = [
             [new Survivor(
                 HashInserter::on($ast)
             )],
         ];
+    }
+
+    public static function fromFile($file)
+    {
+        $instance = new static($file->ast());
+        $instance->file = $file;
+        return $instance;
     }
 
     public function __call($method, $args)
@@ -203,8 +219,16 @@ class ASTQueryBuilder
     public function replace($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
-            $node->__php_file_manipulator_new_value = $newNode;
+            if(!isset($node->results->__object_hash)) return;
+
+            $this->resultingAST = NodeReplacer::replace(
+                $node->results->__object_hash,
+                $newNode,
+                $this->resultingAST
+            );
         });
+
+        
 
         // TWO TRACKS!
         // READ - finish with get() or recall()
@@ -216,12 +240,19 @@ class ASTQueryBuilder
     public function dd()
     {
         dd($this->get());
-    }    
+    }
+    
+    public function exit()
+    {
+        $this->file->ast(
+            $this->resultingAST
+        );
+        
+        return $this->file;
+    }
 
     protected function currentNodes()
     {
         return collect($this->tree[$this->currentDepth]);
     }
-    
-
 }
