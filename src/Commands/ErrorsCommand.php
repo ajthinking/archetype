@@ -58,6 +58,8 @@ class ErrorsCommand extends Command
             }
         });
         
+        if($this->errors->isEmpty()) return $this->info('No errors found!');
+
         $this->table(['path', 'message'], $this->errors->toArray());
     }
 }
