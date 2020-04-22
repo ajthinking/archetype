@@ -39,21 +39,23 @@ class ASTQueryBuilder
 
     public function __call($method, $args)
     {
-        // exists in classMap?
-        if($this->classMap($method)) return $this->traverse($this->classMap($method));        
+        // Can we find a corresponding PHPParser class to enter?
+        $class = $this->classMap($method);
+        if($class) return $this->traverseIntoClass($class);        
 
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
 
-    public function __get($property)
+    public function __get($name)
     {
-        // exists in propertyMap?
-        if($this->propertyMap($property)) return $this->traverseInto($this->propertyMap($property));        
+        // Can we find a corresponding PHPParser property to enter?
+        $property = $this->propertyMap($name);
+        if($property) return $this->traverseIntoProperty($property);        
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }    
 
-    public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
+    public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
     {
         $next = $this->currentNodes()->map(function($queryNode) use($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
@@ -71,7 +73,7 @@ class ASTQueryBuilder
         return $this;        
     }
 
-    public function traverseInto($property)
+    public function traverseIntoProperty($property)
     {
         $next = $this->currentNodes()->map(function($queryNode) use($property) {
             if(!isset($queryNode->results->$property)) return new Killable;
@@ -93,30 +95,6 @@ class ASTQueryBuilder
 
         return $this;
     }
-
-    public function traverseIntoArrayIndex($property, $index)
-    {
-        $next = $this->currentNodes()->map(function($queryNode) use($property, $index) {
-            if(!isset($queryNode->results->$property)) return new Killable;
-            return Survivor::fromParent($queryNode)->withResult(
-                $queryNode->results->$property[$index]
-            );
-        })->flatten()->toArray();
-
-        array_push($this->tree, $next);
-
-        $this->currentDepth++;
-
-        return $this;
-    }    
-
-    public function traverseFirst($class)
-    {
-        return $this->traverse(
-            $this->classMap($class),
-            'findFirstInstanceOf'
-        );        
-    }   
 
     public function shallow()
     {
