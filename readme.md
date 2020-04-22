@@ -209,6 +209,11 @@ php artisan file:api --provider=IO
 ```
 
 ### Gotchas
+
+> If a file can't be parsed, a `FileParseError` will be thrown.
+
+> To see *all* offending files run `php artisan file:errors`.
+
 > :warning: This package assumes code follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Examples: use no more than one class and namespace per file, refrain from multiple property declarations in same line, avoid group use statements etc.
 
 > :warning: Files to be processed must have encoding UTF-8
