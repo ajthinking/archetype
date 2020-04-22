@@ -202,16 +202,26 @@ class ASTQueryBuilder
 
     public function replace($newNode)
     {
+        $this->currentNodes()->each(function($node) use($newNode) {
+            $node->__php_file_manipulator_new_value = $newNode;
+        });
+
+        // TWO TRACKS!
+        // READ - finish with get() or recall()
+        // WRITE - any replace will modify a property resultingAST
+
         return $this;
     }
+
+    public function dd()
+    {
+        dd($this->get());
+    }    
 
     protected function currentNodes()
     {
         return collect($this->tree[$this->currentDepth]);
     }
     
-    public function dd()
-    {
-        dd($this->get());
-    }
+
 }
