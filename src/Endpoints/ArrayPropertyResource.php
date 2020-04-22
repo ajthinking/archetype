@@ -37,7 +37,7 @@ abstract class ArrayPropertyResource extends ResourceEndpointProvider
     }
     
     protected function setItems($requestedName, $items)
-    {
+    {        
         $propertyGroups = (new NodeFinder)->findInstanceOf($this->ast(), Property::class);
         if(!$propertyGroups) return null;
 
@@ -61,6 +61,7 @@ abstract class ArrayPropertyResource extends ResourceEndpointProvider
             })->toArray()
         );
 
+        
         return $this->file;
     }
 }
