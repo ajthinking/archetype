@@ -24,23 +24,16 @@ abstract class ArrayPropertyResource extends ResourceEndpointProvider
 
     protected function items($requestedName)
     {
-        $propertyGroups = (new NodeFinder)->findInstanceOf($this->ast(), Property::class);
-        if(!$propertyGroups) return null;
+        $result = $this->file->astQuery()
+            ->propertyProperty()
+            ->where('name->name', $requestedName)
+            ->arrayItem()
+            ->value
+            ->value
+            ->get()
+            ->toArray();
 
-        $ast = collect($propertyGroups)->map(function($propertyGroup) {
-            // Assume only one property per statement
-            return $propertyGroup->props[0];
-        })->filter(function($property) use($requestedName) {
-            return $property->name->name == $requestedName;
-        })->first();
-
-        if(!$ast) return null;
-
-        if(!$ast->default instanceof Array_) return null;
-
-        return collect($ast->default->items)->map(function($item) {
-            return $item->value->value;
-        })->toArray();
+        return $result ? $result : null;
     }
     
     protected function setItems($requestedName, $items)
