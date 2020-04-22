@@ -55,7 +55,7 @@ class ASTQueryBuilder
 
     public function traverse($expectedClass, $finderMethod = 'findInstanceOf')
     {
-        $next = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($expectedClass, $finderMethod) {
+        $next = $this->currentNodes()->map(function($queryNode) use($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
             $results = $this->nodeFinder()->$finderMethod($queryNode->results, $expectedClass);
             // Wrap matches in Survivor object
@@ -73,7 +73,7 @@ class ASTQueryBuilder
 
     public function traverseInto($property)
     {
-        $next = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($property) {
+        $next = $this->currentNodes()->map(function($queryNode) use($property) {
             if(!isset($queryNode->results->$property)) return new Killable;
             
             $value = $queryNode->results->$property;
@@ -96,7 +96,7 @@ class ASTQueryBuilder
 
     public function traverseIntoArrayIndex($property, $index)
     {
-        $next = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($property, $index) {
+        $next = $this->currentNodes()->map(function($queryNode) use($property, $index) {
             if(!isset($queryNode->results->$property)) return new Killable;
             return Survivor::fromParent($queryNode)->withResult(
                 $queryNode->results->$property[$index]
@@ -137,7 +137,7 @@ class ASTQueryBuilder
 
     public function remember($key, $callback)
     {
-        collect($this->tree[$this->currentDepth])->each(function($queryNode) use($key, $callback) {
+        $this->currentNodes()->each(function($queryNode) use($key, $callback) {
 
             $subAST = [(clone $queryNode)->results];
             $subQueryBuilder = new static($subAST);
@@ -150,7 +150,7 @@ class ASTQueryBuilder
 
     public function where($path, $expected)
     {
-        $nextLevel = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($path, $expected) {
+        $nextLevel = $this->currentNodes()->map(function($queryNode) use($path, $expected) {
             $steps = collect(explode('->', $path));
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
@@ -166,7 +166,7 @@ class ASTQueryBuilder
 
     public function whereChainingOn($name)
     {
-        $nextLevel = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($name) {
+        $nextLevel = $this->currentNodes()->map(function($queryNode) use($name) {
             $current = $queryNode->results;
             do {
                 $current = $current->var ?? false;
@@ -183,7 +183,7 @@ class ASTQueryBuilder
 
     public function flattenChain()
     {
-        $flattened = collect($this->tree[$this->currentDepth])->map(function($queryNode) {
+        $flattened = $this->currentNodes()->map(function($queryNode) {
             $results = collect();
             $current = $queryNode->results[0];
 
@@ -222,18 +222,18 @@ class ASTQueryBuilder
         return collect(end($this->tree))->pluck('results')->flatten();
     }
 
-    public function replace()
+    public function replace($newNode)
     {
-        
+        return $this;
+    }
+
+    protected function currentNodes()
+    {
+        return collect($this->tree[$this->currentDepth]);
     }
     
     public function dd()
     {
         dd($this->get());
-    }
-    
-    public function __toString()
-    {
-        return "hehehhee";
     }
 }
