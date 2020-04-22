@@ -148,40 +148,6 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function expression()
-    {
-        return $this->traverse(
-            $this->classMap('expression')
-        );
-    }    
-
-    /** OUTSIDE CONVENTION */
-    public function named($string)
-    {
-        return $this->where('name->name', $string);
-    }
-
-    /** OUTSIDE CONVENTION */
-    public function arg($index)
-    {
-        return $this->traverseIntoArrayIndex('args', $index);
-    }
-    
-    public function first()
-    {
-        return $this->traverseIntoArray(0);
-    }
-    
-    public function second()
-    {
-        return $this->traverseIntoArray(1);
-    }
-    
-    public function third()
-    {
-        return $this->traverseIntoArray(2);
-    }    
-
     public function where($path, $expected)
     {
         $nextLevel = collect($this->tree[$this->currentDepth])->map(function($queryNode) use($path, $expected) {
@@ -254,6 +220,11 @@ class ASTQueryBuilder
     public function get()
     {
         return collect(end($this->tree))->pluck('results')->flatten();
+    }
+
+    public function replace()
+    {
+        
     }
     
     public function dd()

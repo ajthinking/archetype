@@ -49,10 +49,10 @@ class ASTQueryBuilderTest extends FileTestCase
         )
             ->astQuery() // get a ASTQueryBuilder
             ->method()
-                ->named('up')
+                ->where('name->name', 'up')
             ->staticCall()
                 ->where('class', 'Schema')
-                ->named('create')
+                ->where('name->name', 'create')
             ->args
             ->value
             ->value
