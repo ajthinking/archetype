@@ -242,14 +242,19 @@ class ASTQueryBuilder
         dd($this->get());
     }
     
-    public function exit()
+    public function commit()
     {
         $this->file->ast(
             $this->resultingAST
         );
-        
-        return $this->file;
+
+        return $this;
     }
+
+    public function end()
+    {
+        return $this->file;
+    }    
 
     protected function currentNodes()
     {

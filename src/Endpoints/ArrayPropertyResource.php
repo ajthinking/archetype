@@ -39,14 +39,12 @@ abstract class ArrayPropertyResource extends ResourceEndpointProvider
     
     protected function setItems($requestedName, $items)
     {
-        $this->file->astQuery()
+        return $this->file->astQuery()
             ->propertyProperty()
             ->where('name->name', $requestedName)
             ->default
-            ->replace(
-                BuilderHelpers::normalizeValue($items)
-            )->exit();
-        
-        return $this->file;
+            ->replace(BuilderHelpers::normalizeValue($items))
+            ->commit()
+            ->end();
     }
 }
