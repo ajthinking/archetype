@@ -10,6 +10,7 @@ use PHPFileManipulator\Factories\LaravelFileFactory;
 use PHPFileManipulator\Commands\ListAPICommand;
 use PHPFileManipulator\Commands\TypeWriterCommand;
 use PHPFileManipulator\Commands\RelationshipsDemo;
+use PHPFileManipulator\Commands\ErrorsCommand;
 Use Illuminate\Support\Str;
 use Config;
 use Illuminate\Support\Arr;
@@ -62,6 +63,7 @@ class ServiceProvider extends BaseServiceProvider
             TypeWriterCommand::class,
             DemoCommand::class,
             RelationshipsDemo::class,
+            ErrorsCommand::class,
         ]);
     }
 

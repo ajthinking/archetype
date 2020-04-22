@@ -7,7 +7,8 @@ use PHPFileManipulator\Support\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
-use PHPParser\Error;
+use PHPParser\Error as PHPParserError;
+use PHPFileManipulator\Support\Exceptions\FileParseError;
 use UnexpectedValueException;
 use Config;
 use PHPFileManipulator\Support\PHPFileStorage;
@@ -89,9 +90,9 @@ trait HasIO
 
         try {
             $ast = $parser->parse($this->contents());
-        } catch (Error $error) {
-            dd($error->getMessage() . " " . $this->input->absolutePath());
-            return;
+        } catch (PHPParserError $error) {
+            // rethrow with extra information
+            throw new FileParseError($this->input->absolutePath(), $error);
         }
 
         return $ast;

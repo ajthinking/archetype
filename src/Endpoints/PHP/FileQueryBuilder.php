@@ -124,7 +124,7 @@ class FileQueryBuilder extends EndpointProvider
         return $this->result;
     }
     
-    private function recursiveFileSearch($directory) {
+    public function recursiveFileSearch($directory) {
         
         $directory = base_path($directory);        
 
