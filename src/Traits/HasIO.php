@@ -84,6 +84,14 @@ trait HasIO
         return $this->save();
     }
 
+    public function preview()
+    {
+        $prettyPrinter = new PSR2PrettyPrinter;
+        $code = $prettyPrinter->prettyPrintFile($this->ast());        
+        
+        dd($code);
+    }
+
     public function parse()
     {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
