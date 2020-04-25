@@ -22,7 +22,7 @@ class PHPFile
 
     protected $initialModificationHash;
 
-    protected $endpointProviders = [
+    protected const endpointProviders = [
         // Utillities
         Endpoints\PHP\AstQuery::class,
         Endpoints\PHP\ReflectionProxy::class,
@@ -38,7 +38,7 @@ class PHPFile
     ];
 
     public function endpointProviders() {
-        return collect((new self)->endpointProviders)->push(
+        return collect(self::endpointProviders)->push(
             $this->fileQueryBuilder
         );
     }

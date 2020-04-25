@@ -6,13 +6,7 @@ use PHPFileManipulator\PHPFile;
 
 class LaravelFile extends PHPFile 
 {
-    protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
-
-    public function endpointProviders() {
-        return parent::endpointProviders()->concat($this->endpointProviders);
-    }
-
-    protected $endpointProviders = [
+    protected const endpointProviders = [
         // Utillities
         Endpoints\Laravel\Template::class,
 
@@ -24,6 +18,12 @@ class LaravelFile extends PHPFile
         Endpoints\Laravel\BelongsToMethods::class,
         Endpoints\Laravel\BelongsToManyMethods::class,
     ];
+
+    protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
+
+    public function endpointProviders() {
+        return parent::endpointProviders()->concat(self::endpointProviders);
+    }
 
     public function templates() {
         return parent::templates()->concat([
