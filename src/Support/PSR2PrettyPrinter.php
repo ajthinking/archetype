@@ -22,6 +22,7 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
     }
 
     protected function pExpr_Array(Array_ $node) {
+        // Fix proper multiline here
         return parent::pExpr_array($node);
     }
 
