@@ -5,11 +5,24 @@ namespace PHPFileManipulator\Support;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;
 use PhpParser\Node\Stmt\Nop;
+use PhpParser\Node\Expr\Array_;
 
 class PSR2PrettyPrinter extends StandardPrettyPrinter {
+
+    public function __construct($options = [])
+    {
+        $defaults = ['shortArraySyntax' => true];
+
+        parent::__construct($options + $defaults);
+    }
+
     // Fix empty line before class definition
     protected function pStmt_Class(Class_ $node) {
         return PHP_EOL . $this->pClassCommon($node, ' ' . $node->name); // $this->pStmts($node->stmts)
+    }
+
+    protected function pExpr_Array(Array_ $node) {
+        return parent::pExpr_array($node);
     }
 
     protected function pClassCommon(Class_ $node, $afterClassToken) {
