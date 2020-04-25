@@ -28,6 +28,7 @@ class PHPFile
         Endpoints\PHP\ReflectionProxy::class,
 
         // Resources
+        Endpoints\PHP\Property::class,
         Endpoints\PHP\NamespaceResource::class,
         Endpoints\PHP\Uses::class,
         Endpoints\PHP\ClassName::class,
