@@ -9,7 +9,7 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Expr\ArrayItem;
 use PHPFileManipulator\Exceptions\NotImplementedYetException;
-use PHPParser\BuilderHelpers;
+use PhpParser\BuilderHelpers;
 
 abstract class ArrayPropertyResource extends ResourceEndpointProvider
 {
