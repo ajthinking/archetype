@@ -6,11 +6,8 @@ trait PHPParserClassMap
 {
     public function classMap($class = null)
     {
-        $map = [
-            // SHORTCUTS AND CUSTOMIZATIONS
-            'method' => '\PhpParser\Node\Stmt\ClassMethod',
-    
-            // CAMELCASEIFIED
+        $map = [    
+            // CAMELCASEIFIED WITHOUT _ POSTFIX
             'arrayDimFetch' => '\PhpParser\Node\Expr\ArrayDimFetch',
             'arrayItem' => '\PhpParser\Node\Expr\ArrayItem',
             'array' => '\PhpParser\Node\Expr\Array_',
@@ -111,7 +108,53 @@ trait PHPParserClassMap
             'unset' => '\PhpParser\Node\Stmt\Unset_',
             'useUse' => '\PhpParser\Node\Stmt\UseUse',
             'use' => '\PhpParser\Node\Stmt\Use_',
-            'while' => '\PhpParser\Node\Stmt\While_',        
+            'while' => '\PhpParser\Node\Stmt\While_',
+            
+            // CAMELCASED WITH _ POSTFIX
+            'array_' => '\PhpParser\Node\Expr\Array_',
+            'clone_' => '\PhpParser\Node\Expr\Clone_',
+            'empty_' => '\PhpParser\Node\Expr\Empty_',
+            'eval_' => '\PhpParser\Node\Expr\Eval_',
+            'exit_' => '\PhpParser\Node\Expr\Exit_',
+            'include_' => '\PhpParser\Node\Expr\Include_',
+            'instanceof_' => '\PhpParser\Node\Expr\Instanceof_',
+            'isset_' => '\PhpParser\Node\Expr\Isset_',
+            'list_' => '\PhpParser\Node\Expr\List_',
+            'new_' => '\PhpParser\Node\Expr\New_',
+            'print_' => '\PhpParser\Node\Expr\Print_',
+            'yield_' => '\PhpParser\Node\Expr\Yield_',
+            'string_' => '\PhpParser\Node\Scalar\String_',
+            'break_' => '\PhpParser\Node\Stmt\Break_',
+            'case_' => '\PhpParser\Node\Stmt\Case_',
+            'catch_' => '\PhpParser\Node\Stmt\Catch_',
+            'class_' => '\PhpParser\Node\Stmt\Class_',
+            'const_' => '\PhpParser\Node\Stmt\Const_',
+            'continue_' => '\PhpParser\Node\Stmt\Continue_',
+            'declare_' => '\PhpParser\Node\Stmt\Declare_',
+            'do_' => '\PhpParser\Node\Stmt\Do_',
+            'echo_' => '\PhpParser\Node\Stmt\Echo_',
+            'elseIf_' => '\PhpParser\Node\Stmt\ElseIf_',
+            'else_' => '\PhpParser\Node\Stmt\Else_',
+            'finally_' => '\PhpParser\Node\Stmt\Finally_',
+            'for_' => '\PhpParser\Node\Stmt\For_',
+            'foreach_' => '\PhpParser\Node\Stmt\Foreach_',
+            'function_' => '\PhpParser\Node\Stmt\Function_',
+            'global_' => '\PhpParser\Node\Stmt\Global_',
+            'goto_' => '\PhpParser\Node\Stmt\Goto_',
+            'if_' => '\PhpParser\Node\Stmt\If_',
+            'interface_' => '\PhpParser\Node\Stmt\Interface_',
+            'namespace_' => '\PhpParser\Node\Stmt\Namespace_',
+            'return_' => '\PhpParser\Node\Stmt\Return_',
+            'static_' => '\PhpParser\Node\Stmt\Static_',
+            'switch_' => '\PhpParser\Node\Stmt\Switch_',
+            'throw_' => '\PhpParser\Node\Stmt\Throw_',
+            'trait_' => '\PhpParser\Node\Stmt\Trait_',
+            'unset_' => '\PhpParser\Node\Stmt\Unset_',
+            'use_' => '\PhpParser\Node\Stmt\Use_',
+            'while_' => '\PhpParser\Node\Stmt\While_',
+            
+            // SHORTCUTS AND CUSTOMIZATIONS
+            'method' => '\PhpParser\Node\Stmt\ClassMethod',
         ];
         
         if(!$class) return $map;
