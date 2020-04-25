@@ -13,7 +13,12 @@ abstract class EndpointProvider
     use ExposesPublicMethodsAsEndpoints;
 
     protected $reserved_methods = [
-        'aliases'
+        '__call',
+        '__construct',
+        'aliases',
+        'canHandle',
+        'getEndpoints',
+        'getHandlerMethod',
     ];
     
     public function __construct(PHPFile $file = null)
