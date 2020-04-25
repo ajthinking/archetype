@@ -28,9 +28,14 @@ abstract class EndpointProvider
 
     public static function aliases()
     {
-        return [
+        return defined('self::aliases') ? static::aliases : [
             Str::camel(class_basename(static::class))
         ];
+    }
+    
+    protected function primaryName()
+    {
+        return collect($this->aliases())->first();
     }    
 
     public function canHandle($signature, $args)
@@ -40,7 +45,7 @@ abstract class EndpointProvider
 
     public function getHandlerMethod($signature, $args)
     {
-        return false;
+        return $this->ownNonReservedPublicMethods()->contains($signature) ? $signature : false;
     }
 
     protected function ast()
