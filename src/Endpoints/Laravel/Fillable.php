@@ -6,12 +6,7 @@ use PHPFileManipulator\Endpoints\ArrayPropertyResource;
 
 class Fillable extends ArrayPropertyResource
 {
-    public static function aliases() 
-    {
-        return [
-            'fillable', 'fillables'
-        ];
-    }
+    const aliases = ['fillable', 'fillables'];
 
     public function get()
     {
