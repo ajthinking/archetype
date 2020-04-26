@@ -9,12 +9,7 @@ use PhpParser\BuilderFactory;
 
 class NamespaceResource extends ResourceEndpointProvider
 {
-    public static function aliases()
-    {
-        return [
-            'namespace'
-        ];
-    }
+    const aliases = ['namespace'];
 
     public function get()
     {
