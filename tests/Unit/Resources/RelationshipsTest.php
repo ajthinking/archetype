@@ -13,7 +13,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_belongs_to_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addBelongsToMethods(['App\Department']);
+        $file->addBelongsTo(['App\Department']);
 
         $this->assertContains(
             'department',
@@ -49,7 +49,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_has_many_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addHasManyMethods(['App\Gun', 'App\Rose']);
+        $file->addHasMany(['App\Gun', 'App\Rose']);
 
         $this->assertContains(
             'guns',

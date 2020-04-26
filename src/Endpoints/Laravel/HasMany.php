@@ -7,7 +7,7 @@ use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
-class HasManyMethods extends ResourceEndpointProvider
+class HasMany extends ResourceEndpointProvider
 {
     public function add($targets)
     {

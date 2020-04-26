@@ -56,9 +56,9 @@ PHPFile::in('database/migrations')
 
 // add relationship methods
 LaravelFile::load('app/User.php')
-    ->addHasManyMethods(['App\Car'])
+    ->addHasMany(['App\Car'])
     ->addHasOneMethods(['App\Life'])
-    ->addBelongsToMethods(['App\Wife'])
+    ->addBelongsTo(['App\Wife'])
   	->classMethodNames()
 
 // move User.php to a Models directory
