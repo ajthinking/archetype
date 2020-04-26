@@ -16,7 +16,7 @@ class LaravelFile extends PHPFile
         Endpoints\Laravel\HasOneMethods::class,
         Endpoints\Laravel\HasManyMethods::class,
         Endpoints\Laravel\BelongsToMethods::class,
-        Endpoints\Laravel\BelongsToManyMethods::class,
+        Endpoints\Laravel\BelongsToMany::class,
     ];
 
     protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;

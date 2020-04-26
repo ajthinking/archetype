@@ -7,10 +7,8 @@ use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
-class BelongsToManyMethods extends ResourceEndpointProvider
+class BelongsToMany extends ResourceEndpointProvider
 {
-    const aliases = ['belongsToManyMethod', 'belongsToManyMethods'];
-
     public function add($targets)
     {
         $targets = Arr::wrap($targets);

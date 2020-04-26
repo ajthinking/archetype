@@ -25,7 +25,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_belongs_to_many_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addBelongsToManyMethods(['App\Visit']);
+        $file->addBelongsToMany(['App\Visit']);
 
         $this->assertContains(
             'visits',
@@ -37,7 +37,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_also_use_string_as_argument()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addBelongsToManyMethods('App\Visit');
+        $file->addBelongsToMany('App\Visit');
 
         $this->assertContains(
             'visits',
