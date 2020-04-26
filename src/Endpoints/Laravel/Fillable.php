@@ -3,11 +3,10 @@
 namespace PHPFileManipulator\Endpoints\Laravel;
 
 use PHPFileManipulator\Endpoints\ArrayPropertyResource;
+use Illuminate\Support\Arr;
 
 class Fillable extends ArrayPropertyResource
 {
-    const aliases = ['fillable', 'fillables'];
-
     public function get()
     {
         return $this->canUseReflection() ? $this->getWithReflection('fillable') : $this->getWithParser('fillable');
@@ -15,6 +14,8 @@ class Fillable extends ArrayPropertyResource
 
     public function set($values)
     {
+        $targets = Arr::wrap($values);
+
         return $this->setItems('fillable', $values);
     }
 
