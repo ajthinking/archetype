@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Support\EndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class Property extends EndpointProvider
 {

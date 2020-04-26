@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Endpoints;
 
 use PHPFileManipulator\PHPFile;
-use PHPFileManipulator\Support\EndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use ReflectionClass;

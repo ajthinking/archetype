@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Traits;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\EndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;

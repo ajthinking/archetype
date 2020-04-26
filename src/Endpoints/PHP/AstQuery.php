@@ -4,7 +4,7 @@ namespace PHPFileManipulator\Endpoints\PHP;
 
 use Illuminate\Support\Str;
 use PHPFileManipulator\Support\AST\ASTQueryBuilder;
-use PHPFileManipulator\Support\EndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class AstQuery extends EndpointProvider
 {

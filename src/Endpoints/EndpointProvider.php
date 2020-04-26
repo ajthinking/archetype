@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace PHPFileManipulator\Endpoints;
 
 use PHPFileManipulator\PHPFile;
 use Illuminate\Support\Str;

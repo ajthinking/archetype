@@ -24,5 +24,5 @@ class Fillable extends ArrayPropertyResource
             'fillable',
             collect($this->get())->concat($values)->toArray()
         );
-    }    
+    }
 }

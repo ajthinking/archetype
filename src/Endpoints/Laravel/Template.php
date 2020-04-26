@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Endpoints\Laravel;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\EndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class Template extends EndpointProvider
 {
