@@ -7,8 +7,13 @@ use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
-class HasOneMethods extends ResourceEndpointProvider
+class HasOne extends ResourceEndpointProvider
 {
+    public function set($targets)
+    {
+        return $this->add($targets);
+    }
+        
     public function add($targets)
     {
         $targets = Arr::wrap($targets);

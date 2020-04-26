@@ -13,7 +13,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_belongs_to_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addBelongsTo(['App\Department']);
+        $file->belongsTo(['App\Department']);
 
         $this->assertContains(
             'department',
@@ -25,7 +25,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_belongs_to_many_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addBelongsToMany(['App\Visit']);
+        $file->belongsToMany(['App\Visit']);
 
         $this->assertContains(
             'visits',
@@ -37,7 +37,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_also_use_string_as_argument()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addBelongsToMany('App\Visit');
+        $file->belongsToMany('App\Visit');
 
         $this->assertContains(
             'visits',
@@ -49,7 +49,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_has_many_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addHasMany(['App\Gun', 'App\Rose']);
+        $file->hasMany(['App\Gun', 'App\Rose']);
 
         $this->assertContains(
             'guns',
@@ -66,7 +66,7 @@ class RelationshipsTest extends FileTestCase
     public function it_can_insert_has_one_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->addHasOneMethods(['App\Phone']);
+        $file->hasOne(['App\Phone']);
 
         $this->assertContains(
             'phone',

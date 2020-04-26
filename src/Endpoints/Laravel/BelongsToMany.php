@@ -9,6 +9,11 @@ use Illuminate\Support\Arr;
 
 class BelongsToMany extends ResourceEndpointProvider
 {
+    public function set($targets)
+    {
+        return $this->add($targets);
+    }
+        
     public function add($targets)
     {
         $targets = Arr::wrap($targets);
