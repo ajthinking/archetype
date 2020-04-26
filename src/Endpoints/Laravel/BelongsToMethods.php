@@ -5,11 +5,16 @@ namespace PHPFileManipulator\Endpoints\Laravel;
 use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class BelongsToMethods extends ResourceEndpointProvider
 {
+    const aliases = ['belongsToMethod', 'belongsToMethods'];
+
     public function add($targets)
     {
+        $targets = Arr::wrap($targets);
+
         $this->file->addClassMethods(
             collect($targets)->map(function($target) {
                 return Snippet::___BELONGS_TO_METHOD___([

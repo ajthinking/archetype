@@ -5,11 +5,14 @@ namespace PHPFileManipulator\Endpoints\Laravel;
 use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class HasManyMethods extends ResourceEndpointProvider
 {
     public function add($targets)
     {
+        $targets = Arr::wrap($targets);
+
         $this->file->addClassMethods(
             collect($targets)->map(function($target) {
                 return Snippet::___HAS_MANY_METHOD___([
