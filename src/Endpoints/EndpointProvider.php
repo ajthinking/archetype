@@ -28,7 +28,7 @@ abstract class EndpointProvider
 
     public static function aliases()
     {
-        return defined('self::aliases') ? static::aliases : [
+        return defined('static::aliases') ? static::aliases : [
             Str::camel(class_basename(static::class))
         ];
     }
