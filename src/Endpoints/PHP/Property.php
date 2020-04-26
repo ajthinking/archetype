@@ -10,4 +10,9 @@ class Property extends EndpointProvider
     {
         return "not implemented yet";
     }
+
+    public function setProperty($key, $value)
+    {
+        return "not implemented yet";
+    }
 }
