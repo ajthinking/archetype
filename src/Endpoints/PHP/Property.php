@@ -29,6 +29,7 @@ class Property extends EndpointProvider
     protected function getWithParser($name)
     {
         return $this->file->astQuery()
+            ->class()
             ->propertyProperty()
             ->where('name->name', $name)
             ->default
@@ -39,6 +40,7 @@ class Property extends EndpointProvider
     protected function set($key, $value)
     {
         $propertyExists = $this->file->astQuery()
+            ->class()
             ->propertyProperty()
             ->where('name->name', $key)
             ->get()->isNotEmpty();
@@ -49,6 +51,7 @@ class Property extends EndpointProvider
     protected function update($key, $value)
     {
         return $this->file->astQuery()
+            ->class()
             ->propertyProperty()
             ->where('name->name', $key)
             ->default
