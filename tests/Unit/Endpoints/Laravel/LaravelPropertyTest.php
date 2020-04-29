@@ -7,7 +7,7 @@ use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
 
-class ClassPropertyTest extends FileTestCase
+class LaravelPropertyTest extends FileTestCase
 {
     /** @test */
     public function it_can_retrieve_fillables()
