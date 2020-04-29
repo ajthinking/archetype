@@ -38,7 +38,7 @@ class PropertyTest extends FileTestCase
     public function it_can_create_a_new_class_property()
     {
         $property = PHPFile::load('app/User.php')
-            ->property('master', 'yoda')
+            ->property('master', 'yoda')            
             ->property('master');
 
         $this->assertEquals(
@@ -47,9 +47,7 @@ class PropertyTest extends FileTestCase
         );
     }
     
-    /** @test
-     * @group only
-    */
+    /** @test */
     public function it_can_create_a_new_class_property_when_empty()
     {
         $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
