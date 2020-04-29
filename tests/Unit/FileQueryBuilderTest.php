@@ -29,7 +29,7 @@ class FileQueryBuilderTest extends FileTestCase
         $this->assertInstanceOf(
             LaravelFileQueryBuilder::class,
             LaravelFile::in('app')
-        );        
+        );
     }
 
     /** @test */
