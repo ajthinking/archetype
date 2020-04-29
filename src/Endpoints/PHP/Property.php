@@ -3,6 +3,8 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
+use PhpParser\BuilderHelpers;
+use PHPFileManipulator\Support\AST\Unpacker;
 
 class Property extends EndpointProvider
 {
@@ -19,9 +21,15 @@ class Property extends EndpointProvider
         return $this->canUseReflection() ? $this->getWithReflection($key) : $this->getWithParser($key);
     }
 
-    protected function set($key, $value /* danger we might want to save null! */)
+    protected function set($key, $value)
     {
-        return $this->file;
+        return $this->file->astQuery()
+            ->propertyProperty()
+            ->where('name->name', $key)
+            ->default
+            ->replace(BuilderHelpers::normalizeValue($value))
+            ->commit()
+            ->end();
     }
 
     protected function getWithReflection($name)
@@ -31,10 +39,15 @@ class Property extends EndpointProvider
 
     protected function getWithParser($name)
     {
-        $result = $this->file->astQuery()
+        $propertyAST = $this->file->astQuery()
             ->propertyProperty()
-            ->where('name->name', $requestedName);
+            ->where('name->name', $name)
+            ->default
+            ->get()
+            ->first();
 
-        dd($result);
+        
+        return Unpacker::unpack($propertyAST);
+        
     }
 }
