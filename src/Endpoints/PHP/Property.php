@@ -60,25 +60,6 @@ class Property extends EndpointProvider
             ->end();        
     }
 
-    // protected function create($key, $value)
-    // {
-    //     // All class statements
-    //     $stmts = $this->file->astQuery()->class()->get()->first()->stmts;
-    //     // Find the first non TraitUse statement to have a reference for insertion
-    //     $indexNode = collect($stmts)->first(function($stmt) {
-    //         return !collect(['PhpParser\Node\Stmt\TraitUse'])->contains(get_class($stmt));
-    //     });
-
-    //     $newProperty = (new BuilderFactory)->property($key)->setDefault($value)->getNode();
-    //     $updatedAST = NodeInserter::insertBefore(
-    //         $indexNode->__object_hash ?? null,
-    //         $newProperty,
-    //         $this->file->ast()
-    //     );   
-
-    //     return $this->file->ast($updatedAST);
-    // }
-
     protected function create($key, $value)
     {
         return $this->file->astQuery()
