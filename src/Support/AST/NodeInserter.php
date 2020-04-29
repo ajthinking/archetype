@@ -10,6 +10,7 @@ use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
 class NodeInserter extends NodeVisitorAbstract {
+    
     public function __construct($id, $newNode)
     {
         $this->id = $id;
@@ -40,11 +41,4 @@ class NodeInserter extends NodeVisitorAbstract {
             $newNode));
         return $traverser->traverse($ast);
     }
-    
-    public static function insertBefore($id, $newNode, $ast)
-    {
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new static($id, $newNode));
-        return $traverser->traverse($ast);
-    }    
 }

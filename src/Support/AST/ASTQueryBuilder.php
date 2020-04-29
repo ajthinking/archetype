@@ -15,6 +15,7 @@ use PHPFileManipulator\Support\AST\Killable;
 use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\NodeReplacer;
 use PHPFileManipulator\Support\AST\HashInserter;
+use PHPFileManipulator\Support\AST\StmtInserter;
 use PhpParser\Node\Stmt\Use_;
 use Exception;
 use PhpParser\ConstExprEvaluator;
@@ -239,17 +240,14 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function prepend($key, $newNode)
-    {        
-        $this->currentNodes()->each(function($node) use($key, $newNode) {
-            if(!isset($node->results->$key)) return;
-            if(!is_array($node->results->$key)) return;
+    public function insertStmt($newNode)
+    {
+        $this->currentNodes()->each(function($node) use($newNode) {
+            if(!isset($node->results->stmts)) return;
+            if(!isset($node->results->__object_hash)) return;
 
-            $firstItem = $node->results->$key[0] ?? null;
-            if(!isset($firstItem->__object_hash)) return;
-            
-            $this->resultingAST = NodeInserter::insertBefore(
-                $firstItem->__object_hash,
+            $this->resultingAST = StmtInserter::insertStmt(
+                $node->results->__object_hash,
                 $newNode,
                 $this->resultingAST
             );
@@ -258,24 +256,43 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function push($key, $newNode)
-    {        
-        $this->currentNodes()->each(function($node) use($key, $newNode) {
-            if(!isset($node->results->$key)) return;
-            if(!is_array($node->results->$key)) return;
+    // public function prepend($key, $newNode)
+    // {        
+    //     $this->currentNodes()->each(function($node) use($key, $newNode) {
+    //         if(!isset($node->results->$key)) return;
+    //         if(!is_array($node->results->$key)) return;
 
-            $lastItem = end($node->results->$key) ?? null;
-            if(!isset($lastItem->__object_hash)) return;
+    //         $firstItem = $node->results->$key[0] ?? null;
+    //         if(!isset($firstItem->__object_hash)) return;
             
-            $this->resultingAST = NodeInserter::push(
-                $lastItem->__object_hash,
-                $newNode,
-                $this->resultingAST
-            );
-        });
+    //         $this->resultingAST = NodeInserter::insertBefore(
+    //             $firstItem->__object_hash,
+    //             $newNode,
+    //             $this->resultingAST
+    //         );
+    //     });
 
-        return $this;
-    }    
+    //     return $this;
+    // }
+
+    // public function push($key, $newNode)
+    // {        
+    //     $this->currentNodes()->each(function($node) use($key, $newNode) {
+    //         if(!isset($node->results->$key)) return;
+    //         if(!is_array($node->results->$key)) return;
+
+    //         $lastItem = end($node->results->$key) ?? null;
+    //         if(!isset($lastItem->__object_hash)) return;
+            
+    //         $this->resultingAST = NodeInserter::push(
+    //             $lastItem->__object_hash,
+    //             $newNode,
+    //             $this->resultingAST
+    //         );
+    //     });
+
+    //     return $this;
+    // }    
 
     public function dd()
     {
