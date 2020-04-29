@@ -43,7 +43,7 @@ class Property extends EndpointProvider
         $newProperty = (new BuilderFactory)->property($key)->setDefault($value)->getNode();
         
         $updatedAST = NodeInserter::insertBefore(
-            $indexNode->__object_hash,
+            $indexNode->__object_hash ?? null,
             $newProperty,
             $this->file->ast()
         );

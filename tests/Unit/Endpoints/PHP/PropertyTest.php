@@ -45,5 +45,20 @@ class PropertyTest extends FileTestCase
             $property,
             'yoda'
         );
+    }
+    
+    /** @test
+     * @group only
+    */
+    public function it_can_create_a_new_class_property_when_empty()
+    {
+        $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
+            ->property('master', 'yoda')
+            ->property('master');
+
+        $this->assertEquals(
+            $property,
+            'yoda'
+        );
     }    
 }

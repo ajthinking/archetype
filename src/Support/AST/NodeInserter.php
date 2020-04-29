@@ -25,7 +25,11 @@ class NodeInserter extends NodeVisitorAbstract {
     }
 
     public function afterTraverse(array $nodes) {
-        //
+        if($this->id) return $nodes;
+
+        array_push($nodes, $this->newNode);
+        
+        return $nodes;
     }
     
     public static function insertBefore($id, $newNode, $ast)
