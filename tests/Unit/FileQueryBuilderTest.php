@@ -6,6 +6,7 @@ use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
 use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
+use PHPFileManipulator\Endpoints\Laravel\LaravelFileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -26,7 +27,7 @@ class FileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertInstanceOf(
-            FileQueryBuilder::class,
+            LaravelFileQueryBuilder::class,
             LaravelFile::in('app')
         );        
     }
