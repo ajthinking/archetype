@@ -29,7 +29,6 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->registerFacades();
         $this->registerCommands();
-        $this->registerDevelopmentHelpers();
     }
 
     public function boot()
@@ -65,10 +64,5 @@ class ServiceProvider extends BaseServiceProvider
             RelationshipsDemo::class,
             ErrorsCommand::class,
         ]);
-    }
-
-    protected function registerDevelopmentHelpers()
-    {
-        require(__DIR__ . '/../tests/helpers.php');
     }
 }
