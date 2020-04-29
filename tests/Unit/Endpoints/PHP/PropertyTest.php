@@ -3,6 +3,7 @@
 namespace PHPFileManipulator\Tests\Unit\Endpoints;
 
 use PHPFileManipulator\Tests\FileTestCase;
+use PhpParser\BuilderFactory;
 
 use PHPFile;
 use LaravelFile;
@@ -47,16 +48,55 @@ class PropertyTest extends FileTestCase
         );
     }
     
+    // /** @test */
+    // public function it_can_create_a_new_class_property_when_empty()
+    // {
+    //     $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
+    //         ->property('master', 'yoda')
+    //         ->preview()
+    //         ->property('master');
+
+    //     $this->assertEquals(
+    //         $property,
+    //         'yoda'
+    //     );
+    // }
+
     /** @test */
-    public function it_can_create_a_new_class_property_when_empty()
+    public function it_can_prepend_items_to_arrays()
     {
-        $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
-            ->property('master', 'yoda')
-            ->property('master');
+        $file = PHPFile::load('app/User.php')
+            ->astQuery()        
+            ->class()
+            ->prepend(
+                'stmts',
+                (new BuilderFactory)->property('wow')->setDefault(1337)->getNode()
+            )
+            ->commit()
+            ->end();
 
         $this->assertEquals(
-            $property,
-            'yoda'
+            $file->property('wow'),
+            1337
+        );
+    }
+    
+    /** @test */
+    public function it_can_push_items_to_arrays()
+    {
+        $file = PHPFile::load('app/User.php')
+            ->astQuery()        
+            ->class()
+            ->push(
+                'stmts',
+                (new BuilderFactory)->property('wow')->setDefault(1337)->getNode()
+            )
+            ->commit()
+            ->end();
+
+        $this->assertEquals(
+            $file->property('wow'),
+            1337
         );
     }    
 }

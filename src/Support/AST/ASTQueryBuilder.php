@@ -239,6 +239,44 @@ class ASTQueryBuilder
         return $this;
     }
 
+    public function prepend($key, $newNode)
+    {        
+        $this->currentNodes()->each(function($node) use($key, $newNode) {
+            if(!isset($node->results->$key)) return;
+            if(!is_array($node->results->$key)) return;
+
+            $firstItem = $node->results->$key[0] ?? null;
+            if(!isset($firstItem->__object_hash)) return;
+            
+            $this->resultingAST = NodeInserter::insertBefore(
+                $firstItem->__object_hash,
+                $newNode,
+                $this->resultingAST
+            );
+        });
+
+        return $this;
+    }
+
+    public function push($key, $newNode)
+    {        
+        $this->currentNodes()->each(function($node) use($key, $newNode) {
+            if(!isset($node->results->$key)) return;
+            if(!is_array($node->results->$key)) return;
+
+            $lastItem = end($node->results->$key) ?? null;
+            if(!isset($lastItem->__object_hash)) return;
+            
+            $this->resultingAST = NodeInserter::push(
+                $lastItem->__object_hash,
+                $newNode,
+                $this->resultingAST
+            );
+        });
+
+        return $this;
+    }    
+
     public function dd()
     {
         dd($this->get());

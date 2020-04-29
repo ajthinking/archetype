@@ -32,6 +32,15 @@ class NodeInserter extends NodeVisitorAbstract {
         return $nodes;
     }
     
+    public static function push($id, $newNode, $ast)
+    {
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new static(
+            null, // will push if no ID is provided
+            $newNode));
+        return $traverser->traverse($ast);
+    }
+    
     public static function insertBefore($id, $newNode, $ast)
     {
         $traverser = new NodeTraverser();
