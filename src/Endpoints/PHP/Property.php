@@ -13,6 +13,8 @@ class Property extends EndpointProvider
 
     public function setProperty($key, $value)
     {
-        return "not implemented yet";
+        "not implemented yet";
+
+        return $this->file;
     }
 }
