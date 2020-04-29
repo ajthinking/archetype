@@ -4,7 +4,7 @@ namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
-use PHPFileManipulator\Support\AST\Unpacker;
+use PhpParser\{ConstExprEvaluator, ConstExprEvaluationException};
 
 class Property extends EndpointProvider
 {
@@ -45,9 +45,8 @@ class Property extends EndpointProvider
             ->default
             ->get()
             ->first();
-
         
-        return Unpacker::unpack($propertyAST);
+        return (new ConstExprEvaluator())->evaluateSilently($propertyAST);
         
     }
 }
