@@ -21,6 +21,21 @@ class Property extends EndpointProvider
         return $this->canUseReflection() ? $this->getWithReflection($key) : $this->getWithParser($key);
     }
 
+    protected function getWithReflection($name)
+    {
+        return $this->file->getReflection()->getDefaultProperties()[$name];
+    }
+
+    protected function getWithParser($name)
+    {
+        return $this->file->astQuery()
+            ->propertyProperty()
+            ->where('name->name', $name)
+            ->default
+            ->getEvaluated()
+            ->first();
+    }    
+
     protected function set($key, $value)
     {
         $propertyExists = $this->file->astQuery()
@@ -29,6 +44,17 @@ class Property extends EndpointProvider
             ->get()->isNotEmpty();
 
         return $propertyExists ? $this->update($key, $value) : $this->create($key, $value);
+    }
+
+    protected function update($key, $value)
+    {
+        return $this->file->astQuery()
+            ->propertyProperty()
+            ->where('name->name', $key)
+            ->default
+            ->replace(BuilderHelpers::normalizeValue($value))
+            ->commit()
+            ->end();        
     }
 
     protected function create($key, $value)
@@ -48,33 +74,8 @@ class Property extends EndpointProvider
             $this->file->ast()
         );
 
-        $this->file->ast($updatedAST);
-        return $this->file;
+        return $this->file->ast($updatedAST);
     }
 
-    protected function update($key, $value)
-    {
-        return $this->file->astQuery()
-            ->propertyProperty()
-            ->where('name->name', $key)
-            ->default
-            ->replace(BuilderHelpers::normalizeValue($value))
-            ->commit()
-            ->end();        
-    }    
 
-    protected function getWithReflection($name)
-    {
-        return $this->file->getReflection()->getDefaultProperties()[$name];
-    }
-
-    protected function getWithParser($name)
-    {
-        return $this->file->astQuery()
-            ->propertyProperty()
-            ->where('name->name', $name)
-            ->default
-            ->getEvaluated()
-            ->first();
-    }
 }
