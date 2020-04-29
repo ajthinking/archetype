@@ -9,7 +9,7 @@ class Fillable extends ArrayPropertyResource
 {
     public function get()
     {
-        //return $this->basicInformationDriver()->get('fillable');
+        //IDEA: return $this->basicInformationDriver()->get('fillable');
         return $this->canUseReflection() ? $this->getWithReflection('fillable') : $this->getWithParser('fillable');
     }
 
