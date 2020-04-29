@@ -32,5 +32,18 @@ class PropertyTest extends FileTestCase
             $property,
             $newValue
         );
+    }
+
+    /** @test */
+    public function it_can_create_a_new_class_property()
+    {
+        $property = PHPFile::load('app/User.php')
+            ->property('master', 'yoda')
+            ->property('master');
+
+        $this->assertEquals(
+            $property,
+            'yoda'
+        );
     }    
 }
