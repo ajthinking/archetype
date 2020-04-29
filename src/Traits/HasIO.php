@@ -136,6 +136,8 @@ trait HasIO
 
     public function ast($ast = false)
     {
-        return $ast ? $this->ast = $ast : $this->ast;
+        if(!$ast) return $this->ast;
+        $this->ast = $ast;
+        return $this;
     }
 }
