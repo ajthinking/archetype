@@ -67,7 +67,6 @@ class Property extends EndpointProvider
         });
 
         $newProperty = (new BuilderFactory)->property($key)->setDefault($value)->getNode();
-        
         $updatedAST = NodeInserter::insertBefore(
             $indexNode->__object_hash ?? null,
             $newProperty,
@@ -77,5 +76,21 @@ class Property extends EndpointProvider
         return $this->file->ast($updatedAST);
     }
 
+    protected function createDRAFT($key, $value)
+    {
+        $this->file->astQuery()
+            ->class()
+            ->stmts
 
+            // General manipulations
+            ->replace($value)
+            // Array manipulations
+            ->insert($value) // will attempt to sort whats in inserted depending on the context
+            ->push($value)
+            ->prepend($value)
+
+            // finish
+            ->commit()
+            ->end();
+    }
 }
