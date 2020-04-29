@@ -17,6 +17,7 @@ use PHPFileManipulator\Support\AST\NodeReplacer;
 use PHPFileManipulator\Support\AST\HashInserter;
 use PhpParser\Node\Stmt\Use_;
 use Exception;
+use PhpParser\ConstExprEvaluator;
 
 class ASTQueryBuilder
 {
@@ -216,6 +217,13 @@ class ASTQueryBuilder
         return collect(end($this->tree))->pluck('results')->flatten();
     }
 
+    public function getEvaluated()
+    {
+        return $this->get()->map(function($item) {
+            return (new ConstExprEvaluator())->evaluateSilently($item);
+        });
+    }    
+
     public function replace($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
@@ -227,12 +235,6 @@ class ASTQueryBuilder
                 $this->resultingAST
             );
         });
-
-        
-
-        // TWO TRACKS!
-        // READ - finish with get() or recall()
-        // WRITE - any replace will modify a property resultingAST
 
         return $this;
     }

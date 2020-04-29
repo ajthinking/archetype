@@ -23,7 +23,6 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_update_existing_class_properties()
     {
-        
         $newValue = 'Reset fillable to a single string!';
         $property = PHPFile::load('app/User.php')
             ->property('fillable', $newValue)

@@ -4,7 +4,6 @@ namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
-use PhpParser\{ConstExprEvaluator, ConstExprEvaluationException};
 
 class Property extends EndpointProvider
 {
@@ -39,14 +38,11 @@ class Property extends EndpointProvider
 
     protected function getWithParser($name)
     {
-        $propertyAST = $this->file->astQuery()
+        return $this->file->astQuery()
             ->propertyProperty()
             ->where('name->name', $name)
             ->default
-            ->get()
+            ->getEvaluated()
             ->first();
-        
-        return (new ConstExprEvaluator())->evaluateSilently($propertyAST);
-        
     }
 }
