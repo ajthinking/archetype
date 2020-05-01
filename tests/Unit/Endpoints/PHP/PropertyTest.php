@@ -39,7 +39,7 @@ class PropertyTest extends FileTestCase
     public function it_can_create_a_new_class_property()
     {
         $property = PHPFile::load('app/User.php')
-            ->property('master', 'yoda')            
+            ->property('master', 'yoda')
             ->property('master');
 
         $this->assertEquals(
@@ -73,4 +73,17 @@ class PropertyTest extends FileTestCase
             null
         );
     }
+
+    /** @test */
+    public function it_can_set_visibility_using_directives()
+    {
+        $output = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')
+            ->private()->setProperty('parts')
+            ->render();
+
+        $this->assertStringContainsString(
+            'private $parts;',
+            $output,
+        );
+    }    
 }
