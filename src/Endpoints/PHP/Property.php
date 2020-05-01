@@ -9,8 +9,6 @@ use PHPFileManipulator\Support\AST\NodeInserter;
 
 class Property extends EndpointProvider
 {
-    const NO_VALUE_PROVIDED = '___NO_VALUE_PROVIDED___';
-
     public function property($key, $value = self::NO_VALUE_PROVIDED)
     {
         return $value == self::NO_VALUE_PROVIDED ? $this->get($key) : $this->set($key, $value);    
