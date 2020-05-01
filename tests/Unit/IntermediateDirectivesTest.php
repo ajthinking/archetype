@@ -26,9 +26,8 @@ class IntermediateDirectivesTest extends FileTestCase
     public function it_will_forget_directives_on_continue()
     {
         $file = PHPFile::load('app/User.php')->make()->add()->remove()->continue();
-        $this->assertEquals(
-            $file->intermediateDirectives,
-            []
+        $this->assertEmpty(
+            $file->intermediateDirectives
         );
     }    
 }
