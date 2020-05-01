@@ -18,7 +18,7 @@ class TemplateTest extends FileTestCase
         $templates = LaravelFile::templates();
         
         foreach($templates as $template) {
-            $file = LaravelFile::$template('Name');
+            $file = LaravelFile::make()->$template('Name');
             
             $this->assertTrue(
                 // All template calls should return a LaravelFile
@@ -42,7 +42,7 @@ class TemplateTest extends FileTestCase
     /** @test */
     public function it_can_save_templates_with_default_name()
     {
-        $file = LaravelFile::model('Explosion')->save();
+        $file = LaravelFile::make()->model('Explosion')->save();
 
         $this->assertTrue(
             is_file(__DIR__ . '/../.output/app/Explosion.php')
