@@ -12,7 +12,7 @@ class Property extends EndpointProvider
 {
     public function property($key, $value = self::NO_VALUE_PROVIDED)
     {
-        return $value == self::NO_VALUE_PROVIDED ? $this->get($key) : $this->set($key, $value);    
+        return $value === self::NO_VALUE_PROVIDED ? $this->get($key) : $this->set($key, $value);    
     }
 
     public function setProperty($key, $value = self::NO_VALUE_PROVIDED)
