@@ -4,6 +4,13 @@ namespace PHPFileManipulator\Traits;
 
 trait HasIntermediateDirectives
 {
+    public function continue()
+    {
+        $this->intermediateDirectives = [];
+        
+        return $this;
+    }    
+
     public function make()
     {
         $this->intermediateDirectives['make'] = true;
@@ -32,9 +39,23 @@ trait HasIntermediateDirectives
         return $this;
     }    
 
-    public function continue()
+    public function public()
     {
-        $this->intermediateDirectives = [];
+        $this->intermediateDirectives['public'] = true;
+        
+        return $this;
+    }
+    
+    public function protected()
+    {
+        $this->intermediateDirectives['protected'] = true;
+        
+        return $this;
+    }
+    
+    public function private()
+    {
+        $this->intermediateDirectives['private'] = true;
         
         return $this;
     }
