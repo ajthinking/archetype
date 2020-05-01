@@ -6,6 +6,7 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
 use PhpParser\BuilderFactory;
 use PHPFileManipulator\Support\AST\NodeInserter;
+use PHPFileManipulator\Support\AST\ASTQueryBuilder;
 
 class Property extends EndpointProvider
 {
@@ -51,15 +52,40 @@ class Property extends EndpointProvider
         return $propertyExists ? $this->update($key, $value) : $this->create($key, $value);
     }
 
-    // protected function update($key, $value)
-    // {
-    //     return $this->file->astQuery()
-    //         ->class()
-    //         ->property()
-    //         ->where(function($item) {
-    //             return true;
-    //         })->dd();
-    // }
+    protected function create($key, $value)
+    {
+        return $this->file->astQuery()
+            ->class()
+            ->insertStmt($this->makeProperty($key, $value))
+            ->commit()
+            ->end()
+            ->continue();
+    }    
+
+    protected function newUpdate($key, $value)
+    {
+        $this->file->astQuery()
+            ->class()
+            ->property()
+            ->whereASTQuery(function($query) use($key) {
+                return $query->propertyProperty()
+                    ->where('name->name', $key)
+                    ->get()->isNotEmpty();
+            })
+            ->update(function($node) {
+                $node->flags = $this->flagCode();
+                return $node;
+            })
+            ->propertyProperty()
+            ->where('name->name', $key)
+            ->default
+            ->replace(
+                $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
+            )
+            ->commit()
+            ->end()
+            ->continue();                    
+    }
 
     protected function update($key, $value)
     {
@@ -75,9 +101,9 @@ class Property extends EndpointProvider
             ->commit()
             ->end()
             ->continue();        
-    }    
+    }
 
-    protected function create($key, $value)
+    protected function makeProperty($key, $value)
     {
         $property = (new BuilderFactory)->property($key);
         $property = $property->{'make' . $this->flag()}();
@@ -88,16 +114,23 @@ class Property extends EndpointProvider
             );
         }
 
-        return $this->file->astQuery()
-            ->class()
-            ->insertStmt($property->getNode())
-            ->commit()
-            ->end()
-            ->continue();
+        return $property->getNode();
     }
 
     protected function flag()
     {
         return $this->file->directive('flag') ?? 'protected';
+    }
+
+    protected function flagCode()
+    {
+        return [
+            'public'    =>  1,
+            'protected' =>  2,
+            'private'   =>  4,
+            'static'    =>  8,
+            'abstract'  => 16,
+            'final'     => 32,        
+        ][$this->flag()];
     }
 }
