@@ -4,59 +4,63 @@ namespace PHPFileManipulator\Traits;
 
 trait HasIntermediateDirectives
 {
+    public function directives($directives = null)
+    {
+        if(!$directives) return $this->intermediateDirectives;
+        
+        $this->intermediateDirectives = $directives;
+        
+        return $this;
+    }
+
+    public function directive($key, $value = null)
+    {
+        if(!$value) return $this->intermediateDirectives[$key] ?? null;
+        
+        $this->intermediateDirectives[$key] = $value;
+        
+        return $this;
+    }
+
     public function continue()
     {
         $this->intermediateDirectives = [];
-        
+
         return $this;
-    }    
+    }     
 
     public function make()
     {
-        $this->intermediateDirectives['make'] = true;
-
-        return $this;
+        return $this->directive('make', true);
     }
 
     public function add()
     {
-        $this->intermediateDirectives['add'] = true;
-
-        return $this;
+        return $this->directive('add', true);
     }
 
     public function remove()
     {
-        $this->intermediateDirectives['remove'] = true;
-
-        return $this;
+        return $this->directive('remove', true);
     }
 
     public function empty()
     {
-        $this->intermediateDirectives['empty'] = true;
-
-        return $this;
+        return $this->directive('empty', true);
     }    
 
     public function public()
     {
-        $this->intermediateDirectives['public'] = true;
-        
-        return $this;
+        return $this->directive('public', true);
     }
     
     public function protected()
     {
-        $this->intermediateDirectives['protected'] = true;
-        
-        return $this;
+        return $this->directive('protected', true);
     }
     
     public function private()
     {
-        $this->intermediateDirectives['private'] = true;
-        
-        return $this;
-    }
+        return $this->directive('private', true);
+    }   
 }
