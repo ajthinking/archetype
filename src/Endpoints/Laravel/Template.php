@@ -14,8 +14,6 @@ class Template extends EndpointProvider
 
     public function __call($method, $args)
     {
-        if(!$this->file->directive('make')) dd('use make()->$template()!');
-
         return $this->fromTemplate($method, ...$args);
     }
 
