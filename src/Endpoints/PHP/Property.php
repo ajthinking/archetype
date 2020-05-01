@@ -62,12 +62,14 @@ class Property extends EndpointProvider
                 $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
             )
             ->commit()
-            ->end();        
+            ->end()
+            ->continue();        
     }
 
     protected function create($key, $value)
     {
         $property = (new BuilderFactory)->property($key);
+        $property = $property->{'make' . $this->flag()}();
 
         if($value !== self::NO_VALUE_PROVIDED) {
             $property = $property->setDefault(
@@ -79,6 +81,12 @@ class Property extends EndpointProvider
             ->class()
             ->insertStmt($property->getNode())
             ->commit()
-            ->end();
+            ->end()
+            ->continue();
+    }
+
+    protected function flag()
+    {
+        return $this->file->directive('flag') ?? 'protected';
     }
 }
