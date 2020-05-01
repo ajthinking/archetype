@@ -62,9 +62,9 @@ class Property extends EndpointProvider
             ->continue();
     }    
 
-    protected function newUpdate($key, $value)
+    protected function update($key, $value)
     {
-        $this->file->astQuery()
+        return $this->file->astQuery()
             ->class()
             ->property()
             ->whereASTQuery(function($query) use($key) {
@@ -72,7 +72,8 @@ class Property extends EndpointProvider
                     ->where('name->name', $key)
                     ->get()->isNotEmpty();
             })
-            ->update(function($node) {
+            ->replace(function($queryNode) {
+                $node = $queryNode->results;
                 $node->flags = $this->flagCode();
                 return $node;
             })
@@ -87,21 +88,21 @@ class Property extends EndpointProvider
             ->continue();                    
     }
 
-    protected function update($key, $value)
-    {
-        return $this->file->astQuery()
-            ->class()
-            ->property()
-            ->propertyProperty()
-            ->where('name->name', $key)
-            ->default
-            ->replace(
-                $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
-            )
-            ->commit()
-            ->end()
-            ->continue();        
-    }
+    // protected function oldUpdate($key, $value)
+    // {
+    //     return $this->file->astQuery()
+    //         ->class()
+    //         ->property()
+    //         ->propertyProperty()
+    //         ->where('name->name', $key)
+    //         ->default
+    //         ->replace(
+    //             $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
+    //         )
+    //         ->commit()
+    //         ->end()
+    //         ->continue();        
+    // }
 
     protected function makeProperty($key, $value)
     {
