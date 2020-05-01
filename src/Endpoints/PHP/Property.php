@@ -21,6 +21,16 @@ class Property extends EndpointProvider
 
     protected function get($key)
     {
+        return $this->canUseReflection() ? $this->getWithReflection($key) : $this->getWithParser($key);
+    }
+
+    protected function getWithReflection($name)
+    {
+        return $this->file->getReflection()->getDefaultProperties()[$name];
+    }    
+
+    protected function getWithParser($key)
+    {
         return $this->file->astQuery()
             ->class()
             ->propertyProperty()
