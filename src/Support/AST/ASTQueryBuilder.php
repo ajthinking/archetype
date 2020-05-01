@@ -168,7 +168,7 @@ class ASTQueryBuilder
     protected function whereCallback($callback)
     {
         $nextLevel = $this->currentNodes()->map(function($queryNode) use($callback) {
-            return $callback($queryNode) ? $queryNode : new Killable;
+            return $callback(clone $queryNode) ? $queryNode : new Killable;
         })->flatten()->toArray();
 
         array_push($this->tree, $nextLevel);
