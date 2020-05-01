@@ -42,8 +42,6 @@ trait HasIO
 
     public function load($path)
     {   
-        
-        
         $content = $this->input->load($path);
 
         $this->output->setDefaultsFrom($this->input);
