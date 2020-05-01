@@ -66,10 +66,7 @@ trait HasIO
 
     public function save($outputPath = false)
     {
-        $prettyPrinter = new PSR2PrettyPrinter;
-        $code = $prettyPrinter->prettyPrintFile($this->ast());
-
-        $this->output->save($outputPath, $code);
+        $this->output->save($outputPath, $this->render());
     
         return $this;
     }
@@ -84,10 +81,12 @@ trait HasIO
 
     public function preview()
     {
-        $prettyPrinter = new PSR2PrettyPrinter;
-        $code = $prettyPrinter->prettyPrintFile($this->ast());        
-        
-        dd($code);
+        dd($this->render());
+    }
+
+    public function render()
+    {
+        return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
     }
 
     public function parse()
