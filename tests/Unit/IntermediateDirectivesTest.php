@@ -17,7 +17,7 @@ class IntermediateDirectivesTest extends FileTestCase
     {
         $file = PHPFile::load('app/User.php')->make()->add()->remove();
         $this->assertEquals(
-            $file->intermediateDirectives,
+            $file->directives(),
             ['make' => true, 'add' => true, 'remove' => true]
         );
     }
@@ -27,7 +27,7 @@ class IntermediateDirectivesTest extends FileTestCase
     {
         $file = PHPFile::load('app/User.php')->make()->add()->remove()->continue();
         $this->assertEmpty(
-            $file->intermediateDirectives
+            $file->directives()
         );
     }    
 }
