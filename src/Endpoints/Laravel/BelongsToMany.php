@@ -13,7 +13,7 @@ class BelongsToMany extends ResourceEndpointProvider
     {
         return $this->add($targets);
     }
-        
+
     public function add($targets)
     {
         $targets = Arr::wrap($targets);
@@ -28,6 +28,6 @@ class BelongsToMany extends ResourceEndpointProvider
             })->toArray()
         );
 
-        return $this->file;
+        return $this->file->continue();
     }
 }

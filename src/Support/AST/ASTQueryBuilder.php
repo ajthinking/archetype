@@ -310,7 +310,7 @@ class ASTQueryBuilder
 
     public function end()
     {
-        return $this->file;
+        return $this->file->continue();
     }    
 
     protected function currentNodes()

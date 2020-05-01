@@ -22,6 +22,6 @@ class ClassMethods extends ResourceEndpointProvider
         
         $class->stmts = collect($class->stmts)->concat($methods)->toArray();
 
-        return $this->file;
+        return $this->file->continue();
     }
 }

@@ -28,6 +28,6 @@ class BelongsTo extends ResourceEndpointProvider
             })->toArray()
         );
 
-        return $this->file;
+        return $this->file->continue();
     }
 }

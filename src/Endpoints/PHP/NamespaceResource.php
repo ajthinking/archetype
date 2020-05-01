@@ -35,7 +35,7 @@ class NamespaceResource extends ResourceEndpointProvider
             $this->file->ast($ast);
         }
         
-        return $this->file;
+        return $this->file->continue();
     }
 
     public function remove($_ = null)
@@ -46,6 +46,6 @@ class NamespaceResource extends ResourceEndpointProvider
             $this->file->ast($namespace->stmts);
         }
 
-        return $this->file;
+        return $this->file->continue();
     }    
 }

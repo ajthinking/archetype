@@ -35,7 +35,7 @@ class Uses extends ResourceEndpointProvider
 
         $this->file->ast = $traverser->traverse($this->ast());
 
-        return $this->file;
+        return $this->file->continue();
     }    
 
     public function add($newUseStatements)
@@ -51,6 +51,6 @@ class Uses extends ResourceEndpointProvider
             $namespace ? $this->ast()[0]->stmts : $this->ast()
         ));
 
-        return $this->file;
+        return $this->file->continue();
     }    
 }

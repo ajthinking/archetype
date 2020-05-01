@@ -20,7 +20,7 @@ class ClassImplements extends ResourceEndpointProvider
         if($class) {
             $class->implements = $newImplements;
         }
-        return $this->file;
+        return $this->file->continue();
     }
     
     public function add($newImplements)
@@ -29,6 +29,6 @@ class ClassImplements extends ResourceEndpointProvider
         if($class) {
             $class->implements = array_merge($class->implements, $newImplements);
         }
-        return $this->file;
+        return $this->file->continue();
     }    
 }

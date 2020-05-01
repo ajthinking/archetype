@@ -22,6 +22,6 @@ class ClassName extends ResourceEndpointProvider
             $class->name->name = $newClassName;
         }
 
-        return $this->file;
+        return $this->file->continue();
     }     
 }

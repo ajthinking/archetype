@@ -18,6 +18,6 @@ class ClassExtends extends ResourceEndpointProvider
     {
         $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
         $class->extends = new \PhpParser\Node\Name($newExtends);
-        return $this->file;
+        return $this->file->continue();
     }    
 }
