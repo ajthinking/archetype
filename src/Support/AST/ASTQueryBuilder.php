@@ -144,7 +144,12 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function where($path, $expected)
+    public function where($arg1, $arg2 = null)
+    {
+        return is_callable($arg1) ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
+    }
+
+    protected function wherePath($path, $expected)
     {
         $nextLevel = $this->currentNodes()->map(function($queryNode) use($path, $expected) {
             $steps = collect(explode('->', $path));
@@ -152,6 +157,18 @@ class ASTQueryBuilder
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
             }, $queryNode->results);
             return $result == $expected ? $queryNode : new Killable;
+        })->flatten()->toArray();
+
+        array_push($this->tree, $nextLevel);
+        $this->currentDepth++;
+
+        return $this;
+    }
+
+    protected function whereCallback($callback)
+    {
+        $nextLevel = $this->currentNodes()->map(function($queryNode) use($callback) {
+            return $callback($queryNode) ? $queryNode : new Killable;
         })->flatten()->toArray();
 
         array_push($this->tree, $nextLevel);
@@ -254,45 +271,7 @@ class ASTQueryBuilder
         });
 
         return $this;
-    }
-
-    // public function prepend($key, $newNode)
-    // {        
-    //     $this->currentNodes()->each(function($node) use($key, $newNode) {
-    //         if(!isset($node->results->$key)) return;
-    //         if(!is_array($node->results->$key)) return;
-
-    //         $firstItem = $node->results->$key[0] ?? null;
-    //         if(!isset($firstItem->__object_hash)) return;
-            
-    //         $this->resultingAST = NodeInserter::insertBefore(
-    //             $firstItem->__object_hash,
-    //             $newNode,
-    //             $this->resultingAST
-    //         );
-    //     });
-
-    //     return $this;
-    // }
-
-    // public function push($key, $newNode)
-    // {        
-    //     $this->currentNodes()->each(function($node) use($key, $newNode) {
-    //         if(!isset($node->results->$key)) return;
-    //         if(!is_array($node->results->$key)) return;
-
-    //         $lastItem = end($node->results->$key) ?? null;
-    //         if(!isset($lastItem->__object_hash)) return;
-            
-    //         $this->resultingAST = NodeInserter::push(
-    //             $lastItem->__object_hash,
-    //             $newNode,
-    //             $this->resultingAST
-    //         );
-    //     });
-
-    //     return $this;
-    // }    
+    }   
 
     public function dd()
     {

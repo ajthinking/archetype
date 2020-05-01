@@ -51,10 +51,21 @@ class Property extends EndpointProvider
         return $propertyExists ? $this->update($key, $value) : $this->create($key, $value);
     }
 
+    // protected function update($key, $value)
+    // {
+    //     return $this->file->astQuery()
+    //         ->class()
+    //         ->property()
+    //         ->where(function($item) {
+    //             return true;
+    //         })->dd();
+    // }
+
     protected function update($key, $value)
     {
         return $this->file->astQuery()
             ->class()
+            ->property()
             ->propertyProperty()
             ->where('name->name', $key)
             ->default
@@ -64,7 +75,7 @@ class Property extends EndpointProvider
             ->commit()
             ->end()
             ->continue();        
-    }
+    }    
 
     protected function create($key, $value)
     {
