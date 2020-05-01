@@ -6,7 +6,7 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class ModelProperties extends EndpointProvider
 {
-    protected $methods = [
+    protected $properties = [
         "casts",
         "connection",
         "table",
@@ -21,12 +21,12 @@ class ModelProperties extends EndpointProvider
 
     public function getHandlerMethod($signature, $args)
     {
-        return collect($this->methods)->contains($signature) ? 'fromTemplate' : false;
+        return collect($this->properties)->contains($signature) ? 'fromTemplate' : false;
     }
 
     public function getEndpoints()
     {
-        return $this->methods;
+        return $this->properties;
     }
 
     public function __call($property, $args)
