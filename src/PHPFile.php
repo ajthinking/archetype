@@ -24,7 +24,7 @@ class PHPFile
 
     protected $initialModificationHash;
 
-    public $intermediateDirectives = [];
+    protected $intermediateDirectives = [];
 
     protected const endpointProviders = [
         // Utillities
