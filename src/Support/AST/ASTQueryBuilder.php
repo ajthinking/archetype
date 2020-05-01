@@ -177,6 +177,21 @@ class ASTQueryBuilder
         return $this;
     }
 
+    public function whereASTQuery($callback)
+    {
+        $nextLevel = $this->currentNodes()->map(function($queryNode) use($callback) {
+            $query = new static(
+                [(clone $queryNode)->results]
+            );
+            return $callback($query) ? $queryNode : new Killable;
+        })->flatten()->toArray();
+
+        array_push($this->tree, $nextLevel);
+        $this->currentDepth++;
+
+        return $this;
+    }    
+
     public function whereChainingOn($name)
     {
         $nextLevel = $this->currentNodes()->map(function($queryNode) use($name) {
@@ -240,9 +255,29 @@ class ASTQueryBuilder
         return $this->get()->map(function($item) {
             return (new ConstExprEvaluator())->evaluateSilently($item);
         });
-    }    
+    }
+    
+    public function replace($arg1)
+    {
+        return is_callable($arg1) ? $this->replaceWithCallback($arg1) : $this->replaceWithNode($arg1);
+    }
 
-    public function replace($newNode)
+    protected function replaceWithCallback($callback)
+    {
+        $this->currentNodes()->each(function($node) use($callback) {
+            if(!isset($node->results->__object_hash)) return;
+
+            $this->resultingAST = NodeReplacer::replace(
+                $node->results->__object_hash,
+                $callback($node),
+                $this->resultingAST
+            );
+        });
+
+        return $this;        
+    }
+
+    protected function replaceWithNode($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
             if(!isset($node->results->__object_hash)) return;
