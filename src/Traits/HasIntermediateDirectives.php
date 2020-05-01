@@ -51,16 +51,21 @@ trait HasIntermediateDirectives
 
     public function public()
     {
-        return $this->directive('public', true);
+        return $this->directive('flag', 'public');
     }
     
     public function protected()
     {
-        return $this->directive('protected', true);
+        return $this->directive('flag', 'protected');
     }
     
     public function private()
     {
-        return $this->directive('private', true);
-    }   
+        return $this->directive('flag', 'private');
+    }
+
+    public function static()
+    {
+        return $this->directive('flag', 'static');
+    }    
 }
