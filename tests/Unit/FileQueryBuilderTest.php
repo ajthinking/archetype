@@ -13,12 +13,6 @@ use Illuminate\Support\Str;
 class FileQueryBuilderTest extends FileTestCase
 {
     /** @test */
-    public function pass()
-    {
-        $this->assertTrue(true);
-    }
-
-    /** @test */
     public function it_can_instanciate_via_php_or_laravel_file_with_in_method()
     {
         $this->assertInstanceOf(
