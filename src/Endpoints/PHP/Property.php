@@ -16,6 +16,11 @@ class Property extends EndpointProvider
         return $value == self::NO_VALUE_PROVIDED ? $this->get($key) : $this->set($key, $value);    
     }
 
+    public function setProperty($key, $value = self::NO_VALUE_PROVIDED)
+    {
+        return $this->set($key, $value);    
+    }
+
     protected function get($key)
     {
         return $this->file->astQuery()
@@ -27,7 +32,7 @@ class Property extends EndpointProvider
             ->first();
     }
 
-    protected function set($key, $value)
+    protected function set($key, $value = self::NO_VALUE_PROVIDED)
     {
         $propertyExists = $this->file->astQuery()
             ->class()
@@ -45,18 +50,26 @@ class Property extends EndpointProvider
             ->propertyProperty()
             ->where('name->name', $key)
             ->default
-            ->replace(BuilderHelpers::normalizeValue($value))
+            ->replace(
+                $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
+            )
             ->commit()
             ->end();        
     }
 
     protected function create($key, $value)
     {
+        $property = (new BuilderFactory)->property($key);
+
+        if($value !== self::NO_VALUE_PROVIDED) {
+            $property = $property->setDefault(
+                BuilderHelpers::normalizeValue($value)
+            );
+        }
+
         return $this->file->astQuery()
             ->class()
-            ->insertStmt(
-                (new BuilderFactory)->property($key)->setDefault($value)->getNode()                
-            )
+            ->insertStmt($property->getNode())
             ->commit()
             ->end();
     }

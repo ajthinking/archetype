@@ -60,42 +60,17 @@ class PropertyTest extends FileTestCase
             'yoda'
         );
     }
-
-    // /** @test */
-    // public function it_can_prepend_items_to_arrays()
-    // {
-    //     $file = PHPFile::load('app/User.php')
-    //         ->astQuery()        
-    //         ->class()
-    //         ->prepend(
-    //             'stmts',
-    //             (new BuilderFactory)->property('wow')->setDefault(1337)->getNode()
-    //         )
-    //         ->commit()
-    //         ->end();
-
-    //     $this->assertEquals(
-    //         $file->property('wow'),
-    //         1337
-    //     );
-    // }
     
-    // /** @test */
-    // public function it_can_push_items_to_arrays()
-    // {
-    //     $file = PHPFile::load('app/User.php')
-    //         ->astQuery()        
-    //         ->class()
-    //         ->push(
-    //             'stmts',
-    //             (new BuilderFactory)->property('wow')->setDefault(1337)->getNode()
-    //         )
-    //         ->commit()
-    //         ->end();
+    /** @test */
+    public function it_can_set_empty_property_by_using_explicit_set_method()
+    {
+        $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
+            ->setProperty('empty')
+            ->property('empty');
 
-    //     $this->assertEquals(
-    //         $file->property('wow'),
-    //         1337
-    //     );
-    // }    
+        $this->assertEquals(
+            $property,
+            null
+        );
+    }
 }
