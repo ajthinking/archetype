@@ -8,15 +8,6 @@ class PHPFileFactory
 {
     const FILE_TYPE = PHPFile::class;
 
-    /**
-     * Get a new File instance - PHPFile::make()
-     * Add readability when using templates - PHPFile::make()->model('X')
-     */
-    public static function make()
-    {
-        return self::__makeFileInstance();
-    }
-
     public function __call($method, $args)
     {
         return self::__makeFileInstance()->$method(...$args);
