@@ -45,6 +45,7 @@ abstract class ArrayPropertyResource extends ResourceEndpointProvider
             ->default
             ->replace(BuilderHelpers::normalizeValue($items))
             ->commit()
-            ->end();
+            ->end()
+            ->continue();
     }
 }
