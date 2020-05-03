@@ -12,8 +12,6 @@ abstract class EndpointProvider
 {
     use ExposesPublicMethodsAsEndpoints;
 
-    const NO_VALUE_PROVIDED = '___NO_VALUE_PROVIDED___';
-
     protected $reserved_methods = [
         '__call',
         '__construct',

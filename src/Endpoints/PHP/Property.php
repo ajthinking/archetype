@@ -7,6 +7,7 @@ use PhpParser\BuilderHelpers;
 use PhpParser\BuilderFactory;
 use PHPFileManipulator\Support\AST\NodeInserter;
 use PHPFileManipulator\Support\AST\ASTQueryBuilder;
+use PHPFileManipulator\Support\Types;
 
 class Property extends EndpointProvider
 {
@@ -31,7 +32,7 @@ class Property extends EndpointProvider
     // Associative arrays
 
 
-    public function property($key, $value = self::NO_VALUE_PROVIDED)
+    public function property($key, $value = Types::NO_VALUE)
     {
         // remove
         if($this->file->directive('remove')) return $this->remove($key);
@@ -40,10 +41,10 @@ class Property extends EndpointProvider
         if($this->file->directive('clear')) return $this->clear($key);        
 
         // get or set
-        return $value === self::NO_VALUE_PROVIDED ? $this->get($key) : $this->set($key, $value);    
+        return $value === Types::NO_VALUE ? $this->get($key) : $this->set($key, $value);    
     }
 
-    public function setProperty($key, $value = self::NO_VALUE_PROVIDED)
+    public function setProperty($key, $value = Types::NO_VALUE)
     {
         return $this->set($key, $value);    
     }
@@ -90,7 +91,7 @@ class Property extends EndpointProvider
             ->first();
     }
 
-    protected function set($key, $value = self::NO_VALUE_PROVIDED)
+    protected function set($key, $value = Types::NO_VALUE)
     {
         $propertyExists = $this->file->astQuery()
             ->class()
@@ -130,7 +131,7 @@ class Property extends EndpointProvider
             ->where('name->name', $key)
             ->default
             ->replace(
-                $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
+                $value == Types::NO_VALUE ? null : BuilderHelpers::normalizeValue($value)
             )
             ->commit()
             ->end()
@@ -142,7 +143,7 @@ class Property extends EndpointProvider
         $property = (new BuilderFactory)->property($key);
         $property = $property->{'make' . $this->flag()}();
 
-        if($value !== self::NO_VALUE_PROVIDED) {
+        if($value !== Types::NO_VALUE) {
             $property = $property->setDefault(
                 BuilderHelpers::normalizeValue($value)
             );
