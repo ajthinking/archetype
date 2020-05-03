@@ -10,14 +10,63 @@ use PHPFileManipulator\Support\AST\ASTQueryBuilder;
 
 class Property extends EndpointProvider
 {
+    // RESPONDS TO empty, remove, add **************************************************
+
+    // TODO
+
+    // Incremental arrays
+    // ->empty()->fillable() : sets $fillable = [];
+    // ->clear()->fillable() : sets $fillable;    
+    // ->add()->fillable('cool') : pushes 'cool' to end of array
+
+    // Strings
+    // ->empty()->tableName() : NO EFFECT;
+    // ->clear()->tableName() : sets $tableName;
+    // ->add()->tableName('cool') : NO EFFECT
+
+    // Empty
+
+    // Null
+
+    // Associative arrays
+
+
     public function property($key, $value = self::NO_VALUE_PROVIDED)
     {
+        // remove
+        if($this->file->directive('remove')) return $this->remove($key);
+
+        // clear
+        if($this->file->directive('clear')) return $this->clear($key);        
+
+        // get or set
         return $value === self::NO_VALUE_PROVIDED ? $this->get($key) : $this->set($key, $value);    
     }
 
     public function setProperty($key, $value = self::NO_VALUE_PROVIDED)
     {
         return $this->set($key, $value);    
+    }
+
+    protected function remove($key)
+    {
+        return $this->file->astQuery()
+            ->class()
+            ->property()
+            ->whereASTQuery(function($query) use($key) {
+                return $query->propertyProperty()
+                    ->where('name->name', $key)
+                    ->get()->isNotEmpty();
+            })
+            ->remove()
+            ->commit()
+            ->end()
+            ->continue();
+    }
+
+    protected function clear($key)
+    {
+        return $this->setProperty($key);
     }
 
     protected function get($key)
@@ -87,22 +136,6 @@ class Property extends EndpointProvider
             ->end()
             ->continue();                    
     }
-
-    // protected function oldUpdate($key, $value)
-    // {
-    //     return $this->file->astQuery()
-    //         ->class()
-    //         ->property()
-    //         ->propertyProperty()
-    //         ->where('name->name', $key)
-    //         ->default
-    //         ->replace(
-    //             $value == self::NO_VALUE_PROVIDED ? null : BuilderHelpers::normalizeValue($value)
-    //         )
-    //         ->commit()
-    //         ->end()
-    //         ->continue();        
-    // }
 
     protected function makeProperty($key, $value)
     {
