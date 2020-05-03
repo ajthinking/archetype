@@ -11,27 +11,6 @@ use PHPFileManipulator\Support\Types;
 
 class Property extends EndpointProvider
 {
-    // RESPONDS TO empty, remove, add **************************************************
-
-    // TODO
-
-    // Incremental arrays
-    // ->empty()->fillable() : sets $fillable = [];
-    // ->clear()->fillable() : sets $fillable;    
-    // ->add()->fillable('cool') : pushes 'cool' to end of array
-
-    // Strings
-    // ->empty()->tableName() : NO EFFECT;
-    // ->clear()->tableName() : sets $tableName;
-    // ->add()->tableName('cool') : NO EFFECT
-
-    // Empty
-
-    // Null
-
-    // Associative arrays
-
-
     public function property($key, $value = Types::NO_VALUE)
     {
         // remove?
@@ -40,10 +19,13 @@ class Property extends EndpointProvider
         // clear?
         if($this->file->directive('clear')) return $this->clear($key);        
 
+        // empty?
+        if($this->file->directive('empty')) return $this->empty($key);        
+
         // get?
         if($value === Types::NO_VALUE) return $this->get($key);
 
-        // set
+        // set!
         return $this->set($key, $value);    
     }
 
@@ -72,6 +54,19 @@ class Property extends EndpointProvider
     {
         return $this->setProperty($key);
     }
+
+    protected function empty($key)
+    {
+        $value = $this->get($key);
+
+        $defaultMeaningOfEmpty = null;
+
+        if(is_array($value)) return $this->set($key, []);
+
+        if(is_string($value)) return $this->set($key, '');
+
+        return $this->setProperty($key, $defaultMeaningOfEmpty);
+    }    
 
     protected function get($key)
     {
@@ -132,8 +127,8 @@ class Property extends EndpointProvider
             })
             ->propertyProperty()
             ->where('name->name', $key)
-            ->default
-            ->replace(
+            ->replaceProperty(
+                'default',
                 $value == Types::NO_VALUE ? null : BuilderHelpers::normalizeValue($value)
             )
             ->commit()
