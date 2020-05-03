@@ -34,14 +34,17 @@ class Property extends EndpointProvider
 
     public function property($key, $value = Types::NO_VALUE)
     {
-        // remove
+        // remove?
         if($this->file->directive('remove')) return $this->remove($key);
 
-        // clear
+        // clear?
         if($this->file->directive('clear')) return $this->clear($key);        
 
-        // get or set
-        return $value === Types::NO_VALUE ? $this->get($key) : $this->set($key, $value);    
+        // get?
+        if($value === Types::NO_VALUE) return $this->get($key);
+
+        // set
+        return $this->set($key, $value);    
     }
 
     public function setProperty($key, $value = Types::NO_VALUE)
