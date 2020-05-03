@@ -5,12 +5,14 @@ namespace PHPFileManipulator;
 use PHPFileManipulator\Traits\DelegatesAPICalls;
 use PHPFileManipulator\Traits\HasIO;
 use PHPFileManipulator\Traits\HasIntermediateDirectives;
+use PHPFileManipulator\Traits\HasSyntacticSugar;
 
 class PHPFile
 {
     use HasIO;
     use DelegatesAPICalls;
     use HasIntermediateDirectives;
+    use HasSyntacticSugar;
 
     protected $input;
 
