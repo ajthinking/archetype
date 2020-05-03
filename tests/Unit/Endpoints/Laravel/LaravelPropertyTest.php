@@ -83,5 +83,40 @@ class LaravelPropertyTest extends FileTestCase
             LaravelFile::load('app/User.php')->hidden(['metallica', 'ozzy'])->hidden(),
             ['metallica', 'ozzy',]
         );
+    }
+    
+    /** @test */
+    public function it_can_use_setter_on_associative_arrays()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->casts(['free' => 'bird'])
+            ->casts();
+
+        $this->assertEquals([
+            'free' => 'bird',
+        ], $output);
+    }
+
+    /** @test */
+    public function it_can_add_to_associative_arrays()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->add()->casts(['free' => 'bird'])
+            ->casts();
+
+        $this->assertEquals([
+            'email_verified_at' => 'datetime',
+            'free' => 'bird',
+        ], $output);
+    }
+
+    /** @test */
+    public function it_can_empty_associative_arrays()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->empty()->casts()
+            ->casts();
+
+        $this->assertEquals([], $output);
     }    
 }
