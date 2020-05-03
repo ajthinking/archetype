@@ -152,9 +152,11 @@ class ASTQueryBuilder
     {
         return $this->next(function($queryNode) use($path, $expected) {
             $steps = collect(explode('->', $path));
+
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
             }, $queryNode->results);
+
             return $result == $expected ? $queryNode : new Killable;
         });
     }
