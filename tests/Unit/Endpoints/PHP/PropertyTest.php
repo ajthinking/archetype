@@ -97,13 +97,45 @@ class PropertyTest extends FileTestCase
         $this->assertNull($output);
     }
     
-    // /** @test */
-    // public function it_can_NOT_YET_clear_properties()
-    // {
-    //     $output = LaravelFile::load('app/User.php')
-    //         ->clear()->property('fillable')
-    //         ->fillable();
+    /** @test */
+    public function it_can_clear_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->clear()->property('fillable')
+            ->fillable();
 
-    //     $this->assertNull($output);
-    // }    
+        $this->assertNull($output);
+    }
+
+    /** @test */
+    public function it_can_empty_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->empty()->property('fillable')
+            ->property('fillable');
+
+            $this->assertEquals($output, []);
+    }
+    
+    /** @test */
+    public function it_can_empty_string_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->property('someString', 'hiya')
+            ->empty()->property('someString')
+            ->property('someString');
+
+        $this->assertEquals($output, '');
+    }
+
+    /** @test */
+    public function it_can_empty_non_array_or_string_properties_into_a_default_of_null()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->property('someNonArrayOrStringType', 123)
+            ->empty()->property('someNonArrayOrStringType')
+            ->property('someNonArrayOrStringType');
+
+        $this->assertNull($output);
+    }    
 }
