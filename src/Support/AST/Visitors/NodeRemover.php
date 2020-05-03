@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support\AST;
+namespace PHPFileManipulator\Support\AST\Visitors;
 
 use PhpParser\Node;
 use PhpParser\NodeFinder;

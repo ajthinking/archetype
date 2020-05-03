@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Endpoints\PHP;
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
 use PhpParser\BuilderFactory;
-use PHPFileManipulator\Support\AST\NodeInserter;
+use PHPFileManipulator\Support\AST\Visitors\NodeInserter;
 use PHPFileManipulator\Support\AST\ASTQueryBuilder;
 use PHPFileManipulator\Support\Types;
 
