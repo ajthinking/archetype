@@ -12,8 +12,8 @@ use PHPFileManipulator\Support\AST\ShallowNodeFinder;
 use PHPFileManipulator\Traits\HasOperators;
 use PHPFileManipulator\Traits\PHPParserClassMap;
 use PHPFileManipulator\Support\AST\Killable;
-use PHPFileManipulator\Support\AST\RemovedNode;
 use PHPFileManipulator\Support\AST\NodeReplacer;
+use PHPFileManipulator\Support\AST\NodeRemover;
 use PHPFileManipulator\Support\AST\HashInserter;
 use PHPFileManipulator\Support\AST\StmtInserter;
 use PhpParser\Node\Stmt\Use_;
@@ -256,7 +256,21 @@ class ASTQueryBuilder
             return (new ConstExprEvaluator())->evaluateSilently($item);
         });
     }
-    
+
+    public function remove()
+    {
+        $this->currentNodes()->each(function($node) {
+            if(!isset($node->results->__object_hash)) return;
+
+            $this->resultingAST = NodeRemover::remove(
+                $node->results->__object_hash,
+                $this->resultingAST
+            );
+        });
+        
+        return $this;
+    }    
+
     public function replace($arg1)
     {
         return is_callable($arg1) ? $this->replaceWithCallback($arg1) : $this->replaceWithNode($arg1);
