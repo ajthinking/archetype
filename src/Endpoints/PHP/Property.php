@@ -43,27 +43,29 @@ class Property extends EndpointProvider
     {
         $existing = $this->get($key);
 
-        if(is_array($existing)) return $this->addToArray($key, $existing, $value);
+        if(is_array($existing)) return $this->addToArray($key, $value, $existing);
 
-        if(is_string($existing)) return $this->addToString($key, $existing, $value);
+        if(is_string($existing)) return $this->addToString($key, $value, $existing);
 
-        if(is_numeric($existing)) return $this->addToNumeric($key, $existing, $value);
+        if(is_numeric($existing)) return $this->addToNumeric($key, $value, $existing);
 
-        // Default (danger - can make conflict with public $prop = null VS public $prop;)
-        if($existing === null) return $this->addToArray($key, [], $value);
+        // Default
+        if($existing === null) return $this->addToUnknownType($key, $value);
 
         throw new Exception("Using 'add' on an existing type we cant handle! Current support: array/string/numeric/null");
     }
 
-    protected function addToArray($key, $existing, $new)
+    protected function addToArray($key, $new, $existing = [])
     {
+        $new = Arr::wrap($new);
+
         return $this->set(
             $key,
             array_merge($existing, Arr::wrap($new))
         );
     }
 
-    protected function addToString($key, $existing, $new)
+    protected function addToString($key, $new, $existing = '')
     {
         return $this->set(
             $key,
@@ -71,7 +73,7 @@ class Property extends EndpointProvider
         );
     }
 
-    protected function addToNumeric($key, $existing, $new)
+    protected function addToNumeric($key, $new, $existing = 0)
     {
         return $this->set(
             $key,
@@ -136,6 +138,8 @@ class Property extends EndpointProvider
 
     protected function set($key, $value = Types::NO_VALUE)
     {
+        $value = $this->prepareValue($value);
+
         $propertyExists = $this->file->astQuery()
             ->class()
             ->propertyProperty()
@@ -193,6 +197,22 @@ class Property extends EndpointProvider
         }
 
         return $property->getNode();
+    }
+
+    protected function addToUnknownType($key, $value)
+    {
+        $assumedType = $this->file->directive('assumeType') ?? 'array';
+        $addMethod = 'addTo' . $assumedType;
+        return $this->$addMethod($key, $value);
+    }
+
+    protected function prepareValue($value)
+    {
+        if($this->file->directive('assumeType') == 'array') {
+            return Arr::wrap($value);
+        }
+
+        return $value;
     }
 
     protected function flag()
