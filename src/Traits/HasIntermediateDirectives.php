@@ -72,5 +72,10 @@ trait HasIntermediateDirectives
     public function static()
     {
         return $this->directive('flag', 'static');
-    }    
+    }
+    
+    public function assumeType($value)
+    {
+        return $this->directive('assumeType', $value);
+    }
 }
