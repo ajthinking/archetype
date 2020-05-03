@@ -137,5 +137,55 @@ class PropertyTest extends FileTestCase
             ->property('someNonArrayOrStringType');
 
         $this->assertNull($output);
+    }
+    
+    /** @test */
+    public function it_can_add_to_array_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->add()->property('fillable', 'cool')
+            ->property('fillable');
+
+        $this->assertEquals(['name', 'email', 'password', 'cool'], $output);
+    }
+
+    /** @test */
+    public function it_can_add_to_string_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->property('table', 'users')
+            ->add()->property('table', '_backup')
+            ->property('table');
+
+        $this->assertEquals('users_backup', $output);
+    }
+
+    /** @test */
+    public function it_can_add_to_numeric_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->property('allowed_errors', 1)
+            ->add()->property('allowed_errors', 99)
+            ->property('allowed_errors');
+
+        $this->assertEquals(100, $output);
+    }
+
+    /** @test */
+    public function it_will_default_to_add_to_an_array_if_null_or_non_value_property_is_encountered()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->setProperty('realms')
+            ->add()->property('realms', 'Atlantis')
+            ->property('realms');
+
+        $this->assertEquals(['Atlantis'], $output);
+
+        $output = LaravelFile::load('app/User.php')
+            ->setProperty('realms', null)
+            ->add()->property('realms', 'Gondor')
+            ->property('realms');
+
+        $this->assertEquals(['Gondor'], $output);        
     }    
 }
