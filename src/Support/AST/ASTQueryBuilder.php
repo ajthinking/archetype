@@ -16,6 +16,7 @@ use PHPFileManipulator\Support\AST\Visitors\NodeReplacer;
 use PHPFileManipulator\Support\AST\Visitors\NodeRemover;
 use PHPFileManipulator\Support\AST\Visitors\HashInserter;
 use PHPFileManipulator\Support\AST\Visitors\StmtInserter;
+use PHPFileManipulator\Support\AST\Visitors\NodePropertyReplacer;
 use PhpParser\Node\Stmt\Use_;
 use Exception;
 use PhpParser\ConstExprEvaluator;
@@ -251,6 +252,22 @@ class ASTQueryBuilder
         
         return $this;
     }    
+
+    public function replaceProperty($key, $value)
+    {
+        $this->currentNodes()->each(function($node) use($key, $value) {
+            if(!isset($node->results->__object_hash)) return;
+
+            $this->resultingAST = NodePropertyReplacer::replace(
+                $node->results->__object_hash,
+                $key,
+                $value,
+                $this->resultingAST
+            );
+        });
+
+        return $this;        
+    }
 
     public function replace($arg1)
     {
