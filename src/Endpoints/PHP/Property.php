@@ -8,6 +8,8 @@ use PhpParser\BuilderFactory;
 use PHPFileManipulator\Support\AST\Visitors\NodeInserter;
 use PHPFileManipulator\Support\AST\ASTQueryBuilder;
 use PHPFileManipulator\Support\Types;
+use Illuminate\Support\Arr;
+use Exception;
 
 class Property extends EndpointProvider
 {
@@ -20,7 +22,10 @@ class Property extends EndpointProvider
         if($this->file->directive('clear')) return $this->clear($key);        
 
         // empty?
-        if($this->file->directive('empty')) return $this->empty($key);        
+        if($this->file->directive('empty')) return $this->empty($key);
+
+        // add?
+        if($this->file->directive('add')) return $this->add($key, $value);
 
         // get?
         if($value === Types::NO_VALUE) return $this->get($key);
@@ -33,6 +38,46 @@ class Property extends EndpointProvider
     {
         return $this->set($key, $value);    
     }
+
+    protected function add($key, $value)
+    {
+        $existing = $this->get($key);
+
+        if(is_array($existing)) return $this->addToArray($key, $existing, $value);
+
+        if(is_string($existing)) return $this->addToString($key, $existing, $value);
+
+        if(is_numeric($existing)) return $this->addToNumeric($key, $existing, $value);
+
+        // Default (danger - can make conflict with public $prop = null VS public $prop;)
+        if($existing === null) return $this->addToArray($key, [], $value);
+
+        throw new Exception("Using 'add' on an existing type we cant handle! Current support: array/string/numeric/null");
+    }
+
+    protected function addToArray($key, $existing, $new)
+    {
+        return $this->set(
+            $key,
+            array_merge($existing, Arr::wrap($new))
+        );
+    }
+
+    protected function addToString($key, $existing, $new)
+    {
+        return $this->set(
+            $key,
+            $existing . $new
+        );
+    }
+
+    protected function addToNumeric($key, $existing, $new)
+    {
+        return $this->set(
+            $key,
+            $existing + $new
+        );
+    }    
 
     protected function remove($key)
     {
