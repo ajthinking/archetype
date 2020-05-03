@@ -16,7 +16,6 @@ class IntermediateDirectivesTest extends FileTestCase
     public function it_will_remember_directives_when_chained()
     {
         $file = PHPFile::load('app/User.php')->add()->remove();
-        dd($file->directives());
 
         $this->assertEquals(
             ['add' => true, 'remove' => true],
