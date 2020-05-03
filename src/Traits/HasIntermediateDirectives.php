@@ -2,6 +2,8 @@
 
 namespace PHPFileManipulator\Traits;
 
+use PHPFileManipulator\Support\Types;
+
 trait HasIntermediateDirectives
 {
     public function directives($directives = null)
@@ -13,9 +15,9 @@ trait HasIntermediateDirectives
         return $this;
     }
 
-    public function directive($key, $value = null)
+    public function directive($key, $value = Types::NO_VALUE)
     {
-        if(!$value) return $this->intermediateDirectives[$key] ?? null;
+        if($value === Types::NO_VALUE) return $this->intermediateDirectives[$key] ?? null;
         
         $this->intermediateDirectives[$key] = $value;
         
@@ -29,14 +31,13 @@ trait HasIntermediateDirectives
         return $this;
     }     
 
-    public function make()
+    public function add($value = Types::NO_VALUE)
     {
-        return $this->directive('make', true);
-    }
+        $this->directive('add', true);
 
-    public function add()
-    {
-        return $this->directive('add', true);
+        if($value !== Types::NO_VALUE) $this->directive('addValue', $value);
+        
+        return $this;
     }
 
     public function remove()
