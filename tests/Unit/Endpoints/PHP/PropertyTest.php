@@ -85,5 +85,25 @@ class PropertyTest extends FileTestCase
             'private $parts;',
             $output,
         );
-    }    
+    }
+    
+    /** @test */
+    public function it_can_remove_properties()
+    {
+        $output = LaravelFile::load('app/User.php')
+            ->remove()->property('fillable')
+            ->fillable();
+
+        $this->assertNull($output);
+    }
+    
+    // /** @test */
+    // public function it_can_NOT_YET_clear_properties()
+    // {
+    //     $output = LaravelFile::load('app/User.php')
+    //         ->clear()->property('fillable')
+    //         ->fillable();
+
+    //     $this->assertNull($output);
+    // }    
 }
