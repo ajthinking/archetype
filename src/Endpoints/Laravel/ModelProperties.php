@@ -6,31 +6,34 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class ModelProperties extends EndpointProvider
 {
-    protected $properties = [
-        "casts",
-        "connection",
-        "table",
-        "dates",
-        "timestamps",
-        "visible",
-        "guarded",
-        "unguarded",  
-        "fillable",
-        "hidden",
+    /** attribute => default type */
+    protected $propertyMap = [
+        'casts'         => 'associativeArray',
+        'connection'    => 'string',
+        'table'         => 'string',
+        'dates'         => 'array',
+        'timestamps'    => 'boolean',
+        'visible'       => 'array',
+        'guarded'       => 'array',
+        'unguarded'     => 'array',  
+        'fillable'      => 'array',
+        'hidden'        => 'array',
     ];
 
     public function getHandlerMethod($signature, $args)
     {
-        return collect($this->properties)->contains($signature) ? 'fromTemplate' : false;
+        return collect($this->propertyMap)->keys()->contains($signature) ? 'fromTemplate' : false;
     }
 
     public function getEndpoints()
     {
-        return $this->properties;
+        return collect($this->propertyMap)->keys();
     }
 
     public function __call($property, $args)
     {
-        return $args == [] ? $this->file->property($property) : $this->file->property($property, ...$args);
+        $defaultType = $this->propertyMap[$property];
+
+        return $this->file->assumeType($defaultType)->property($property, ...$args);
     }
 }
