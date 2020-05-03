@@ -44,6 +44,11 @@ trait HasIntermediateDirectives
         return $this->directive('remove', true);
     }
 
+    public function clear()
+    {
+        return $this->directive('clear', true);
+    }    
+
     public function empty()
     {
         return $this->directive('empty', true);
