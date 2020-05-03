@@ -32,6 +32,28 @@ class LaravelPropertyTest extends FileTestCase
             LaravelFile::load('public/index.php')->hidden()
         );
     }
+
+    /** @test */
+    public function it_will_assume_array_if_we_are_inserting_on_a_new_hidden_property()
+    {
+        $hidden = LaravelFile::load('app/User.php')
+            ->remove()->hidden()
+            ->hidden('ghost')->hidden();
+
+        $this->assertEquals(
+            ['ghost'],
+            $hidden            
+        );
+
+        $hidden = LaravelFile::load('app/User.php')
+            ->remove()->hidden()
+            ->hidden(['ghost'])->hidden();
+
+        $this->assertEquals(
+            ['ghost'],
+            $hidden            
+        );
+    }
     
     /** @test */
     public function it_can_set_fillables()
