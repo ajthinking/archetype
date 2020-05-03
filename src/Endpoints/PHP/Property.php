@@ -26,7 +26,7 @@ class Property extends EndpointProvider
 
         // add?
         if($this->file->directive('add')) return $this->add($key, $value);
-
+        
         // get?
         if($value === Types::NO_VALUE) return $this->get($key);
 
@@ -41,6 +41,11 @@ class Property extends EndpointProvider
 
     protected function add($key, $value)
     {
+        // no value but has value from intermidiate add directive?
+        if($value === Types::NO_VALUE && $this->file->directive('addValue')) {
+            $value = $this->file->directive('addValue');
+        }
+
         $existing = $this->get($key);
 
         if(is_array($existing)) return $this->addToArray($key, $value, $existing);
@@ -48,7 +53,7 @@ class Property extends EndpointProvider
         if(is_string($existing)) return $this->addToString($key, $value, $existing);
 
         if(is_numeric($existing)) return $this->addToNumeric($key, $value, $existing);
-
+        
         // Default
         if($existing === null) return $this->addToUnknownType($key, $value);
 
