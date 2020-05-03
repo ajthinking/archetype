@@ -15,8 +15,8 @@ class ModelProperties extends EndpointProvider
         "visible",
         "guarded",
         "unguarded",  
-        //"fillable",
-        //"hidden",
+        "fillable",
+        "hidden",
     ];
 
     public function getHandlerMethod($signature, $args)

@@ -84,9 +84,9 @@ LaravelFile::load('app/User.php')
 
 // add items to protected properties
 LaravelFile::load('app/User.php')
-    ->addFillable('message')
-    ->addCasts(['is_admin' => 'boolean'])
-    ->addHidden('secret')    
+    ->add()->fillable('message')
+    ->add()->casts(['is_admin' => 'boolean'])
+    ->add()->hidden('secret')    
 
 // create new files from templates
 LaravelFile::model('Beer')

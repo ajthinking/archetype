@@ -12,8 +12,6 @@ class LaravelFile extends PHPFile
 
         // Resources
         Endpoints\Laravel\ModelProperties::class,
-        Endpoints\Laravel\Fillable::class,
-        Endpoints\Laravel\Hidden::class,
         Endpoints\Laravel\HasOne::class,
         Endpoints\Laravel\HasMany::class,
         Endpoints\Laravel\BelongsTo::class,
