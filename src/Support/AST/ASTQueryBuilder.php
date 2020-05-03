@@ -75,25 +75,19 @@ class ASTQueryBuilder
 
     public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
     {
-        $next = $this->currentNodes()->map(function($queryNode) use($expectedClass, $finderMethod) {
+        return $this->next(function($queryNode) use($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
             $results = $this->nodeFinder()->$finderMethod($queryNode->results, $expectedClass);
             // Wrap matches in Survivor object
             return collect($results)->map(function($result) use($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
-        })->flatten()->toArray();
-        
-        array_push($this->tree, $next);
-
-        $this->currentDepth++;
-
-        return $this;        
+        });     
     }
 
     public function traverseIntoProperty($property)
     {
-        $next = $this->currentNodes()->map(function($queryNode) use($property) {
+        return $this->next(function($queryNode) use($property) {
             if(!isset($queryNode->results->$property)) return new Killable;
             
             $value = $queryNode->results->$property;
@@ -105,13 +99,7 @@ class ASTQueryBuilder
             }
 
             return Survivor::fromParent($queryNode)->withResult($value);
-        })->flatten()->toArray();
-
-        array_push($this->tree, $next);
-
-        $this->currentDepth++;
-
-        return $this;
+        });
     }
 
     public function shallow()
@@ -124,11 +112,6 @@ class ASTQueryBuilder
     {
         $this->allowDeepQueries = true;
         return $this;
-    }
-
-    protected function nodeFinder()
-    {
-        return $this->allowDeepQueries ? new NodeFinder : new ShallowNodeFinder;
     }
 
     public function remember($key, $callback)
@@ -149,64 +132,60 @@ class ASTQueryBuilder
         return is_callable($arg1) ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
     }
 
+    protected function next($callback)
+    {
+        $next = $this->currentNodes()->map($callback)->flatten()->toArray();
+
+        array_push($this->tree, $next);
+
+        $this->currentDepth++;
+
+        return $this;
+    }
+
+    protected function nodeFinder()
+    {
+        return $this->allowDeepQueries ? new NodeFinder : new ShallowNodeFinder;
+    }
+
     protected function wherePath($path, $expected)
     {
-        $nextLevel = $this->currentNodes()->map(function($queryNode) use($path, $expected) {
+        return $this->next(function($queryNode) use($path, $expected) {
             $steps = collect(explode('->', $path));
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
             }, $queryNode->results);
             return $result == $expected ? $queryNode : new Killable;
-        })->flatten()->toArray();
-
-        array_push($this->tree, $nextLevel);
-        $this->currentDepth++;
-
-        return $this;
+        });
     }
 
     protected function whereCallback($callback)
     {
-        $nextLevel = $this->currentNodes()->map(function($queryNode) use($callback) {
+        return $this->next(function($queryNode) use($callback) {
             return $callback(clone $queryNode) ? $queryNode : new Killable;
-        })->flatten()->toArray();
-
-        array_push($this->tree, $nextLevel);
-        $this->currentDepth++;
-
-        return $this;
+        });
     }
 
     public function whereASTQuery($callback)
     {
-        $nextLevel = $this->currentNodes()->map(function($queryNode) use($callback) {
+        return $this->next(function($queryNode) use($callback) {
             $query = new static(
                 [(clone $queryNode)->results]
             );
             return $callback($query) ? $queryNode : new Killable;
-        })->flatten()->toArray();
-
-        array_push($this->tree, $nextLevel);
-        $this->currentDepth++;
-
-        return $this;
+        });
     }    
 
     public function whereChainingOn($name)
     {
-        $nextLevel = $this->currentNodes()->map(function($queryNode) use($name) {
+        return $this->next(function($queryNode) use($name) {
             $current = $queryNode->results;
             do {
                 $current = $current->var ?? false;
             } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
 
             return $current->name == $name ? $queryNode : new Killable;
-        })->flatten()->toArray();
-
-        array_push($this->tree, $nextLevel);
-        $this->currentDepth++;
-
-        return $this;
+        });
     }
 
     public function flattenChain()
@@ -338,7 +317,7 @@ class ASTQueryBuilder
 
     public function end()
     {
-        return $this->file->continue();
+        return $this->file;
     }    
 
     protected function currentNodes()
