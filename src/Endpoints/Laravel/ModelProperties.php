@@ -34,6 +34,8 @@ class ModelProperties extends EndpointProvider
     {
         $defaultType = $this->propertyMap[$property];
 
-        return $this->file->assumeType($defaultType)->property($property, ...$args);
+        return $this->file->assumeType($defaultType)
+            ->protected()
+            ->property($property, ...$args);
     }
 }
