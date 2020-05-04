@@ -232,6 +232,11 @@ class ASTQueryBuilder
         return collect(end($this->tree))->pluck('results')->flatten();
     }
 
+    public function first()
+    {
+        return $this->get()->first();
+    }    
+
     public function getEvaluated()
     {
         return $this->get()->map(function($item) {
