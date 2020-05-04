@@ -39,7 +39,7 @@ class ClassMethodsTest extends FileTestCase
         $factory = new BuilderFactory;
         $file = LaravelFile::load('app/User.php');
 
-        $file = $file->addClassMethod([
+        $file = $file->add()->classMethod([
             $factory->method('insertedMethod')
                 ->makeProtected() // ->makePublic() [default], ->makePrivate()
                 ->addParam($factory->param('someParam')->setDefault('test'))

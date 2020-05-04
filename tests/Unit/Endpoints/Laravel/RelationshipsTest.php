@@ -72,5 +72,18 @@ class RelationshipsTest extends FileTestCase
             'phone',
             $file->classMethodNames()
         );
+    }
+
+    /** @test */
+    public function it_will_overwrite_already_existing_method()
+    {
+        $file = LaravelFile::load('app/User.php')
+            ->hasOne(['App\Phone'])
+            ->hasOne(['App\Phone']);
+
+        $this->assertCount(
+            1,
+            $file->classMethodNames()
+        );
     }    
 }
