@@ -13,6 +13,7 @@ class StmtInserter extends NodeVisitorAbstract {
     const priority = [
         'PhpParser\Node\Stmt\TraitUse',
         'PhpParser\Node\Stmt\Property',
+        'PhpParser\Node\Stmt\ClassMethod',
     ];
 
     public function __construct($id, $newNode)
@@ -23,9 +24,8 @@ class StmtInserter extends NodeVisitorAbstract {
 
     public function leaveNode(Node $node) {  
         if($node->__object_hash != $this->id) return $node;
-
-        $this->position = 0;
-        $priority = 1; //$this->priority($this->newNode);
+        $priority = $this->priority($this->newNode);
+        $this->position = sizeof($node->stmts);
         $indexes = [];
         collect($node->stmts)->first(function($stmt, $index) use($priority) {
             $candidatePriority = $this->priority($stmt);
