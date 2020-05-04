@@ -4,14 +4,14 @@ namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
 use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\ClassMethod as ClassMethod_;
 use PhpParser\Node\Stmt\Class_;
 
-class ClassMethods extends ResourceEndpointProvider
+class ClassMethod extends ResourceEndpointProvider
 {
     public function get()
     {
-        return (new NodeFinder)->findInstanceOf($this->ast(), ClassMethod::class);
+        return (new NodeFinder)->findInstanceOf($this->ast(), ClassMethod_::class);
     }
     
     public function add($methods)

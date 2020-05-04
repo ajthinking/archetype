@@ -18,7 +18,7 @@ class BelongsTo extends ResourceEndpointProvider
     {
         $targets = Arr::wrap($targets);
 
-        $this->file->addClassMethods(
+        $this->file->addClassMethod(
             collect($targets)->map(function($target) {
                 return Snippet::___BELONGS_TO_METHOD___([
                     '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),

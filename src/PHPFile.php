@@ -39,7 +39,7 @@ class PHPFile
         Endpoints\PHP\ClassName::class,
         Endpoints\PHP\ClassExtends::class,
         Endpoints\PHP\ClassImplements::class,
-        Endpoints\PHP\ClassMethods::class,
+        Endpoints\PHP\ClassMethod::class,
         Endpoints\PHP\ClassMethodNames::class,
     ];
 

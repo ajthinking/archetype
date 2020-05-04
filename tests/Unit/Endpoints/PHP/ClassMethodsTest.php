@@ -26,7 +26,7 @@ class ClassMethodsTest extends FileTestCase
     /** @test */
     public function it_can_retrieve_class_method_asts()
     {
-        $methods = PHPFile::load('app/Console/Kernel.php')->classMethods();
+        $methods = PHPFile::load('app/Console/Kernel.php')->classMethod();
 
             collect($methods)->each(function($method) {
                 $this->assertInstanceOf(ClassMethod::class, $method);
@@ -39,7 +39,7 @@ class ClassMethodsTest extends FileTestCase
         $factory = new BuilderFactory;
         $file = LaravelFile::load('app/User.php');
 
-        $file = $file->addClassMethods([
+        $file = $file->addClassMethod([
             $factory->method('insertedMethod')
                 ->makeProtected() // ->makePublic() [default], ->makePrivate()
                 ->addParam($factory->param('someParam')->setDefault('test'))
