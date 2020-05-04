@@ -18,7 +18,7 @@ class HasOne extends ResourceEndpointProvider
     {
         $targets = Arr::wrap($targets);
 
-        $this->file->addClassMethod(
+        $this->file->add()->classMethod(
             collect($targets)->map(function($target) {
                 return Snippet::___HAS_ONE_METHOD___([
                     '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),

@@ -18,7 +18,7 @@ class HasMany extends ResourceEndpointProvider
     {
         $targets = Arr::wrap($targets);
 
-        $this->file->addClassMethod(
+        $this->file->add()->classMethod(
             collect($targets)->map(function($target) {
                 return Snippet::___HAS_MANY_METHOD___([
                     '___HAS_MANY_METHOD___' => Str::hasManyMethodName($target),

@@ -18,7 +18,7 @@ class BelongsToMany extends ResourceEndpointProvider
     {
         $targets = Arr::wrap($targets);
 
-        $this->file->addClassMethod(
+        $this->file->add()->classMethod(
             collect($targets)->map(function($target) {
                 return Snippet::___BELONGS_TO_MANY_METHOD___([
                     '___BELONGS_TO_MANY_METHOD___' => Str::belongsToManyMethodName($target),
