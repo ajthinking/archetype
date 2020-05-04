@@ -123,6 +123,11 @@ class FileQueryBuilder extends EndpointProvider
         if(!isset($this->baseDir)) $this->in('');        
         return $this->result;
     }
+
+    public function first()
+    {
+        return $this->get()->first();
+    }    
     
     public function recursiveFileSearch($directory) {
         

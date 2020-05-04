@@ -145,5 +145,14 @@ class FileQueryBuilderTest extends FileTestCase
         $this->assertCount(
             1, $files
         );
+    }
+    
+    /** @test */
+    public function it_has_a_first_method()
+    {        
+        $this->assertInstanceOf(
+            \PHPFileManipulator\LaravelFile::class,
+            LaravelFile::in('public')->first()
+        );
     }     
 }
