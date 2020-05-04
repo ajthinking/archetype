@@ -1,5 +1,0 @@
-// read/write operations on files
-PHPFile::load('app/User.php')
-->addUseStatements('Package\Tool')
-->addTraitUseStatement('Tool')
-->save()

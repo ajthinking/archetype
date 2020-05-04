@@ -1,4 +1,0 @@
-// Query the actual CODE
-// using the abstract syntax tree query builder
-
-$file->astQuery() // Dive deeper

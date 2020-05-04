@@ -1,8 +1,0 @@
-// find files with the query builder
-PHPFile::in('database/migrations')
-->where('classExtends', 'Migration')
-->andWhere('className', 'like', 'Create')
-->andWhere(function($file) {
-// custom query ...
-})
-->get()
