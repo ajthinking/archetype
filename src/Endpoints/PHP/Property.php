@@ -222,7 +222,7 @@ class Property extends EndpointProvider
 
     protected function flag()
     {
-        return $this->file->directive('flag') ?? 'protected';
+        return $this->file->directive('flag') ?? 'public';
     }
 
     protected function flagCode()
