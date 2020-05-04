@@ -8,7 +8,6 @@ use App;
 use PHPFileManipulator\Factories\PHPFileFactory;
 use PHPFileManipulator\Factories\LaravelFileFactory;
 use PHPFileManipulator\Commands\ListAPICommand;
-use PHPFileManipulator\Commands\TypeWriterCommand;
 use PHPFileManipulator\Commands\RelationshipsDemo;
 use PHPFileManipulator\Commands\ErrorsCommand;
 Use Illuminate\Support\Str;
@@ -59,7 +58,6 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->commands([
             ListAPICommand::class,
-            TypeWriterCommand::class,
             DemoCommand::class,
             RelationshipsDemo::class,
             ErrorsCommand::class,
