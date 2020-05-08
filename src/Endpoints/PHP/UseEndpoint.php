@@ -31,7 +31,7 @@ class UseEndpoint extends EndpointProvider
             })->flatten()->toArray();
     }
 
-    public function set($newUseStatements)
+    protected function set($newUseStatements)
     {
         $traverser = new NodeTraverser();
         $visitor = new UseStatementInserter($this->ast(), $newUseStatements);
@@ -42,7 +42,7 @@ class UseEndpoint extends EndpointProvider
         return $this->file->continue();
     }    
 
-    public function add($newUseStatements)
+    protected function add($newUseStatements)
     {
         $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
         $traverser = new NodeTraverser();
