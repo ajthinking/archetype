@@ -34,8 +34,8 @@ class PHPFile
 
         // Resources
         Endpoints\PHP\Property::class,
-        Endpoints\PHP\ClassMethod::class,
-        Endpoints\PHP\ClassMethodNames::class,
+        Endpoints\PHP\Method::class,
+        Endpoints\PHP\MethodNames::class,
         Endpoints\PHP\Namespace_::class,
         Endpoints\PHP\Use_::class,
         Endpoints\PHP\ClassName::class,
