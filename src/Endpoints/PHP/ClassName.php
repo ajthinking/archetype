@@ -2,19 +2,26 @@
 
 namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Class_;
 
-class ClassName extends ResourceEndpointProvider
+class ClassName extends EndpointProvider
 {
-    public function get()
+    public function className($name = null)
+    {
+        if($name === null) return $this->get();
+
+        return $this->set($name);
+    }
+
+    protected function get()
     {
         $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
         return $class ? $class->name->name : null;
-    }
+    }    
 
-    public function set($newClassName)
+    protected function set($newClassName)
     {
         $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
         
