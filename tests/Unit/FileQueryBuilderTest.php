@@ -98,7 +98,7 @@ class FileQueryBuilderTest extends FileTestCase
         $this->assertCount(
             1, LaravelFile::in('app')->where([
                 ['className', 'like', 'provider'],
-                ['classMethodNames', 'contains', 'mapWebRoutes']
+                ['methodNames', 'contains', 'mapWebRoutes']
             ])->get()
         );        
     }
@@ -109,7 +109,7 @@ class FileQueryBuilderTest extends FileTestCase
         $this->assertCount(
             1, LaravelFile::in('app')
                 ->where('className', 'like', 'provider')
-                ->andWhere('classMethodNames', 'contains', 'mapWebRoutes')
+                ->andWhere('methodNames', 'contains', 'mapWebRoutes')
                 ->get()
         );        
     }    
@@ -127,7 +127,7 @@ class FileQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_can_query_non_class_files_and_files_missing_extend()
     {        
-        $files = LaravelFile::where('classExtends', 'Authenticatable')->get();
+        $files = LaravelFile::where('extends', 'Authenticatable')->get();
         $this->assertTrue(
             $files->count() > 0
         );
@@ -136,8 +136,8 @@ class FileQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_can_chain()
     {        
-        $files = LaravelFile::where('classExtends', 'ServiceProvider')
-            ->where('classMethodNames', 'contains', 'boot')
+        $files = LaravelFile::where('extends', 'ServiceProvider')
+            ->where('methodNames', 'contains', 'boot')
             ->where(function($file) {
                 return $file->className() == 'AuthServiceProvider'; 
             })->get();

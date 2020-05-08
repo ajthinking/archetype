@@ -15,19 +15,19 @@ class ClassImplementsTest extends FileTestCase
         $file = PHPFile::load('app/User.php');
 
         $this->assertTrue(
-            $file->classImplements() === []
+            $file->implements() === []
         );
     }
 
     /** @test */
     public function it_can_set_class_implements()
     {
-        $file = PHPFile::load('app/User.php')->classImplements([
+        $file = PHPFile::load('app/User.php')->implements([
         "MyInterface" 
         ]);
 
         $this->assertTrue(
-            $file->classImplements() === [
+            $file->implements() === [
                 "MyInterface" 
             ]
         );
@@ -37,11 +37,11 @@ class ClassImplementsTest extends FileTestCase
     public function it_can_add_class_implements()
     {
         $file = PHPFile::load('app/User.php')
-            ->addClassImplements(["MyFirstInterface" ])
-            ->addClassImplements(["MySecondInterface" ]);
+            ->add()->implements(["MyFirstInterface" ])
+            ->add()->implements(["MySecondInterface" ]);
 
         $this->assertTrue(
-            $file->classImplements() === [
+            $file->implements() === [
                 "MyFirstInterface",
                 "MySecondInterface"
             ]

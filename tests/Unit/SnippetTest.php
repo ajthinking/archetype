@@ -29,7 +29,7 @@ class SnippetTest extends FileTestCase
         ]);
 
         $this->assertEquals(
-            LaravelFile::load('app/User.php')->add()->classMethod([$method])->classMethodNames(),
+            LaravelFile::load('app/User.php')->add()->classMethod([$method])->methodNames(),
             ['guitars']
         );            
     }    

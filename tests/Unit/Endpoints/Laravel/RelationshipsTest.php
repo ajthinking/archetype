@@ -17,7 +17,7 @@ class RelationshipsTest extends FileTestCase
 
         $this->assertContains(
             'department',
-            $file->classMethodNames()
+            $file->methodNames()
         );
     }
 
@@ -29,7 +29,7 @@ class RelationshipsTest extends FileTestCase
 
         $this->assertContains(
             'visits',
-            $file->classMethodNames()
+            $file->methodNames()
         );
     }
     
@@ -41,7 +41,7 @@ class RelationshipsTest extends FileTestCase
 
         $this->assertContains(
             'visits',
-            $file->classMethodNames()
+            $file->methodNames()
         );
     }     
     
@@ -53,12 +53,12 @@ class RelationshipsTest extends FileTestCase
 
         $this->assertContains(
             'guns',
-            $file->classMethodNames()
+            $file->methodNames()
         );
 
         $this->assertContains(
             'roses',
-            $file->classMethodNames()
+            $file->methodNames()
         );
     }
     
@@ -70,7 +70,7 @@ class RelationshipsTest extends FileTestCase
 
         $this->assertContains(
             'phone',
-            $file->classMethodNames()
+            $file->methodNames()
         );
     }
 
@@ -83,7 +83,7 @@ class RelationshipsTest extends FileTestCase
 
         $this->assertCount(
             1,
-            $file->classMethodNames()
+            $file->methodNames()
         );
     }    
 }

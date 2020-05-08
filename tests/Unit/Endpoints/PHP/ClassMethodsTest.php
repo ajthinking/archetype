@@ -19,7 +19,7 @@ class ClassMethodsTest extends FileTestCase
         $file = PHPFile::load('app/Console/Kernel.php');
 
         $this->assertTrue(
-            $file->classMethodNames() === ['schedule', 'commands']
+            $file->methodNames() === ['schedule', 'commands']
         );
     }
 
@@ -49,7 +49,7 @@ class ClassMethodsTest extends FileTestCase
         ]);
 
         $this->assertContains(
-            'insertedMethod', $file->classMethodNames()
+            'insertedMethod', $file->methodNames()
         );
     }    
 }
