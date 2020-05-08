@@ -34,13 +34,13 @@ class PHPFile
 
         // Resources
         Endpoints\PHP\Property::class,
-        Endpoints\PHP\NamespaceEndpoint::class,
-        Endpoints\PHP\UseEndpoint::class,
+        Endpoints\PHP\ClassMethod::class,
+        Endpoints\PHP\ClassMethodNames::class,
+        Endpoints\PHP\Namespace_::class,
+        Endpoints\PHP\Use_::class,
         Endpoints\PHP\ClassName::class,
         Endpoints\PHP\ClassExtends::class,
         Endpoints\PHP\ClassImplements::class,
-        Endpoints\PHP\ClassMethod::class,
-        Endpoints\PHP\ClassMethodNames::class,
     ];
 
     public function endpointProviders() {
@@ -53,12 +53,5 @@ class PHPFile
         return collect(
             //
         );
-    }
-    
-    public function tags()
-    {
-        return [
-            //
-        ];
-    }   
+    } 
 }
