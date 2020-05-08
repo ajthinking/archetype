@@ -78,9 +78,9 @@ class DemoCommand extends Command
 
         $nonClassCount = $fileCount - $classCount;
 
-        $extendingModel = PHPFile::where('classExtends', 'Model')->get()->count();
+        $extendingModel = PHPFile::where('extends', 'Model')->get()->count();
 
-        $extendingController = PHPFile::where('classExtends', 'Controller')->get()->count();
+        $extendingController = PHPFile::where('extends', 'Controller')->get()->count();
 
         $this->table(["Stats (excluding vendor folder)"], [
             ["$fileCount PHP files."],

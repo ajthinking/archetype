@@ -15,17 +15,17 @@ class ClassExtendsTest extends FileTestCase
         $file = PHPFile::load('app/User.php');
 
         $this->assertTrue(
-            $file->classExtends() === 'Authenticatable'
+            $file->extends() === 'Authenticatable'
         );
     }
 
     /** @test */
     public function it_can_set_class_implements()
     {
-        $file = PHPFile::load('app/User.php')->classExtends("My\BaseClass");
+        $file = PHPFile::load('app/User.php')->extends("My\BaseClass");
 
         $this->assertTrue(
-            $file->classExtends() === "My\BaseClass"
+            $file->extends() === "My\BaseClass"
         );
     } 
 }
