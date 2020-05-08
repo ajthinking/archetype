@@ -39,8 +39,8 @@ class PHPFile
         Endpoints\PHP\Namespace_::class,
         Endpoints\PHP\Use_::class,
         Endpoints\PHP\ClassName::class,
-        Endpoints\PHP\ClassExtends::class,
-        Endpoints\PHP\ClassImplements::class,
+        Endpoints\PHP\Extends_::class,
+        Endpoints\PHP\Implements_::class,
     ];
 
     public function endpointProviders() {
