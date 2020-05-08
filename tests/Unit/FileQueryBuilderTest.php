@@ -68,7 +68,7 @@ class FileQueryBuilderTest extends FileTestCase
         );        
 
         $this->assertCount(
-            1, LaravelFile::in('app')->where('uses', 'contains', 'Illuminate\Contracts\Auth\MustVerifyEmail')->get()
+            1, LaravelFile::in('app')->where('use', 'contains', 'Illuminate\Contracts\Auth\MustVerifyEmail')->get()
         );
 
         $this->assertCount(
@@ -88,7 +88,7 @@ class FileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            2, LaravelFile::in('app')->where('uses', 'count', 4)->get()
+            2, LaravelFile::in('app')->where('use', 'count', 4)->get()
         );        
     }
 

@@ -14,7 +14,7 @@ class UsesTest extends FileTestCase
     {
         // A file with use statements
         $file = PHPFile::load('app/User.php');
-        $useStatements = $file->uses();
+        $useStatements = $file->use();
         $expectedUseStatements = collect([
             "Illuminate\Notifications\Notifiable",
             "Illuminate\Contracts\Auth\MustVerifyEmail",
@@ -29,7 +29,7 @@ class UsesTest extends FileTestCase
 
         // A file without use statements
         $file = PHPFile::load('public/index.php');
-        $useStatements = $file->uses();
+        $useStatements = $file->use();
 
         $this->assertTrue(
             collect($useStatements)->count() === 0
@@ -43,7 +43,7 @@ class UsesTest extends FileTestCase
         // on a file with use statements        
         $file = PHPFile::load('app/User.php');
 
-        $useStatements = $file->addUses(['Add\This'])->uses();
+        $useStatements = $file->add()->use(['Add\This'])->use();
 
         $expectedUseStatements = collect([
             "Illuminate\Notifications\Notifiable",
@@ -65,7 +65,7 @@ class UsesTest extends FileTestCase
                 
         $file = PHPFile::load('public/index.php');
         
-        $useStatements = $file->addUses(['Add\This'])->uses();
+        $useStatements = $file->add()->use(['Add\This'])->use();
         
         $expectedUseStatements = collect([            
             "Add\This",            
@@ -82,7 +82,7 @@ class UsesTest extends FileTestCase
     public function it_can_add_use_statements_with_alias()
     {        
         $file = PHPFile::load('public/index.php');
-        $useStatements = $file->addUses(['Add\This as Wow'])->uses();
+        $useStatements = $file->add()->use(['Add\This as Wow'])->use();
         $expectedUseStatements = collect([            
             "Add\This as Wow",            
         ]);
@@ -100,7 +100,7 @@ class UsesTest extends FileTestCase
     {
         $file = PHPFile::load('app/User.php');
 
-        $useStatements = $file->uses(['Only\This'])->uses();
+        $useStatements = $file->use(['Only\This'])->use();
         $expectedUseStatements = collect([
             "Only\This",
         ]);

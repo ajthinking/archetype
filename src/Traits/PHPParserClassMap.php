@@ -222,7 +222,7 @@ trait PHPParserClassMap
             'init' => 'init',
             'loop' => 'loop',
             'prefix' => 'prefix',
-            'uses' => 'uses',
+            'use' => 'use',
             'specialClassNames' => 'specialClassNames',
             'variadic' => 'variadic',
             'left' => 'left',

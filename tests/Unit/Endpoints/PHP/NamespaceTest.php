@@ -42,12 +42,12 @@ class NamespaceTest extends FileTestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            PHPFile::load('app/User.php')->removeNamespace()->namespace() === null
+            PHPFile::load('app/User.php')->remove()->namespace()->namespace() === null
         );
 
         // on a file without namespace
         $this->assertTrue(
-            PHPFile::load('public/index.php')->removeNamespace()->namespace() === null
+            PHPFile::load('public/index.php')->remove()->namespace()->namespace() === null
         );        
     }        
 }

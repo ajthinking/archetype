@@ -2,21 +2,25 @@
 
 namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Endpoints\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeTraverser;
 
-class Uses extends ResourceEndpointProvider
+class UseEndpoint extends EndpointProvider
 {
-    public static function aliases()
+    public function use($value = null)
     {
-        return ['use', 'uses'];
+        if($this->file->directive('add')) return $this->add($value);
+
+        if($value === null) return $this->get();
+
+        return $this->set($value);
     }
 
-    public function get()
+    protected function get()
     {
         return collect((new NodeFinder)->findInstanceOf($this->ast(), Use_::class))
             ->map(function($useStatement) {

@@ -49,7 +49,7 @@ PHPFile::in('database/migrations')
     ->get()
     ->each(function($file) {
         // Do something
-        $file->addUses(['Database\CustomMigration'])
+        $file->add()->use(['Database\CustomMigration'])
           ->classExtends('Database\CustomMigration')
           ->save();
     });

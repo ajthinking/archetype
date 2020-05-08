@@ -2,22 +2,29 @@
 
 namespace PHPFileManipulator\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\BuilderFactory;
 
-class NamespaceResource extends ResourceEndpointProvider
+class NamespaceEndpoint extends EndpointProvider
 {
-    const aliases = ['namespace'];
+    public function namespace($value = null)
+    {
+        if($this->file->directive('remove')) return $this->remove();
 
-    public function get()
+        if($value === null) return $this->get();
+
+        return $this->set($value);
+    }
+
+    protected function get()
     {
         $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
         return $namespace ? implode('\\', $namespace->name->parts) : null;
     }
 
-    public function set($newNamespace)
+    protected function set($newNamespace)
     {
         $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
         
@@ -38,7 +45,7 @@ class NamespaceResource extends ResourceEndpointProvider
         return $this->file->continue();
     }
 
-    public function remove($_ = null)
+    protected function remove()
     {
         $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
         
