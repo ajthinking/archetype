@@ -44,13 +44,13 @@ use LaravelFile;
 
 // find files with the query builder
 PHPFile::in('database/migrations')
-    ->where('classExtends', 'Migration')
+    ->where('extends', 'Migration')
   	->andWhere('className', 'like', 'Create')
     ->get()
     ->each(function($file) {
         // Do something
         $file->add()->use(['Database\CustomMigration'])
-          ->classExtends('Database\CustomMigration')
+          ->extends('Database\CustomMigration')
           ->save();
     });
 
@@ -59,7 +59,7 @@ LaravelFile::load('app/User.php')
     ->hasMany(['App\Car'])
     ->hasOne(['App\Life'])
     ->belongsTo(['App\Wife'])
-  	->classMethodNames()
+  	->methodNames()
 
 // move User.php to a Models directory
 PHPFile::load('app/User.php')
