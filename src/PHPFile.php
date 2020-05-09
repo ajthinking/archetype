@@ -41,6 +41,7 @@ class PHPFile
         Endpoints\PHP\ClassName::class,
         Endpoints\PHP\Extends_::class,
         Endpoints\PHP\Implements_::class,
+        Endpoints\PHP\Trait_::class,
     ];
 
     public function endpointProviders() {
