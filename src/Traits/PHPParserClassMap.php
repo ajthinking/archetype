@@ -102,7 +102,6 @@ trait PHPParserClassMap
             'throw' => '\PhpParser\Node\Stmt\Throw_',
             'traitUse' => '\PhpParser\Node\Stmt\TraitUse',
             'traitUseAdaptation' => '\PhpParser\Node\Stmt\TraitUseAdaptation',
-            'traitUseAdaptation' => '\PhpParser\Node\Stmt\TraitUseAdaptation',
             'trait' => '\PhpParser\Node\Stmt\Trait_',
             'tryCatch' => '\PhpParser\Node\Stmt\TryCatch',
             'unset' => '\PhpParser\Node\Stmt\Unset_',
