@@ -5,6 +5,7 @@ namespace PHPFileManipulator\Endpoints\PHP;
 use Illuminate\Support\Str;
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
+use PHPFileManipulator\Support\RecursiveFileSearch;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;
@@ -22,7 +23,7 @@ class FileQueryBuilder extends EndpointProvider
 {
     use HasOperators;
 
-    static $PHPSignature = '/\.php$/';
+    const PHPSignature = '/\.php$/';
     
     const operators = [
         // tested
@@ -56,17 +57,18 @@ class FileQueryBuilder extends EndpointProvider
     
     public function all()
     {
-        $this->recursiveFileSearch('', static::$PHPSignature);
+        return $this->in('')->get();
     }
 
     public function in($directory)
     {
         $this->baseDir = $directory;
                       
-        $this->result = $this->recursiveFileSearch($this->baseDir)->map(function($filePath) {
-            $type = class_basename($this->file);
-            return app()->make($type)->load($filePath);
-        });
+        $this->result = collect($this->recursiveFileSearch($this->baseDir))
+            ->map(function($filePath) {
+                $type = class_basename($this->file);
+                return app()->make($type)->load($filePath);
+            });
         
         return $this;    
     }
@@ -120,6 +122,7 @@ class FileQueryBuilder extends EndpointProvider
 
     public function get()
     {
+        // Ensure we are in a directory context - default to base path
         if(!isset($this->baseDir)) $this->in('');        
         return $this->result;
     }
@@ -130,47 +133,11 @@ class FileQueryBuilder extends EndpointProvider
     }    
     
     public function recursiveFileSearch($directory) {
-        
-        $directory = base_path($directory);        
+        $directory = base_path($directory);
 
-        /**
-         * @param SplFileInfo $file
-         * @param mixed $key
-         * @param RecursiveCallbackFilterIterator $iterator
-         * @return bool True if you need to recurse or if the item is acceptable
-         */
-        $filter = function ($file, $key, $iterator) {
-            // Exclude some folders/files
-            $exclude = config('php-file-manipulator.ignored_paths');
-            if (in_array($file->getFilename(), $exclude)) {
-                return false;
-            }
-
-            // Iterate recursively
-            if ($iterator->hasChildren()) {
-                return true;
-            }
-
-            // Accept any file matching signature
-            return $file->isFile() && preg_match(static::$PHPSignature, $file->getFilename());
-        };
-        
-
-        $innerIterator = new RecursiveDirectoryIterator(
-            $directory,
-            RecursiveDirectoryIterator::SKIP_DOTS
-        );
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveCallbackFilterIterator($innerIterator, $filter)
-        );
-
-        foreach ($iterator as $pathname => $fileInfo) {
-            // do your insertion here
-        }
-        
-        return collect(iterator_to_array($iterator))->map(function($file) {
-            
-            return $file->getFilename();
-        })->keys();
-    }    
+        return RecursiveFileSearch::in($directory)
+            ->matching(static::PHPSignature)
+            ->ignore(config('php-file-manipulator.ignored_paths'))
+            ->get();
+    }  
 }
