@@ -161,7 +161,7 @@ class ASTQueryBuilder
     protected function whereCallback($callback)
     {
         return $this->next(function($queryNode) use($callback) {
-            return $callback(clone $queryNode) ? $queryNode : new Killable;
+            return $callback($queryNode->result) ? $queryNode : new Killable;
         });
     }
 
@@ -175,46 +175,46 @@ class ASTQueryBuilder
         });
     }    
 
-    public function whereChainingOn($name)
-    {
-        return $this->next(function($queryNode) use($name) {
-            $current = $queryNode->result;
-            do {
-                $current = $current->var ?? false;
-            } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
+    // public function whereChainingOn($name)
+    // {
+    //     return $this->next(function($queryNode) use($name) {
+    //         $current = $queryNode->result;
+    //         do {
+    //             $current = $current->var ?? false;
+    //         } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
 
-            return $current->name == $name ? $queryNode : new Killable;
-        });
-    }
+    //         return $current->name == $name ? $queryNode : new Killable;
+    //     });
+    // }
 
-    public function flattenChain()
-    {
-        $flattened = $this->currentNodes()->map(function($queryNode) {
-            $results = collect();
-            $current = $queryNode->result[0];
+    // public function flattenChain()
+    // {
+    //     $flattened = $this->currentNodes()->map(function($queryNode) {
+    //         $results = collect();
+    //         $current = $queryNode->result[0];
 
-            do {
-                $results->push($current);
-                $current = $current->var ?? false;
+    //         do {
+    //             $results->push($current);
+    //             $current = $current->var ?? false;
                 
-            } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
+    //         } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
 
-            return $results->reverse();
+    //         return $results->reverse();
             
-        })->flatten();
+    //     })->flatten();
 
-        return $flattened->flatMap(function($methodCall) {
-            $var = $methodCall->var->name;
-            $name = $methodCall->name;
-            $args = $methodCall->args;
+    //     return $flattened->flatMap(function($methodCall) {
+    //         $var = $methodCall->var->name;
+    //         $name = $methodCall->name;
+    //         $args = $methodCall->args;
 
-            return [
-                $methodCall->name->name => collect($args)->map(function($arg) {
-                    return $arg->value->value;
-                })->values()->toArray()
-            ];
-        })->toArray();
-    }
+    //         return [
+    //             $methodCall->name->name => collect($args)->map(function($arg) {
+    //                 return $arg->value->value;
+    //             })->values()->toArray()
+    //         ];
+    //     })->toArray();
+    // }
 
     public function recall()
     {

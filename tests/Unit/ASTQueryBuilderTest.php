@@ -62,33 +62,32 @@ class ASTQueryBuilderTest extends FileTestCase
         $this->assertEquals($result, 'users');
     }
     
-    // BROKEN!
-    public function it_can_flatten_method_call_chains()
-    {
-        $result = LaravelFile::load(__DIR__ . '/../samples/chained_migration_table_statement.php')
-            ->astQuery()
-            ->expression()
-            
-            ->shallow()
-            ->methodCall()
-            ->whereChainingOn('table')
-            ->remember('migration_statement', function($node) {
-                // BROKEN!
-                return $node->flattenChain();
-            })
-            ->recall();
+    // /** @test */
+    // public function it_can_flatten_method_call_chains()
+    // {
+    //     $result = LaravelFile::load(__DIR__ . '/../samples/chained_migration_table_statement.php')
+    //         ->astQuery()
+    //         ->expression()
+    //         ->shallow()
+    //         ->methodCall()
+    //         ->whereChainingOn('table')
+    //         ->remember('migration_statement', function($node) {
+    //             // BROKEN!
+    //             return $node->flattenChain();
+    //         })
+    //         ->recall();
 
-        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $result);
-        $this->assertCount(3, $result);
-        $this->assertTrue(
-            $result[0]->migration_statement['integer'] == ['id']
-        );
-        $this->assertTrue(
-            $result[1]->migration_statement['text'] == ['name']
-        );
-        $this->assertTrue(
-            $result[2]->migration_statement['string'] == ['description', 255]
-        );                
+    //     $this->assertInstanceOf(\Illuminate\Support\Collection::class, $result);
+    //     $this->assertCount(3, $result);
+    //     $this->assertTrue(
+    //         $result[0]->migration_statement['integer'] == ['id']
+    //     );
+    //     $this->assertTrue(
+    //         $result[1]->migration_statement['text'] == ['name']
+    //     );
+    //     $this->assertTrue(
+    //         $result[2]->migration_statement['string'] == ['description', 255]
+    //     );                
         
-    }
+    // }
 }
