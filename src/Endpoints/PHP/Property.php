@@ -5,8 +5,6 @@ namespace PHPFileManipulator\Endpoints\PHP;
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
 use PhpParser\BuilderFactory;
-use PHPFileManipulator\Support\AST\Visitors\NodeInserter;
-use PHPFileManipulator\Support\AST\ASTQueryBuilder;
 use PHPFileManipulator\Support\Types;
 use Illuminate\Support\Arr;
 use Exception;
@@ -174,10 +172,9 @@ class Property extends EndpointProvider
                     ->where('name->name', $key)
                     ->get()->isNotEmpty();
             })
-            ->replace(function($queryNode) {
-                $node = $queryNode->results;
-                $node->flags = $this->flagCode();
-                return $node;
+            ->replace(function($property) {
+                $property->flags = $this->flagCode();
+                return $property;
             })
             ->propertyProperty()
             ->where('name->name', $key)
