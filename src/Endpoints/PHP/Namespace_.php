@@ -3,8 +3,6 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PhpParser\Node\Stmt\Namespace_ as PhpParserNamespace_;
-use PhpParser\NodeFinder;
 use PhpParser\BuilderFactory;
 
 class Namespace_ extends EndpointProvider
@@ -20,13 +18,22 @@ class Namespace_ extends EndpointProvider
 
     protected function get()
     {
-        $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), PhpParserNamespace_::class);
-        return $namespace ? implode('\\', $namespace->name->parts) : null;
+        return $this->file->astQuery()
+            ->namespace()
+            ->remember('formatted_namespace', function($query) {
+                $parts = $query->first()->name->parts ?? null;
+                return $parts ? join('\\', $parts) : null;
+            })
+            ->recall()
+            ->pluck('formatted_namespace')
+            ->first();
     }
 
     protected function set($newNamespace)
     {
-        $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), PhpParserNamespace_::class);
+        $namespace = $this->file->astQuery()
+            ->namespace()
+            ->first();        
         
         if($namespace) {
             // Modifying existing namespace
@@ -47,11 +54,13 @@ class Namespace_ extends EndpointProvider
 
     protected function remove()
     {
-        $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), PhpParserNamespace_::class);
+        $namespace = $this->file->astQuery()->namespace()->first();
         
-        if($namespace) {
-            $this->file->ast($namespace->stmts);
-        }
+        // using remove()->namespace() should NOT remove underlying statements
+        // humans would not expect that
+        // instead just unwrap the statements
+        // this assumes 0 or 1 namespaces
+        if($namespace) $this->file->ast($namespace->stmts);
 
         return $this->file->continue();
     }    
