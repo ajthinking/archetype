@@ -3,8 +3,6 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Class_;
 
 class Extends_ extends EndpointProvider
 {
@@ -17,14 +15,29 @@ class Extends_ extends EndpointProvider
 
     protected function get()
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        return $class && isset($class->extends) ? join('\\', $class->extends->parts) : null;
+        return $this->file->astQuery()
+            ->class()
+            ->extends
+            ->remember('formatted_extends', function($query) {
+                $parts = $query->first()->parts ?? null;
+                return $parts ? join('\\', $parts) : null;
+            })
+            
+            ->recall()
+            ->pluck('formatted_extends')
+            ->first();
     }
 
     protected function set($newExtends)
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        $class->extends = new \PhpParser\Node\Name($newExtends);
-        return $this->file->continue();
+        return $this->file->astQuery()
+            ->class()
+            ->extends
+            ->replace(
+                new \PhpParser\Node\Name($newExtends)
+            )
+            ->commit()
+            ->end()
+            ->continue();
     }    
 }
