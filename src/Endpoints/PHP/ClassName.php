@@ -3,8 +3,6 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Class_;
 
 class ClassName extends EndpointProvider
 {
@@ -17,18 +15,21 @@ class ClassName extends EndpointProvider
 
     protected function get()
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        return $class ? $class->name->name : null;
+        return $this->file->astQuery()
+            ->class()
+            ->name
+            ->name
+            ->first();
     }    
 
     protected function set($newClassName)
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        
-        if($class) {
-            $class->name->name = $newClassName;
-        }
-
-        return $this->file->continue();
+        return $this->file->astQuery()
+            ->class()
+            ->name
+            ->replaceProperty('name', $newClassName)
+            ->commit()
+            ->end()
+            ->continue();
     }     
 }
