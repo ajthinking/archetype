@@ -8,11 +8,6 @@ use Exception;
 
 class ReflectionProxy extends EndpointProvider
 {
-    public function getHandlerMethod($signature, $args)
-    {
-        return $signature == 'getReflection';
-    }
-
     public function getReflection()
     {
         $class = "\\" . $this->file->namespace() ."\\" . $this->file->className();
