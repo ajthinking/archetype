@@ -22,7 +22,6 @@ class Extends_ extends EndpointProvider
                 $parts = $query->first()->parts ?? null;
                 return $parts ? join('\\', $parts) : null;
             })
-            
             ->recall()
             ->pluck('formatted_extends')
             ->first();

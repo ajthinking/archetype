@@ -114,7 +114,6 @@ class ASTQueryBuilder
 
     public function remember($key, $callback)
     {
-        
         $this->currentNodes()->each(function($queryNode) use($key, $callback) {
             
             if($queryNode instanceof Killable) return;
