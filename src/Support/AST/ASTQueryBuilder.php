@@ -2,9 +2,6 @@
 
 namespace PHPFileManipulator\Support\AST;
 
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 use PhpParser\NodeFinder;
@@ -117,11 +114,15 @@ class ASTQueryBuilder
 
     public function remember($key, $callback)
     {
+        
         $this->currentNodes()->each(function($queryNode) use($key, $callback) {
+            
+            if($queryNode instanceof Killable) return;
 
             $subAST = [(clone $queryNode)->results];
+            
             $subQueryBuilder = new static($subAST);
-
+            
             $queryNode->memory[$key] = $callback($subQueryBuilder);
         });
 
@@ -247,8 +248,9 @@ class ASTQueryBuilder
     public function remove()
     {
         $this->currentNodes()->each(function($node) {
+            
             if(!isset($node->results->__object_hash)) return;
-
+            
             $this->resultingAST = NodeRemover::remove(
                 $node->results->__object_hash,
                 $this->resultingAST
@@ -286,7 +288,7 @@ class ASTQueryBuilder
 
             $this->resultingAST = NodeReplacer::replace(
                 $node->results->__object_hash,
-                $callback($node),
+                $callback($node->results),
                 $this->resultingAST
             );
         });
