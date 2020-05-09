@@ -3,9 +3,6 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Node\Stmt\Class_;
 use Illuminate\Support\Arr;
 
 class Method extends EndpointProvider
@@ -21,7 +18,10 @@ class Method extends EndpointProvider
 
     protected function get()
     {
-        return (new NodeFinder)->findInstanceOf($this->ast(), ClassMethod::class);
+        return $this->file->astQuery()
+            ->method()
+            ->get()
+            ->toArray();
     }
 
     protected function set($methods)
@@ -57,14 +57,5 @@ class Method extends EndpointProvider
             ->class()
             ->insertStmt($method)
             ->commit();
-    }
-
-    protected function getClass()
-    {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        
-        if(!$class) throw Exception('Could not resolve a class.');
-
-        return $class;
     }
 }
