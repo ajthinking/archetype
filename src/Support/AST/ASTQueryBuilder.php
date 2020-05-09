@@ -117,12 +117,8 @@ class ASTQueryBuilder
         $this->currentNodes()->each(function($queryNode) use($key, $callback) {
             
             if($queryNode instanceof Killable) return;
-
-            $subAST = [(clone $queryNode)->result];
             
-            $subQueryBuilder = new static($subAST);
-            
-            $queryNode->memory[$key] = $callback($subQueryBuilder);
+            $queryNode->memory[$key] = $callback($queryNode->result);
         });
 
         return $this;

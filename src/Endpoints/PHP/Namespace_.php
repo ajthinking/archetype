@@ -20,8 +20,8 @@ class Namespace_ extends EndpointProvider
     {
         return $this->file->astQuery()
             ->namespace()
-            ->remember('formatted_namespace', function($query) {
-                $parts = $query->first()->name->parts ?? null;
+            ->remember('formatted_namespace', function($node) {
+                $parts = $node->name->parts ?? null;
                 return $parts ? join('\\', $parts) : null;
             })
             ->recall()

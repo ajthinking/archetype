@@ -18,8 +18,8 @@ class Extends_ extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->extends
-            ->remember('formatted_extends', function($query) {
-                $parts = $query->first()->parts ?? null;
+            ->remember('formatted_extends', function($node) {
+                $parts = $node->parts ?? null;
                 return $parts ? join('\\', $parts) : null;
             })
             ->recall()
