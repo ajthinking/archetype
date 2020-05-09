@@ -75,7 +75,7 @@ class ASTQueryBuilder
     {
         return $this->next(function($queryNode) use($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
-            $results = $this->nodeFinder()->$finderMethod($queryNode->results, $expectedClass);
+            $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
             // Wrap matches in Survivor object
             return collect($results)->map(function($result) use($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
@@ -86,9 +86,9 @@ class ASTQueryBuilder
     public function traverseIntoProperty($property)
     {
         return $this->next(function($queryNode) use($property) {
-            if(!isset($queryNode->results->$property)) return new Killable;
+            if(!isset($queryNode->result->$property)) return new Killable;
             
-            $value = $queryNode->results->$property;
+            $value = $queryNode->result->$property;
             
             if(is_array($value)) {
                 return collect($value)->map(function($item) use($value, $queryNode) {
@@ -119,7 +119,7 @@ class ASTQueryBuilder
             
             if($queryNode instanceof Killable) return;
 
-            $subAST = [(clone $queryNode)->results];
+            $subAST = [(clone $queryNode)->result];
             
             $subQueryBuilder = new static($subAST);
             
@@ -157,7 +157,7 @@ class ASTQueryBuilder
 
             $result = $steps->reduce(function($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
-            }, $queryNode->results);
+            }, $queryNode->result);
 
             return $result == $expected ? $queryNode : new Killable;
         });
@@ -174,7 +174,7 @@ class ASTQueryBuilder
     {
         return $this->next(function($queryNode) use($callback) {
             $query = new static(
-                [(clone $queryNode)->results]
+                [(clone $queryNode)->result]
             );
             return $callback($query) ? $queryNode : new Killable;
         });
@@ -183,7 +183,7 @@ class ASTQueryBuilder
     public function whereChainingOn($name)
     {
         return $this->next(function($queryNode) use($name) {
-            $current = $queryNode->results;
+            $current = $queryNode->result;
             do {
                 $current = $current->var ?? false;
             } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
@@ -196,7 +196,7 @@ class ASTQueryBuilder
     {
         $flattened = $this->currentNodes()->map(function($queryNode) {
             $results = collect();
-            $current = $queryNode->results[0];
+            $current = $queryNode->result[0];
 
             do {
                 $results->push($current);
@@ -223,14 +223,14 @@ class ASTQueryBuilder
 
     public function recall()
     {
-        return collect(end($this->tree))->filter(fn($item) => $item->results)->map(function($item) {
+        return collect(end($this->tree))->filter(fn($item) => $item->result)->map(function($item) {
             return (object) $item->memory;
         });
     }
 
     public function get()
     {
-        return collect(end($this->tree))->pluck('results')->flatten();
+        return collect(end($this->tree))->pluck('result')->flatten();
     }
 
     public function first()
@@ -249,10 +249,10 @@ class ASTQueryBuilder
     {
         $this->currentNodes()->each(function($node) {
             
-            if(!isset($node->results->__object_hash)) return;
+            if(!isset($node->result->__object_hash)) return;
             
             $this->resultingAST = NodeRemover::remove(
-                $node->results->__object_hash,
+                $node->result->__object_hash,
                 $this->resultingAST
             );
         });
@@ -263,10 +263,10 @@ class ASTQueryBuilder
     public function replaceProperty($key, $value)
     {
         $this->currentNodes()->each(function($node) use($key, $value) {
-            if(!isset($node->results->__object_hash)) return;
+            if(!isset($node->result->__object_hash)) return;
 
             $this->resultingAST = NodePropertyReplacer::replace(
-                $node->results->__object_hash,
+                $node->result->__object_hash,
                 $key,
                 $value,
                 $this->resultingAST
@@ -284,11 +284,11 @@ class ASTQueryBuilder
     protected function replaceWithCallback($callback)
     {
         $this->currentNodes()->each(function($node) use($callback) {
-            if(!isset($node->results->__object_hash)) return;
+            if(!isset($node->result->__object_hash)) return;
 
             $this->resultingAST = NodeReplacer::replace(
-                $node->results->__object_hash,
-                $callback($node->results),
+                $node->result->__object_hash,
+                $callback($node->result),
                 $this->resultingAST
             );
         });
@@ -299,10 +299,10 @@ class ASTQueryBuilder
     protected function replaceWithNode($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
-            if(!isset($node->results->__object_hash)) return;
+            if(!isset($node->result->__object_hash)) return;
 
             $this->resultingAST = NodeReplacer::replace(
-                $node->results->__object_hash,
+                $node->result->__object_hash,
                 $newNode,
                 $this->resultingAST
             );
@@ -314,11 +314,11 @@ class ASTQueryBuilder
     public function insertStmt($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
-            if(!isset($node->results->stmts)) return;
-            if(!isset($node->results->__object_hash)) return;
+            if(!isset($node->result->stmts)) return;
+            if(!isset($node->result->__object_hash)) return;
 
             $this->resultingAST = StmtInserter::insertStmt(
-                $node->results->__object_hash,
+                $node->result->__object_hash,
                 $newNode,
                 $this->resultingAST
             );

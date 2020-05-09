@@ -8,11 +8,11 @@ class Survivor extends QueryNode {
 
     public $memory;
 
-    public $results;    
+    public $result;    
 
-    public function __construct($results)
+    public function __construct($result)
     {
-        $this->results = $results;
+        $this->result = $result;
     }
 
     public static function fromParent($parent)
@@ -25,7 +25,7 @@ class Survivor extends QueryNode {
 
     public function withResult($result)
     {
-        $this->results = $result;
+        $this->result = $result;
         return $this;
     }
 
