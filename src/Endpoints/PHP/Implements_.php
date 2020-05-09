@@ -3,8 +3,6 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Class_;
 
 class Implements_ extends EndpointProvider
 {
@@ -19,25 +17,33 @@ class Implements_ extends EndpointProvider
 
     protected function get()
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        return $class ? $class->implements : null;
+        return $this->file->astQuery()
+            ->class()
+            ->implements
+            ->get()
+            ->toArray();
     }
 
     protected function set($newImplements)
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        if($class) {
-            $class->implements = $newImplements;
-        }
-        return $this->file->continue();
+        return $this->file->astQuery()
+            ->class()
+            ->replaceProperty('implements', $newImplements)
+            ->commit()
+            ->end()
+            ->continue();
     }
     
     protected function add($newImplements)
     {
-        $class = (new NodeFinder)->findFirstInstanceOf($this->ast(), Class_::class);
-        if($class) {
-            $class->implements = array_merge($class->implements, $newImplements);
-        }
-        return $this->file->continue();
-    }    
+        return $this->file->astQuery()
+            ->class()
+            ->replace(function($class) use($newImplements) {
+                $class->implements = array_merge($class->implements, $newImplements);
+                return $class;
+            })
+            ->commit()
+            ->end()
+            ->continue();
+    }
 }
