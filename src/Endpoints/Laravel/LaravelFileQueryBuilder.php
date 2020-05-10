@@ -7,7 +7,6 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
-use Error;
 use UnexpectedValueException;
 use PHPFileManipulator\Traits\HasOperators;
 use ReflectionClass;
@@ -40,13 +39,7 @@ class LaravelFileQueryBuilder extends FileQueryBuilder
     public function serviceProviders()
     {
         return $this->instanceof('Illuminate\Support\ServiceProvider');
-    }    
-
-    // PLEASE TAYLOR MAKE MIGRATIONS NAMESPACED
-    // public function migrations()
-    // {
-    //     return $this->instanceof('Illuminate\Database\Migrations\Migration');
-    // }    
+    }  
 
     protected function instanceof($class)
     {
