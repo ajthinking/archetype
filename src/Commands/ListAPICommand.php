@@ -76,8 +76,6 @@ class ListAPICommand extends Command
             return collect($endpoints)->map(function($endpoint) use($endpoints, $provider) {
                 return [
                     $endpoint,
-                    'N/A',
-                    'N/A',
                     Str::replaceFirst('PHPFileManipulator\\Endpoints\\', '', $provider),
                 ];
             })->toArray();
@@ -85,7 +83,7 @@ class ListAPICommand extends Command
 
         $this->info(PHP_EOL . 'AVAILABLE ENDPOINTS A-Z');
         $this->table(
-            ['method', 'parameters', 'description', 'EndpointProvider'],
+            ['method', 'EndpointProvider'],
             $formattedAPI
         );
     }    
