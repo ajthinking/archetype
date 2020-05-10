@@ -210,17 +210,18 @@ php artisan file:api --provider=IO
 ```
 
 ### Errors
-> If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
-> To see *all* offending files run `php artisan file:errors`. To ignore files with problems, put them in `config/php-file-manipulator.php` -> `ignored_paths`.
+If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
+
+To see *all* offending files run `php artisan file:errors`. To ignore files with problems, put them in `config/php-file-manipulator.php` -> `ignored_paths`.
 
 ### Limitations / Missing features
 In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
 
-> Can't use group use syntax (`use Something\{X, Y};`)
+* Can't use group use syntax (`use Something\{X, Y};`)
 
-> Assumes one class per file
+* Assumes one class per file
 
-> Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
+* Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
 
 ## Contributing
 
