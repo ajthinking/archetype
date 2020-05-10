@@ -17,7 +17,7 @@ trait ExposesPublicMethodsAsEndpoints
     {
         return collect($this->ownPublicMethods())
             ->filter(function($method) {
-                return !collect($this->reserved_methods)->contains($method);
+                return !collect($this->reservedMethods)->contains($method);
             })->values();
     }
 

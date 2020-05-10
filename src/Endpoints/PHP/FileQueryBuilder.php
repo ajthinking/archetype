@@ -42,6 +42,7 @@ class FileQueryBuilder extends EndpointProvider
         "<" => "lessThan",
     ];    
 
+    /** this is kept probably because of some inheritance issue */
     protected function getHandlerMethod($signature, $args)
     {
         $reflection = new ReflectionClass(static::class);

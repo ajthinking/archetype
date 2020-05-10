@@ -17,13 +17,5 @@ trait DelegatesAPICalls
         if($handler) return (new $handler($this))->$method(...$args);
 
         throw new BadMethodCallException("Could not find a handler for method $method");
-    }
-
-    /**
-     * It should be able to list all endpoints...
-     */    
-    public function listAPI()
-    {
-        //
     }    
 }
