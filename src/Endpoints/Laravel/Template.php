@@ -7,9 +7,16 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class Template extends EndpointProvider
 {
-    public function getHandlerMethod($signature, $args)
+    protected function getHandlerMethod($signature, $args)
     {
         return $this->file->templates()->contains($signature) ? 'fromTemplate' : false;
+    }
+
+    public function getEndpoints()
+    {
+        return []; // HAVING THE TEMPLATES ON THE FILE BREAKS THE ABILITY TO RETRIEVE ENDPOINTS 'STATICALLY'
+        // CONSIDER MOVING THEM TO PHPTemplate and LaravelTemplate ENdpoints
+        //return $this->file->templates()->toArray();
     }
 
     public function __call($method, $args)
