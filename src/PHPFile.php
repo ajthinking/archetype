@@ -4,13 +4,15 @@ namespace PHPFileManipulator;
 
 use PHPFileManipulator\Traits\DelegatesAPICalls;
 use PHPFileManipulator\Traits\HasIO;
-use PHPFileManipulator\Traits\HasIntermediateDirectives;
+use PHPFileManipulator\Traits\HasDirectiveDefaults;
+use PHPFileManipulator\Traits\HasDirectiveHandlers;
 
 class PHPFile
 {
     use HasIO;
     use DelegatesAPICalls;
-    use HasIntermediateDirectives;
+    use HasDirectiveDefaults;
+    use HasDirectiveHandlers;
 
     protected $input;
 
@@ -24,7 +26,7 @@ class PHPFile
 
     protected $initialModificationHash;
 
-    protected $intermediateDirectives = [];
+    protected $directives = [];
 
     protected const endpointProviders = [
         // Utillities
