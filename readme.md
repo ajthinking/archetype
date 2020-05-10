@@ -18,7 +18,8 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
     + [Build your own templates](#build-your-own-templates)
     + [Querying the Abstract Syntax Tree](#querying-the-abstract-syntax-tree)
     + [LaravelFile available methods](#laravelfile-available-methods)    
-    + [Gotchas](#gotchas)
+    + [Errors](#errors)
+    + [Limitations / Missing features](#limitaions--missing-features)
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
     + [Roadmap](#roadmap)  
@@ -208,18 +209,21 @@ Use the `--provider` flag to only view methods from a specific `EndpointProvider
 php artisan file:api --provider=IO
 ```
 
-### Limitations / Missing features
-In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
-
-> Can't use group use syntax (`use Something\{X, Y};`)
-> Assumes one class per file
-> Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
-
 ### Errors
 > If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
 > To see *all* offending files run `php artisan file:errors`. To ignore files with problems, put them in `config/php-file-manipulator.php` -> `ignored_paths`.
 
+### Limitations / Missing features
+In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
+
+> :danger: Can't use group use syntax (`use Something\{X, Y};`)
+
+> :danger: Assumes one class per file
+
+> :danger: Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
+
 ## Contributing
+
 ### Development installation
 The test suite requires that you are inside laravel application
 ```bash

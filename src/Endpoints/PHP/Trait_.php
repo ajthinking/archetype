@@ -24,7 +24,7 @@ class Trait_ extends EndpointProvider
             })
             ->recall()
             ->pluck('formatted_traits')
-            ->first();            
+            ->first();
     }
 
     protected function set($value)
