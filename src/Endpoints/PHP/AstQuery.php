@@ -8,7 +8,7 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class AstQuery extends EndpointProvider
 {
-    public function getHandlerMethod($signature, $args)
+    protected function getHandlerMethod($signature, $args)
     {
         return $signature == 'astQuery' ? 'astQuery' : false;
     }

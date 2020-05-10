@@ -42,7 +42,7 @@ class FileQueryBuilder extends EndpointProvider
         "<" => "lessThan",
     ];    
 
-    public function getHandlerMethod($signature, $args)
+    protected function getHandlerMethod($signature, $args)
     {
         $reflection = new ReflectionClass(static::class);
         $methods = collect($reflection->getMethods(ReflectionMethod::IS_PUBLIC))->pluck('name');
