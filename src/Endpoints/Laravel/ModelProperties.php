@@ -8,7 +8,7 @@ class ModelProperties extends EndpointProvider
 {
     /** attribute => default type */
     protected $propertyMap = [
-        'casts'         => 'associativeArray',
+        'casts'         => 'array',
         'connection'    => 'string',
         'table'         => 'string',
         'dates'         => 'array',
