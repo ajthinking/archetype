@@ -216,11 +216,11 @@ php artisan file:api --provider=IO
 ### Limitations / Missing features
 In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
 
-> :danger: Can't use group use syntax (`use Something\{X, Y};`)
+> Can't use group use syntax (`use Something\{X, Y};`)
 
-> :danger: Assumes one class per file
+> Assumes one class per file
 
-> :danger: Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
+> Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
 
 ## Contributing
 
