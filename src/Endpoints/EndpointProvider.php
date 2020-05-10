@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use PHPFileManipulator\Traits\ExposesPublicMethodsAsEndpoints;
 use ReflectionClass;
 use ReflectionMethod;
+use PHPFileManipulator\Support\Types;
 
 abstract class EndpointProvider
 {
@@ -24,7 +25,28 @@ abstract class EndpointProvider
     public function __construct(PHPFile $file = null)
     {
         $this->file = $file;
+
+        // proxy directives
+        $this->intermediateDirectives = $this->file ? $this->file->directives() : [];
     }
+
+    public function directives($directives = null)
+    {
+        if(!$directives) return $this->intermediateDirectives;
+        
+        $this->intermediateDirectives = $directives;
+        
+        return $this;
+    }
+
+    public function directive($key, $value = Types::NO_VALUE)
+    {
+        if($value === Types::NO_VALUE) return $this->intermediateDirectives[$key] ?? null;
+        
+        $this->intermediateDirectives[$key] = $value;
+        
+        return $this;
+    }    
 
     public static function aliases()
     {
@@ -32,11 +54,6 @@ abstract class EndpointProvider
             Str::camel(class_basename(static::class))
         ];
     }
-    
-    protected function primaryName()
-    {
-        return collect($this->aliases())->first();
-    }    
 
     public function canHandle($signature, $args)
     {
