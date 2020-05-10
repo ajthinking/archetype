@@ -12,10 +12,9 @@ class LaravelFile extends PHPFile
 
         // Resources
         Endpoints\Laravel\ModelProperties::class,
-        Endpoints\Laravel\RelationshipMethod::class,
         Endpoints\Laravel\HasOne::class,
         Endpoints\Laravel\HasMany::class,
-        //Endpoints\Laravel\BelongsTo::class,
+        Endpoints\Laravel\BelongsTo::class,
         Endpoints\Laravel\BelongsToMany::class,
     ];
 
