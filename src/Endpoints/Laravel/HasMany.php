@@ -2,19 +2,24 @@
 
 namespace PHPFileManipulator\Endpoints\Laravel;
 
-use PHPFileManipulator\Endpoints\ResourceEndpointProvider;
+use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Support\Snippet;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
-class HasMany extends ResourceEndpointProvider
+class HasMany extends EndpointProvider
 {
-    public function set($targets)
+    public function hasMany($targets)
     {
         return $this->add($targets);
     }
 
-    public function add($targets)
+    protected function set($targets)
+    {
+        return $this->add($targets);
+    }
+
+    protected function add($targets)
     {
         $targets = Arr::wrap($targets);
 
