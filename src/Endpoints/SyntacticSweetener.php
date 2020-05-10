@@ -24,14 +24,21 @@ class SyntacticSweetener extends EndpointProvider
         'to',
     ];
 
-    public function getHandlerMethod($signature, $args)
-    {
-        return collect($this->words)->contains($signature) ? $signature : false;
-    }
-    
     public function __call($method, $args)
     {
         // Do nothing :)
         return $this->file;
+    }    
+
+    protected function getHandlerMethod($signature, $args)
+    {
+        return collect($this->words)->contains($signature) ? $signature : false;
     }
+
+    public function getEndpoints()
+    {
+        return $this->words;
+    }
+    
+
 }
