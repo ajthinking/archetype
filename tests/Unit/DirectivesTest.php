@@ -5,12 +5,12 @@ namespace PHPFileManipulator\Tests\Unit;
 use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
-use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
+use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
 use PHPFileManipulator\Endpoints\Laravel\LaravelFileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class IntermediateDirectivesTest extends FileTestCase
+class DirectivesTest extends FileTestCase
 {
     /** @test */
     public function it_will_remember_directives_when_chained()
