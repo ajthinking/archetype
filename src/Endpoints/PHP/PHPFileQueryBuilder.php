@@ -19,7 +19,7 @@ use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 
-class FileQueryBuilder extends EndpointProvider
+class PHPFileQueryBuilder extends EndpointProvider
 {
     use HasOperators;
 
@@ -37,6 +37,11 @@ class FileQueryBuilder extends EndpointProvider
     {
         parent::__construct($file);
         $this->result = collect();
+    }
+
+    public function query()
+    {
+        return $this;
     }
     
     public function all()

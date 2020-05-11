@@ -20,7 +20,7 @@ class PHPFile
 
     protected $contents;
 
-    protected $fileQueryBuilder = Endpoints\PHP\FileQueryBuilder::class;
+    protected $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
 
     protected $ast;
 
@@ -52,10 +52,4 @@ class PHPFile
             $this->fileQueryBuilder
         );
     }
-
-    public function templates() {
-        return collect(
-            //
-        );
-    } 
 }
