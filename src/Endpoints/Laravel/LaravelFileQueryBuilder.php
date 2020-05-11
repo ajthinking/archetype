@@ -17,9 +17,9 @@ use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 
-use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
+use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
 
-class LaravelFileQueryBuilder extends FileQueryBuilder
+class LaravelFileQueryBuilder extends PHPFileQueryBuilder
 {
     public function user()
     {

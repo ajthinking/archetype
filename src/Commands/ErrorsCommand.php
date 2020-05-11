@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PHPFileManipulator\Support\Exceptions\FileParseError;
 
-use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
+use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
 
 class ErrorsCommand extends Command
 {
@@ -43,7 +43,7 @@ class ErrorsCommand extends Command
      */
     public function handle()
     {
-        $queryBuilder = new FileQueryBuilder;
+        $queryBuilder = new PHPFileQueryBuilder;
             
         $this->errors = collect();
 
