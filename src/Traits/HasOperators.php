@@ -4,48 +4,68 @@ namespace PHPFileManipulator\Traits;
 
 trait HasOperators
 {
-    public function equals($candidate, $expected)
+    protected function operatorMethod($operator)
+    {
+        $operators = [
+            '='         => 'equals',
+            'equals'    => 'equals',
+            '!='        => 'notEquals',
+            'not'       => 'notEquals',
+            'contains'  => 'contains',
+            'has'       => 'contains',
+            'in'        => 'inOperator',
+            'like'      => 'like',
+            'matches'   => 'matches',
+            'count'     => 'count',
+            '>'         => 'greaterThan',
+            '<'         => 'lessThan',
+        ];
+        
+        return $operators[$operator] ?? null;
+    }
+
+    protected function equals($candidate, $expected)
     {
         return $candidate == $expected;
     }
 
-    public function notEquals($candidate, $forbidden)
+    protected function notEquals($candidate, $forbidden)
     {
         return $candidate != $forbidden;
     }    
 
-    public function contains($candidate, $needle)
+    protected function contains($candidate, $needle)
     {
         return collect($candidate)->contains($needle);
     }
 
     // Conflict with QueryBuilder::in($path) -> add Operator suffix
-    public function inOperator($candidate, $haystack)
+    protected function inOperator($candidate, $haystack)
     {
         return collect($haystack)->contains($candidate);
     }    
     
-    public function like($candidate, $like)
+    protected function like($candidate, $like)
     {
         return preg_match("/$like/i", $candidate);
     }
     
-    public function matches($candidate, $regex)
+    protected function matches($candidate, $regex)
     {
         return preg_match($regex, $candidate);
     }
     
-    public function greaterThan($candidate, $length)
+    protected function greaterThan($candidate, $length)
     {
         return $candidate > $length;
     }
     
-    public function lessThan($candidate, $length)
+    protected function lessThan($candidate, $length)
     {
         return $candidate < $length;
     }
     
-    public function count($candidate, $expected)
+    protected function count($candidate, $expected)
     {
         return collect($candidate)->count() == $expected;
     }    

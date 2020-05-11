@@ -23,24 +23,7 @@ class FileQueryBuilder extends EndpointProvider
 {
     use HasOperators;
 
-    const PHPSignature = '/\.php$/';
-    
-    const operators = [
-        // tested
-        "=" => "equals",
-        "equals" => "equals",
-        "!=" => "notEquals",
-        "not" => "notEquals",
-        "contains" => "contains",
-        "has" => "contains",
-        "in" => "inOperator",
-        "like" => "like",
-        "matches" => "matches",
-        "count" => "count",
-        // untested
-        ">" => "greaterThan",
-        "<" => "lessThan",
-    ];    
+    const PHPSignature = '/\.php$/';   
 
     /** this is kept probably because of some inheritance issue */
     protected function getHandlerMethod($signature, $args)
@@ -101,12 +84,14 @@ class FileQueryBuilder extends EndpointProvider
         // If its a resource where query
         $property = $arg1;
         $operator = $arg3 ? $arg2 : "=";
-        if(!collect($this::operators)->has($operator)) throw new InvalidArgumentException("Operator not supported");
         $value = $arg3 ? $arg3 : $arg2;
+
+        if(!$this->operatorMethod($operator)) throw new InvalidArgumentException("Operator not supported");
 
         // Dispatch to HasOperators trait method
         $this->result = $this->result->filter(function($file) use($property, $operator, $value) {
-            $operatorMethod = $this::operators[$operator];
+            $operatorMethod = $this->operatorMethod($operator);
+            
             return $this->$operatorMethod(
                 $file->$property(),
                 $value
