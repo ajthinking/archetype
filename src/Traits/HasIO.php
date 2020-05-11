@@ -56,7 +56,7 @@ trait HasIO
     }
     
     public function fromString($code)
-    {        
+    {
         $this->contents($code);
         $this->ast($this->parse());
         $this->initialModificationHash = $this->getModificationHash();
