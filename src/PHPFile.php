@@ -35,6 +35,7 @@ class PHPFile
         Endpoints\PHP\ReflectionProxy::class,
 
         // Resources
+        Endpoints\PHP\Template::class,
         Endpoints\PHP\Property::class,
         Endpoints\PHP\Method::class,
         Endpoints\PHP\MethodNames::class,
