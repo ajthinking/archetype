@@ -12,7 +12,7 @@ class RelationshipsTest extends FileTestCase
     /** @test */
     public function it_can_insert_belongs_to_methods()
     {
-        $file = LaravelFile::load('app/User.php');
+        $file = $this->user();
         $file->belongsTo(['App\Department']);
 
         $this->assertContains(
@@ -24,7 +24,7 @@ class RelationshipsTest extends FileTestCase
     /** @test */
     public function it_can_insert_belongs_to_many_methods()
     {
-        $file = LaravelFile::load('app/User.php');
+        $file = $this->user();
         $file->belongsToMany(['App\Visit']);
 
         $this->assertContains(
@@ -36,7 +36,7 @@ class RelationshipsTest extends FileTestCase
     /** @test */
     public function it_can_also_use_string_as_argument()
     {
-        $file = LaravelFile::load('app/User.php');
+        $file = $this->user();
         $file->belongsToMany('App\Visit');
 
         $this->assertContains(
@@ -48,7 +48,7 @@ class RelationshipsTest extends FileTestCase
     /** @test */
     public function it_can_insert_has_many_methods()
     {
-        $file = LaravelFile::load('app/User.php');
+        $file = $this->user();
         $file->hasMany(['App\Gun', 'App\Rose']);
 
         $this->assertContains(
@@ -65,7 +65,7 @@ class RelationshipsTest extends FileTestCase
     /** @test */
     public function it_can_insert_has_one_methods()
     {
-        $file = LaravelFile::load('app/User.php');
+        $file = $this->user();
         $file->hasOne(['App\Phone']);
 
         $this->assertContains(
@@ -77,7 +77,7 @@ class RelationshipsTest extends FileTestCase
     /** @test */
     public function it_will_overwrite_already_existing_method()
     {
-        $file = LaravelFile::load('app/User.php')
+        $file = $this->user()
             ->hasOne(['App\Phone'])
             ->hasOne(['App\Phone']);
 

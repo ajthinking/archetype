@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Tests\Unit;
 use PHPFileManipulator\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
-use PHPFileManipulator\Endpoints\PHP\FileQueryBuilder;
+use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -31,7 +31,7 @@ class LaravelFileQueryBuilderTest extends FileTestCase
     public function it_can_get_user()
     {        
         $this->assertTrue(
-            get_class(LaravelFile::user()) === 'PHPFileManipulator\LaravelFile'
+            get_class($this->user()) === 'PHPFileManipulator\LaravelFile'
         );
     }    
 }

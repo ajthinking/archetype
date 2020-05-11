@@ -16,7 +16,7 @@ class ASTQueryBuilderTest extends FileTestCase
     */
     public function it_can_be_instanciated_using_an_ast_object()
     {
-        $ast = LaravelFile::load('app/User.php')->ast();
+        $ast = $this->user()->ast();
         
         $ASTQB = new ASTQueryBuilder($ast);
 
@@ -29,7 +29,7 @@ class ASTQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_will_return_instance_of_itself_on_chain()
     {
-        $ast = LaravelFile::load('app/User.php')->ast();
+        $ast = $this->user()->ast();
 
         $result = (new ASTQueryBuilder($ast))
             ->class();
