@@ -37,7 +37,7 @@ class ClassMethodsTest extends FileTestCase
     public function it_can_add_class_methods()
     {
         $factory = new BuilderFactory;
-        $file = LaravelFile::load('app/User.php');
+        $file = PHPFile::load('app/User.php');
 
         $file = $file->add()->classMethod([
             $factory->method('insertedMethod')

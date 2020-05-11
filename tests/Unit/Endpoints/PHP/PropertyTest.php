@@ -77,7 +77,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_set_visibility_using_directives()
     {
-        $output = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')
+        $output = PHPFile::make()->class('Demo')
             ->private()->setProperty('parts')
             ->render();
 
@@ -90,9 +90,9 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_remove_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->remove()->property('fillable')
-            ->fillable();
+            ->property('fillable');
 
         $this->assertNull($output);
     }
@@ -100,9 +100,9 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_clear_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->clear()->property('fillable')
-            ->fillable();
+            ->property('fillable');
 
         $this->assertNull($output);
     }
@@ -110,7 +110,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_empty_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->empty()->property('fillable')
             ->property('fillable');
 
@@ -120,7 +120,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_empty_string_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->property('someString', 'hiya')
             ->empty()->property('someString')
             ->property('someString');
@@ -131,7 +131,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_empty_non_array_or_string_properties_into_a_default_of_null()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->property('someNonArrayOrStringType', 123)
             ->empty()->property('someNonArrayOrStringType')
             ->property('someNonArrayOrStringType');
@@ -142,7 +142,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_add_to_array_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->add()->property('fillable', 'cool')
             ->property('fillable');
 
@@ -152,7 +152,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_add_to_string_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->property('table', 'users')
             ->add()->property('table', '_backup')
             ->property('table');
@@ -163,7 +163,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_add_to_numeric_properties()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->property('allowed_errors', 1)
             ->add()->property('allowed_errors', 99)
             ->property('allowed_errors');
@@ -174,14 +174,14 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_will_default_to_add_to_an_array_if_null_or_non_value_property_is_encountered()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->setProperty('realms')
             ->add()->property('realms', 'Atlantis')
             ->property('realms');
 
         $this->assertEquals(['Atlantis'], $output);
 
-        $output = LaravelFile::load('app/User.php')
+        $output = PHPFile::load('app/User.php')
             ->setProperty('realms', null)
             ->add()->property('realms', 'Gondor')
             ->property('realms');
