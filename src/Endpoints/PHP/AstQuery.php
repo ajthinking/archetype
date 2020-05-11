@@ -8,11 +8,6 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 
 class AstQuery extends EndpointProvider
 {
-    protected function getHandlerMethod($signature, $args)
-    {
-        return $signature == 'astQuery' ? 'astQuery' : false;
-    }
-    
     public function astQuery() {
         return ASTQueryBuilder::fromFile($this->file);
     }
