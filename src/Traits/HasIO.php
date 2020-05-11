@@ -86,6 +86,7 @@ trait HasIO
 
     public function render()
     {
+        
         return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
     }
 
@@ -131,9 +132,9 @@ trait HasIO
         return $contents ? $this->contents = $contents : $this->contents;
     }
 
-    public function ast($ast = false)
+    public function ast($ast = null)
     {
-        if(!$ast) return $this->ast;
+        if($ast === null) return $this->ast;
         $this->ast = $ast;
         return $this;
     }
