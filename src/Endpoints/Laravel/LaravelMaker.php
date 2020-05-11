@@ -49,17 +49,8 @@ class LaravelMaker extends EndpointProvider
 
     public function __call($method, $args)
     {
-        //$handler = Class_::class;
         $handler = $this->publishableStubs[$method];
 
         return $handler::make(...$args)->in($this->file)->get();        
-    }
-
-    protected function stubs()
-    {
-        // HARDCODED STUB
-        // CONFIGURED STUB
-        // STUB IN /stubs
-        // STUB IN FRAMEWORK
     }
 }
