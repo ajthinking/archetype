@@ -3,20 +3,18 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
+use PHPFileManipulator\Endpoints\PHP\Template\Empty_;
+use PHPFileManipulator\Endpoints\PHP\Template\Class_;
 
 class Template extends EndpointProvider
 {
+    public function file($name)
+    {
+        return Empty_::make($name)->in($this->file)->get();
+    }
+
     public function class($name)
     {
-        $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
-        $outputDriver = new $outputDriverClass;
-        $outputDriver->filename = $name;
-        $outputDriver->extension = 'php';
-        $outputDriver->relativeDir = 'app';
-
-        $file = $this->file->fromString('<?php' . PHP_EOL . 'class C {}');
-        $file->outputDriver($outputDriver);
-
-        return $file;
-    }
+        return Class_::make($name)->in($this->file)->get();
+    }    
 }
