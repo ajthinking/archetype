@@ -53,32 +53,11 @@ abstract class FileTestCase extends BaseTestCase
             'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
             'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
         ]);
-    }     
-
-    protected function samplePath($name)
-    {
-        return "tests/samples/$name";
     }
 
-    protected function userFile()
+    protected function user()
     {
-        return PHPFile::load(
-            $this->samplePath('app/User.php')
-        );        
-    }
-
-    protected function laravelUserFile()
-    {
-        return LaravelFile::load(
-            $this->samplePath('app/User.php')
-        );        
-    }    
-    
-    protected function routesFile()
-    {
-        return LaravelFile::load(
-            $this->samplePath('routes/web.php')
-        );        
+        return LaravelFile::load('app/User.php');        
     }
 
     protected function rrmdir($dir)
