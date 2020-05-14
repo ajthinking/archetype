@@ -47,4 +47,9 @@ class LaravelTemplate extends PHPTemplate
         
         return $template;
     }
+
+    protected function populate()
+    {
+
+    }
 }
