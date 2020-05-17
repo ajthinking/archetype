@@ -8,9 +8,11 @@ class Model extends LaravelTemplate
 {
     protected $stub = 'model.stub';
 
-    public function __construct($name)
+    public function __construct($name, $options = [])
     {
         $this->filename = $name;
+        $this->namespace = 'Some\App\\Namespaze';
+        $this->class = $name;
     }
     
     protected function filename()
@@ -21,5 +23,13 @@ class Model extends LaravelTemplate
     protected function relativeDir()
     {
         return '';
+    }
+
+    protected function populate($contents)
+    {
+        $contents = str_replace(['DummyNamespace', '___namespace___'], $this->namespace, $contents);
+        $contents = str_replace(['{{ class }}', 'DummyClass', '___class___'], $this->class, $contents);
+
+        return $contents;
     }
 }
