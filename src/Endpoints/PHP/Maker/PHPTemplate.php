@@ -19,30 +19,52 @@ class PHPTemplate
 
     public function get()
     {
+        $file = $this->file->fromString(
+            $this->contents()
+        );
+
+        $file->outputDriver(
+            $this->outputDriver()
+        );
+
+        return $file;           
+    }
+
+    protected function outputDriver()
+    {
         $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
         $outputDriver = new $outputDriverClass;
         $outputDriver->filename = $this->filename();
         $outputDriver->extension = $this->extension();
         $outputDriver->relativeDir = $this->relativeDir();
 
-        $contents = $this->contents(
-            file_get_contents(static::stubPath)
-        );
-
-        $file = $this->file->fromString($contents);
-
-        $file->outputDriver($outputDriver);
-
-        return $file;           
-    }
+        return $outputDriver;
+    }    
 
     protected function extension()
     {
         return 'php';
     }
 
-    protected function contents($template)
+    protected function contents()
     {
-        return $template;
+        $contents = file_get_contents($this->stubPath());
+        $contents = $this->populate($contents);
+
+        return $contents;
     }
+
+    protected function populate($contents)
+    {
+        return $contents;
+    }
+
+    protected function stubPath()
+    {
+        // HAS PUBLISHED ?
+
+        // ELSE USE DEFAULT
+        $name = $this->stub;
+        return __DIR__ . '/stubs/' . $name;
+    }    
 }
