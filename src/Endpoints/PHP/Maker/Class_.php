@@ -6,7 +6,7 @@ use PHPFileManipulator\Endpoints\PHP\Maker\PHPTemplate;
 
 class Class_ extends PHPTemplate
 {
-    const stubPath = __DIR__ . '/stubs/class_.php.stub';
+    protected $stub = 'class_.php.stub';
 
     public function __construct($name)
     {
@@ -24,8 +24,8 @@ class Class_ extends PHPTemplate
         return 'app';
     }
 
-    protected function contents($template)
+    protected function populate($contents)
     {
-        return str_replace('___CLASS___', $this->className, $template);
+        return str_replace('___CLASS___', $this->className, $contents);
     }
 }

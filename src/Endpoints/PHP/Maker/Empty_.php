@@ -6,7 +6,7 @@ use PHPFileManipulator\Endpoints\PHP\Maker\PHPTemplate;
 
 class Empty_ extends PHPTemplate
 {
-    const stubPath = __DIR__ . '/stubs/empty_.php.stub';
+    protected $stub = 'empty_.php.stub';
 
     public function __construct($name)
     {
