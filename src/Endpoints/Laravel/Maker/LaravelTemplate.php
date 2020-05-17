@@ -31,6 +31,8 @@ class LaravelTemplate extends PHPTemplate
 
         $contents = $this->replaceLaravelStyleTemplating($contents);
         
+        $contents = $this->populate($contents);
+
         return $contents;
     }
 

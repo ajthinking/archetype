@@ -2,7 +2,9 @@
 
 namespace PHPFileManipulator\Support\URI;
 
-class PathURI
+use PHPFileManipulator\Support\URI\URI;
+
+class PathURI extends URI
 {
     
 }

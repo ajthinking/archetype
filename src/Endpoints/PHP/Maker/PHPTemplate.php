@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 
 class PHPTemplate
 {
+    protected $options = [];
+
     public static function make(...$args)
     {
         return new static(...$args);
