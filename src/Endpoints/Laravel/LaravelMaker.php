@@ -10,7 +10,9 @@ class LaravelMaker extends EndpointProvider
 {
     protected $publishableStubs = [
         // ASSUMED DEFAULTS: namespace + class
-        'console'               => Unimplemented::class, // command
+        'command'               => Maker\Command::class,
+        'model'                 => Maker\Model::class,
+
         'controller.api'        => Unimplemented::class, // rootNamespace
         'controller.invokable'  => Unimplemented::class, // rootNamespace
         'controller.model.api'  => Unimplemented::class, // rootNamespace, namespacedModel, model, modelVariable
@@ -27,7 +29,7 @@ class LaravelMaker extends EndpointProvider
         'migration'             => Unimplemented::class, // NO namespace
         'migration.update'      => Unimplemented::class, // NO namespace // table
         'model.pivot'           => Unimplemented::class,
-        'model'                 => Unimplemented::class,
+        
         'policy.plain'          => Unimplemented::class, // namespacedUserModel
         'policy'                => Unimplemented::class, // namespacedModel, namespacedUserModel, user, modelVariable, model
         'request'               => Unimplemented::class,
