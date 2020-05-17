@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default input, output and debug disks
@@ -43,10 +42,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | The Tags used by the File instances as defaults
+    | Laravel specific configuration
     |--------------------------------------------------------------------------
     */
-    'tags' => [
-        //
+    'laravel' => [
+        'root_namespace' => 'App',
+        'models_root' => 'App\Models',
     ],
 ];
