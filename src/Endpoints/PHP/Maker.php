@@ -5,12 +5,23 @@ namespace PHPFileManipulator\Endpoints\PHP;
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Endpoints\PHP\Maker\Empty_;
 use PHPFileManipulator\Endpoints\PHP\Maker\Class_;
+use PHPFileManipulator\Support\URI\UriFactory;
+use PHPFileManipulator\PHPFile;
+
 
 class Maker extends EndpointProvider
 {
     protected $filename;
     protected $extension = '.php';
     protected $relativeDir = '';
+
+    protected function setupNames($name)
+    {
+        $this->uri = UriFactory::make($name); // TODO
+        $this->filename = $name;
+        $this->namespace = 'Some\App\\Namespaze';
+        $this->class = $name;        
+    }
 
     public function file($name)
     {
