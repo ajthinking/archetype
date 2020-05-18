@@ -6,21 +6,20 @@ use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Endpoints\Laravel\Maker\Unimplemented;
 use PHPFileManipulator\Endpoints\PHP\Maker;
 use PHPFileManipulator\Support\URI\UriFactory;
+use Illuminate\Support\Str;
 
 class LaravelMaker extends Maker
 {
     public function command($name, $options = [])
     {
-        $this->uri = UriFactory::make($name); // TODO
-        $this->filename = $name;
-        $this->namespace = 'Some\App\\Namespaze';
-        $this->class = $name;
-        $command = $options['command'] ?? 'command:name';
+        $this->setupNames($name);
+        $this->command = $options['command'] ?? 'command:name';
 
-        $contents = file_get_contents($this->stubPath('console.stub'));
-        $contents = str_replace(['DummyNamespace', '___namespace___', '{{ namespace }}'], $this->namespace, $contents);
-        $contents = str_replace(['{{ class }}', 'DummyClass', '___class___'], $this->class, $contents);
-        $contents = str_replace(['{{ command }}', 'dummy:command', '___command___'], $command, $contents);                
+        $contents = Str::of($this->stub('console.stub'))
+            ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
+            ->replace(['{{ class }}', 'DummyClass'], $this->class)
+            ->replace(['{{ command }}', 'dummy:command'], $this->command)
+            ->__toString();
 
         return $this->file->fromString($contents)
             ->outputDriver($this->outputDriver());        
@@ -28,21 +27,71 @@ class LaravelMaker extends Maker
 
     public function model($name)
     {
-        $this->uri = UriFactory::make($name); // TODO
-        $this->filename = $name;
-        $this->namespace = 'Some\App\\Namespaze';
-        $this->class = $name;
+        $this->setupNames($name);
 
-        $contents = file_get_contents($this->stubPath('model.stub'));
-        $contents = str_replace(['DummyNamespace', '___namespace___', '{{ namespace }}'], $this->namespace, $contents);
-        $contents = str_replace(['{{ class }}', 'DummyClass', '___class___'], $this->class, $contents);                
-        dd($contents);
+        $contents = Str::of($this->stub('model.stub'))
+            ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
+            ->replace(['{{ class }}', 'DummyClass'], $this->class)
+            ->__toString();                
+
+        return $this->file->fromString($contents)
+            ->outputDriver($this->outputDriver());        
+    }
+
+    public function controller($name)
+    {
+        $this->setupNames($name);
+
+        $contents = Str::of($this->stub('controller.plain.stub'))
+            ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
+            ->replace(['{{ rootNamespace }}'], $this->namespace)
+            ->replace(['{{ class }}', 'DummyClass'], $this->class)
+            ->__toString();                
+
+        return $this->file->fromString($contents)
+            ->outputDriver($this->outputDriver());        
+    }
+
+    public function migration($name)
+    {
+        $this->setupNames($name);
+
+        $contents = Str::of($this->stub('migration.stub'))
+            ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
+            ->replace(['{{ rootNamespace }}'], $this->namespace)
+            ->replace(['{{ class }}', 'DummyClass'], $this->class)
+            ->__toString();                
+
+        return $this->file->fromString($contents)
+            ->outputDriver($this->outputDriver());        
+    }
+    
+    public function factory($name)
+    {
+        $this->setupNames($name);
+
+        $contents = Str::of($this->stub('factory.stub'))
+            ->replace(['{{ rootNamespace }}'], $this->namespace)
+            ->__toString();                
+
         return $this->file->fromString($contents)
             ->outputDriver($this->outputDriver());        
     }    
 
-    protected function stubPath($name)
+    protected function stub($name)
     {
-        return base_path('vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/' . $name);
+        $dir = collect([
+            'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs',
+            'vendor/laravel/framework/src/Illuminate/Routing/Console/stubs',
+            'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs',
+            'vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs',
+            'vendor/laravel/framework/src/Illuminate/Database/Console/Factories/stubs',
+        ])->first(function($dir) use($name) {
+            return is_file(base_path($dir . "/$name"));
+        });
+
+        return file_get_contents(
+            base_path($dir . "/$name")
+        );
     }    
 }
