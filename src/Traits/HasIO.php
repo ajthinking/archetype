@@ -2,24 +2,26 @@
 
 namespace PHPFileManipulator\Traits;
 
+use Config;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\PSR2PrettyPrinter;
-use PhpParser\ParserFactory;
-use Illuminate\Support\Facades\Storage;
-use PHPParser\Error as PHPParserError;
-use PHPFileManipulator\Support\Exceptions\FileParseError;
-use UnexpectedValueException;
-use Config;
-use PHPFileManipulator\Support\PHPFileStorage;
 use PHPFileManipulator\PHPFile;
+use PHPFileManipulator\Support\Exceptions\FileParseError;
 use PHPFileManipulator\Support\Path;
+use PHPFileManipulator\Support\PHPFileStorage;
+use PHPFileManipulator\Support\PSR2PrettyPrinter;
+use PHPParser\Error as PHPParserError;
+use PhpParser\ParserFactory;
+use UnexpectedValueException;
 
 trait HasIO
 {
     public function inputDriver($driver = null)
     {
-        if(!$driver) return $this->input;
+        if (! $driver) {
+            return $this->input;
+        }
 
         $this->input = $driver;
 
@@ -28,12 +30,14 @@ trait HasIO
 
     public function outputDriver($driver = null)
     {
-        if(!$driver) return $this->output;
+        if (! $driver) {
+            return $this->output;
+        }
 
         $this->output = $driver;
 
         return $this;
-    }    
+    }
 
     public function find($path)
     {
@@ -41,33 +45,35 @@ trait HasIO
     }
 
     public function load($path)
-    {   
+    {
         $content = $this->input->load($path);
 
         $this->output->setDefaultsFrom($this->input);
-        
+
         $this->contents($content);
-        
+
         $this->ast($this->parse());
 
         $this->initialModificationHash = $this->getModificationHash();
-        
+
         return $this;
     }
-    
+
     public function fromString($code)
     {
         $this->contents($code);
+
         $this->ast($this->parse());
+
         $this->initialModificationHash = $this->getModificationHash();
-        
-        return $this;        
+
+        return $this;
     }
 
     public function save($outputPath = false)
     {
         $this->output->save($outputPath, $this->render());
-    
+
         return $this;
     }
 
@@ -86,7 +92,6 @@ trait HasIO
 
     public function render()
     {
-        
         return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
     }
 
@@ -134,8 +139,12 @@ trait HasIO
 
     public function ast($ast = null)
     {
-        if($ast === null) return $this->ast;
+        if ($ast === null) {
+            return $this->ast;
+        }
+
         $this->ast = $ast;
+
         return $this;
     }
 }

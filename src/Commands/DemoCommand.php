@@ -53,15 +53,18 @@ class DemoCommand extends Command
         $this->table(['Demo', 'Description'], $demos);
 
         $method = $this->choice('Select a demo >>', $names , 0);
-        
-        if($method != 'stats') throw new NotImplementedYetException('Coming soon');
+
+        if ($method != 'stats') {
+            throw new NotImplementedYetException('Coming soon');
+        }
+
         $this->$method();
     }
 
     public function stats()
     {
         $files = PHPFile::in('')->get();
-        
+
         $fileCount = $files->count();
 
         $charCount = $files->sum(function($file) {
@@ -90,6 +93,7 @@ class DemoCommand extends Command
             ["$extendingController classes extending name 'Controller'"],
             ["$nonClassCount non class files"],
         ]);
+
         $this->presentPathToSource();
     }
 

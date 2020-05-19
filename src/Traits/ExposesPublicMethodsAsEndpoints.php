@@ -25,10 +25,12 @@ trait ExposesPublicMethodsAsEndpoints
     {
         $reflection = new ReflectionClass(static::class);
         $methods = [];
+
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
-            if ($method->class == $reflection->getName())
-                 $methods[] = $method->name;
-                 
+            if ($method->class == $reflection->getName()) {
+                $methods[] = $method->name;
+            }
+
         return $methods;
-    }    
+    }
 }

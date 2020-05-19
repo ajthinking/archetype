@@ -3,9 +3,9 @@
 namespace PHPFileManipulator\Commands;
 
 use Illuminate\Console\Command;
-use PHPFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PHPFile;
 use PHPFileManipulator\Support\Exceptions\FileParseError;
 
 use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
@@ -44,11 +44,11 @@ class ErrorsCommand extends Command
     public function handle()
     {
         $queryBuilder = new PHPFileQueryBuilder;
-            
+
         $this->errors = collect();
 
         $this->result = $queryBuilder->recursiveFileSearch('')->map(function($filePath) {
-            try {                
+            try {
                 app()->make('PHPFile')->load($filePath);
             } catch(FileParseError $error) {
                 $this->errors->push([
@@ -57,8 +57,10 @@ class ErrorsCommand extends Command
                 ]);
             }
         });
-        
-        if($this->errors->isEmpty()) return $this->info('No errors found!');
+
+        if ($this->errors->isEmpty()) {
+            return $this->info('No errors found!');
+        }
 
         $this->table(['path', 'message'], $this->errors->toArray());
     }

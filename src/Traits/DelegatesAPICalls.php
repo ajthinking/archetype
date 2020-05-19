@@ -14,8 +14,10 @@ trait DelegatesAPICalls
             return (new $endpoint($this))->canHandle($method, $args);
         })->first();
 
-        if($handler) return (new $handler($this))->$method(...$args);
+        if ($handler) {
+            return (new $handler($this))->$method(...$args);
+        }
 
         throw new BadMethodCallException("Could not find a handler for method $method");
-    }    
+    }
 }
