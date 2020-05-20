@@ -48,10 +48,10 @@ class PHPFileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            7, LaravelFile::in('app/Http/Middleware')->get()
-        );        
+            8, LaravelFile::in('app/Http/Middleware')->get()
+        );
     }
-    
+
     /** @test */
     public function it_can_filter_with_where_method()
     {
