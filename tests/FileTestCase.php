@@ -24,11 +24,6 @@ abstract class FileTestCase extends BaseTestCase
         $this->cleanupDirectories();
     }
 
-    /**
-     * Creates the application.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
     public function createApplication()
     {
         $app = require __DIR__.'/../../../../bootstrap/app.php';
@@ -53,11 +48,6 @@ abstract class FileTestCase extends BaseTestCase
             'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
             'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
         ]);
-    }
-
-    protected function user()
-    {
-        return LaravelFile::load('app/User.php');
     }
 
     protected function rrmdir($dir)

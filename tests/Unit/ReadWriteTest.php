@@ -60,7 +60,7 @@ class ReadWriteTest extends FileTestCase
     /** @test */
     public function it_can_also_load_laravel_specific_files()
     {
-        $file = $this->user();
+        $file = LaravelFile::load('app/User.php');
 
         $this->assertInstanceOf(
             \PHPFileManipulator\LaravelFile::class, $file
@@ -71,14 +71,14 @@ class ReadWriteTest extends FileTestCase
     public function it_can_write_to_default_location()
     {        
         // default save location is in .output when in development mode
-        $this->user()->save();        
+        LaravelFile::load('app/User.php')->save();        
         
         $this->assertTrue(
             is_file(__DIR__ . '/../.output/app/User.php')
         );
 
         // debug
-        $this->user()->debug();        
+        LaravelFile::load('app/User.php')->debug();        
 
         $this->assertTrue(
             is_file(__DIR__ . '/../.debug/app/User.php')

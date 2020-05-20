@@ -31,7 +31,7 @@ class LaravelFileQueryBuilderTest extends FileTestCase
     public function it_can_get_user()
     {        
         $this->assertTrue(
-            get_class($this->user()) === 'PHPFileManipulator\LaravelFile'
+            get_class(LaravelFile::load('app/User.php')) === 'PHPFileManipulator\LaravelFile'
         );
     }    
 }
