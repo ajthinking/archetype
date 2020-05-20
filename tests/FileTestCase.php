@@ -80,7 +80,6 @@ abstract class FileTestCase extends BaseTestCase
             foreach( $files as $file ){
                 $this->deleteDirectory( $file );
             }
-
             try {
                 dd($path);
                 rmdir( $path );
@@ -88,7 +87,6 @@ abstract class FileTestCase extends BaseTestCase
                 if(Str::endsWith($e->getMessage(), 'No such file or directory')) return;
                 throw $e;
             }
-
         } elseif (is_file($path)) {
             unlink( $path );
         }
