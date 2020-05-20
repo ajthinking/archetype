@@ -2,9 +2,9 @@
 
 namespace PHPFileManipulator\Commands\Demo;
 
-use ReflectionProperty;
-use PHPFileManipulator\Facades\LaravelFile;
 use Illuminate\Support\Str;
+use PHPFileManipulator\Facades\LaravelFile;
+use ReflectionProperty;
 
 class Project
 {
@@ -13,17 +13,15 @@ class Project
     public $models;
 
     public function __construct()
-    {   
+    {
         //$this->schema = $this->makeSchema();
     }
 
     public function missingRelationshipMethods()
     {
-        return collect([
-            1,2,3
-        ]);
+        return collect([1, 2, 3]);
     }
-    
+
     protected function makeSchema()
     {
         $this->models = LaravelFile::models()->get()->map(function($model) {
@@ -36,9 +34,7 @@ class Project
     {
         // Assume table name from class name
         $tableName = Str::snake(
-            Str::plural(
-                $model->className()
-            )
+            Str::plural($model->className())
         );
 
         // Assume only one migration

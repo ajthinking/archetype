@@ -3,9 +3,9 @@
 namespace PHPFileManipulator;
 
 use PHPFileManipulator\Traits\DelegatesAPICalls;
-use PHPFileManipulator\Traits\HasIO;
 use PHPFileManipulator\Traits\HasDirectiveDefaults;
 use PHPFileManipulator\Traits\HasDirectiveHandlers;
+use PHPFileManipulator\Traits\HasIO;
 
 class PHPFile
 {
@@ -29,7 +29,7 @@ class PHPFile
     protected $directives = [];
 
     protected const endpointProviders = [
-        // Utillities
+        // Utilities
         Endpoints\SyntacticSweetener::class,
         Endpoints\PHP\AstQuery::class,
         Endpoints\PHP\ReflectionProxy::class,

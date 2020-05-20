@@ -20,7 +20,7 @@ trait HasOperators
             '>'         => 'greaterThan',
             '<'         => 'lessThan',
         ];
-        
+
         return $operators[$operator] ?? null;
     }
 
@@ -32,7 +32,7 @@ trait HasOperators
     protected function notEquals($candidate, $forbidden)
     {
         return $candidate != $forbidden;
-    }    
+    }
 
     protected function contains($candidate, $needle)
     {
@@ -43,30 +43,30 @@ trait HasOperators
     protected function inOperator($candidate, $haystack)
     {
         return collect($haystack)->contains($candidate);
-    }    
-    
+    }
+
     protected function like($candidate, $like)
     {
         return preg_match("/$like/i", $candidate);
     }
-    
+
     protected function matches($candidate, $regex)
     {
         return preg_match($regex, $candidate);
     }
-    
+
     protected function greaterThan($candidate, $length)
     {
         return $candidate > $length;
     }
-    
+
     protected function lessThan($candidate, $length)
     {
         return $candidate < $length;
     }
-    
+
     protected function count($candidate, $expected)
     {
         return collect($candidate)->count() == $expected;
-    }    
+    }
 }

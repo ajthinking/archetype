@@ -10,8 +10,10 @@ trait HasDirectiveDefaults
     {
         $this->directive('add', true);
 
-        if($value !== Types::NO_VALUE) $this->directive('addValue', $value);
-        
+        if ($value !== Types::NO_VALUE) {
+            $this->directive('addValue', $value);
+        }
+
         return $this;
     }
 
@@ -23,23 +25,23 @@ trait HasDirectiveDefaults
     public function clear()
     {
         return $this->directive('clear', true);
-    }    
+    }
 
     public function empty()
     {
         return $this->directive('empty', true);
-    }    
+    }
 
     public function public()
     {
         return $this->directive('flag', 'public');
     }
-    
+
     public function protected()
     {
         return $this->directive('flag', 'protected');
     }
-    
+
     public function private()
     {
         return $this->directive('flag', 'private');
@@ -49,7 +51,7 @@ trait HasDirectiveDefaults
     {
         return $this->directive('flag', 'static');
     }
-    
+
     public function assumeType($value)
     {
         return $this->directive('assumeType', $value);

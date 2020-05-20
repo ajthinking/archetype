@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Tests; 
+namespace PHPFileManipulator\Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use PHPFile;
@@ -9,12 +9,12 @@ use Illuminate\Contracts\Console\Kernel;
 use ErrorException;
 use Illuminate\Support\Str;
 
-abstract class FileTestCase extends BaseTestCase  
+abstract class FileTestCase extends BaseTestCase
 {
     protected function setUp() : void
     {
         parent::setUp();
-        $this->cleanupDirectories();        
+        $this->cleanupDirectories();
         $this->bootDevelopmentRootDisks();
     }
 
@@ -22,7 +22,7 @@ abstract class FileTestCase extends BaseTestCase
     {
         parent::tearDown();
         $this->cleanupDirectories();
-    }    
+    }
 
     /**
      * Creates the application.
@@ -44,7 +44,7 @@ abstract class FileTestCase extends BaseTestCase
         $output = __DIR__ . '/.output';
 
         is_dir($debug) ? $this->rrmdir($debug) : null;
-        is_dir($output) ? $this->rrmdir($output) : null;        
+        is_dir($output) ? $this->rrmdir($output) : null;
     }
 
     protected function bootDevelopmentRootDisks()
@@ -57,7 +57,7 @@ abstract class FileTestCase extends BaseTestCase
 
     protected function user()
     {
-        return LaravelFile::load('app/User.php');        
+        return LaravelFile::load('app/User.php');
     }
 
     protected function rrmdir($dir)
@@ -82,22 +82,25 @@ abstract class FileTestCase extends BaseTestCase
 
     protected function deleteDirectory($path)
     {
-        if(is_dir($path)){
+        if (is_dir($path)) {
             //GLOB_MARK adds a slash to directories returned
             //GLOB_BRACE includes hidden files
             $files = glob( $path . '*', GLOB_MARK|GLOB_BRACE );
+
             foreach( $files as $file ){
-                $this->deleteDirectory( $file );      
+                $this->deleteDirectory( $file );
             }
-            try{
+
+            try {
                 dd($path);
                 rmdir( $path );
             } catch(ErrorException $e) {
                 if(Str::endsWith($e->getMessage(), 'No such file or directory')) return;
                 throw $e;
             }
-        } elseif(is_file($path)) {
-            unlink( $path );  
+
+        } elseif (is_file($path)) {
+            unlink( $path );
         }
-    }    
+    }
 }

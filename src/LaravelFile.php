@@ -4,10 +4,10 @@ namespace PHPFileManipulator;
 
 use PHPFileManipulator\PHPFile;
 
-class LaravelFile extends PHPFile 
+class LaravelFile extends PHPFile
 {
     protected const endpointProviders = [
-        // Utillities
+        // Utilities
         Endpoints\Laravel\LaravelMaker::class,
 
         // Resources

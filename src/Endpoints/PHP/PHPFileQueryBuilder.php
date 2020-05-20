@@ -52,14 +52,14 @@ class PHPFileQueryBuilder extends EndpointProvider
     public function in($directory)
     {
         $this->baseDir = $directory;
-                      
+
         $this->result = collect($this->recursiveFileSearch($this->baseDir))
             ->map(function($filePath) {
                 $type = class_basename($this->file);
                 return app()->make($type)->load($filePath);
             });
-        
-        return $this;    
+
+        return $this;
     }
 
     /**
@@ -91,12 +91,14 @@ class PHPFileQueryBuilder extends EndpointProvider
         $operator = $arg3 ? $arg2 : "=";
         $value = $arg3 ? $arg3 : $arg2;
 
-        if(!$this->operatorMethod($operator)) throw new InvalidArgumentException("Operator not supported");
+        if (!$this->operatorMethod($operator)) {
+            throw new InvalidArgumentException("Operator not supported");
+        }
 
         // Dispatch to HasOperators trait method
-        $this->result = $this->result->filter(function($file) use($property, $operator, $value) {
+        $this->result = $this->result->filter(function($file) use ($property, $operator, $value) {
             $operatorMethod = $this->operatorMethod($operator);
-            
+
             return $this->$operatorMethod(
                 $file->$property(),
                 $value
@@ -109,20 +111,20 @@ class PHPFileQueryBuilder extends EndpointProvider
     public function andWhere(...$args)
     {
         return $this->where(...$args);
-    }    
+    }
 
     public function get()
     {
         // Ensure we are in a directory context - default to base path
-        if(!isset($this->baseDir)) $this->in('');        
+        if(!isset($this->baseDir)) $this->in('');
         return $this->result;
     }
 
     public function first()
     {
         return $this->get()->first();
-    }    
-    
+    }
+
     public function recursiveFileSearch($directory) {
         $directory = base_path($directory);
 
@@ -130,5 +132,5 @@ class PHPFileQueryBuilder extends EndpointProvider
             ->matching(static::PHPSignature)
             ->ignore(config('php-file-manipulator.ignored_paths'))
             ->get();
-    }  
+    }
 }

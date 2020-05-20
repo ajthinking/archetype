@@ -12,7 +12,7 @@ trait AddsLaravelStringsToStrWithMacros {
                 class_basename($target)
             );
         });
-        
+
         Str::macro('hasManyMethodName', function ($target) {
             return static::camel(
                 static::plural(
@@ -33,7 +33,7 @@ trait AddsLaravelStringsToStrWithMacros {
                     class_basename($target)
                 )
             );
-        });        
+        });
 
         Str::macro('hasOneDocBlockName', function ($target) {
             return static::studly(
@@ -47,20 +47,20 @@ trait AddsLaravelStringsToStrWithMacros {
                     class_basename($target)
                 )
             );
-        });        
+        });
 
         Str::macro('belongsToDocBlockName', function ($target) {
             return static::studly(
                 class_basename($target)
             );
         });
-        
+
         Str::macro('belongsToManyDocBlockName', function ($target) {
             return static::studly(
                 static::plural(
                     class_basename($target)
                 )
             );
-        });        
-    }    
+        });
+    }
 }

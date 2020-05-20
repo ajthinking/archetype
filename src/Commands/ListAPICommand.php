@@ -3,9 +3,9 @@
 namespace PHPFileManipulator\Commands;
 
 use Illuminate\Console\Command;
-use PHPFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PHPFile;
 
 class ListAPICommand extends Command
 {
@@ -46,7 +46,7 @@ class ListAPICommand extends Command
     protected function showGrouped()
     {
         $formattedAPI = $this->api()->map(function($endpoints, $provider) {
-            return collect($endpoints)->map(function($endpoint) use($endpoints, $provider) {
+            return collect($endpoints)->map(function($endpoint) use ($endpoints, $provider) {
                 return [
                     $endpoint,
                     'N/A',
@@ -73,7 +73,7 @@ class ListAPICommand extends Command
         });
 
         $formattedAPI = $this->api()->map(function($endpoints, $provider) {
-            return collect($endpoints)->map(function($endpoint) use($endpoints, $provider) {
+            return collect($endpoints)->map(function($endpoint) use ($endpoints, $provider) {
                 return [
                     $endpoint,
                     Str::replaceFirst('PHPFileManipulator\\Endpoints\\', '', $provider),
@@ -82,22 +82,22 @@ class ListAPICommand extends Command
         })->flattenOneLevel()->sort();
 
         $this->info(PHP_EOL . 'AVAILABLE ENDPOINTS A-Z');
+
         $this->table(
             ['method', 'EndpointProvider'],
             $formattedAPI
         );
-    }    
+    }
 
     protected function api()
     {
         return (new \PHPFileManipulator\LaravelFile)
-        ->endpointProviders()->filter(function($provider){
-            return !$this->option('provider') || class_basename($provider) == $this->option('provider');
-        })
-        ->mapWithKeys(function ($provider, $key) {
-            return [
-                $provider => (new $provider())->getEndpoints()
-            ];
-        });
+            ->endpointProviders()->filter(function($provider) {
+                return ! $this->option('provider') || class_basename($provider) == $this->option('provider');
+            })->mapWithKeys(function ($provider, $key) {
+                return [
+                    $provider => (new $provider())->getEndpoints()
+                ];
+            });
     }
 }
