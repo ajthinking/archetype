@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Endpoints\Laravel;
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Endpoints\Laravel\Maker\Unimplemented;
 use PHPFileManipulator\Endpoints\PHP\Maker;
-use PHPFileManipulator\Support\URI\UriFactory;
+use PHPFileManipulator\Support\URI\URIFactory;
 use Illuminate\Support\Str;
 
 class LaravelMaker extends Maker

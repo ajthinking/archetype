@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\URI\UriFactory;
+use PHPFileManipulator\Support\URI\URIFactory;
 use PHPFileManipulator\PHPFile;
 use Illuminate\Support\Str;
 
@@ -15,7 +15,7 @@ class Maker extends EndpointProvider
 
     protected function setupNames($name)
     {
-        $this->uri = UriFactory::make($name);
+        $this->uri = URIFactory::make($name);
         $this->filename = $name;
         $this->namespace = 'Some\App\\Namespaze';
         $this->class = $name;        
