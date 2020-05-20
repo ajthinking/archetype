@@ -3,11 +3,9 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Endpoints\PHP\Maker\Empty_;
-use PHPFileManipulator\Endpoints\PHP\Maker\Class_;
 use PHPFileManipulator\Support\URI\UriFactory;
 use PHPFileManipulator\PHPFile;
-
+use Illuminate\Support\Str;
 
 class Maker extends EndpointProvider
 {
@@ -17,20 +15,31 @@ class Maker extends EndpointProvider
 
     protected function setupNames($name)
     {
-        $this->uri = UriFactory::make($name); // TODO
+        $this->uri = UriFactory::make($name);
         $this->filename = $name;
         $this->namespace = 'Some\App\\Namespaze';
         $this->class = $name;        
     }
 
-    public function file($name)
+    public function file($name, $options = [])
     {
-        return Empty_::make($name)->in($this->file)->get();
+        $this->setupNames($name);
+
+        return $this->file->fromString($this->stub('empty.php.stub'))
+            ->outputDriver($this->outputDriver());        
     }
 
-    public function class($name)
+    public function class($name, $options = [])
     {
-        return Class_::make($name)->in($this->file)->get();
+        $this->setupNames($name);
+
+        $contents = Str::of($this->stub('class.php.stub'))
+            ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
+            ->replace(['{{ class }}', 'DummyClass'], $this->class)
+            ->__toString();
+
+        return $this->file->fromString($contents)
+            ->outputDriver($this->outputDriver());        
     }
 
     protected function outputDriver()
@@ -53,9 +62,16 @@ class Maker extends EndpointProvider
     {
         return $this->extension;        
     }
-    
+
     protected function relativeDir()
     {
         return $this->relativeDir;        
-    }    
+    }
+
+    protected function stub($name)
+    {
+        return file_get_contents(
+            __DIR__ . "/Maker/stubs/$name"
+        );
+    }
 }
