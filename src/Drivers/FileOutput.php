@@ -31,17 +31,6 @@ class FileOutput implements OutputInterface
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
 
-        // dd(
-        //     $this->root['root'],
-        //     $this->relativeDir,
-        //     $this->absoluteDir(),
-        //     $this->filename,
-        //     $this->extension,
-        //     $this->absolutePath()
-        // ); 
-
-        //file_put_contents($this->absolutePath(), $code);
-
         $this->storage->put(
             $this->absolutePath(),
             $code
