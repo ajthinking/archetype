@@ -42,11 +42,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laravel specific configuration
+    | Project file structure
     |--------------------------------------------------------------------------
     */
-    'laravel' => [
-        'root_namespace' => 'App',
-        'models_root' => 'App\Models',
+    'locations' => [
+        // Application root/default namespace
+        'app_path' => 'app',
+        'app_namespace' => 'App',
+        
+        // PHP
+        'file_root' => '',
+        'class_root' => 'app',
+
+        // Laravel
+        'commands_root' => 'app/HTTP/Controllers',
+        'controllers_root' => 'app/HTTP/Controllers',
+        'factories_root' => 'database/factories',
+        'migrations_root' => 'database/migrations',
+        'models_root' => 'app/Models',
     ],
 ];
