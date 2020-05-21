@@ -52,6 +52,8 @@ class FileOutput implements OutputInterface
         $this->filename = $inputDriver->filename;
         $this->extension = $inputDriver->extension;
         $this->relativeDir = $inputDriver->relativeDir;
+
+        return $this;
     }
 
     protected function ensureDefaultRootExists()
