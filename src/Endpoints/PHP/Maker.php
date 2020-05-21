@@ -13,12 +13,18 @@ class Maker extends EndpointProvider
     protected $extension = '.php';
     protected $relativeDir = '';
 
-    protected function setupNames($name)
+    protected function setupNames($name, $location = 'file_root')
     {
-        $this->uri = URIFactory::make($name);
+        $path = config('php-file-manipulator.locations.' . $location) . DIRECTORY_SEPARATOR . $name;
+        $path = Str::of($path)->ltrim('/')->__toString();
+        
+        $this->outputDriver = $this->outputDriver(
+            $this->emulatedInputDriver($path)
+        );
+
         $this->filename = $name;
         $this->namespace = 'Some\App\\Namespaze';
-        $this->class = $name;        
+        $this->class = $name;
     }
 
     public function file($name, $options = [])
@@ -26,12 +32,12 @@ class Maker extends EndpointProvider
         $this->setupNames($name);
 
         return $this->file->fromString($this->stub('empty.php.stub'))
-            ->outputDriver($this->outputDriver());        
+            ->outputDriver($this->outputDriver);        
     }
 
     public function class($name, $options = [])
     {
-        $this->setupNames($name);
+        $this->setupNames($name, 'class_root');
 
         $contents = Str::of($this->stub('class.php.stub'))
             ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
@@ -39,18 +45,14 @@ class Maker extends EndpointProvider
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());        
+            ->outputDriver($this->outputDriver);        
     }
 
-    protected function outputDriver()
+    protected function outputDriver($inputDriver)
     {
         $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
-        $outputDriver = new $outputDriverClass;
-        $outputDriver->filename = $this->filename();
-        $outputDriver->extension = $this->extension();
-        $outputDriver->relativeDir = $this->relativeDir();
-
-        return $outputDriver;
+        $this->outputDriver = new $outputDriverClass;        
+        return $this->outputDriver->setDefaultsFrom($inputDriver);
     }
 
     protected function filename()
@@ -73,5 +75,12 @@ class Maker extends EndpointProvider
         return file_get_contents(
             __DIR__ . "/Maker/stubs/$name"
         );
+    }
+
+    protected function emulatedInputDriver($path)
+    {
+        $inputDriverClass = config('php-file-manipulator.input', \PHPFileManipulator\Drivers\FileInput::class);
+        $inputDriver = new $inputDriverClass;
+        return $inputDriver->readPath($path);
     }
 }
