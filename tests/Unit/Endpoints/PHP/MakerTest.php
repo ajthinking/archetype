@@ -16,7 +16,8 @@ class MakerTest extends FileTestCase
     {
         $output = PHPFile::make()->file('script.php')->outputDriver();
         $this->assertEquals('', $output->relativeDir);
-        $this->assertEquals('script.php', $output->filename);
+        $this->assertEquals('script', $output->filename);
+        $this->assertEquals('php', $output->extension);
     }
 
     /** @test */
@@ -25,6 +26,7 @@ class MakerTest extends FileTestCase
         $this->markTestIncomplete();
         $output = PHPFile::make()->file('app/HTTP/script.php')->outputDriver();
         $this->assertEquals('app/HTTP', $output->relativeDir);
-        $this->assertEquals('script.php', $output->filename);
+        $this->assertEquals('script', $output->filename);
+        $this->assertEquals('php', $output->extension);
     }  
 }
