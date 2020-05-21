@@ -18,6 +18,14 @@ class FileInput implements InputInterface
 
     public $root;
 
+    public function readPath($path = null)
+    {
+        $this->ensureDefaultRootExists();
+        $this->extractPathProperties($path);
+        
+        return $this;
+    }
+
     public function load($path = null)
     {
         $this->ensureDefaultRootExists();
@@ -50,13 +58,14 @@ class FileInput implements InputInterface
         $this->extension = $matches[1] ?? null;
         
         $pathIsAbsolute = Str::startsWith($path, '/');
-
+        
         if($pathIsAbsolute) {
+            
             $this->absoluteDir = dirname($path);
         } else {
             $this->absoluteDir = dirname($this->root['root'] . "/" . $path);
         }
 
-        $this->relativeDir = Str::replaceFirst($this->root['root'] . '/', '', $this->absoluteDir);
+        $this->relativeDir = Str::replaceFirst($this->root['root'] /*. '/'*/, '', $this->absoluteDir);
     }
 }
