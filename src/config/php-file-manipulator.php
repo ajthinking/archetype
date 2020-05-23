@@ -46,6 +46,10 @@ return [
     |--------------------------------------------------------------------------
     */
     'locations' => [
+        'namespace_map' => [
+            'app' => 'App',
+        ],
+                
         // Application root/default namespace
         'app_path' => 'app',
         'app_namespace' => 'App',
