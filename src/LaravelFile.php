@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator;
+namespace Archetype;
 
-use PHPFileManipulator\PHPFile;
+use Archetype\PHPFile;
 
 class LaravelFile extends PHPFile
 {

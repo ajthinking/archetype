@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit\Endpoints\PHP;
+namespace Archetype\Tests\Unit\Endpoints\PHP;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
@@ -15,12 +15,12 @@ class TemplateTest extends FileTestCase
     public function it_can_make_files_with_basic_php_templates()
     {
         // $this->assertInstanceOf(
-        //     \PHPFileManipulator\PHPFile::class,
+        //     \Archetype\PHPFile::class,
         //     PHPFile::make()->file('cool.php')
         // );
 
         $this->assertInstanceOf(
-            \PHPFileManipulator\PHPFile::class,
+            \Archetype\PHPFile::class,
             PHPFile::make()->class('CoolClass')
         );
     }

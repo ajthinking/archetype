@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Commands\Demo;
+namespace Archetype\Commands\Demo;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Facades\LaravelFile;
+use Archetype\Facades\LaravelFile;
 use ReflectionProperty;
 
 class Project

@@ -1,5 +1,5 @@
 {
-    "name": "ajthinking/php-file-manipulator",
+    "name": "ajthinking/archetype",
     "type": "package",
     "description": "Programatically edit PHP and Laravel files.",
     "keywords": [
@@ -31,18 +31,18 @@
         "laravel": {
             "dont-discover": [],
             "providers": [
-                "PHPFileManipulator\\ServiceProvider"
+                "Archetype\\ServiceProvider"
             ],
             "aliases": {
-                "PHPFile": "PHPFileManipulator\\Facades\\PHPFile",
-                "LaravelFile": "PHPFileManipulator\\Facades\\LaravelFile"
+                "PHPFile": "Archetype\\Facades\\PHPFile",
+                "LaravelFile": "Archetype\\Facades\\LaravelFile"
             }            
         }
     },
     "autoload": {
         "psr-4": {
-            "PHPFileManipulator\\": "src/",
-            "PHPFileManipulator\\Tests\\": "tests/"
+            "Archetype\\": "src/",
+            "Archetype\\Tests\\": "tests/"
         }
     },
     "autoload-dev": {

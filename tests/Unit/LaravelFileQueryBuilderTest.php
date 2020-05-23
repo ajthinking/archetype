@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
-use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
+use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -31,7 +31,7 @@ class LaravelFileQueryBuilderTest extends FileTestCase
     public function it_can_get_user()
     {        
         $this->assertTrue(
-            get_class(LaravelFile::load('app/User.php')) === 'PHPFileManipulator\LaravelFile'
+            get_class(LaravelFile::load('app/User.php')) === 'Archetype\LaravelFile'
         );
     }    
 }

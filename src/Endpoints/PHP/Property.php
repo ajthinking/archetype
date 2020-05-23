@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
 use PhpParser\BuilderFactory;
-use PHPFileManipulator\Support\Types;
+use Archetype\Support\Types;
 use Illuminate\Support\Arr;
 use Exception;
 

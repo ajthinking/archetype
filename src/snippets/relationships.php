@@ -3,8 +3,8 @@
 /**
  * Setup any FAKE names we need
  */
-use PHPFileManipulator\Support\FakeName; 
-use PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
+use Archetype\Support\FakeName; 
+use Archetype\Support\FakeName as ___TARGET_CLASS___;
 
 /**
  * This is just a placeholder class where we can add our snippets

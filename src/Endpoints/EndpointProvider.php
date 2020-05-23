@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints;
+namespace Archetype\Endpoints;
 
-use PHPFileManipulator\PHPFile;
+use Archetype\PHPFile;
 use Illuminate\Support\Str;
-use PHPFileManipulator\Traits\ExposesPublicMethodsAsEndpoints;
-use PHPFileManipulator\Traits\HasDirectiveHandlers;
+use Archetype\Traits\ExposesPublicMethodsAsEndpoints;
+use Archetype\Traits\HasDirectiveHandlers;
 use ReflectionClass;
 use ReflectionMethod;
-use PHPFileManipulator\Support\Types;
+use Archetype\Support\Types;
 
 abstract class EndpointProvider
 {

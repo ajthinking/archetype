@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Commands\Demo;
+namespace Archetype\Commands\Demo;
 
-use PHPFileManipulator\LaravelFile;
+use Archetype\LaravelFile;
 
 class CustomizedLaravelFile extends LaravelFile
 {

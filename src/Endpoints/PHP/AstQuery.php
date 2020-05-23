@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\AST\ASTQueryBuilder;
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Support\AST\ASTQueryBuilder;
+use Archetype\Endpoints\EndpointProvider;
 
 class AstQuery extends EndpointProvider
 {

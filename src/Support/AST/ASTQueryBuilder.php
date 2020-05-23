@@ -1,19 +1,19 @@
 <?php
 
-namespace PHPFileManipulator\Support\AST;
+namespace Archetype\Support\AST;
 
 use InvalidArgumentException;
 use LaravelFile;
 use PhpParser\NodeFinder;
-use PHPFileManipulator\Support\AST\ShallowNodeFinder;
-use PHPFileManipulator\Traits\HasOperators;
-use PHPFileManipulator\Traits\PHPParserClassMap;
-use PHPFileManipulator\Support\AST\Killable;
-use PHPFileManipulator\Support\AST\Visitors\NodeReplacer;
-use PHPFileManipulator\Support\AST\Visitors\NodeRemover;
-use PHPFileManipulator\Support\AST\Visitors\HashInserter;
-use PHPFileManipulator\Support\AST\Visitors\StmtInserter;
-use PHPFileManipulator\Support\AST\Visitors\NodePropertyReplacer;
+use Archetype\Support\AST\ShallowNodeFinder;
+use Archetype\Traits\HasOperators;
+use Archetype\Traits\PHPParserClassMap;
+use Archetype\Support\AST\Killable;
+use Archetype\Support\AST\Visitors\NodeReplacer;
+use Archetype\Support\AST\Visitors\NodeRemover;
+use Archetype\Support\AST\Visitors\HashInserter;
+use Archetype\Support\AST\Visitors\StmtInserter;
+use Archetype\Support\AST\Visitors\NodePropertyReplacer;
 use PhpParser\Node\Stmt\Use_;
 use Exception;
 use PhpParser\ConstExprEvaluator;

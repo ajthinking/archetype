@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel;
+namespace Archetype\Endpoints\Laravel;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\Snippet;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\Snippet;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 

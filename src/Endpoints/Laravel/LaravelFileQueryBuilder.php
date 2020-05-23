@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel;
+namespace Archetype\Endpoints\Laravel;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\PSR2PrettyPrinter;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use UnexpectedValueException;
-use PHPFileManipulator\Traits\HasOperators;
+use Archetype\Traits\HasOperators;
 use ReflectionClass;
 use ReflectionMethod;
 use RecursiveDirectoryIterator;
@@ -17,7 +17,7 @@ use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
 
-use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
+use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
 class LaravelFileQueryBuilder extends PHPFileQueryBuilder
 {

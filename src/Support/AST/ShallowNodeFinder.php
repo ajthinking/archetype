@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support\AST;
+namespace Archetype\Support\AST;
 
 use PhpParser\NodeFinder;
 

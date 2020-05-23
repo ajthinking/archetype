@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel\Maker;
+namespace Archetype\Endpoints\Laravel\Maker;
 
-use PHPFileManipulator\Endpoints\Laravel\Maker\LaravelTemplate;
+use Archetype\Endpoints\Laravel\Maker\LaravelTemplate;
 
 class Unimplemented extends LaravelTemplate
 {

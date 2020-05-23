@@ -1,11 +1,11 @@
 name: tests
 # Since this package must be tested inside a Laravel application this workflow does the following:
 # Create a fresh Laravel host app
-# Checkout package into host/packages/Ajthinking/PHPFileManipulator
+# Checkout package into host/packages/Ajthinking/Archetype
 # Add the package in host composer.json repositories section
 # Require the package using @dev
 # Publishing config
-# Running tests: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
+# Running tests: vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests
 
 on: [push, pull_request]
 
@@ -19,20 +19,20 @@ jobs:
     - name: Checkout the package
       uses: actions/checkout@v2
       with:
-        path: host/packages/Ajthinking/PHPFileManipulator
+        path: host/packages/Ajthinking/Archetype
 
     - name: Add composer.json repository
       working-directory: ./host      
-      run: composer config repositories.php-file-manipulator path "/home/runner/work/php-file-manipulator/php-file-manipulator/host/packages/Ajthinking/PHPFileManipulator"
+      run: composer config repositories.archetype path "/home/runner/work/archetype/archetype/host/packages/Ajthinking/Archetype"
 
     - name: Require the package
       working-directory: ./host
-      run: composer require ajthinking/php-file-manipulator @dev
+      run: composer require ajthinking/archetype @dev
 
     - name: Publish things
       working-directory: ./host
-      run: php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+      run: php artisan vendor:publish --provider="Archetype\ServiceProvider"
 
     - name: Run tests
       working-directory: ./host      
-      run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
+      run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests

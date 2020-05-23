@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Support\AST;
+namespace Archetype\Support\AST;
 
-use PHPFileManipulator\Support\AST\QueryNode;
+use Archetype\Support\AST\QueryNode;
 
 class Killable extends QueryNode {
     public $result = [];

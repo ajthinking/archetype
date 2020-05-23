@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use UnexpectedValueException;
@@ -28,7 +28,7 @@ class TemplateTest extends FileTestCase
             
             $this->assertTrue(
                 // All template calls should return a LaravelFile
-                get_class($file) === 'PHPFileManipulator\LaravelFile'
+                get_class($file) === 'Archetype\LaravelFile'
             );
 
             $this->assertTrue(

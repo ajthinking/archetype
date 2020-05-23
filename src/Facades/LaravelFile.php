@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Facades;
+namespace Archetype\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
-use PHPFileManipulator\LaravelFile;
+use Archetype\Tests\FileTestCase;
+use Archetype\LaravelFile;
 
 class DuplicateEndpointTest extends FileTestCase
 {

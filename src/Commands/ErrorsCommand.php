@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPFileManipulator\Commands;
+namespace Archetype\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PHPFile;
-use PHPFileManipulator\Support\Exceptions\FileParseError;
+use Archetype\Support\Exceptions\FileParseError;
 
-use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
+use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
 class ErrorsCommand extends Command
 {

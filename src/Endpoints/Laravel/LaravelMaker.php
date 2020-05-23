@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel;
+namespace Archetype\Endpoints\Laravel;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Endpoints\Laravel\Maker\Unimplemented;
-use PHPFileManipulator\Endpoints\PHP\Maker;
-use PHPFileManipulator\Support\URI;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Endpoints\Laravel\Maker\Unimplemented;
+use Archetype\Endpoints\PHP\Maker;
+use Archetype\Support\URI;
 use Illuminate\Support\Str;
 
 class LaravelMaker extends Maker

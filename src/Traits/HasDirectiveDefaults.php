@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Traits;
+namespace Archetype\Traits;
 
-use PHPFileManipulator\Support\Types;
+use Archetype\Support\Types;
 
 trait HasDirectiveDefaults
 {

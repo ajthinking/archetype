@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Drivers;
+namespace Archetype\Drivers;
 
-use PHPFileManipulator\Drivers\OutputInterface;
+use Archetype\Drivers\OutputInterface;
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\PHPFileStorage;
+use Archetype\Support\PHPFileStorage;
 
 class FileOutput implements OutputInterface
 {
@@ -58,7 +58,7 @@ class FileOutput implements OutputInterface
 
     protected function ensureDefaultRootExists()
     {
-        $this->root = $this->root ?? config('php-file-manipulator')['roots']['output'];
+        $this->root = $this->root ?? config('archetype')['roots']['output'];
     }
 
     protected function extractPathProperties($path)

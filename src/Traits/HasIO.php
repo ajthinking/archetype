@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPFileManipulator\Traits;
+namespace Archetype\Traits;
 
 use Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\PHPFile;
-use PHPFileManipulator\Support\Exceptions\FileParseError;
-use PHPFileManipulator\Support\Path;
-use PHPFileManipulator\Support\PHPFileStorage;
-use PHPFileManipulator\Support\PSR2PrettyPrinter;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\PHPFile;
+use Archetype\Support\Exceptions\FileParseError;
+use Archetype\Support\Path;
+use Archetype\Support\PHPFileStorage;
+use Archetype\Support\PSR2PrettyPrinter;
 use PHPParser\Error as PHPParserError;
 use PhpParser\ParserFactory;
 use UnexpectedValueException;
@@ -80,7 +80,7 @@ trait HasIO
     public function debug()
     {
         $this->output->storage->roots['output'] = $this->output->storage->roots['debug'];
-        $this->output->root = config('php-file-manipulator.roots')['debug'];
+        $this->output->root = config('archetype.roots')['debug'];
 
         return $this->save();
     }

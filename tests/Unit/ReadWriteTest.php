@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 
 use LaravelFile;
 use PHPFile;
@@ -29,7 +29,7 @@ class ReadWriteTest extends FileTestCase
         $file = PHPFile::load('public/index.php');
 
         $this->assertTrue(
-            get_class($file) === 'PHPFileManipulator\PHPFile'
+            get_class($file) === 'Archetype\PHPFile'
         );
     }
 
@@ -37,11 +37,11 @@ class ReadWriteTest extends FileTestCase
     public function it_can_load_files_with_absolute_path()
     {
         $file = PHPFile::load(
-                base_path('vendor/ajthinking/php-file-manipulator/src/snippets/relationships.php')
+                base_path('vendor/ajthinking/archetype/src/snippets/relationships.php')
         );
 
         $this->assertTrue(
-            get_class($file) === 'PHPFileManipulator\PHPFile'
+            get_class($file) === 'Archetype\PHPFile'
         );
     }
 
@@ -49,11 +49,11 @@ class ReadWriteTest extends FileTestCase
     public function it_will_accept_forbidden_directories_when_explicitly_passed()
     {
         $file = PHPFile::in(
-            'vendor/ajthinking/php-file-manipulator/src/snippets'
+            'vendor/ajthinking/archetype/src/snippets'
         )->get()->first();
 
         $this->assertTrue(
-            get_class($file) === 'PHPFileManipulator\PHPFile'
+            get_class($file) === 'Archetype\PHPFile'
         );
     }    
 
@@ -63,7 +63,7 @@ class ReadWriteTest extends FileTestCase
         $file = LaravelFile::load('app/User.php');
 
         $this->assertInstanceOf(
-            \PHPFileManipulator\LaravelFile::class, $file
+            \Archetype\LaravelFile::class, $file
         );
     } 
 

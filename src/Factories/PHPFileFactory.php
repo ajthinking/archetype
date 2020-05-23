@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Factories;
+namespace Archetype\Factories;
 
-use PHPFileManipulator\PHPFile;
+use Archetype\PHPFile;
 
 class PHPFileFactory
 {
@@ -31,8 +31,8 @@ class PHPFileFactory
     protected static function __driver($name)
     {
         $driver =[
-            "input" => config('php-file-manipulator.input', \PHPFileManipulator\Drivers\FileInput::class),
-            "output" => config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class),
+            "input" => config('archetype.input', \Archetype\Drivers\FileInput::class),
+            "output" => config('archetype.output', \Archetype\Drivers\FileOutput::class),
         ][$name];
 
         return new $driver;

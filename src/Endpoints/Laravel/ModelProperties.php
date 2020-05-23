@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel;
+namespace Archetype\Endpoints\Laravel;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Endpoints\EndpointProvider;
 
 class ModelProperties extends EndpointProvider
 {

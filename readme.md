@@ -1,9 +1,9 @@
-# ```PHPFile::manipulator```(:fire::fire::fire:);
+# ```Archetype```;
 
-![tests](https://github.com/ajthinking/php-file-manipulator/workflows/tests/badge.svg)
-![version](https://img.shields.io/packagist/v/ajthinking/php-file-manipulator?color=blue)
-[![Total Downloads](https://poser.pugx.org/ajthinking/php-file-manipulator/downloads)](https://packagist.org/packages/ajthinking/php-file-manipulator)
-[![License](https://poser.pugx.org/ajthinking/php-file-manipulator/license)](https://packagist.org/packages/ajthinking/php-file-manipulator)
+![tests](https://github.com/ajthinking/archetype/workflows/tests/badge.svg)
+![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
+[![Total Downloads](https://poser.pugx.org/ajthinking/archetype/downloads)](https://packagist.org/packages/ajthinking/archetype)
+[![License](https://poser.pugx.org/ajthinking/archetype/license)](https://packagist.org/packages/ajthinking/archetype)
 
 
 
@@ -30,8 +30,8 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 
 ## Installation
 ```
-composer require ajthinking/php-file-manipulator
-php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+composer require ajthinking/archetype
+php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
 
 
@@ -100,7 +100,7 @@ LaravelFile::create('Beer', ['model', 'controller', 'migration'])
 ```
 
 ### Template engine
-Let's make a snippet for a method we want to insert. Start by creating a file `storage/php-file-manipulator/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
+Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
 ```php
 <?php
@@ -108,9 +108,9 @@ Let's make a snippet for a method we want to insert. Start by creating a file `s
 /**
  * Optionally use FAKE names to silence IDE warnings
  */
-use PHPFileManipulator\Support\FakeName; 
-use PHPFileManipulator\Support\FakeName as ANY;
-use PHPFileManipulator\Support\FakeName as ___TARGET_CLASS___;
+use Archetype\Support\FakeName; 
+use Archetype\Support\FakeName as ANY;
+use Archetype\Support\FakeName as ___TARGET_CLASS___;
 
 /**
  * This is just a placeholder class where we can add our snippets
@@ -131,14 +131,14 @@ class _ extends FakeName
 
 Your snippet is then instantly available anywhere in your code:
 ```php
-use PHPFileManipulator\Support\Snippet;
+use Archetype\Support\Snippet;
 
 // Get the snippet
 Snippet::mySpecialMethod()
 
 // Pass an array of replacement pairs to replace any handles:
 Snippet::mySpecialMethod([
-    '___DOC_BLOCK___' => 'Inserted with php-file-manipulator :)',
+    '___DOC_BLOCK___' => 'Inserted with archetype :)',
     '___TARGET_CLASS___' => 'App\Rocket'
 ]);
 
@@ -212,7 +212,7 @@ php artisan file:api --provider=IO
 ### Errors
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
 
-To see *all* offending files run `php artisan file:errors`. To ignore files with problems, put them in `config/php-file-manipulator.php` -> `ignored_paths`.
+To see *all* offending files run `php artisan file:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
 
 ### Limitations / Missing features
 In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
@@ -230,31 +230,31 @@ The test suite requires that you are inside laravel application
 ```bash
 laravel new host
 cd host
-git clone git@github.com:ajthinking/php-file-manipulator.git packages/Ajthinking/PHPFileManipulator
+git clone git@github.com:ajthinking/archetype.git packages/Ajthinking/Archetype
 ```
 Add this to the host projects `composer.json`
 ```json
     "repositories": [
         {
             "type": "path",
-            "url": "/PATH/TO/PROJECTS/host/packages/Ajthinking/PHPFileManipulator"
+            "url": "/PATH/TO/PROJECTS/host/packages/Ajthinking/Archetype"
         }
     ],
 ```
 Then,
 ```bash
-composer require ajthinking/php-file-manipulator @dev
-php artisan vendor:publish --provider="PHPFileManipulator\ServiceProvider"
+composer require ajthinking/archetype @dev
+php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
 Finally in host root run
 ```bash
-vendor/phpunit/phpunit/phpunit packages/Ajthinking/PHPFileManipulator/tests
+vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests
 ```
 
 ### Roadmap
-PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/php-file-manipulator) for planned features.
+PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/archetype) for planned features.
 
-<a href="https://trello.com/b/1M2VRnoQ/php-file-manipulator">
+<a href="https://trello.com/b/1M2VRnoQ/archetype">
     <img src="docs/img/trello.png" width="600px">
 </a>
 
@@ -268,7 +268,7 @@ MIT
 
 
 ## Like this package?
-<a href="https://github.com/ajthinking/php-file-manipulator/stargazers" >Star it :star: </a>
+<a href="https://github.com/ajthinking/archetype/stargazers" >Star it :star: </a>
 
 [Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
 

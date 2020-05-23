@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP\Maker;
+namespace Archetype\Endpoints\PHP\Maker;
 
 use Illuminate\Support\Str;
 
@@ -34,7 +34,7 @@ class PHPTemplate
 
     protected function outputDriver()
     {
-        $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
+        $outputDriverClass = config('archetype.output', \Archetype\Drivers\FileOutput::class);
         $outputDriver = new $outputDriverClass;
         $outputDriver->filename = $this->filename();
         $outputDriver->extension = $this->extension();

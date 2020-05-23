@@ -1,5 +1,5 @@
 <?php
 
-namespace PHPFileManipulator\Support\AST;
+namespace Archetype\Support\AST;
 
 class QueryNode {}

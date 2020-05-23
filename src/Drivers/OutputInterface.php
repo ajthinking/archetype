@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Drivers;
+namespace Archetype\Drivers;
 
 Interface OutputInterface
 {

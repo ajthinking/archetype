@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Commands;
+namespace Archetype\Commands;
 
 use Illuminate\Console\Command;
 use PHPFile;
-use PHPFileManipulator\Support\Exceptions\NotImplementedYetException;
+use Archetype\Support\Exceptions\NotImplementedYetException;
 
 class DemoCommand extends Command
 {
@@ -20,7 +20,7 @@ class DemoCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Provides a few interactive examples to illustrate php-file-manipulator capabilities';
+    protected $description = 'Provides a few interactive examples to illustrate archetype capabilities';
 
     /**
      * Create a new command instance.
@@ -101,7 +101,7 @@ class DemoCommand extends Command
     {
         $this->line('');
         $this->line('Review source: ' .
-            base_path('vendor/ajthinking/php-file-manipulator/src/Commands/DemoCommand.php')
+            base_path('vendor/ajthinking/archetype/src/Commands/DemoCommand.php')
         );
     }
 }

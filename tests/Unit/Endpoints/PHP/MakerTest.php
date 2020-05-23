@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit\Endpoints\PHP;
+namespace Archetype\Tests\Unit\Endpoints\PHP;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use UnexpectedValueException;

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Endpoints\EndpointProvider;
 use PhpParser\BuilderFactory;
 
 class Namespace_ extends EndpointProvider

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Drivers;
+namespace Archetype\Drivers;
 
-use PHPFileManipulator\Drivers\InputInterface;
+use Archetype\Drivers\InputInterface;
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\PHPFileStorage;
+use Archetype\Support\PHPFileStorage;
 
 class FileInput implements InputInterface
 {
@@ -45,7 +45,7 @@ class FileInput implements InputInterface
 
     protected function ensureDefaultRootExists()
     {
-        $this->root = $this->root ?? config('php-file-manipulator')['roots']['input'];
+        $this->root = $this->root ?? config('archetype')['roots']['input'];
     }
 
     protected function extractPathProperties($path)

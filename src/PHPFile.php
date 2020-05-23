@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPFileManipulator;
+namespace Archetype;
 
-use PHPFileManipulator\Traits\DelegatesAPICalls;
-use PHPFileManipulator\Traits\HasDirectiveDefaults;
-use PHPFileManipulator\Traits\HasDirectiveHandlers;
-use PHPFileManipulator\Traits\HasIO;
+use Archetype\Traits\DelegatesAPICalls;
+use Archetype\Traits\HasDirectiveDefaults;
+use Archetype\Traits\HasDirectiveHandlers;
+use Archetype\Traits\HasIO;
 
 class PHPFile
 {

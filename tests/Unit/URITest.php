@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 
 use LaravelFile;
 use PHPFile;
 use Str;
 use TypeError;
-use PHPFileManipulator\Support\URI\NameURI;
-use PHPFileManipulator\Support\URI\PathURI;
-use PHPFileManipulator\Support\URI;
+use Archetype\Support\URI\NameURI;
+use Archetype\Support\URI\PathURI;
+use Archetype\Support\URI;
 
 class URITest extends FileTestCase
 {

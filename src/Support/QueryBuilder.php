@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveCallbackFilterIterator;
 use InvalidArgumentException;
 use LaravelFile;
-use PHPFileManipulator\Traits\HasOperators;
+use Archetype\Traits\HasOperators;
 
 class QueryBuilder
 {
@@ -117,7 +117,7 @@ class QueryBuilder
          */
         $filter = function ($file, $key, $iterator) {
             // Exclude some folders/files
-            $exclude = config('php-file-manipulator.ignored_paths');
+            $exclude = config('archetype.ignored_paths');
             if (in_array($file->getFilename(), $exclude)) {
                 return false;
             }

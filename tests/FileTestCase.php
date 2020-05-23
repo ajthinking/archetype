@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Tests;
+namespace Archetype\Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use PHPFile;
@@ -45,8 +45,8 @@ abstract class FileTestCase extends BaseTestCase
     protected function bootDevelopmentRootDisks()
     {
         config([
-            'php-file-manipulator.roots.output.root' => __DIR__ . '/../tests/.output',
-            'php-file-manipulator.roots.debug.root' => __DIR__ . '/../tests/.debug',
+            'archetype.roots.output.root' => __DIR__ . '/../tests/.output',
+            'archetype.roots.debug.root' => __DIR__ . '/../tests/.debug',
         ]);
     }
 

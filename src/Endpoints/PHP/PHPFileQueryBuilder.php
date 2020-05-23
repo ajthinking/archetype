@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\PSR2PrettyPrinter;
-use PHPFileManipulator\Support\RecursiveFileSearch;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\PSR2PrettyPrinter;
+use Archetype\Support\RecursiveFileSearch;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;
 use UnexpectedValueException;
-use PHPFileManipulator\Traits\HasOperators;
+use Archetype\Traits\HasOperators;
 use ReflectionClass;
 use ReflectionMethod;
 use RecursiveDirectoryIterator;
@@ -130,7 +130,7 @@ class PHPFileQueryBuilder extends EndpointProvider
 
         return RecursiveFileSearch::in($directory)
             ->matching(static::PHPSignature)
-            ->ignore(config('php-file-manipulator.ignored_paths'))
+            ->ignore(config('archetype.ignored_paths'))
             ->get();
     }
 }

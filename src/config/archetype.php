@@ -17,7 +17,7 @@ return [
         ],
         'debug' => [
             'driver' => 'local',
-            'root' => storage_path('php-file-manipulator/debug'),
+            'root' => storage_path('archetype/debug'),
         ],                                
     ],
 

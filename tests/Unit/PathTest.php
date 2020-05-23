@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 
-use PHPFileManipulator\Support\Path;
+use Archetype\Support\Path;
 
 class PathTest extends FileTestCase
 {

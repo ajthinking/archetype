@@ -1,19 +1,19 @@
 <?php
 
-namespace PHPFileManipulator;
+namespace Archetype;
 
 use App;
 use Config;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 Use Illuminate\Support\Str;
-use PHPFileManipulator\Commands\DemoCommand;
-use PHPFileManipulator\Commands\ErrorsCommand;
-use PHPFileManipulator\Commands\ListAPICommand;
-use PHPFileManipulator\Commands\RelationshipsDemo;
-use PHPFileManipulator\Factories\LaravelFileFactory;
-use PHPFileManipulator\Factories\PHPFileFactory;
-use PHPFileManipulator\Traits\AddsLaravelStringsToStrWithMacros;
+use Archetype\Commands\DemoCommand;
+use Archetype\Commands\ErrorsCommand;
+use Archetype\Commands\ListAPICommand;
+use Archetype\Commands\RelationshipsDemo;
+use Archetype\Factories\LaravelFileFactory;
+use Archetype\Factories\PHPFileFactory;
+use Archetype\Traits\AddsLaravelStringsToStrWithMacros;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -50,7 +50,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function publishConfig()
     {
         $this->publishes([
-            __DIR__.'/config/php-file-manipulator.php' => config_path('php-file-manipulator.php'),
+            __DIR__.'/config/archetype.php' => config_path('archetype.php'),
         ]);
     }
 

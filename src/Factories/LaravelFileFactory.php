@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Factories;
+namespace Archetype\Factories;
 
-use PHPFileManipulator\Factories\PHPFileFactory;
-use PHPFileManipulator\LaravelFile;
+use Archetype\Factories\PHPFileFactory;
+use Archetype\LaravelFile;
 
 class LaravelFileFactory extends PHPFileFactory
 {

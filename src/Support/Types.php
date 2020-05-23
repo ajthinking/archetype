@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 class Types
 {
-    const NO_VALUE = '__PHP_FILE_MANIPULATOR_NO_VALUE__';
+    const NO_VALUE = '__ARCHETYPE_NO_VALUE__';
 }

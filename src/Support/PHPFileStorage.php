@@ -1,18 +1,18 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use Config;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-use PHPFileManipulator\Support\Path;
+use Archetype\Support\Path;
 
 class PHPFileStorage
 {
     public function __construct()
     {
-        $this->roots = config('php-file-manipulator.roots');
+        $this->roots = config('archetype.roots');
     }
 
     public function get($path)
@@ -45,7 +45,7 @@ class PHPFileStorage
 
     protected function getStorageRootPath($name)
     {
-        return Config::get("php-file-manipulator.roots.$name.root");
+        return Config::get("archetype.roots.$name.root");
     }
     
     protected function getStorageDisk($name)

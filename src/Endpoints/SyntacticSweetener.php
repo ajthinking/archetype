@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints;
+namespace Archetype\Endpoints;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Support\AST\ASTQueryBuilder;
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Support\AST\ASTQueryBuilder;
+use Archetype\Endpoints\EndpointProvider;
 
 class SyntacticSweetener extends EndpointProvider
 {

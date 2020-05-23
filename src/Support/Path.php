@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use Illuminate\Support\Str;
 

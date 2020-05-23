@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Endpoints\EndpointProvider;
 use Illuminate\Support\Arr;
 
 class Method extends EndpointProvider

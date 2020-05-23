@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel\Maker;
+namespace Archetype\Endpoints\Laravel\Maker;
 
-use PHPFileManipulator\Endpoints\Laravel\Maker\LaravelTemplate;
-use PHPFileManipulator\Support\URI;
+use Archetype\Endpoints\Laravel\Maker\LaravelTemplate;
+use Archetype\Support\URI;
 
 class NamepspacedClass extends LaravelTemplate
 {

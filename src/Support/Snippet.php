@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
@@ -20,13 +20,13 @@ class Snippet
         $replacementPairs = $args ? $args[0] : [];
         // Get all files containing snippets
         $containers = PHPFile::in(
-            'vendor/ajthinking/php-file-manipulator/src/snippets'
+            'vendor/ajthinking/archetype/src/snippets'
         )->get()->mapInto(static::class);
 
-        $hasCustoms = is_dir(base_path(config('php-file-manipulator.snippets_path')));
+        $hasCustoms = is_dir(base_path(config('archetype.snippets_path')));
         if($hasCustoms) {
             $containers = $containers->concat(PHPFile::in(
-                config('php-file-manipulator.snippets_path')
+                config('archetype.snippets_path')
             )->get()->mapInto(static::class));
         }
         

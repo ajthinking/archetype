@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use PhpParser\Node\Stmt\ClassMethod;
 
 use PHPFile;
 use LaravelFile;
 
-use PHPFileManipulator\Support\Snippet;
+use Archetype\Support\Snippet;
 
 class SnippetTest extends FileTestCase
 {

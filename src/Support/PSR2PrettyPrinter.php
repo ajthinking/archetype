@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;

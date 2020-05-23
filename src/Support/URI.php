@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use Illuminate\Support\Str;
 
@@ -37,7 +37,7 @@ class URI
     public function namespace()
     {
         $this->name = collect(explode('\\', $this->name))->map(function($part) {
-            $map = config('php-file-manipulator.locations.namespace_map');
+            $map = config('archetype.locations.namespace_map');
             return  $map[$part] ?? $part;
         })->implode('\\');
 
@@ -84,7 +84,7 @@ class URI
     protected function nameToPath($input)
     {
         $parts = collect(explode('\\', $input))->map(function($part) {
-            $map = array_flip(config('php-file-manipulator.locations.namespace_map'));
+            $map = array_flip(config('archetype.locations.namespace_map'));
             return  $map[$part] ?? $part;
         })->toArray();
 
@@ -96,7 +96,7 @@ class URI
     protected function pathToName($input)
     {
         $parts = collect(explode('\\', $input))->map(function($part) {
-            $map = array_flip(config('php-file-manipulator.locations.namespace_map'));
+            $map = array_flip(config('archetype.locations.namespace_map'));
             return  $map[$part] ?? $part;
         })->toArray();
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\Laravel\Maker;
+namespace Archetype\Endpoints\Laravel\Maker;
 
-use PHPFileManipulator\Endpoints\PHP\Maker\PHPTemplate;
+use Archetype\Endpoints\PHP\Maker\PHPTemplate;
 
 use Illuminate\Support\Str;
 
@@ -16,7 +16,7 @@ class LaravelTemplate extends PHPTemplate
 
     protected function outputDriver()
     {
-        $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
+        $outputDriverClass = config('archetype.output', \Archetype\Drivers\FileOutput::class);
         $outputDriver = new $outputDriverClass;
         $outputDriver->filename = $this->filename();
         $outputDriver->extension = $this->extension();

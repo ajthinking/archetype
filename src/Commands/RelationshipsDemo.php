@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Commands;
+namespace Archetype\Commands;
 
 use Illuminate\Console\Command;
 
-use PHPFileManipulator\Commands\Demo\Project;
+use Archetype\Commands\Demo\Project;
 
 class RelationshipsDemo extends Command
 {

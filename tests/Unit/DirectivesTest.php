@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit;
+namespace Archetype\Tests\Unit;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use PHPFile;
 use LaravelFile;
-use PHPFileManipulator\Endpoints\PHP\PHPFileQueryBuilder;
-use PHPFileManipulator\Endpoints\Laravel\LaravelFileQueryBuilder;
+use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
+use Archetype\Endpoints\Laravel\LaravelFileQueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

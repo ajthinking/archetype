@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Commands;
+namespace Archetype\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -76,7 +76,7 @@ class ListAPICommand extends Command
             return collect($endpoints)->map(function($endpoint) use ($endpoints, $provider) {
                 return [
                     $endpoint,
-                    Str::replaceFirst('PHPFileManipulator\\Endpoints\\', '', $provider),
+                    Str::replaceFirst('Archetype\\Endpoints\\', '', $provider),
                 ];
             })->toArray();
         })->flattenOneLevel()->sort();
@@ -91,7 +91,7 @@ class ListAPICommand extends Command
 
     protected function api()
     {
-        return (new \PHPFileManipulator\LaravelFile)
+        return (new \Archetype\LaravelFile)
             ->endpointProviders()->filter(function($provider) {
                 return ! $this->option('provider') || class_basename($provider) == $this->option('provider');
             })->mapWithKeys(function ($provider, $key) {

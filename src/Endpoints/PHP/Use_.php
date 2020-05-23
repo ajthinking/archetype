@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Endpoints\UseStatementInserter;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Endpoints\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_ as PhpParserUse_;

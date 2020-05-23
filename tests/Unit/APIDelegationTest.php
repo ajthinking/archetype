@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit; 
+namespace Archetype\Tests\Unit; 
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use PHPFile;
 
 use BadMethodCallException;

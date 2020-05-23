@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 use Illuminate\Support\Str;
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\PSR2PrettyPrinter;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\PSR2PrettyPrinter;
 use PhpParser\ParserFactory;
 use Illuminate\Support\Facades\Storage;
 use Error;
 use UnexpectedValueException;
-use PHPFileManipulator\Traits\HasOperators;
+use Archetype\Traits\HasOperators;
 use ReflectionClass;
 use ReflectionMethod;
 use RecursiveDirectoryIterator;

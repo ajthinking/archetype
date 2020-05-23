@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\URI;
-use PHPFileManipulator\PHPFile;
+use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\URI;
+use Archetype\PHPFile;
 use Illuminate\Support\Str;
 
 class Maker extends EndpointProvider
@@ -17,7 +17,7 @@ class Maker extends EndpointProvider
     {
         $relativeLocation = URI::make($path);
         
-        $relativeRoot = config('php-file-manipulator.locations.' . $location)
+        $relativeRoot = config('archetype.locations.' . $location)
             . DIRECTORY_SEPARATOR . $relativeLocation->path();
 
         $relativeRoot = Str::of($relativeRoot)->ltrim('/')->__toString();
@@ -54,7 +54,7 @@ class Maker extends EndpointProvider
 
     protected function outputDriver($inputDriver)
     {
-        $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
+        $outputDriverClass = config('archetype.output', \Archetype\Drivers\FileOutput::class);
         $this->outputDriver = new $outputDriverClass;        
         return $this->outputDriver->setDefaultsFrom($inputDriver);
     }
@@ -78,7 +78,7 @@ class Maker extends EndpointProvider
 
     protected function emulatedInputDriver($path)
     {
-        $inputDriverClass = config('php-file-manipulator.input', \PHPFileManipulator\Drivers\FileInput::class);
+        $inputDriverClass = config('archetype.input', \Archetype\Drivers\FileInput::class);
         $inputDriver = new $inputDriverClass;
         return $inputDriver->readPath($path);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support\Exceptions;
+namespace Archetype\Support\Exceptions;
 use Exception;
 
 class FileParseError extends Exception {

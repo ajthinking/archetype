@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Endpoints\PHP;
+namespace Archetype\Endpoints\PHP;
 
-use PHPFileManipulator\Endpoints\EndpointProvider;
+use Archetype\Endpoints\EndpointProvider;
 
 class Trait_ extends EndpointProvider
 {

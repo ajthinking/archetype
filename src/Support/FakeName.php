@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPFileManipulator\Support;
+namespace Archetype\Support;
 
 class FakeName {
     public static function __callStatic($method, $args) {}

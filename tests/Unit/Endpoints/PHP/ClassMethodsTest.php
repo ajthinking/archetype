@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPFileManipulator\Tests\Unit\Endpoints;
+namespace Archetype\Tests\Unit\Endpoints;
 
-use PHPFileManipulator\Tests\FileTestCase;
+use Archetype\Tests\FileTestCase;
 use LaravelFile;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\BuilderFactory;
