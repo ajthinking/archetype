@@ -2,7 +2,7 @@
 
 namespace PHPFileManipulator\Endpoints\Laravel\Maker;
 
-use PHPFileManipulator\Support\URI\UriFactory;
+use PHPFileManipulator\Support\URI;
 use PHPFileManipulator\Endpoints\Laravel\Maker\LaravelTemplate;
 
 class Model extends LaravelTemplate
@@ -11,7 +11,7 @@ class Model extends LaravelTemplate
 
     public function __construct($name, $options = [])
     {
-        $this->uri = UriFactory::make($name); // TODO
+        $this->uri = URI::make($name); // TODO
 
         $this->filename = $name;
         $this->namespace = 'Some\App\\Namespaze';
