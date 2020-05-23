@@ -3,7 +3,7 @@
 namespace PHPFileManipulator\Endpoints\PHP;
 
 use PHPFileManipulator\Endpoints\EndpointProvider;
-use PHPFileManipulator\Support\URI\URIFactory;
+use PHPFileManipulator\Support\URI;
 use PHPFileManipulator\PHPFile;
 use Illuminate\Support\Str;
 
@@ -13,18 +13,19 @@ class Maker extends EndpointProvider
     protected $extension = '.php';
     protected $relativeDir = '';
 
-    protected function setupNames($name, $location = 'file_root')
+    protected function setupNames($path, $location = 'file_root')
     {
-        $path = config('php-file-manipulator.locations.' . $location) . DIRECTORY_SEPARATOR . $name;
-        $path = Str::of($path)->ltrim('/')->__toString();
+        $uri = URI::make($path);
         
+        $path = config('php-file-manipulator.locations.' . $location) . DIRECTORY_SEPARATOR . $uri->path();
+        $path = Str::of($uri->path())->ltrim('/')->__toString();
+
         $this->outputDriver = $this->outputDriver(
             $this->emulatedInputDriver($path)
         );
 
-        $this->filename = $name;
-        $this->namespace = 'Some\App\\Namespaze';
-        $this->class = $name;
+        $this->namespace = $uri->namespace();
+        $this->class = $uri->class();
     }
 
     public function file($name, $options = [])
@@ -40,8 +41,8 @@ class Maker extends EndpointProvider
         $this->setupNames($name, 'class_root');
 
         $contents = Str::of($this->stub('class.php.stub'))
-            ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
-            ->replace(['{{ class }}', 'DummyClass'], $this->class)
+            ->replace(['DummyNamespace', '___NAMESPACE___', '{{ namespace }}'], $this->namespace)
+            ->replace(['{{ class }}', '___CLASS___', 'DummyClass'], $this->class)
             ->__toString();
 
         return $this->file->fromString($contents)
@@ -53,11 +54,6 @@ class Maker extends EndpointProvider
         $outputDriverClass = config('php-file-manipulator.output', \PHPFileManipulator\Drivers\FileOutput::class);
         $this->outputDriver = new $outputDriverClass;        
         return $this->outputDriver->setDefaultsFrom($inputDriver);
-    }
-
-    protected function filename()
-    {
-        return $this->filename;
     }
 
     protected function extension()
