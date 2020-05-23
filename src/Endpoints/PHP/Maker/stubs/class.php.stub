@@ -1,5 +1,7 @@
 <?php
 
+namespace ___NAMESPACE___;
+
 class ___CLASS___
 {
 }
