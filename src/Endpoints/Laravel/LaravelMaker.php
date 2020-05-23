@@ -5,7 +5,7 @@ namespace PHPFileManipulator\Endpoints\Laravel;
 use PHPFileManipulator\Endpoints\EndpointProvider;
 use PHPFileManipulator\Endpoints\Laravel\Maker\Unimplemented;
 use PHPFileManipulator\Endpoints\PHP\Maker;
-use PHPFileManipulator\Support\URI\URIFactory;
+use PHPFileManipulator\Support\URI;
 use Illuminate\Support\Str;
 
 class LaravelMaker extends Maker
@@ -27,8 +27,6 @@ class LaravelMaker extends Maker
 
     public function model($name)
     {
-        //$this->uri = URIFactory::make($name);
-
         $this->setupNames($name);
 
         $contents = Str::of($this->stub('model.stub'))
