@@ -1,4 +1,4 @@
-# ```Archetype```;
+# Archetype
 
 ![tests](https://github.com/ajthinking/archetype/workflows/tests/badge.svg)
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
