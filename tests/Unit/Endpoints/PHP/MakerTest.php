@@ -29,11 +29,10 @@ class MakerTest extends FileTestCase
         $this->assertEquals('php', $output->extension);
     }
     
-    /** @test
-     * @group only*/
+    /** @test */
     public function the_php_class_maker_accepts_a_namespaced_class()
     {
-        $file = PHPFile::make()->class('App\Weapons\RocketLauncher');
+        $file = PHPFile::make()->class('Weapons\RocketLauncher');
         
         $output = $file->outputDriver();
         $this->assertEquals('app/Weapons', $output->relativeDir);
