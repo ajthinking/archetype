@@ -36,12 +36,20 @@ class URI
 
     public function namespace()
     {
-        return Str::of($this->name)->replaceLast($this->class(), '')->rtrim('\\')->__toString();
+        $this->name = collect(explode('\\', $this->name))->map(function($part) {
+            $map = config('php-file-manipulator.locations.namespace_map');
+            return  $map[$part] ?? $part;
+        })->implode('\\');
+
+        return Str::of($this->name)
+            ->replaceLast($this->class(), '')
+            ->replaceLast('.php', '')
+            ->rtrim('\\')->__toString();
     }
     
     public function class()
     {
-        return class_basename($this->name);
+        return Str::of(class_basename($this->name))->replaceLast('.php', '')->__toString();
     }    
 
     public function isPath()
@@ -87,6 +95,11 @@ class URI
 
     protected function pathToName($input)
     {
+        $parts = collect(explode('\\', $input))->map(function($part) {
+            $map = array_flip(config('php-file-manipulator.locations.namespace_map'));
+            return  $map[$part] ?? $part;
+        })->toArray();
+
         $parts = explode(DIRECTORY_SEPARATOR, $input);
 
         $name = implode('\\', $parts);

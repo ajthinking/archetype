@@ -15,17 +15,20 @@ class Maker extends EndpointProvider
 
     protected function setupNames($path, $location = 'file_root')
     {
-        $uri = URI::make($path);
+        $relativeLocation = URI::make($path);
         
-        $path = config('php-file-manipulator.locations.' . $location) . DIRECTORY_SEPARATOR . $uri->path();
-        $path = Str::of($uri->path())->ltrim('/')->__toString();
+        $relativeRoot = config('php-file-manipulator.locations.' . $location)
+            . DIRECTORY_SEPARATOR . $relativeLocation->path();
+
+        $relativeRoot = Str::of($relativeRoot)->ltrim('/')->__toString();
 
         $this->outputDriver = $this->outputDriver(
-            $this->emulatedInputDriver($path)
+            $this->emulatedInputDriver($relativeRoot)
         );
 
-        $this->namespace = $uri->namespace();
-        $this->class = $uri->class();
+        $this->namespace = URI::make($relativeRoot)->namespace();
+
+        $this->class = URI::make($relativeRoot)->class();
     }
 
     public function file($name, $options = [])
