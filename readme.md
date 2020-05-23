@@ -1,4 +1,4 @@
-# Archetype
+# ```php::archetype```(:fire::fire::fire:);
 
 ![tests](https://github.com/ajthinking/archetype/workflows/tests/badge.svg)
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
