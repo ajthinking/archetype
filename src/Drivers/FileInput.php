@@ -22,7 +22,6 @@ class FileInput implements InputInterface
     {
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
-        
         return $this;
     }
 
@@ -60,12 +59,14 @@ class FileInput implements InputInterface
         $pathIsAbsolute = Str::startsWith($path, '/');
         
         if($pathIsAbsolute) {
-            
             $this->absoluteDir = dirname($path);
         } else {
             $this->absoluteDir = dirname($this->root['root'] . "/" . $path);
         }
 
-        $this->relativeDir = Str::replaceFirst($this->root['root'] /*. '/'*/, '', $this->absoluteDir);
+        $this->relativeDir = Str::of($this->absoluteDir)
+            ->replaceFirst($this->root['root'], '')
+            ->ltrim('/')
+            ->__toString();
     }
 }

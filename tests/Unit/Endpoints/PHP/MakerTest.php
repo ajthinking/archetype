@@ -23,10 +23,9 @@ class MakerTest extends FileTestCase
     /** @test */
     public function the_php_file_maker_can_write_into_directories()
     {
-        $this->markTestIncomplete();
         $output = PHPFile::make()->file('app/HTTP/script.php')->outputDriver();
         $this->assertEquals('app/HTTP', $output->relativeDir);
         $this->assertEquals('script', $output->filename);
         $this->assertEquals('php', $output->extension);
-    }  
+    }    
 }
