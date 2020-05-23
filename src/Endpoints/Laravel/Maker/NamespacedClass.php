@@ -3,13 +3,13 @@
 namespace PHPFileManipulator\Endpoints\Laravel\Maker;
 
 use PHPFileManipulator\Endpoints\Laravel\Maker\LaravelTemplate;
-use PHPFileManipulator\Support\URI\URIFactory;
+use PHPFileManipulator\Support\URI;
 
 class NamepspacedClass extends LaravelTemplate
 {
     public function __construct($name)
     {
-        $uri = UriFactory::make($name);
+        $uri = URI::make($name);
 
         $this->filename = $name;
     }
