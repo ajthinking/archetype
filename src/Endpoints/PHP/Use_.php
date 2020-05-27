@@ -22,13 +22,14 @@ class Use_ extends EndpointProvider
 
     protected function get()
     {
-        return collect((new NodeFinder)->findInstanceOf($this->ast(), PhpParserUse_::class))
+        return $this->file->astQuery()
+            ->use()
+            ->uses
+            ->get()
             ->map(function($useStatement) {
-                return collect($useStatement->uses)->map(function($useStatement) {
-                    $base = join('\\', $useStatement->name->parts); 
-                    return $base . ($useStatement->alias ? ' as ' . $useStatement->alias : '');
-                });
-            })->flatten()->toArray();
+                $base = join('\\', $useStatement->name->parts); 
+                return $base . ($useStatement->alias ? ' as ' . $useStatement->alias : '');
+            });
     }
 
     protected function set($newUseStatements)
