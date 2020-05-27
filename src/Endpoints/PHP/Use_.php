@@ -5,6 +5,7 @@ namespace Archetype\Endpoints\PHP;
 use Archetype\Endpoints\EndpointProvider;
 use Archetype\Endpoints\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\BuilderFactory;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_ as PhpParserUse_;
 use PhpParser\NodeTraverser;
@@ -16,7 +17,7 @@ class Use_ extends EndpointProvider
         if($this->file->directive('add')) return $this->add($value);
 
         if($value === null) return $this->get();
-
+        
         return $this->set($value);
     }
 
@@ -34,11 +35,17 @@ class Use_ extends EndpointProvider
 
     protected function set($newUseStatements)
     {
-        $traverser = new NodeTraverser();
-        $visitor = new UseStatementInserter($this->ast(), $newUseStatements);
-        $traverser->addVisitor($visitor);
+        $use = (new BuilderFactory)->use($newUseStatements[0]);
+        return $this->file->astQuery()
+            ->insertStmt($use->getNode())
+            ->commit()
+            ->end()
+            ->continue();
+        // $traverser = new NodeTraverser();
+        // $visitor = new UseStatementInserter($this->ast(), $newUseStatements);
+        // $traverser->addVisitor($visitor);
 
-        $this->file->ast = $traverser->traverse($this->ast());
+        // $this->file->ast = $traverser->traverse($this->ast());
 
         return $this->file->continue();
     }    
