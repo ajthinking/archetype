@@ -29,10 +29,6 @@ jobs:
       working-directory: ./host
       run: composer require ajthinking/archetype @dev
 
-    - name: Publish things
-      working-directory: ./host
-      run: php artisan vendor:publish --provider="Archetype\ServiceProvider"
-
     - name: Run tests
       working-directory: ./host      
       run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests
