@@ -28,6 +28,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->registerFacades();
         $this->registerCommands();
+        $this->mergeConfigFrom(__DIR__.'/config/archetype.php', 'archetype');
     }
 
     public function boot()
@@ -62,5 +63,5 @@ class ServiceProvider extends BaseServiceProvider
             RelationshipsDemo::class,
             ErrorsCommand::class,
         ]);
-    }
+    }  
 }
