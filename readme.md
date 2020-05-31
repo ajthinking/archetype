@@ -31,7 +31,6 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 ## Installation
 ```
 composer require ajthinking/archetype
-php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
 
 
@@ -223,6 +222,9 @@ In general this package assumes code to be parsed follows guidellines and conven
 
 * Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
 
+## Configuration
+    php artisan vendor:publish --provider="Archetype\ServiceProvider"
+
 ## Contributing
 
 ### Development installation
@@ -244,7 +246,6 @@ Add this to the host projects `composer.json`
 Then,
 ```bash
 composer require ajthinking/archetype @dev
-php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
 Finally in host root run
 ```bash
