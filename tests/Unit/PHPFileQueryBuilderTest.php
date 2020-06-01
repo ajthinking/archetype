@@ -64,7 +64,7 @@ class PHPFileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            1, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
+            2, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
         );        
 
         $this->assertCount(
@@ -118,7 +118,7 @@ class PHPFileQueryBuilderTest extends FileTestCase
     public function it_can_filter_with_closure()
     {
         $this->assertCount(
-            2, LaravelFile::in('database/migrations')->where(function($file) {
+            3, LaravelFile::in('database/migrations')->where(function($file) {
                 return preg_match('/^Create.*Table$/', $file->className()); 
             })->get()
         );
