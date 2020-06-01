@@ -309,11 +309,16 @@ class ASTQueryBuilder
     public function insertStmt($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
-            if(!isset($node->result->stmts)) return;
-            if(!isset($node->result->__object_hash)) return;
+
+            $target = $node->result;
+
+            // Assume insertion targets namespace stmts (if present at index 0)
+            if(is_array($target) && !empty($target) && get_class($target[0]) == 'PhpParser\\Node\\Stmt\Namespace_') {
+                $target = $target[0];
+            }
 
             $this->resultingAST = StmtInserter::insertStmt(
-                $node->result->__object_hash,
+                $target->__object_hash ?? null,
                 $newNode,
                 $this->resultingAST
             );
