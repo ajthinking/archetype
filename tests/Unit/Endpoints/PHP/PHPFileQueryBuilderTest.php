@@ -28,7 +28,7 @@ class PHPFileQueryBuilderTest extends Archetype\Tests\FileTestCase
         ); 
         
         $this->assertInstanceOf(
-            Collection::class,
+            \Illuminate\Support\Collection::class,
             LaravelFile::get()
         ); 
     }
