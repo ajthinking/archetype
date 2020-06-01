@@ -1,13 +1,6 @@
 <?php
 
-namespace Archetype\Tests\Unit\Endpoints;
-
-use Archetype\Tests\FileTestCase;
-
-use PHPFile;
-use LaravelFile;
-
-class UsesTest extends FileTestCase
+class UsesTest extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function it_can_retrieve_use_statements()
@@ -93,7 +86,6 @@ class UsesTest extends FileTestCase
             );
         });
     }    
-
 
     /** @wip-test */
     public function it_can_overwrite_use_statements()

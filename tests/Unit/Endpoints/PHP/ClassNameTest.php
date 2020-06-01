@@ -1,13 +1,6 @@
 <?php
 
-namespace Archetype\Tests\Unit\Endpoints;
-
-use Archetype\Tests\FileTestCase;
-
-use PHPFile;
-use LaravelFile;
-
-class ClassNameTest extends FileTestCase
+class ClassNameTest extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function it_can_retrieve_class_name()

@@ -1,17 +1,10 @@
 <?php
-
-namespace Archetype\Tests\Unit\Endpoints;
-
-use Archetype\Tests\FileTestCase;
-use LaravelFile;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Expr\Print_;
 use PhpParser\Node\Expr\Variable;
 
-use PHPFile;
-
-class ClassMethodsTest extends FileTestCase
+class ClassMethodsTest extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function it_can_retrieve_class_method_names()

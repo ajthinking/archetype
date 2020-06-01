@@ -1,15 +1,10 @@
 <?php
-
-namespace Archetype\Tests\Unit\Endpoints;
-
-use Archetype\Tests\FileTestCase;
 use PhpParser\BuilderFactory;
 
-use PHPFile;
-use LaravelFile;
-
-class PropertyTest extends FileTestCase
+class Property2Test extends Archetype\Tests\FileTestCase
 {
+    protected $emptyClass = '<?php class EmptyClass {}';
+
     /** @test */
     public function it_can_get_a_class_property()
     {
@@ -51,7 +46,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_create_a_new_class_property_when_empty()
     {
-        $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
+        $property = PHPFile::fromString($this->emptyClass)        
             ->property('master', 'yoda')
             ->property('master');
 
@@ -64,7 +59,7 @@ class PropertyTest extends FileTestCase
     /** @test */
     public function it_can_set_empty_property_by_using_explicit_set_method()
     {
-        $property = PHPFile::load(__DIR__ . '../../../../samples/EmptyClass.php')        
+        $property = PHPFile::fromString($this->emptyClass)        
             ->setProperty('empty')
             ->property('empty');
 

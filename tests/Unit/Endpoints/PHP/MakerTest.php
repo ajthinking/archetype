@@ -1,16 +1,16 @@
 <?php
 
-namespace Archetype\Tests\Unit\Endpoints\PHP;
-
-use Archetype\Tests\FileTestCase;
-use BadMethodCallException;
-use Illuminate\Support\Str;
-use UnexpectedValueException;
-
-use PHPFile;
-
-class MakerTest extends FileTestCase
+class MakerTest extends Archetype\Tests\FileTestCase
 {
+    /** @test */
+    public function it_can_make_files_with_basic_php_templates()
+    {
+        $this->assertInstanceOf(
+            \Archetype\PHPFile::class,
+            PHPFile::make()->class('CoolClass')
+        );
+    }
+
     /** @test */
     public function the_php_file_maker_defaults_to_root()
     {

@@ -1,13 +1,6 @@
 <?php
 
-namespace Archetype\Tests\Unit\Endpoints;
-
-use Archetype\Tests\FileTestCase;
-
-use LaravelFile;
-use PHPFile;
-
-class RelationshipsTest extends FileTestCase
+class RelationshipsTest extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function it_can_insert_belongs_to_methods()

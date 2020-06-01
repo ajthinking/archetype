@@ -1,13 +1,6 @@
 <?php
 
-namespace Archetype\Tests\Unit\Endpoints;
-
-use Archetype\Tests\FileTestCase;
-
-use PHPFile;
-use LaravelFile;
-
-class TraitTest extends FileTestCase
+class TraitTest extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function it_can_test()
