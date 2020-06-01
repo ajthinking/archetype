@@ -3,12 +3,12 @@
 namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
-use Archetype\Endpoints\UseStatementInserter;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\BuilderFactory;
 use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_ as PhpParserUse_;
 use PhpParser\NodeTraverser;
+use Arr;
 
 class Use_ extends EndpointProvider
 {
@@ -35,33 +35,18 @@ class Use_ extends EndpointProvider
 
     protected function set($newUseStatements)
     {
-        $use = (new BuilderFactory)->use($newUseStatements[0]);
-        return $this->file->astQuery()
-            ->insertStmt($use->getNode())
-            ->commit()
-            ->end()
-            ->continue();
-        // $traverser = new NodeTraverser();
-        // $visitor = new UseStatementInserter($this->ast(), $newUseStatements);
-        // $traverser->addVisitor($visitor);
-
-        // $this->file->ast = $traverser->traverse($this->ast());
-
-        return $this->file->continue();
-    }    
+        return $this->add($newUseStatements);
+    }
 
     protected function add($newUseStatements)
     {
-        $namespace = (new NodeFinder)->findFirstInstanceOf($this->ast(), Namespace_::class);
-        $traverser = new NodeTraverser();
-        $visitor = new UseStatementInserter(
-            $namespace ? $this->ast()[0]->stmts : $this->ast(),
-            $newUseStatements);
-        $traverser->addVisitor($visitor);
-
-        $this->file->ast($traverser->traverse(
-            $namespace ? $this->ast()[0]->stmts : $this->ast()
-        ));
+        collect(Arr::wrap($newUseStatements))->each(function($name) {
+            $this->file->astQuery()
+            ->insertStmt(
+                (new BuilderFactory)->use($name)->getNode()
+            )
+            ->commit();
+        });
 
         return $this->file->continue();
     }    
