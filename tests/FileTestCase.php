@@ -3,8 +3,6 @@
 namespace Archetype\Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use PHPFile;
-use LaravelFile;
 use Illuminate\Contracts\Console\Kernel;
 use ErrorException;
 use Illuminate\Support\Str;
