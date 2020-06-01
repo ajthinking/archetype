@@ -64,7 +64,7 @@ class PHPFileQueryBuilderTest extends FileTestCase
         );
 
         $this->assertCount(
-            2, LaravelFile::in('database/migrations')->where('className', '!=', 'CreateUsersTable')->get()
+            4, LaravelFile::in('app/Providers')->where('className', '!=', 'AppServiceProvider')->get()
         );        
 
         $this->assertCount(
@@ -117,16 +117,9 @@ class PHPFileQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_can_filter_with_closure()
     {
-        dd(
-            glob(
-                base_path('database/migrations') . '/*'
-            ),
-            //LaravelFile::load('database/migrations/2014_10_12_100000_create_password_resets_table.php')->className()
-        );
-
         $this->assertCount(
-            3, LaravelFile::in('database/migrations')->where(function($file) {
-                return preg_match('/^Create.*Table$/', $file->className()); 
+            2, LaravelFile::in('app')->where(function($file) {
+                return preg_match('/^.*Kernel$/', $file->extends()); 
             })->get()
         );
     }
