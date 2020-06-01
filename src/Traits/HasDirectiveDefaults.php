@@ -19,10 +19,17 @@ trait HasDirectiveDefaults
 
     public function include($value = Types::NO_VALUE)
     {
-        $this->directive('include', true);
+        return $this->unique($value = Types::NO_VALUE);
+    }
+
+    public function unique($value = Types::NO_VALUE)
+    {
+        dd("NOT IMPLEMENTED");
+
+        $this->directive('unique', true);
 
         if ($value !== Types::NO_VALUE) {
-            $this->directive('includeValue', $value);
+            $this->directive('uniqueValue', $value);
         }
 
         return $this;
