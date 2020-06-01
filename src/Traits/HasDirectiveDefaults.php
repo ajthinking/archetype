@@ -17,6 +17,17 @@ trait HasDirectiveDefaults
         return $this;
     }
 
+    public function include($value = Types::NO_VALUE)
+    {
+        $this->directive('include', true);
+
+        if ($value !== Types::NO_VALUE) {
+            $this->directive('includeValue', $value);
+        }
+
+        return $this;
+    }
+
     public function remove()
     {
         return $this->directive('remove', true);
