@@ -10,7 +10,10 @@ use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
 class StmtInserter extends NodeVisitorAbstract {
+    protected $finished = false;
+
     const priority = [
+        'PhpParser\Node\Stmt\Namespace_',
         'PhpParser\Node\Stmt\TraitUse',
         'PhpParser\Node\Stmt\Property',
         'PhpParser\Node\Stmt\ClassMethod',
@@ -22,26 +25,42 @@ class StmtInserter extends NodeVisitorAbstract {
         $this->newNode = $newNode;
     }
 
-    public function leaveNode(Node $node) {  
-        if($node->__object_hash != $this->id) return $node;
-        $priority = $this->priority($this->newNode);
-        $this->position = sizeof($node->stmts);
-        $indexes = [];
-        collect($node->stmts)->first(function($stmt, $index) use($priority) {
-            $candidatePriority = $this->priority($stmt);
-            if($candidatePriority >= $priority) {
-                $this->position = $index;
-                return true;
-            }
-        });
+    public function leaveNode(Node $node) {
+        if($this->finished) return NodeTraverser::STOP_TRAVERSAL;
         
-        $p1 = collect($node->stmts)->splice(0, $this->position);
-        $p2 = collect([$this->newNode]);
-        $p3 = collect($node->stmts)->splice($this->position);
+        if(!$this->isTarget($node)) return $node;
         
-        $node->stmts = $p1->concat($p2)->concat($p3)->toArray();
+        $node->stmts = $this->insertAndSortNodes($node->stmts);
+
+        $this->finished = true;
 
         return $node;
+    }
+
+    public function beforeTraverse(array $nodes) {
+        if($this->id) return;
+        
+        $nodes = $this->insertAndSortNodes($nodes);
+
+        $this->finished = true;
+
+        return $nodes;
+    }
+
+    public function afterTraverse(array $nodes) {
+        //
+    }
+    
+    public static function insertStmt($id, $newNode, $ast)
+    {
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new static($id, $newNode));
+        return $traverser->traverse($ast);
+    }
+
+    protected function isTarget($node)
+    {
+        return $node->__object_hash == $this->id;
     }
 
     protected function priority($node)
@@ -50,33 +69,25 @@ class StmtInserter extends NodeVisitorAbstract {
         
         $priority = array_search($class, $this::priority);
         return $priority !== false ? $priority : sizeof($this::priority) + 1;
-    }
+    }    
 
-    // public function leaveNode(Node $node) {
-    //     //
-    // }
-
-    public function beforeTraverse(array $nodes) {
-        //
-    }
-
-    public function afterTraverse(array $nodes) {
-        //
-    }
-    
-    public static function push($id, $newNode, $ast)
+    protected function insertAndSortNodes($stmts)
     {
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new static(
-            null, // will push if no ID is provided
-            $newNode));
-        return $traverser->traverse($ast);
-    }
-    
-    public static function insertStmt($id, $newNode, $ast)
-    {
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new static($id, $newNode));
-        return $traverser->traverse($ast);
+        $this->position = sizeof($stmts);
+
+        collect($stmts)->first(function($stmt, $index) {
+            $candidatePriority = $this->priority($stmt);
+            $newNodePritority = $this->priority($this->newNode);
+            if($candidatePriority >= $newNodePritority) {
+                $this->position = $index;
+                return true;
+            }
+        });
+        
+        $p1 = collect($stmts)->splice(0, $this->position);
+        $p2 = collect([$this->newNode]);
+        $p3 = collect($stmts)->splice($this->position);
+        
+        return $p1->concat($p2)->concat($p3)->toArray();
     }
 }
