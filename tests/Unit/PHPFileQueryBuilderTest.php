@@ -117,6 +117,12 @@ class PHPFileQueryBuilderTest extends FileTestCase
     /** @test */
     public function it_can_filter_with_closure()
     {
+        dd(
+            LaravelFile::in('database/migrations')->where(function($file) {
+                return preg_match('/^Create.*Table$/', $file->className()); 
+            })->get()->map->className()->toArray()
+        );
+
         $this->assertCount(
             3, LaravelFile::in('database/migrations')->where(function($file) {
                 return preg_match('/^Create.*Table$/', $file->className()); 
