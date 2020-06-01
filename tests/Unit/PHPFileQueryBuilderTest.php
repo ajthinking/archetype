@@ -118,7 +118,10 @@ class PHPFileQueryBuilderTest extends FileTestCase
     public function it_can_filter_with_closure()
     {
         dd(
-            LaravelFile::load('database/migrations/2014_10_12_100000_create_password_resets_table.php')->className()
+            glob(
+                base_path('database/migrations') . '/*'
+            ),
+            //LaravelFile::load('database/migrations/2014_10_12_100000_create_password_resets_table.php')->className()
         );
 
         $this->assertCount(
