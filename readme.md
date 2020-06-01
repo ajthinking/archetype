@@ -232,14 +232,14 @@ The test suite requires that you are inside laravel application
 ```bash
 laravel new host
 cd host
-git clone git@github.com:ajthinking/archetype.git packages/Ajthinking/Archetype
+git clone git@github.com:ajthinking/archetype.git packages/ajthinking/archetype
 ```
 Add this to the host projects `composer.json`
 ```json
     "repositories": [
         {
             "type": "path",
-            "url": "/PATH/TO/PROJECTS/host/packages/Ajthinking/Archetype"
+            "url": "/PATH/TO/PROJECTS/host/packages/ajthinking/archetype"
         }
     ],
 ```
@@ -249,7 +249,7 @@ composer require ajthinking/archetype @dev
 ```
 Finally in host root run
 ```bash
-vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests
+vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
 ```
 
 ### Roadmap

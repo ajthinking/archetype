@@ -1,11 +1,11 @@
 name: tests
 # Since this package must be tested inside a Laravel application this workflow does the following:
 # Create a fresh Laravel host app
-# Checkout package into host/packages/Ajthinking/Archetype
+# Checkout package into host/packages/ajthinking/archetype
 # Add the package in host composer.json repositories section
 # Require the package using @dev
 # Publishing config
-# Running tests: vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests
+# Running tests: vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
 
 on: [push, pull_request]
 
@@ -19,11 +19,11 @@ jobs:
     - name: Checkout the package
       uses: actions/checkout@v2
       with:
-        path: host/packages/Ajthinking/Archetype
+        path: host/packages/ajthinking/archetype
 
     - name: Add composer.json repository
       working-directory: ./host      
-      run: composer config repositories.archetype path "/home/runner/work/archetype/archetype/host/packages/Ajthinking/Archetype"
+      run: composer config repositories.archetype path "/home/runner/work/archetype/archetype/host/packages/ajthinking/archetype"
 
     - name: Require the package
       working-directory: ./host
@@ -31,4 +31,4 @@ jobs:
 
     - name: Run tests
       working-directory: ./host      
-      run: vendor/phpunit/phpunit/phpunit packages/Ajthinking/Archetype/tests
+      run: vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
