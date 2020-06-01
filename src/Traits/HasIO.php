@@ -87,7 +87,7 @@ trait HasIO
 
     public function preview()
     {
-        dd($this->render());
+        echo $this->render();
     }
 
     public function render()
