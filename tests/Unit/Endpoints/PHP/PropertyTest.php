@@ -1,4 +1,5 @@
 <?php
+
 use PhpParser\BuilderFactory;
 
 class Property2Test extends Archetype\Tests\FileTestCase

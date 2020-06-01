@@ -1,4 +1,5 @@
 <?php
+
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Expr\Print_;

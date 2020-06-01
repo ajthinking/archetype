@@ -23,7 +23,7 @@ class PHPFileQueryBuilderTest extends Archetype\Tests\FileTestCase
     public function it_will_return_a_collection_on_get()
     {
         $this->assertInstanceOf(
-            Collection::class,
+            \Illuminate\Support\Collection::class,
             LaravelFile::in('app')->get()
         ); 
         

@@ -1,4 +1,5 @@
 <?php
+
 use Archetype\LaravelFile;
 
 class DuplicateEndpointTest extends Archetype\Tests\FileTestCase
