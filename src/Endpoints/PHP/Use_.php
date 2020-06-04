@@ -9,6 +9,7 @@ use PhpParser\NodeFinder;
 use PhpParser\Node\Stmt\Use_ as PhpParserUse_;
 use PhpParser\NodeTraverser;
 use Arr;
+use Str;
 
 class Use_ extends EndpointProvider
 {
@@ -35,6 +36,11 @@ class Use_ extends EndpointProvider
 
     protected function set($newUseStatements)
     {
+        $this->file->astQuery()
+            ->use()
+            ->remove()
+            ->commit();
+
         return $this->add($newUseStatements);
     }
 
@@ -43,11 +49,24 @@ class Use_ extends EndpointProvider
         collect(Arr::wrap($newUseStatements))->each(function($name) {
             $this->file->astQuery()
             ->insertStmt(
-                (new BuilderFactory)->use($name)->getNode()
+                $this->useStatement($name)
             )
             ->commit();
         });
 
         return $this->file->continue();
-    }    
+    }
+
+    protected function useStatement($signature)
+    {
+        $parts = Str::of($signature)->explode(' as ');
+        $name = $parts->first();
+        $statement = (new BuilderFactory)->use($name);
+        
+        if($parts->last() != $parts->first()) {
+            $statement = $statement->as($parts->last());
+        }
+
+        return $statement->getNode();
+    }
 }

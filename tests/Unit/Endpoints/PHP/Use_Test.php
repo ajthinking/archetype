@@ -1,6 +1,6 @@
 <?php
 
-class UsesTest extends Archetype\Tests\FileTestCase
+class Use_Test extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function it_can_retrieve_use_statements()
@@ -71,7 +71,7 @@ class UsesTest extends Archetype\Tests\FileTestCase
         });
     }
 
-    /** @wip-test */
+    /** @test */
     public function it_can_add_use_statements_with_alias()
     {        
         $file = PHPFile::load('public/index.php');
@@ -87,7 +87,7 @@ class UsesTest extends Archetype\Tests\FileTestCase
         });
     }    
 
-    /** @wip-test */
+    /** @test */
     public function it_can_overwrite_use_statements()
     {
         $file = PHPFile::load('app/User.php');
@@ -97,12 +97,11 @@ class UsesTest extends Archetype\Tests\FileTestCase
             "Only\This",
         ]);
 
-        $this->assertTrue(
-            collect($useStatements)->count() == 1
-        );
+        $this->assertCount(1, collect($useStatements));
 
-        $this->assertTrue(
-            $useStatements[0] == 'Only\This'
+        $this->assertEquals(
+            $useStatements->first(),
+            'Only\This'
         );        
     }
 }
