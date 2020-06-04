@@ -4,7 +4,7 @@ namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
 
-class Trait_ extends EndpointProvider
+class TraitUse extends EndpointProvider
 {
     public function trait($value = null)
     {
@@ -23,12 +23,16 @@ class Trait_ extends EndpointProvider
                 })->toArray();
             })
             ->recall()
-            ->pluck('formatted_traits')
-            ->first();
+            ->pluck('formatted_traits');
+    }
+
+    protected function add($value)
+    {
+        return $this->file->continue();
     }
 
     protected function set($value)
     {
         return $this->file->continue();
-    }    
+    }
 }
