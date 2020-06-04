@@ -23,7 +23,8 @@ class TraitUse extends EndpointProvider
                 })->toArray();
             })
             ->recall()
-            ->pluck('formatted_traits');
+            ->pluck('formatted_traits')
+            ->first();
     }
 
     protected function add($value)
