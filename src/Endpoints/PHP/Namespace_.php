@@ -7,7 +7,13 @@ use PhpParser\BuilderFactory;
 
 class Namespace_ extends EndpointProvider
 {
-    public function namespace($value = null)
+    /**
+     * Get/set file namespace
+     *
+     * @param string|null $value
+     * @return void
+     */
+    public function namespace(string $value = null)
     {
         if($this->file->directive('remove')) return $this->remove();
 

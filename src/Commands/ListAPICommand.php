@@ -100,4 +100,26 @@ class ListAPICommand extends Command
                 ];
             });
     }
+
+    protected function documentationExperiment()
+    {
+        LaravelFile::in('packages/ajthinking/archetype/src/Endpoints')
+        ->get()
+        ->map->getReflection()
+        ->map->getMethods()
+        ->flatten()
+        ->filter(function ($method) {
+            return $method->getModifiers() === 1;
+        })
+        ->map(function ($method) {
+            return (object) [
+                'class' => $method->class,
+                'name' => $method->name,
+                'parameters' => collect($method->getParameters())
+                    ->pluck('name')
+                    ->toArray(),
+                'docblock' => $method->getDocComment()
+            ];
+        });    
+    }
 }
