@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 Use Illuminate\Support\Str;
 use Archetype\Commands\DemoCommand;
 use Archetype\Commands\ErrorsCommand;
+use Archetype\Commands\DocumentationCommand;
 use Archetype\Commands\ListAPICommand;
 use Archetype\Commands\RelationshipsDemo;
 use Archetype\Factories\LaravelFileFactory;
@@ -62,6 +63,7 @@ class ServiceProvider extends BaseServiceProvider
             DemoCommand::class,
             RelationshipsDemo::class,
             ErrorsCommand::class,
+            DocumentationCommand::class,
         ]);
     }  
 }

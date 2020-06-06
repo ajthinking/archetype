@@ -125,6 +125,14 @@ class DocumentationExtractor
      */
     public function parse($string)
     {
+        return (object) [
+            'body' => $this->getBody($string),
+            'tags' => $this->extractAnnotations($string),
+        ]; 
+    }
+
+    public function extractAnnotations($string)
+    {
         //in case we don't have any tag to detect or an empty doc comment, we skip this method
         if (empty($this->tags) || empty($string)) {
             return [];
@@ -140,7 +148,7 @@ class DocumentationExtractor
         }
         
         //find @[tag] [params...]
-        $regex = '#\* @(?P<tag>'.$tags.'+)\s+((?P<params>[\s"a-zA-Z0-9\-$\\._/-^]+)){1,}#si';
+        $regex = '#\* @(?P<tag>'.$tags.'+)\s+((?P<params>[\s"a-zA-Z0-9\(\)\'\-$\\._/-^]+)){1,}#si';
         preg_match_all($regex, $string, $matches, PREG_SET_ORDER);
         
         $final = [];
@@ -171,5 +179,19 @@ class DocumentationExtractor
         }
         
         return $final;
+    }
+
+    public function getBody($docblock)
+    {
+        $docblock = preg_replace('/^[\s\n]*/', '', $docblock);
+        $docblock = preg_replace('/\/\*\*/', '', $docblock);
+        $docblock = preg_replace('/\*\//', '', $docblock);        
+        $docblock = preg_replace('/\*/', "$1", $docblock);        
+        $docblock = preg_replace('/(.*)@.*/', "$1", $docblock);        
+        $docblock = preg_replace('/[\s\n]*$/m', '', $docblock);
+        $docblock = preg_replace('/^[\s\n]*/', '', $docblock);
+        $docblock = preg_replace('/^\s*/m', '', $docblock);        
+
+        return $docblock;
     }
 }

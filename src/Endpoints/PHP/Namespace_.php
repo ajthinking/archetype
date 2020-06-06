@@ -8,9 +8,16 @@ use PhpParser\BuilderFactory;
 class Namespace_ extends EndpointProvider
 {
     /**
-     * Get/set file namespace
+     * @example Get file namespace
+     * @source $file->namespace()
      *
-     * @param string|null $value
+     * @example Set file namespace
+     * @source $file->namespace('App\Models')
+     * 
+     * @example Remove file namespace
+     * @source $file->remove()->namespace()
+     * 
+     * @param string $value
      * @return void
      */
     public function namespace(string $value = null)
