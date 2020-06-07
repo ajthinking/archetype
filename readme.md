@@ -182,7 +182,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
 
 The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
 
-<img src="docs/img/ASTQueryBuilder2.png" width="600px">
+<img src="https://user-images.githubusercontent.com/3457668/83963053-2e692600-a8a3-11ea-9a8a-9aa1a28c4d55.png" width="600px">
 
 * Three kinds of methods are provided (hinted with indentation in the code example)
     * Traversing (`methods`,`staticCalls`,`firstArg` ...)
@@ -256,7 +256,7 @@ vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
 PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/archetype) for planned features.
 
 <a href="https://trello.com/b/1M2VRnoQ/archetype">
-    <img src="docs/img/trello.png" width="600px">
+    <img src="https://user-images.githubusercontent.com/3457668/83963060-332dda00-a8a3-11ea-844d-5d4d4d6987ff.png" width="600px">
 </a>
 
 ## License
