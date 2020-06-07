@@ -140,7 +140,7 @@ class DocumentationExtractor
         }
         
         //find @[tag] [params...]
-        $regex = '#\* @(?P<tag>'.$tags.'+)\s+((?P<params>[\s"a-zA-Z0-9\(\)\'\-$\\._/-^]+)){1,}#si';
+        $regex = '#\* @(?P<tag>'.$tags.'+)\s+((?P<params>[\s"a-zA-Z0-9\(\)\'\,\-$\\._/-^]+)){1,}#si';
         preg_match_all($regex, $string, $matches, PREG_SET_ORDER);
         
         $final = [];
