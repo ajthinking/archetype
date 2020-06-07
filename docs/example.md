@@ -1,7 +1,7 @@
 
-# API
+## API
 
-## <b>Namespace_</b>
+### <b>Namespace_</b>
 
 ```php
 // Get file namespace
@@ -13,7 +13,7 @@ $file->namespace('App\Models')
 // Remove file namespace
 $file->remove()->namespace()
 ```
-## <b>ClassName</b>
+### <b>ClassName</b>
 ```php
 // Get file class name
 $file->className()
@@ -21,12 +21,12 @@ $file->className()
 // Set file class name
 $file->className('MyClass')
 ```
-## <b>AstQuery</b>
+### <b>AstQuery</b>
 ```php
 // Get a AstQueryBuilder instance
 $file->astQuery()
 ```
-## <b>Extends</b>
+### <b>Extends</b>
 ```php
 // Get class extends
 $file->extends()
