@@ -1,3 +1,4 @@
+```php
 // Get file namespace
 $file->namespace()
 
@@ -6,3 +7,4 @@ $file->namespace('App\Models')
 
 // Remove file namespace
 $file->remove()->namespace()
+```
