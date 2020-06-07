@@ -182,7 +182,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
 
 The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
 
-<img src="https://user-images.githubusercontent.com/3457668/83963053-2e692600-a8a3-11ea-9a8a-9aa1a28c4d55.png" width="600px">
+<img src="https://user-images.githubusercontent.com/3457668/83963046-25785480-a8a3-11ea-9224-b04fa8cebb81.png" width="600px">
 
 * Three kinds of methods are provided (hinted with indentation in the code example)
     * Traversing (`methods`,`staticCalls`,`firstArg` ...)
