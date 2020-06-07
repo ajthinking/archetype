@@ -49,56 +49,47 @@ PHPFile::in('database/migrations')
     ->get()
     ->each(function($file) {
         // Do something
-        $file->add()->use(['Database\CustomMigration'])
+        $file->add()->use('Database\CustomMigration')
           ->extends('Database\CustomMigration')
           ->save();
     });
 
-// add relationship methods
-LaravelFile::load('app/User.php')
-    ->hasMany(['App\Car'])
-    ->hasOne(['App\Life'])
-    ->belongsTo(['App\Wife'])
-  	->methodNames()
+// quickly find the Laravel user file
+LaravelFile::user()
 
-// move User.php to a Models directory
-PHPFile::load('app/User.php')
-    ->namespace('App\Models')
-    ->move('app/Models/User.php')
+// add relationship methods
+LaravelFile::user()
+    ->hasMany('App\Car')
+    ->hasOne('App\Life')
+    ->belongsTo(['App\Wife', 'App\Kid'])
 
 // install a package trait
 PHPFile::load('app/User.php')
-    ->addUseStatements('Package\Tool')
-    ->addTraitUseStatement('Tool')
-    ->save()
-
-// add a route
-LaravelFile::load('routes/web.php')
-    ->addRoute('dummy', 'Controller@method')
+    ->add()->use('Package\Tool')
+    ->add()->traitUse('Tool')
     ->save()
     
 // debug will write result relative to storage/.debug
 LaravelFile::load('app/User.php')
-    ->setClassName('Mistake')
+    ->className('MistakeUser')
     ->debug()
 
-// add items to protected properties
+// add items to properties
 LaravelFile::load('app/User.php')
     ->add()->fillable('message')
     ->add()->casts(['is_admin' => 'boolean'])
     ->add()->hidden('secret')    
 
 // create new files from templates
-LaravelFile::model('Beer')
-    ->save()
-LaravelFile::controller('BeerController')
+LaravelFile::make()->model('Beer')
     ->save()
 
-// many in one go
-LaravelFile::create('Beer', ['model', 'controller', 'migration'])
+// create new empty file
+LaravelFile::make()->file('scripts/custom_script.php')
+    ->save()
 ```
 
-### Template engine
+### Template engine (under review)
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
 ```php
