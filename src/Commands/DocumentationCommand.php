@@ -83,9 +83,11 @@ class DocumentationCommand extends Command
             return $result;
         });
 
-        dd($chunk->first());
-        
+        $r = $chunk->map(function($piece) {
+            return '// ' . $piece->comment . PHP_EOL . $piece->source;
+        })->implode(PHP_EOL . PHP_EOL);
 
+        file_put_contents(base_path('docs.md'), '```php' . PHP_EOL . $r . PHP_EOL . '```');
     }
 
 
