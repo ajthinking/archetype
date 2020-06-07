@@ -37,6 +37,11 @@ abstract class EndpointProvider
         return (boolean) $this->getHandlerMethod($signature, $args);
     }
 
+    public function getEndpoints()
+    {
+        return $this->ownNonReservedPublicMethods();        
+    }
+
     protected function getHandlerMethod($signature, $args)
     {
         return $this->ownNonReservedPublicMethods()->contains($signature) ? $signature : false;

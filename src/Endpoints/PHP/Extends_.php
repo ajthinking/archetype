@@ -6,6 +6,16 @@ use Archetype\Endpoints\EndpointProvider;
 
 class Extends_ extends EndpointProvider
 {
+    /**
+     * @example Get class extends
+     * @source $file->extends()
+     * 
+     * @example Set class extends
+     * @source $file->extends('App\BaseProduct')
+     * 
+     * @param string $name
+     * @return void
+     */
     public function extends($name = null)
     {
         if($name === null) return $this->get();

@@ -2,9 +2,11 @@
 
 namespace Archetype\Endpoints\PHP\Maker;
 
+use Archetype\Endpoints\EndpointProvider;
 use Illuminate\Support\Str;
 
-class PHPTemplate
+
+class PHPTemplate extends EndpointProvider
 {
     protected $options = [];
 

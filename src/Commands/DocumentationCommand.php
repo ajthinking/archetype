@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PHPFile;
+use Illuminate\Support\Facades\File;
+use ReflectionException;
 
 class DocumentationCommand extends Command
 {
@@ -35,59 +37,55 @@ class DocumentationCommand extends Command
 
     public function handle()
     {
-        // LaravelFile::in('packages/ajthinking/archetype/src/Endpoints')
-        // ->get()
-        // ->map->getReflection()
-        // ->map->getMethods()
-        // ->flatten()
-        // ->filter(function ($method) {
-        //     return $method->getModifiers() === 1;
-        // })
-        // ->map(function ($method) {
-        //     return (object) [
-        //         'class' => $method->class,
-        //         'name' => $method->name,
-        //         'parameters' => collect($method->getParameters())
-        //             ->pluck('name')
-        //             ->toArray(),
-        //         'docblock' => $method->getDocComment()
-        //     ];
-        // });
-        
-        $examples = (new \Archetype\Support\DocumentationExtractor(
-            \Archetype\Endpoints\PHP\Namespace_::class, ['example']
-        ))->getFromMethod('namespace');
+        $targets = PHPFile::in('packages/ajthinking/archetype/src/Endpoints')->get()
+            ->map->getReflection()->filter()->map->name;
 
-        $examples = collect($examples->tags)->map(function($example) {
-            return (object) [
-                'comment' => implode(' ', $example['params']),
-            ];
+        $targets->each(function($target) {
+            $doc = $this->getClassDocs($target);
+
+            $path = Str::of(base_path('packages/ajthinking/archetype/docs/'))
+                ->append(
+                    Str::of($target)
+                        ->replaceFirst('Archetype\\', '')
+                        ->replace('\\', '/')
+                        ->finish('.md')
+                );
+
+            File::ensureDirectoryExists(
+                dirname($path)
+            );
+            
+            File::put($path, $doc);
         });
+    }
+
+    protected function getClassDocs($class)
+    {
+        try{
+            $methodsToDocument = (new $class)->getEndpoints();
+        } catch(\Throwable $e) {
+            $methodsToDocument = [];
+        }
         
-        $sources = (new \Archetype\Support\DocumentationExtractor(
-            \Archetype\Endpoints\PHP\Namespace_::class, ['source']
-        ))->getFromMethod('namespace');
+        $extractor = new \Archetype\Support\DocumentationExtractor(
+            $class, ['example', 'source']
+        );
 
-        $sources = collect($sources->tags)->map(function($source) {
-            return (object) [
-                'source' => implode(' ', $source['params']),
-            ];
-        });
-
-        $chunk = $examples->zip($sources)->map(function($objects) {
-            $result = (object) [];
-            foreach($objects as $object) {
-                $key = array_keys((array)$object)[0];
-                $result->$key = $object->$key;
+        return collect($methodsToDocument)->map(function($method) use($extractor) {
+            try {
+                $annotations = collect($extractor->getFromMethod($method));
+            } catch(ReflectionException $e) {
+                $annotations = collect($extractor->getFromMethod('__call'));
             }
-            return $result;
-        });
 
-        $r = $chunk->map(function($piece) {
-            return '// ' . $piece->comment . PHP_EOL . $piece->source;
+            echo $method . PHP_EOL;
+
+            return $annotations->chunk(2)->map(function($pair) {
+                return '// ' . implode(' ', $pair->first()['params']) . PHP_EOL
+                    . implode(' ', $pair->last()['params']);
+                })->implode(PHP_EOL . PHP_EOL);
+
         })->implode(PHP_EOL . PHP_EOL);
-
-        file_put_contents(base_path('docs.md'), '```php' . PHP_EOL . $r . PHP_EOL . '```');
     }
 
 

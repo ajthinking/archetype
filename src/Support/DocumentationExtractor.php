@@ -125,14 +125,6 @@ class DocumentationExtractor
      */
     public function parse($string)
     {
-        return (object) [
-            'body' => $this->getBody($string),
-            'tags' => $this->extractAnnotations($string),
-        ]; 
-    }
-
-    public function extractAnnotations($string)
-    {
         //in case we don't have any tag to detect or an empty doc comment, we skip this method
         if (empty($this->tags) || empty($string)) {
             return [];
@@ -179,19 +171,5 @@ class DocumentationExtractor
         }
         
         return $final;
-    }
-
-    public function getBody($docblock)
-    {
-        $docblock = preg_replace('/^[\s\n]*/', '', $docblock);
-        $docblock = preg_replace('/\/\*\*/', '', $docblock);
-        $docblock = preg_replace('/\*\//', '', $docblock);        
-        $docblock = preg_replace('/\*/', "$1", $docblock);        
-        $docblock = preg_replace('/(.*)@.*/', "$1", $docblock);        
-        $docblock = preg_replace('/[\s\n]*$/m', '', $docblock);
-        $docblock = preg_replace('/^[\s\n]*/', '', $docblock);
-        $docblock = preg_replace('/^\s*/m', '', $docblock);        
-
-        return $docblock;
     }
 }

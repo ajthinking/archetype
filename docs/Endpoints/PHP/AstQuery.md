@@ -1,0 +1,2 @@
+// Get a AstQueryBuilder instance
+$file->astQuery()

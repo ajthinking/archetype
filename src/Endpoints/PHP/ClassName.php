@@ -6,6 +6,16 @@ use Archetype\Endpoints\EndpointProvider;
 
 class ClassName extends EndpointProvider
 {
+    /**
+     * @example Get file class name
+     * @source $file->className()
+     *
+     * @example Set file class name
+     * @source $file->className('MyClass')
+     * 
+     * @param string $name
+     * @return void
+     */    
     public function className($name = null)
     {
         if($name === null) return $this->get();

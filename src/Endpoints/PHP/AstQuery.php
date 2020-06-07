@@ -8,6 +8,12 @@ use Archetype\Endpoints\EndpointProvider;
 
 class AstQuery extends EndpointProvider
 {
+    /**
+     * @example Get a AstQueryBuilder instance
+     * @source $file->astQuery()
+     * 
+     * @return Archetype\Support\AST\ASTQueryBuilder
+     */     
     public function astQuery() {
         return ASTQueryBuilder::fromFile($this->file);
     }
