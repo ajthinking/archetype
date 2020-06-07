@@ -3,7 +3,7 @@
 
 <hr>
 
-![abcdef](https://img.shields.io/badge/-namespace-green)
+![abcdef](https://img.shields.io/badge/-namespace-blue)
 
 ```php
 // Get file namespace
@@ -19,7 +19,7 @@ $file->remove()->namespace()
 
 <hr>
 
-![abcdef](https://img.shields.io/badge/-className-green)
+![abcdef](https://img.shields.io/badge/-className-blue)
 
 ```php
 // Get file class name
@@ -31,7 +31,7 @@ $file->className('MyClass')
 
 <hr>
 
-![abcdef](https://img.shields.io/badge/-astQuery-green)
+![abcdef](https://img.shields.io/badge/-astQuery-blue)
 
 ```php
 // Get a AstQueryBuilder instance
@@ -40,7 +40,7 @@ $file->astQuery()
 
 <hr>
 
-![abcdef](https://img.shields.io/badge/-extends-green)
+![abcdef](https://img.shields.io/badge/-extends-blue)
 
 ```php
 // Get class extends
