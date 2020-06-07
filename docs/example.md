@@ -1,7 +1,7 @@
 
 ## API
 
-> Namespace
+> Archetype\Endpoints\PHP\Namespace
 ```php
 // Get file namespace
 $file->namespace()
@@ -13,7 +13,7 @@ $file->namespace('App\Models')
 $file->remove()->namespace()
 ```
 
-> ClassName
+> Archetype\Endpoints\PHP\ClassName
 ```php
 // Get file class name
 $file->className()
@@ -22,13 +22,13 @@ $file->className()
 $file->className('MyClass')
 ```
 
-> AstQuery
+> Archetype\Endpoints\PHP\AstQuery
 ```php
 // Get a AstQueryBuilder instance
 $file->astQuery()
 ```
 
-> Extends
+> Archetype\Endpoints\PHP\Extends
 ```php
 // Get class extends
 $file->extends()
