@@ -11,6 +11,8 @@ use ReflectionException;
 
 class DocumentationCommand extends Command
 {
+    public $all = '';
+
     /**
      * The name and signature of the console command.
      *
@@ -56,7 +58,10 @@ class DocumentationCommand extends Command
             );
             
             File::put($path, $doc);
+            $this->all = $this->all . $doc;
         });
+
+        //File::put(base_path('packages/ajthinking/archetype/docs/example.md'), $this->all);
     }
 
     protected function getClassDocs($class)
