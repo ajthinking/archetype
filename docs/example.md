@@ -1,6 +1,10 @@
 
 ## PHPFile API
 
+<hr>
+
+![abcdef](https://img.shields.io/badge/-namespace-green)
+
 ```php
 // Get file namespace
 $file->namespace()
@@ -12,7 +16,10 @@ $file->namespace('App\Models')
 $file->remove()->namespace()
 ```
 
+
 <hr>
+
+![abcdef](https://img.shields.io/badge/-className-green)
 
 ```php
 // Get file class name
@@ -24,12 +31,16 @@ $file->className('MyClass')
 
 <hr>
 
+![abcdef](https://img.shields.io/badge/-astQuery-green)
+
 ```php
 // Get a AstQueryBuilder instance
 $file->astQuery()
 ```
 
 <hr>
+
+![abcdef](https://img.shields.io/badge/-extends-green)
 
 ```php
 // Get class extends
