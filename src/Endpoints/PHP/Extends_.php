@@ -14,7 +14,7 @@ class Extends_ extends EndpointProvider
      * @source $file->extends('App\BaseProduct')
      * 
      * @param string $name
-     * @return void
+     * @return mixed
      */
     public function extends($name = null)
     {

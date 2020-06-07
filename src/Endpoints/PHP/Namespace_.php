@@ -18,7 +18,7 @@ class Namespace_ extends EndpointProvider
      * @source $file->remove()->namespace()
      * 
      * @param string $value
-     * @return void
+     * @return mixed
      */
     public function namespace(string $value = null)
     {

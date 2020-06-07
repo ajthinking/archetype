@@ -11,6 +11,35 @@ use Exception;
 
 class Property extends EndpointProvider
 {
+    /**
+     * @example Get class property
+     * @source $file->property('table')
+     *
+     * @example Set class property
+     * @source $file->property('table', 'gdpr_users')
+     * 
+     * @example Remove class property
+     * @source $file->remove()->property('table')
+     * 
+     * @example Clear class property default value
+     * @source $file->clear()->property('table')
+     * 
+     * @example Empty class array property
+     * @source $file->empty()->property('fillable')
+     * 
+     * @example Add item to class array property
+     * @source $file->add()->property('fillable', 'nickname')
+     * 
+     * @example Append to class string property
+     * @source $file->add()->property('table', '_gdpr')
+     * 
+     * @example Add item to class array property
+     * @source $file->add()->property('fillable', 'nickname')
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return mixed
+     */    
     public function property($key, $value = Types::NO_VALUE)
     {
         // remove?
@@ -32,6 +61,14 @@ class Property extends EndpointProvider
         return $this->set($key, $value);    
     }
 
+    /**
+     * @example Explicitly set class property without default value
+     * @source $file->setProperty('propertyWithoutDefaultValue')
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return mixed
+     */
     public function setProperty($key, $value = Types::NO_VALUE)
     {
         return $this->set($key, $value);    

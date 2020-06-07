@@ -6,6 +6,17 @@ use Archetype\Endpoints\EndpointProvider;
 
 class Implements_ extends EndpointProvider
 {
+    /**
+     * @example Get class implements
+     * @source $file->implements()
+     * 
+     * @example Set class implements
+     * @source $file->implements(['InterfaceA', 'InterfaceB'])
+     * 
+     * @example Add class implements
+     * @source $file->add()->implements('InterfaceC')
+     * @return mixed
+     */    
     public function implements($name = null)
     {
         if($this->file->directive('add')) return $this->add($name);

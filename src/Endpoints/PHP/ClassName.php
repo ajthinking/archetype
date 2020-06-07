@@ -14,7 +14,7 @@ class ClassName extends EndpointProvider
      * @source $file->className('MyClass')
      * 
      * @param string $name
-     * @return void
+     * @return mixed
      */    
     public function className($name = null)
     {

@@ -13,24 +13,6 @@ class Maker extends EndpointProvider
     protected $extension = '.php';
     protected $relativeDir = '';
 
-    protected function setupNames($path, $location = 'file_root')
-    {
-        $relativeLocation = URI::make($path);
-        
-        $relativeRoot = config('archetype.locations.' . $location)
-            . DIRECTORY_SEPARATOR . $relativeLocation->path();
-
-        $relativeRoot = Str::of($relativeRoot)->ltrim('/')->__toString();
-
-        $this->outputDriver = $this->outputDriver(
-            $this->emulatedInputDriver($relativeRoot)
-        );
-
-        $this->namespace = URI::make($relativeRoot)->namespace();
-
-        $this->class = URI::make($relativeRoot)->class();
-    }
-
     public function file($name, $options = [])
     {
         $this->setupNames($name);
@@ -51,6 +33,25 @@ class Maker extends EndpointProvider
         return $this->file->fromString($contents)
             ->outputDriver($this->outputDriver);        
     }
+
+
+    protected function setupNames($path, $location = 'file_root')
+    {
+        $relativeLocation = URI::make($path);
+        
+        $relativeRoot = config('archetype.locations.' . $location)
+            . DIRECTORY_SEPARATOR . $relativeLocation->path();
+
+        $relativeRoot = Str::of($relativeRoot)->ltrim('/')->__toString();
+
+        $this->outputDriver = $this->outputDriver(
+            $this->emulatedInputDriver($relativeRoot)
+        );
+
+        $this->namespace = URI::make($relativeRoot)->namespace();
+
+        $this->class = URI::make($relativeRoot)->class();
+    }    
 
     protected function outputDriver($inputDriver)
     {

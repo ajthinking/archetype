@@ -6,6 +6,10 @@ use Archetype\Endpoints\EndpointProvider;
 
 class MethodNames extends EndpointProvider
 {
+    /**
+     * @example Get class method names
+     * @source $file->methodNames()
+     */        
     public function methodNames()
     {
         return $this->get();

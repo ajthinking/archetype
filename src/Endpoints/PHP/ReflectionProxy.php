@@ -8,6 +8,12 @@ use Exception;
 
 class ReflectionProxy extends EndpointProvider
 {
+    /**
+     * @example Get ReflectionClass
+     * @source $file->getReflection()
+     *
+     * @return mixed
+     */
     public function getReflection()
     {
         $class = "\\" . $this->file->namespace() ."\\" . $this->file->className();

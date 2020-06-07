@@ -13,6 +13,21 @@ use Str;
 
 class Use_ extends EndpointProvider
 {
+    /**
+     * @example Get file uses
+     * @source $file->use()
+     * 
+     * @example Set file uses
+     * @source $file->use(['ClassA', 'classB'])
+     * 
+     * @example Use with alias
+     * @source $file->use('ClassA as Ajthinking')
+     * 
+     * @example Add file uses
+     * @source $file->add()->use('AdditionalClass')
+     * 
+     * @return mixed
+     */     
     public function use($value = null)
     {
         if($this->file->directive('add')) return $this->add($value);

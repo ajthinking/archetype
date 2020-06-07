@@ -24,14 +24,6 @@ class PHPFileQueryBuilder extends EndpointProvider
     use HasOperators;
 
     const PHPSignature = '/\.php$/';   
-
-    /** this is kept probably because of some inheritance issue */
-    protected function getHandlerMethod($signature, $args)
-    {
-        $reflection = new ReflectionClass(static::class);
-        $methods = collect($reflection->getMethods(ReflectionMethod::IS_PUBLIC))->pluck('name');
-        return collect($methods)->contains($signature) ? $signature : false;
-    }
     
     public function __construct($file = null)
     {
@@ -133,4 +125,12 @@ class PHPFileQueryBuilder extends EndpointProvider
             ->ignore(config('archetype.ignored_paths'))
             ->get();
     }
+
+    /** this is kept probably because of some inheritance issue */
+    protected function getHandlerMethod($signature, $args)
+    {
+        $reflection = new ReflectionClass(static::class);
+        $methods = collect($reflection->getMethods(ReflectionMethod::IS_PUBLIC))->pluck('name');
+        return collect($methods)->contains($signature) ? $signature : false;
+    }    
 }
