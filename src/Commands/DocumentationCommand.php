@@ -66,19 +66,17 @@ class DocumentationCommand extends Command
         } catch(\Throwable $e) {
             $methodsToDocument = [];
         }
-        
+
         $extractor = new \Archetype\Support\DocumentationExtractor(
             $class, ['example', 'source']
         );
 
-        return collect($methodsToDocument)->map(function($method) use($extractor) {
+        $code = collect($methodsToDocument)->map(function($method) use($extractor) {
             try {
                 $annotations = collect($extractor->getFromMethod($method));
             } catch(ReflectionException $e) {
                 $annotations = collect($extractor->getFromMethod('__call'));
             }
-
-            echo $method . PHP_EOL;
 
             return $annotations->chunk(2)->map(function($pair) {
                 return '// ' . implode(' ', $pair->first()['params']) . PHP_EOL
@@ -86,6 +84,8 @@ class DocumentationCommand extends Command
                 })->implode(PHP_EOL . PHP_EOL);
 
         })->implode(PHP_EOL . PHP_EOL);
+
+        return '```php' . PHP_EOL . $code . PHP_EOL . '```';
     }
 
 
