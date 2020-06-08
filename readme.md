@@ -70,54 +70,7 @@ LaravelFile::user()
 
 Running the `LaravelFile` script above will save the following to disk:
 
-```php
-<?php
-
-namespace App;
-
-use App\Contracts\PlayerInterface;
-use App\Traits\Dumpable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-
-class User extends Authenticatable
-{
-    use Notifiable;
-    
-    public $table = 'users';
-    
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'email', 'password', 'nickname'];
-    
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [];
-    
-    /**
-     * Get the associated Guild
-     */
-    public function guild()
-    {
-        return $this->belongsTo(Guild::class);
-    }
-    
-    /**
-     * Get the associated Games
-     */
-    public function games()
-    {
-        return $this->hasMany(Game::class);
-    }
-}
-```
+<img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
 ```php
 // Each *setter* method also act as *getter* when argument is omitted
