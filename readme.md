@@ -11,6 +11,23 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 
 <img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">
 
+## Table of Content
+  * [Installation](#installation)
+  * [Usage](#usage)
+    + [Quick start examples](#quick-start-examples)
+    + [File API](#available-methods)
+    + [Querying the Abstract Syntax Tree (under review)](#querying-the-abstract-syntax-tree--under-review-)
+    + [Template engine (under review)](#template-engine--under-review-)
+    + [Finding errors](#errors)
+    + [Limitations / Missing features](#limitations---missing-features)
+  * [Configuration](#configuration)
+  * [Contributing](#contributing)
+    + [Development installation](#development-installation)
+    + [Roadmap](#roadmap)
+  * [License](#license)
+  * [Acknowledgements](#acknowledgements)
+  * [Like this package?](#like-this-package-)
+
 ## Installation
 ```
 composer require ajthinking/archetype
