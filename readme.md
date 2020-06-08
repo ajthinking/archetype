@@ -43,6 +43,7 @@ PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
     ->add()->trait('Shippable')
     ->public()->property('stock', -1)
+    // ...
     ->save();
 ```
 
@@ -50,15 +51,15 @@ PHPFile::make()->class('acme/Product.php')
 // Modify existing files  
 PHPFile::load('app/User.php')
     ->className('NewClassName')
-    ->save()
+    ->save();
 ```
 
 ```php
-// Use LaravelFile for Laravel specific extras
-LaravelFile::load('app/User.php')
+// Use LaravelFile for Laravel specifics
+LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->trait('Dumpable')
-    ->public()->property('table', 'users')
+    ->table('gdpr_users')
     ->add()->fillable('nickname')
     ->remove()->hidden()
     ->empty()->casts()
@@ -67,15 +68,62 @@ LaravelFile::load('app/User.php')
     ->save();
 ```
 
-Running above saves the following to disk:
+Running the `LaravelFile` script above will save the following to disk:
 
-<img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
+```php
+<?php
+
+namespace App;
+
+use App\Contracts\PlayerInterface;
+use App\Traits\Dumpable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+    
+    public $table = 'users';
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'password', 'nickname'];
+    
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [];
+    
+    /**
+     * Get the associated Guild
+     */
+    public function guild()
+    {
+        return $this->belongsTo(Guild::class);
+    }
+    
+    /**
+     * Get the associated Games
+     */
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
+}
+```
 
 ```php
 // Each *setter* method also act as *getter* when argument is omitted
-echo PHPFile::load('app/User.php')->extends()
+echo PHPFile::load('app/User.php')->fillable();
 
-// 'Authenticatable'
+// ['name', 'email', 'password']
 ```
 
 > [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
