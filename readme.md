@@ -59,7 +59,7 @@ Running above gives:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
-:point_right: [docs/api.md | Full API documentation available here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+> [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 
 ### File QueryBuilder 
 ```php
