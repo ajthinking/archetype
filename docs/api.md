@@ -1,4 +1,4 @@
-# API Endpoints
+# File read/write API Endpoints
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Namespace_.php'>![Archetype\Endpoints\PHP\Namespace_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Namespace_-blue)</a>
 ```php
@@ -117,12 +117,6 @@ $file->extends('App\BaseProduct')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Maker/PHPTemplate.php'>![Archetype\Endpoints\PHP\Maker\PHPTemplate](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Maker\PHPTemplate-blue)</a>
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Use_.php'>![Archetype\Endpoints\PHP\Use_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Use_-blue)</a>
 ```php
 // Get file uses
@@ -211,36 +205,6 @@ $file->visible();
 <hr>
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/LaravelFileQueryBuilder.php'>![Archetype\Endpoints\Laravel\LaravelFileQueryBuilder](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\LaravelFileQueryBuilder-blue)</a>
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/Maker/LaravelTemplate.php'>![Archetype\Endpoints\Laravel\Maker\LaravelTemplate](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\Maker\LaravelTemplate-blue)</a>
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/Maker/NamepspacedClass.php'>![Archetype\Endpoints\Laravel\Maker\NamepspacedClass](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\Maker\NamepspacedClass-blue)</a>
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/Maker/Model.php'>![Archetype\Endpoints\Laravel\Maker\Model](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\Maker\Model-blue)</a>
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/Maker/Unimplemented.php'>![Archetype\Endpoints\Laravel\Maker\Unimplemented](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\Maker\Unimplemented-blue)</a>
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/Maker/Command.php'>![Archetype\Endpoints\Laravel\Maker\Command](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\Maker\Command-blue)</a>
 ```php
 // UNDOCUMENTED CLASS
 ```
