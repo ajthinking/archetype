@@ -1,4 +1,4 @@
-# File read/write API Endpoints
+# File read/write API
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Namespace_.php'>![Archetype\Endpoints\PHP\Namespace_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Namespace_-blue)</a>
 ```php

@@ -52,7 +52,7 @@ class DocumentationCommand extends Command
             return $this->makeEndpointDoc($class);
         })->implode(PHP_EOL . PHP_EOL);
 
-        $introduction = '# File read/write API Endpoints';
+        $introduction = '# File read/write API';
 
         $content = collect([
             $introduction,
