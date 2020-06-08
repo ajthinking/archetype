@@ -73,7 +73,7 @@ class Maker extends EndpointProvider
     protected function stub($name)
     {
         return file_get_contents(
-            __DIR__ . "/../../../stubs/$name"
+            __DIR__ . "/../../stubs/$name"
         );
     }
 
