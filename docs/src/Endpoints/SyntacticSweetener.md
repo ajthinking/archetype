@@ -2,7 +2,7 @@
 ```php
 use LaravelFile as Assistant;
 
-// Optionally make the syntax more 'readable' with intermediate words
+// Make syntax more 'readable' with intermediate words
 Assistant::please()->make()->model('App\Car')
     ->and()->add('nickname')->to()->fillable()
     ->also()->add()->a()->trait('HasNickname')
