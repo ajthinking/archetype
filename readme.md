@@ -38,11 +38,6 @@ composer require ajthinking/archetype
 ### File read/write API
 
 ```php
-// Base functionality
-PHPFile::load('public/index.php');
-```
-
-```php
 // Laravel example
 LaravelFile::load('app/User.php')
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
