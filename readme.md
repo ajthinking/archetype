@@ -111,7 +111,7 @@ LaravelFile::models()
 LaravelFile::controllers()
 ```
 
-> [Review the QueryBuilder API here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+> [Review full QueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/querybuilder.md) :point_left:
 
 
 ### Abstract Syntax Tree QueryBuilder
