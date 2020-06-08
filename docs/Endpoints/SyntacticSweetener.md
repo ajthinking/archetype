@@ -1,4 +1,4 @@
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/SyntacticSweetener.php'>![SyntacticSweetener](https://img.shields.io/badge/-Archetype\Endpoints\SyntacticSweetener-blue)
+<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/SyntacticSweetener.php'>![SyntacticSweetener](https://img.shields.io/badge/-SyntacticSweetener-blue)
 ```php
 // UNDOCUMENTED CLASS
 ```

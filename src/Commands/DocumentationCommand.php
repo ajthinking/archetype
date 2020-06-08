@@ -64,7 +64,7 @@ class DocumentationCommand extends Command
             ->finish('.php');
 
         $basename = class_basename($target);
-        $classBadge = "<a href='$sourceLink'>![$basename](https://img.shields.io/badge/-$target-blue)";
+        $classBadge = "<a href='$sourceLink'>![$basename](https://img.shields.io/badge/-$basename-blue)";
 
         $doc = $classBadge . PHP_EOL
             . '```php' . PHP_EOL . $examples . PHP_EOL . '```'
