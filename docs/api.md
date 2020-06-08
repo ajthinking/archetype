@@ -1,3 +1,5 @@
+# API Endpoints
+
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Namespace_.php'>![Archetype\Endpoints\PHP\Namespace_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Namespace_-blue)</a>
 ```php
 // Get file namespace
@@ -39,7 +41,8 @@ INCOMPLETE
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/PHPFileQueryBuilder.php'>![Archetype\Endpoints\PHP\PHPFileQueryBuilder](https://img.shields.io/badge/-Archetype\Endpoints\PHP\PHPFileQueryBuilder-blue)</a>
 ```php
-// UNDOCUMENTED CLASS
+// Custom code loaded from a md file
+$files = PHPFile::where('className', 'like' '%Create%')->get();
 ```
 <hr>
 

@@ -17,7 +17,7 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
     + [Quick start examples](#quick-start-examples)    
     + [Build your own templates](#build-your-own-templates)
     + [Querying the Abstract Syntax Tree](#querying-the-abstract-syntax-tree)
-    + [LaravelFile available methods](#laravelfile-available-methods)    
+    + [Available methods](#available-methods)    
     + [Errors](#errors)
     + [Limitations / Missing features](#limitaions--missing-features)
   * [Contributing](#contributing)
@@ -181,23 +181,9 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
     * Resolving (`getValue`)
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
-### LaravelFile available methods
-To list all the available methods A-Z on `LaravelFile`, run: 
-```
-php artisan file:api
-```
+### Available methods
 
-![image](https://user-images.githubusercontent.com/3457668/73381863-c8520e00-42c6-11ea-9f9e-2f9e93fe8818.png)
-
-To group methods by `EndpointProvider` use the `--group` flag:
-```
-php artisan file:api --group
-```
-
-Use the `--provider` flag to only view methods from a specific `EndpointProvider`, for instance `IO`:
-```
-php artisan file:api --provider=IO
-```
+[a API Docs](https://github.com/ajthinking/archetype/blob/master/docs/api.md)
 
 ### Errors
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
