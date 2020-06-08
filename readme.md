@@ -38,6 +38,8 @@ composer require ajthinking/archetype
 ### File read/write API
 
 ```php
+use PHPFile;
+
 // Create file  
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
@@ -55,7 +57,9 @@ PHPFile::load('app/User.php')
 ```
 
 ```php
-// Use LaravelFile for Laravel specifics
+// LaravelFile extends PHPFile
+use LaravelFile;
+
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->trait('Dumpable')
@@ -81,11 +85,10 @@ echo LaravelFile::load('app/User.php')->fillable();
 
 > [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 
-### File QueryBuilder 
-```php
-use PHPFile;
-use LaravelFile;
+### File QueryBuilder
+The file QueryBuilders can help you search and retrieve a set of files to interact with. 
 
+```php
 // find files with the query builder
 PHPFile::in('database/migrations')
     ->where('extends', 'Migration')
@@ -101,36 +104,13 @@ PHPFile::in('database/migrations')
 // quickly find the Laravel user file
 LaravelFile::user()
 
-// add relationship methods
-LaravelFile::user()
-    ->hasMany('App\Car')
-    ->hasOne('App\Life')
-    ->belongsTo(['App\Wife', 'App\Kid'])
+// find models
+LaravelFile::models()
 
-// install a package trait
-PHPFile::load('app/User.php')
-    ->add()->use('Package\Tool')
-    ->add()->traitUse('Tool')
-    ->save()
-    
-// debug will write result relative to storage/.debug
-LaravelFile::load('app/User.php')
-    ->className('MistakeUser')
-    ->debug()
+// find controllers
+LaravelFile::controllers()
 
-// add items to properties
-LaravelFile::load('app/User.php')
-    ->add()->fillable('message')
-    ->add()->casts(['is_admin' => 'boolean'])
-    ->add()->hidden('secret')    
-
-// create new files from templates
-LaravelFile::make()->model('Beer')
-    ->save()
-
-// create new empty file
-LaravelFile::make()->file('scripts/custom_script.php')
-    ->save()
+> [Review the QueryBuilder API here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 ```
 
 ### Abstract Syntax Tree QueryBuilder
