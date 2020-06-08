@@ -34,12 +34,14 @@ class Implements_ extends EndpointProvider
             ->class()
             ->implements
             ->get()
-            ->toArray();
+            ->map(function($name) {
+                return implode('\\', $name->parts);
+            })->toArray();
     }
 
     protected function set($newImplements)
     {
-        $newImplements = Arr::wrap($newImplements);
+        $newImplements = $this->makeNameObject($newImplements);
         
         return $this->file->astQuery()
             ->class()
@@ -51,15 +53,18 @@ class Implements_ extends EndpointProvider
     
     protected function add($newImplements)
     {
-        
-        return $this->file->astQuery()
-            ->class()
-            ->replace(function($class) use($newImplements) {
-                $class->implements = array_merge($class->implements, $newImplements);
-                return $class;
-            })
-            ->commit()
-            ->end()
-            ->continue();
+        return $this->set(
+            array_merge(
+                $this->get(),
+                $newImplements
+            )
+        );
+    }
+
+    protected function makeNameObject($names)
+    {
+        return collect(Arr::wrap($names))->map(function($name) {
+            return new \PhpParser\Node\Name($name);
+        })->toArray();
     }
 }

@@ -30,13 +30,13 @@ class ClassImplementsTest extends Archetype\Tests\FileTestCase
     public function it_can_add_class_implements()
     {
         $file = PHPFile::load('app/User.php')
-            ->add()->implements(["MyFirstInterface" ])
-            ->add()->implements(["MySecondInterface" ]);
+            ->add()->implements(['MyFirstInterface'])
+            ->add()->implements(['MySecondInterface']);
 
         $this->assertTrue(
             $file->implements() === [
-                "MyFirstInterface",
-                "MySecondInterface"
+                'MyFirstInterface',
+                'MySecondInterface'
             ]
         );
     }    
