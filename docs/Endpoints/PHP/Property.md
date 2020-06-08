@@ -1,3 +1,4 @@
+<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Property.php'>![Archetype\Endpoints\PHP\Property](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Property-blue)
 ```php
 // Get class property
 $file->property('table')
@@ -26,3 +27,4 @@ $file->add()->property('fillable', 'nickname')
 // Explicitly set class property without default value
 $file->setProperty('propertyWithoutDefaultValue')
 ```
+<hr>

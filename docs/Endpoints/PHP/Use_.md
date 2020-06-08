@@ -1,3 +1,4 @@
+<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Use_.php'>![Archetype\Endpoints\PHP\Use_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Use_-blue)
 ```php
 // Get file uses
 $file->use()
@@ -11,3 +12,4 @@ $file->use('ClassA as Ajthinking')
 // Add file uses
 $file->add()->use('AdditionalClass')
 ```
+<hr>

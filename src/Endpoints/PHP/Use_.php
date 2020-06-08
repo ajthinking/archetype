@@ -27,7 +27,7 @@ class Use_ extends EndpointProvider
      * @source $file->add()->use('AdditionalClass')
      * 
      * @return mixed
-     */     
+     */
     public function use($value = null)
     {
         if($this->file->directive('add')) return $this->add($value);

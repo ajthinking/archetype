@@ -11,7 +11,7 @@ use ReflectionException;
 
 class DocumentationCommand extends Command
 {
-    public $all = '';
+    public $all = [];
 
     /**
      * The name and signature of the console command.
@@ -49,31 +49,51 @@ class DocumentationCommand extends Command
             ->map->getReflection()->filter()->map->name;
 
         $targets->each(function($target) {
-            $doc = $this->getEndpointDocs($target);
-
-            $path = Str::of(base_path('packages/ajthinking/archetype/docs/'))
-                ->append(
-                    Str::of($target)
-                        ->replaceFirst('Archetype\\', '')
-                        ->replace('\\', '/')
-                        ->finish('.md')
-                );
-
-            File::ensureDirectoryExists(
-                dirname($path)
-            );
-            
-            File::put($path, $doc);
-            $this->all = $this->all . $doc;
+            $this->createMDFile($target);
         });
     }
 
+    public function createMDFile($target)
+    {
+        $examples = $this->getEndpointExamples($target);
+
+        $sourceLink = 'https://github.com/ajthinking/archetype/blob/master/src/'
+            . Str::of($target)
+            ->replaceFirst('Archetype\\', '')
+            ->replace('\\', '/')
+            ->finish('.php');
+
+        $classBadge = "<a href='$sourceLink'>![$target](https://img.shields.io/badge/-$target-blue)";
+
+        $doc = $classBadge . PHP_EOL
+            . '```php' . PHP_EOL . $examples . PHP_EOL . '```'
+            . PHP_EOL . '<hr>';
+
+        $path = Str::of(base_path('packages/ajthinking/archetype/docs/'))
+            ->append(
+                Str::of($target)
+                    ->replaceFirst('Archetype\\', '')
+                    ->replace('\\', '/')
+                    ->finish('.md')
+            );
+
+        File::ensureDirectoryExists(
+            dirname($path)
+        );
+        
+        File::put($path, $doc);
+        array_push($this->all, $doc);
+    }    
+
     protected function combineMdFiles()
     {
-        File::put(base_path('packages/ajthinking/archetype/docs/example2.md'), $this->all);
+        File::put(
+            base_path('packages/ajthinking/archetype/docs/example2.md'),
+            collect($this->all)->implode(PHP_EOL . PHP_EOL)
+        );
     }
 
-    protected function getEndpointDocs($class)
+    protected function getEndpointExamples($class)
     {
         try{
             $methodsToDocument = (new $class)->getEndpoints();
@@ -85,7 +105,8 @@ class DocumentationCommand extends Command
             $class, ['example', 'source']
         );
 
-        $code = collect($methodsToDocument)->map(function($method) use($extractor) {
+        $examples = collect($methodsToDocument)->map(function($method) use($extractor) {            
+
             try {
                 $annotations = collect($extractor->getFromMethod($method));
             } catch(ReflectionException $e) {
@@ -96,10 +117,9 @@ class DocumentationCommand extends Command
                 return '// ' . implode(' ', $pair->first()['params']) . PHP_EOL
                     . implode(' ', $pair->last()['params']);
                 })->implode(PHP_EOL . PHP_EOL);
+        })->filter()->implode(PHP_EOL . PHP_EOL);
 
-        })->implode(PHP_EOL . PHP_EOL);
-
-        return '```php' . PHP_EOL . $code . PHP_EOL . '```';
+        return $examples ? $examples : '// UNDOCUMENTED CLASS';
     }
 
 
