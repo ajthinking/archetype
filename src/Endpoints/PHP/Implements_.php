@@ -20,7 +20,6 @@ class Implements_ extends EndpointProvider
      */    
     public function implements($name = null)
     {
-        
         if($this->file->directive('add')) return $this->add($name);
         
         if($name === null) return $this->get();
