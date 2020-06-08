@@ -45,7 +45,6 @@ PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
     ->add()->trait('Shippable')
     ->public()->property('stock', -1)
-    // ...
     ->save();
 ```
 
