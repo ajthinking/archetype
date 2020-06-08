@@ -1,4 +1,4 @@
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Property.php'>![Property](https://img.shields.io/badge/-Property-blue)
+<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Property.php'>![Archetype\Endpoints\PHP\Property](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Property-blue)
 ```php
 // Get class property
 $file->property('table')
