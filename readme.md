@@ -14,10 +14,10 @@ Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, f
 ## Table of Content
   * [Installation](#installation)
   * [Usage](#usage)
-    + [Quick start examples](#quick-start-examples)
-    + [File API](#available-methods)
-    + [Querying the Abstract Syntax Tree (under review)](#querying-the-abstract-syntax-tree--under-review-)
-    + [Template engine (under review)](#template-engine--under-review-)
+    + [File read/write API](#file-read/write-api)
+    + [File QueryBuilder](#file-querybuilder)
+    + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
+    + [Template engine](#template-engine)
     + [Finding errors](#errors)
     + [Limitations / Missing features](#limitations---missing-features)
   * [Configuration](#configuration)
@@ -35,7 +35,33 @@ composer require ajthinking/archetype
 
 ## Usage
 
-### Quick start examples 
+### File read/write API
+
+```php
+// Base functionality only
+PHPFile::load('public/index.php');
+```
+
+```php
+// Laravel example
+LaravelFile::load('app/User.php')
+    ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
+    ->add()->trait('Dumpable')
+    ->public()->property('table', 'users')
+    ->add()->fillable('nickname')
+    ->remove()->hidden()
+    ->empty()->casts()
+    ->hasMany('App\Game')
+    ->belongsTo('App\Guild')
+    ->save();
+```
+Running above gives:
+![image](https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png)
+
+Full documentation available here
+#### [docs/api.md](https://github.com/ajthinking/archetype/blob/master/docs/api.md)
+
+### File QueryBuilder 
 ```php
 use PHPFile;
 use LaravelFile;
@@ -87,10 +113,7 @@ LaravelFile::make()->file('scripts/custom_script.php')
     ->save()
 ```
 
-### API docs
-[Check out all available methods](https://github.com/ajthinking/archetype/blob/master/docs/api.md)
-
-### Querying the Abstract Syntax Tree (under review)
+### Abstract Syntax Tree QueryBuilder
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
 Example: how can we fetch explicit column names in a migration file?
@@ -125,7 +148,7 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
     * Resolving (`getValue`)
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
-### Template engine (under review)
+### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
 ```php
