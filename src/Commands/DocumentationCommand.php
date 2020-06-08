@@ -49,7 +49,7 @@ class DocumentationCommand extends Command
             ->map->getReflection()->filter()->map->name;
 
         $targets->each(function($target) {
-            $doc = $this->getClassDocs($target);
+            $doc = $this->getEndpointDocs($target);
 
             $path = Str::of(base_path('packages/ajthinking/archetype/docs/'))
                 ->append(
@@ -73,7 +73,7 @@ class DocumentationCommand extends Command
         File::put(base_path('packages/ajthinking/archetype/docs/example2.md'), $this->all);
     }
 
-    protected function getClassDocs($class)
+    protected function getEndpointDocs($class)
     {
         try{
             $methodsToDocument = (new $class)->getEndpoints();
