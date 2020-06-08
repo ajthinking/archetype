@@ -1,4 +1,4 @@
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Use_.php'>![Archetype\Endpoints\PHP\Use_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Use_-blue)
+<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Use_.php'>![Archetype\Endpoints\PHP\Use_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Use_-blue)</a>
 ```php
 // Get file uses
 $file->use()
