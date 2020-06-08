@@ -38,7 +38,30 @@ composer require ajthinking/archetype
 ### File read/write API
 
 ```php
-// Laravel example
+// Get code metadata for instance
+echo PHPFile::load('app/User.php')->extends()
+
+// 'Authenticatable'
+```
+
+```php
+// Create file  
+PHPFile::make()->class('acme/Product.php')
+    ->use('Shippable')
+    ->add()->trait('Shippable')
+    ->public()->property('stock', -1)
+    ->save();
+```
+
+```php
+// Modify existing files  
+PHPFile::load('app/User.php')
+    ->className('NewClassName')
+    ->save()
+```
+
+```php
+// Use LaravelFile for Laravel specific extras
 LaravelFile::load('app/User.php')
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->trait('Dumpable')
@@ -50,7 +73,8 @@ LaravelFile::load('app/User.php')
     ->belongsTo('App\Guild')
     ->save();
 ```
-Running above gives:
+
+Running above saves the following to disk:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
