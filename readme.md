@@ -38,13 +38,6 @@ composer require ajthinking/archetype
 ### File read/write API
 
 ```php
-// Get code metadata for instance
-echo PHPFile::load('app/User.php')->extends()
-
-// 'Authenticatable'
-```
-
-```php
 // Create file  
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
@@ -77,6 +70,13 @@ LaravelFile::load('app/User.php')
 Running above saves the following to disk:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
+
+```php
+// Each *setter* method also act as *getter* when argument is omitted
+echo PHPFile::load('app/User.php')->extends()
+
+// 'Authenticatable'
+```
 
 > [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 
