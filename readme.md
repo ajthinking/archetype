@@ -77,7 +77,7 @@ Running the `LaravelFile` script above will save the following to disk:
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
 ```php
-// Each *setter* method also act as *getter* when argument is omitted
+// Each setter method also act as getter when argument is omitted
 echo LaravelFile::load('app/User.php')->fillable();
 
 // ['name', 'email', 'password']
