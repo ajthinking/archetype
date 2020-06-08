@@ -86,7 +86,7 @@ echo LaravelFile::load('app/User.php')->fillable();
 > [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 
 ### File QueryBuilder
-The file QueryBuilders can help you search and retrieve a set of files to interact with. 
+Filter and retrieve a set of files to interact with. 
 
 ```php
 // find files with the query builder
@@ -101,14 +101,14 @@ PHPFile::in('database/migrations')
           ->save();
     });
 
-// quickly find the Laravel user file
-LaravelFile::user()
+// Quickly find the Laravel User file
+$file = LaravelFile::user();
 
-// find models
-LaravelFile::models()
-
-// find controllers
-LaravelFile::controllers()
+// Quickly find Laravel specific files
+LaravelFile::models()->get();
+LaravelFile::controllers()->get();
+LaravelFile::serviceProviders()->get();
+// ...
 ```
 
 > [Review full QueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/querybuilder.md) :point_left:
