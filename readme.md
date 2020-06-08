@@ -109,9 +109,10 @@ LaravelFile::models()
 
 // find controllers
 LaravelFile::controllers()
+```
 
 > [Review the QueryBuilder API here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
-```
+
 
 ### Abstract Syntax Tree QueryBuilder
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
