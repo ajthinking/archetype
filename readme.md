@@ -38,7 +38,7 @@ composer require ajthinking/archetype
 ### File read/write API
 
 ```php
-// Base functionality only
+// Base functionality
 PHPFile::load('public/index.php');
 ```
 
