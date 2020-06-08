@@ -13,7 +13,7 @@ class DemoCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'file:demo';
+    protected $signature = 'archetype:demo';
 
     /**
      * The console command description.

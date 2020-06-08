@@ -13,7 +13,7 @@ class RelationshipsDemo extends Command
      *
      * @var string
      */
-    protected $signature = 'file:relationships';
+    protected $signature = 'archetype:relationships';
 
     /**
      * The console command description.

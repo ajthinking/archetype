@@ -17,7 +17,7 @@ class ErrorsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'file:errors';
+    protected $signature = 'archetype:errors';
 
     /**
      * The console command description.

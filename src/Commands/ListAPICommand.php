@@ -14,7 +14,7 @@ class ListAPICommand extends Command
      *
      * @var string
      */
-    protected $signature = 'file:api {--provider=} {--group}';
+    protected $signature = 'archetype:api {--provider=} {--group}';
 
     /**
      * The console command description.

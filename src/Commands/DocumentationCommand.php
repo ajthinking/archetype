@@ -16,7 +16,7 @@ class DocumentationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'file:docs';
+    protected $signature = 'archetype:docs';
 
     /**
      * The console command description.

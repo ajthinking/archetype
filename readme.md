@@ -204,7 +204,7 @@ PHPFile::load('app/User.php')
 ### Errors
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
 
-To see *all* offending files run `php artisan file:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
+To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
 
 ### Limitations / Missing features
 In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
