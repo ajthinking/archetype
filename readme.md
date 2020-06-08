@@ -74,7 +74,7 @@ Running the `LaravelFile` script above will save the following to disk:
 
 ```php
 // Each *setter* method also act as *getter* when argument is omitted
-echo PHPFile::load('app/User.php')->fillable();
+echo LaravelFile::load('app/User.php')->fillable();
 
 // ['name', 'email', 'password']
 ```
