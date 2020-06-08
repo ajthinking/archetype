@@ -59,8 +59,8 @@ Running above gives:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
-Full documentation available here
-#### [docs/api.md](https://github.com/ajthinking/archetype/blob/master/docs/api.md)
+:point_right: [Full  API documentation available here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+
 
 ### File QueryBuilder 
 ```php
