@@ -56,7 +56,7 @@ LaravelFile::load('app/User.php')
     ->save();
 ```
 Running above gives:
-<img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=400>
+<img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
 Full documentation available here
 #### [docs/api.md](https://github.com/ajthinking/archetype/blob/master/docs/api.md)
