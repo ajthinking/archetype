@@ -49,7 +49,6 @@ class DocumentationCommand extends Command
             }
 
             // Harvested doc
-
             return $this->makeEndpointDoc($class);
         })->implode(PHP_EOL . PHP_EOL);
 
