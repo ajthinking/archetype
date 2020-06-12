@@ -9,12 +9,11 @@ use Illuminate\Support\Arr;
 
 class BelongsTo extends EndpointProvider
 {
+    /**
+     * @example Add a belongsTo relationship method
+     * @source $file->belongsTo('Company')
+     */
     public function belongsTo($targets)
-    {
-        return $this->add($targets);
-    }
-
-    protected function set($targets)
     {
         return $this->add($targets);
     }

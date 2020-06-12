@@ -178,13 +178,15 @@ $words = [
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/BelongsTo.php'>![Archetype\Endpoints\Laravel\BelongsTo](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\BelongsTo-blue)</a>
 ```php
-// UNDOCUMENTED CLASS
+// Add a belongsTo relationship method
+$file->belongsTo('Company')
 ```
 <hr>
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/BelongsToMany.php'>![Archetype\Endpoints\Laravel\BelongsToMany](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\BelongsToMany-blue)</a>
 ```php
-// UNDOCUMENTED CLASS
+// Add a belongsToMany relationship method
+$file->belongsToMany('Company')
 ```
 <hr>
 
@@ -212,13 +214,15 @@ $file->visible();
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/HasMany.php'>![Archetype\Endpoints\Laravel\HasMany](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\HasMany-blue)</a>
 ```php
-// UNDOCUMENTED CLASS
+// Add a hasMany relationship method
+$file->hasMany('Company')
 ```
 <hr>
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/HasOne.php'>![Archetype\Endpoints\Laravel\HasOne](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\HasOne-blue)</a>
 ```php
-// UNDOCUMENTED CLASS
+// Add a hasOne relationship method
+$file->hasOne('Company')
 ```
 <hr>
 

@@ -9,12 +9,11 @@ use Illuminate\Support\Arr;
 
 class HasMany extends EndpointProvider
 {
+    /**
+     * @example Add a hasMany relationship method
+     * @source $file->hasMany('Company')
+     */    
     public function hasMany($targets)
-    {
-        return $this->add($targets);
-    }
-
-    protected function set($targets)
     {
         return $this->add($targets);
     }
