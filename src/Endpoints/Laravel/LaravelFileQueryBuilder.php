@@ -21,21 +21,37 @@ use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
 class LaravelFileQueryBuilder extends PHPFileQueryBuilder
 {
+    /**
+     * @example Get the User file
+     * @source LaravelFile::user()
+     */
     public function user()
     {
         return $this->where('className', 'User')->get()->first();
     }
 
+    /**
+     * @example Get models
+     * @source LaravelFile::models()
+     */    
     public function models()
     {
         return $this->instanceof('Illuminate\Database\Eloquent\Model');
     }
 
+    /**
+     * @example Get controllers
+     * @source LaravelFile::controllers()
+     */        
     public function controllers()
     {
         return $this->instanceof('Illuminate\Routing\Controller');
     }
 
+    /**
+     * @example Get serviceProviders
+     * @source LaravelFile::serviceProviders()
+     */        
     public function serviceProviders()
     {
         return $this->instanceof('Illuminate\Support\ServiceProvider');
