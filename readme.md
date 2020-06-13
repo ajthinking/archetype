@@ -40,7 +40,7 @@ composer require ajthinking/archetype
 ```php
 use PHPFile;
 
-// Create new file  
+// Create new files
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
     ->add()->trait('Shippable')
