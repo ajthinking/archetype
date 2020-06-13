@@ -1,4 +1,4 @@
-[Archetype\Endpoints\Laravel\ModelProperties](../blob/master/src/Endpoints/Laravel/ModelProperties.php)
+[Archetype\Endpoints\Laravel\ModelProperties](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/ModelProperties.php)
 
 ```php
 // Property getters (add argument for equivalent setters)

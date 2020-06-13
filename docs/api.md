@@ -1,6 +1,6 @@
 # File read/write API
 
-[Archetype\Endpoints\PHP\Namespace_](../blob/master/src/Endpoints/PHP/Namespace_.php)
+[Archetype\Endpoints\PHP\Namespace_](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Namespace_.php)
 ```php
 // Get file namespace
 $file->namespace()
@@ -13,14 +13,14 @@ $file->remove()->namespace()
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\MethodNames](../blob/master/src/Endpoints/PHP/MethodNames.php)
+[Archetype\Endpoints\PHP\MethodNames](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/MethodNames.php)
 ```php
 // Get class method names
 $file->methodNames()
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\TraitUse](../blob/master/src/Endpoints/PHP/TraitUse.php)
+[Archetype\Endpoints\PHP\TraitUse](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/TraitUse.php)
 ```php
 // Get class traits
 $file->trait()
@@ -33,13 +33,13 @@ INCOMPLETE
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Maker](../blob/master/src/Endpoints/PHP/Maker.php)
+[Archetype\Endpoints\PHP\Maker](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Maker.php)
 ```php
 // UNDOCUMENTED CLASS
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\PHPFileQueryBuilder](../blob/master/src/Endpoints/PHP/PHPFileQueryBuilder.php)
+[Archetype\Endpoints\PHP\PHPFileQueryBuilder](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/PHPFileQueryBuilder.php)
 ```php
 // Get a QueryBuilder instance
 PHPFile::query()
@@ -73,14 +73,14 @@ PHPFile::where(...)->first()
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\ReflectionProxy](../blob/master/src/Endpoints/PHP/ReflectionProxy.php)
+[Archetype\Endpoints\PHP\ReflectionProxy](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/ReflectionProxy.php)
 ```php
 // Get ReflectionClass
 $file->getReflection()
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\ClassName](../blob/master/src/Endpoints/PHP/ClassName.php)
+[Archetype\Endpoints\PHP\ClassName](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/ClassName.php)
 ```php
 // Get file class name
 $file->className()
@@ -90,20 +90,20 @@ $file->className('MyClass')
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Method](../blob/master/src/Endpoints/PHP/Method.php)
+[Archetype\Endpoints\PHP\Method](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Method.php)
 ```php
 // UNDOCUMENTED CLASS
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\AstQuery](../blob/master/src/Endpoints/PHP/AstQuery.php)
+[Archetype\Endpoints\PHP\AstQuery](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/AstQuery.php)
 ```php
 // Get a AstQueryBuilder instance
 $file->astQuery()
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Property](../blob/master/src/Endpoints/PHP/Property.php)
+[Archetype\Endpoints\PHP\Property](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Property.php)
 ```php
 // Get class property
 $file->property('table')
@@ -134,7 +134,7 @@ $file->setProperty('propertyWithoutDefaultValue')
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Extends_](../blob/master/src/Endpoints/PHP/Extends_.php)
+[Archetype\Endpoints\PHP\Extends_](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Extends_.php)
 ```php
 // Get class extends
 $file->extends()
@@ -144,7 +144,7 @@ $file->extends('App\BaseProduct')
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Use_](../blob/master/src/Endpoints/PHP/Use_.php)
+[Archetype\Endpoints\PHP\Use_](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Use_.php)
 ```php
 // Get file uses
 $file->use()
@@ -160,7 +160,7 @@ $file->add()->use('AdditionalClass')
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Implements_](../blob/master/src/Endpoints/PHP/Implements_.php)
+[Archetype\Endpoints\PHP\Implements_](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Implements_.php)
 ```php
 // Get class implements
 $file->implements()
@@ -173,7 +173,7 @@ $file->add()->implements('InterfaceC')
 ```
 <hr>
 
-[Archetype\Endpoints\SyntacticSweetener](../blob/master/src/Endpoints/SyntacticSweetener.php)
+[Archetype\Endpoints\SyntacticSweetener](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/SyntacticSweetener.php)
 
 ```php
 use LaravelFile as Assistant;
@@ -204,21 +204,21 @@ $words = [
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\BelongsTo](../blob/master/src/Endpoints/Laravel/BelongsTo.php)
+[Archetype\Endpoints\Laravel\BelongsTo](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/BelongsTo.php)
 ```php
 // Add a belongsTo relationship method
 $file->belongsTo('Company')
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\BelongsToMany](../blob/master/src/Endpoints/Laravel/BelongsToMany.php)
+[Archetype\Endpoints\Laravel\BelongsToMany](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/BelongsToMany.php)
 ```php
 // Add a belongsToMany relationship method
 $file->belongsToMany('Company')
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\ModelProperties](../blob/master/src/Endpoints/Laravel/ModelProperties.php)
+[Archetype\Endpoints\Laravel\ModelProperties](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/ModelProperties.php)
 
 ```php
 // Property getters (add argument for equivalent setters)
@@ -235,7 +235,7 @@ $file->visible();
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\LaravelFileQueryBuilder](../blob/master/src/Endpoints/Laravel/LaravelFileQueryBuilder.php)
+[Archetype\Endpoints\Laravel\LaravelFileQueryBuilder](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/LaravelFileQueryBuilder.php)
 ```php
 // Get the User file
 LaravelFile::user()
@@ -251,27 +251,27 @@ LaravelFile::serviceProviders()
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\HasMany](../blob/master/src/Endpoints/Laravel/HasMany.php)
+[Archetype\Endpoints\Laravel\HasMany](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/HasMany.php)
 ```php
 // Add a hasMany relationship method
 $file->hasMany('Company')
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\HasOne](../blob/master/src/Endpoints/Laravel/HasOne.php)
+[Archetype\Endpoints\Laravel\HasOne](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/HasOne.php)
 ```php
 // Add a hasOne relationship method
 $file->hasOne('Company')
 ```
 <hr>
 
-[Archetype\Endpoints\Laravel\LaravelMaker](../blob/master/src/Endpoints/Laravel/LaravelMaker.php)
+[Archetype\Endpoints\Laravel\LaravelMaker](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/LaravelMaker.php)
 ```php
 // UNDOCUMENTED CLASS
 ```
 <hr>
 
-[Archetype\Endpoints\EndpointProvider](../blob/master/src/Endpoints/EndpointProvider.php)
+[Archetype\Endpoints\EndpointProvider](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/EndpointProvider.php)
 ```php
 // UNDOCUMENTED CLASS
 ```

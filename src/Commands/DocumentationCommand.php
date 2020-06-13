@@ -78,7 +78,7 @@ class DocumentationCommand extends Command
 
     public function makeEndpointDoc($class)
     {
-        $sourceLink = '../blob/master/src/'
+        $sourceLink = 'https://github.com/ajthinking/archetype/blob/master/src/'
             . Str::of($class)
             ->replaceFirst('Archetype\\', '')
             ->replace('\\', '/')
