@@ -121,7 +121,7 @@ class PHPFileQueryBuilder extends EndpointProvider
     }
 
     /**
-     * @example Alias to where
+     * @example andWhere is an alias to where
      * @source PHPFile::where(...)->andWhere(...)->get()
      */
     public function andWhere(...$args)

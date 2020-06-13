@@ -31,7 +31,7 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     }
 
     /**
-     * @example Get models
+     * @example Query models
      * @source LaravelFile::models()
      */    
     public function models()
@@ -40,7 +40,7 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     }
 
     /**
-     * @example Get controllers
+     * @example Query controllers
      * @source LaravelFile::controllers()
      */        
     public function controllers()
@@ -49,7 +49,7 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     }
 
     /**
-     * @example Get serviceProviders
+     * @example Query serviceProviders
      * @source LaravelFile::serviceProviders()
      */        
     public function serviceProviders()

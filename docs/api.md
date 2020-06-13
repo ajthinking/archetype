@@ -62,7 +62,7 @@ PHPFile::where([['className', 'User'], ['use', 'includes', 'SomeClass']])
 // Where callback returns true
 PHPFile::where(fn($file) => $file->canUseReflection())
 
-// Alias to where
+// andWhere is an alias to where
 PHPFile::where(...)->andWhere(...)->get()
 
 // Get a collection with results
@@ -238,13 +238,13 @@ $file->visible();
 // Get the User file
 LaravelFile::user()
 
-// Get models
+// Query models
 LaravelFile::models()
 
-// Get controllers
+// Query controllers
 LaravelFile::controllers()
 
-// Get serviceProviders
+// Query serviceProviders
 LaravelFile::serviceProviders()
 ```
 <hr>
