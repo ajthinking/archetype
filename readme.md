@@ -6,10 +6,8 @@
 [![License](https://poser.pugx.org/ajthinking/archetype/license)](https://packagist.org/packages/ajthinking/archetype)
 
 * A dependency for Rapid Application Development tools
-* Programatically manipulate `PHP` / `Laravel` files
-* Intuiutive, fluent read/write API
-* File Query Builder
-* Abstract Syntax Tree (Code) Query Builder
+* Programatically manipulate `PHP` / `Laravel` files with an intuiutive, fluent read/write API
+* File Query Builder and Abstract Syntax Tree (~Code) Query Builder
 * Inline PHP Template engine
 
 <img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">
