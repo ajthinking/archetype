@@ -5,9 +5,9 @@
 [![Total Downloads](https://poser.pugx.org/ajthinking/archetype/downloads)](https://packagist.org/packages/ajthinking/archetype)
 [![License](https://poser.pugx.org/ajthinking/archetype/license)](https://packagist.org/packages/ajthinking/archetype)
 
-* Programatically manipulate `PHP` / `Laravel` files with an intuiutive, fluent read/write API
-* File Query Builder and Abstract Syntax Tree (~Code) Query Builder
-* Inline PHP Template engine
+* Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive read/write API
+* Dive *into* files, classes, framework- and language constructs using `FileQueryBuilder`s and an `AbstractSyntaxTreeQueryBuilder`
+* Add `Snippet`s with an inline PHP Template engine
 
 <img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">
 
@@ -35,12 +35,12 @@ composer require ajthinking/archetype
 
 ## Usage
 
-### File read/write API
+### `PHPFile` read/write API
 
 ```php
 use PHPFile;
 
-// Create file  
+// Create new files
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
     ->add()->trait('Shippable')
@@ -55,9 +55,12 @@ PHPFile::load('app/User.php')
     ->save();
 ```
 
+> [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+
+### `LaravelFile` read/write API
+
 ```php
-// LaravelFile extends PHPFile
-use LaravelFile;
+use LaravelFile; // extends PHPFile
 
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
@@ -71,16 +74,9 @@ LaravelFile::user()
     ->save();
 ```
 
-Running the `LaravelFile` script above will save the following to disk:
+Result:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
-
-```php
-// Each setter method also act as getter when argument is omitted
-echo LaravelFile::load('app/User.php')->fillable();
-
-// ['name', 'email', 'password']
-```
 
 > [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 
@@ -91,14 +87,8 @@ Filter and retrieve a set of files to interact with.
 // find files with the query builder
 PHPFile::in('database/migrations')
     ->where('extends', 'Migration')
-  	->andWhere('className', 'like', 'Create')
-    ->get()
-    ->each(function($file) {
-        // Do something
-        $file->add()->use('Database\CustomMigration')
-          ->extends('Database\CustomMigration')
-          ->save();
-    });
+    ->andWhere('className', 'like', 'Create')
+    ->get() // returns Collection of PHPFiles
 
 // Quickly find the Laravel User file
 $file = LaravelFile::user();
