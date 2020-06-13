@@ -35,7 +35,7 @@ composer require ajthinking/archetype
 
 ## Usage
 
-### File read/write API
+### `PHPFile` read/write API
 
 ```php
 use PHPFile;
@@ -54,6 +54,10 @@ PHPFile::load('app/User.php')
     ->className('NewClassName')
     ->save();
 ```
+
+> [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+
+### `LaravelFile` read/write API
 
 ```php
 // LaravelFile extends PHPFile
