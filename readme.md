@@ -5,9 +5,11 @@
 [![Total Downloads](https://poser.pugx.org/ajthinking/archetype/downloads)](https://packagist.org/packages/ajthinking/archetype)
 [![License](https://poser.pugx.org/ajthinking/archetype/license)](https://packagist.org/packages/ajthinking/archetype)
 
-
-
-Programatically manipulate `PHP` / `Laravel` files on disk with an intuiutive, fluent API. Features include *File-* and *Code/AST* QueryBuilders, an inline PHP Template engine and categorization of read/write operations in `Resource` endpoints.
+* Programatically manipulate `PHP` / `Laravel` files
+* Intuiutive, fluent read/write API
+* File Query Builder
+* Abstract Syntax Tree (Code) Query Builder
+* Inline PHP Template engine
 
 <img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">
 
