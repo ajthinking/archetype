@@ -40,7 +40,7 @@ composer require ajthinking/archetype
 ```php
 use PHPFile;
 
-// Create file  
+// Create new file  
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
     ->add()->trait('Shippable')
@@ -60,7 +60,6 @@ PHPFile::load('app/User.php')
 ### `LaravelFile` read/write API
 
 ```php
-// LaravelFile extends PHPFile
 use LaravelFile;
 
 LaravelFile::user()
@@ -75,7 +74,7 @@ LaravelFile::user()
     ->save();
 ```
 
-Running the `LaravelFile` script above will save the following to disk:
+Result:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
