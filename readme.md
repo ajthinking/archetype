@@ -78,13 +78,6 @@ Result:
 
 <img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
 
-```php
-// Each setter method also act as getter when argument is omitted
-echo LaravelFile::load('app/User.php')->fillable();
-
-// ['name', 'email', 'password']
-```
-
 > [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
 
 ### File QueryBuilder
