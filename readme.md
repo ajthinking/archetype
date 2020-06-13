@@ -5,6 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/ajthinking/archetype/downloads)](https://packagist.org/packages/ajthinking/archetype)
 [![License](https://poser.pugx.org/ajthinking/archetype/license)](https://packagist.org/packages/ajthinking/archetype)
 
+* A dependency for Rapid Application Development tools
 * Programatically manipulate `PHP` / `Laravel` files
 * Intuiutive, fluent read/write API
 * File Query Builder
