@@ -87,14 +87,8 @@ Filter and retrieve a set of files to interact with.
 // find files with the query builder
 PHPFile::in('database/migrations')
     ->where('extends', 'Migration')
-  	->andWhere('className', 'like', 'Create')
-    ->get()
-    ->each(function($file) {
-        // Do something
-        $file->add()->use('Database\CustomMigration')
-          ->extends('Database\CustomMigration')
-          ->save();
-    });
+    ->andWhere('className', 'like', 'Create')
+    ->get() // returns Collection of PHPFiles
 
 // Quickly find the Laravel User file
 $file = LaravelFile::user();
