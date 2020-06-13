@@ -60,7 +60,7 @@ PHPFile::load('app/User.php')
 ### `LaravelFile` read/write API
 
 ```php
-use LaravelFile;
+use LaravelFile; // extends PHPFile
 
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
