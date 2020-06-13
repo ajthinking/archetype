@@ -31,16 +31,28 @@ class PHPFileQueryBuilder extends EndpointProvider
         $this->result = collect();
     }
 
+    /**
+     * @example Get a QueryBuilder instance
+     * @source PHPFile::query()
+     */
     public function query()
     {
         return $this;
     }
     
+    /**
+     * @example Get all files in root recursively
+     * @source PHPFile::all()
+     */    
     public function all()
     {
         return $this->in('')->get();
     }
 
+    /**
+     * @example Query files in directory
+     * @source PHPFile::in('app/HTTP')
+     */    
     public function in($directory)
     {
         $this->baseDir = $directory;
@@ -55,9 +67,17 @@ class PHPFileQueryBuilder extends EndpointProvider
     }
 
     /**
-     * Supported signatures:
-     * where('something', <value>)
-     * where('something', <operator> , <value>)
+     * @example Where file->endpoint Equals value
+     * @source PHPFile::where('className', 'User')
+     * 
+     * @example Where file->endpoints <operator> value
+     * @source PHPFile::where('implements', 'contains', 'MyInterface')
+     * 
+     * @example Multiple conditions with array
+     * @source PHPFile::where([['className', 'User'], ['use', 'includes', 'SomeClass']])
+     * 
+     * @example Where callback returns true
+     * @source PHPFile::where(fn($file) => $file->canUseReflection())
      */
     public function where($arg1, $arg2 = null, $arg3 = null)
     {
@@ -100,11 +120,19 @@ class PHPFileQueryBuilder extends EndpointProvider
         return $this;
     }
 
+    /**
+     * @example Alias to where
+     * @source PHPFile::where(...)->andWhere(...)->get()
+     */
     public function andWhere(...$args)
     {
         return $this->where(...$args);
     }
 
+    /**
+     * @example Get a collection with results
+     * @source PHPFile::where(...)->get()
+     */
     public function get()
     {
         // Ensure we are in a directory context - default to base path
@@ -112,6 +140,10 @@ class PHPFileQueryBuilder extends EndpointProvider
         return $this->result;
     }
 
+    /**
+     * @example Get the first match
+     * @source PHPFile::where(...)->first()
+     */    
     public function first()
     {
         return $this->get()->first();
