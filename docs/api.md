@@ -41,8 +41,35 @@ INCOMPLETE
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/PHPFileQueryBuilder.php'>![Archetype\Endpoints\PHP\PHPFileQueryBuilder](https://img.shields.io/badge/-Archetype\Endpoints\PHP\PHPFileQueryBuilder-blue)</a>
 ```php
-// Custom code loaded from a md file
-$files = PHPFile::where('className', 'like' '%Create%')->get();
+// Get a QueryBuilder instance
+PHPFile::query()
+
+// Get all files in root recursively
+PHPFile::all()
+
+// Query files in directory
+PHPFile::in('app/HTTP')
+
+// Where file->endpoint Equals value
+PHPFile::where('className', 'User')
+
+// Where file->endpoints <operator> value
+PHPFile::where('implements', 'contains', 'MyInterface')
+
+// Multiple conditions with array
+PHPFile::where([['className', 'User'], ['use', 'includes', 'SomeClass']])
+
+// Where callback returns true
+PHPFile::where(fn($file) => $file->canUseReflection())
+
+// Alias to where
+PHPFile::where(...)->andWhere(...)->get()
+
+// Get a collection with results
+PHPFile::where(...)->get()
+
+// Get the first match
+PHPFile::where(...)->first()
 ```
 <hr>
 
