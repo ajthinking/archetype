@@ -1,6 +1,6 @@
 # File read/write API
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Namespace_.php'>![Archetype\Endpoints\PHP\Namespace_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Namespace_-blue)</a>
+[Archetype\Endpoints\PHP\Namespace_](../blob/master/src/Endpoints/PHP/Namespace_.php)
 ```php
 // Get file namespace
 $file->namespace()
@@ -13,14 +13,14 @@ $file->remove()->namespace()
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/MethodNames.php'>![Archetype\Endpoints\PHP\MethodNames](https://img.shields.io/badge/-Archetype\Endpoints\PHP\MethodNames-blue)</a>
+[Archetype\Endpoints\PHP\MethodNames](../blob/master/src/Endpoints/PHP/MethodNames.php)
 ```php
 // Get class method names
 $file->methodNames()
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/TraitUse.php'>![Archetype\Endpoints\PHP\TraitUse](https://img.shields.io/badge/-Archetype\Endpoints\PHP\TraitUse-blue)</a>
+[Archetype\Endpoints\PHP\TraitUse](../blob/master/src/Endpoints/PHP/TraitUse.php)
 ```php
 // Get class traits
 $file->trait()
@@ -33,13 +33,13 @@ INCOMPLETE
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Maker.php'>![Archetype\Endpoints\PHP\Maker](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Maker-blue)</a>
+[Archetype\Endpoints\PHP\Maker](../blob/master/src/Endpoints/PHP/Maker.php)
 ```php
 // UNDOCUMENTED CLASS
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/PHPFileQueryBuilder.php'>![Archetype\Endpoints\PHP\PHPFileQueryBuilder](https://img.shields.io/badge/-Archetype\Endpoints\PHP\PHPFileQueryBuilder-blue)</a>
+[Archetype\Endpoints\PHP\PHPFileQueryBuilder](../blob/master/src/Endpoints/PHP/PHPFileQueryBuilder.php)
 ```php
 // Get a QueryBuilder instance
 PHPFile::query()
@@ -73,14 +73,14 @@ PHPFile::where(...)->first()
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/ReflectionProxy.php'>![Archetype\Endpoints\PHP\ReflectionProxy](https://img.shields.io/badge/-Archetype\Endpoints\PHP\ReflectionProxy-blue)</a>
+[Archetype\Endpoints\PHP\ReflectionProxy](../blob/master/src/Endpoints/PHP/ReflectionProxy.php)
 ```php
 // Get ReflectionClass
 $file->getReflection()
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/ClassName.php'>![Archetype\Endpoints\PHP\ClassName](https://img.shields.io/badge/-Archetype\Endpoints\PHP\ClassName-blue)</a>
+[Archetype\Endpoints\PHP\ClassName](../blob/master/src/Endpoints/PHP/ClassName.php)
 ```php
 // Get file class name
 $file->className()
@@ -90,20 +90,20 @@ $file->className('MyClass')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Method.php'>![Archetype\Endpoints\PHP\Method](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Method-blue)</a>
+[Archetype\Endpoints\PHP\Method](../blob/master/src/Endpoints/PHP/Method.php)
 ```php
 // UNDOCUMENTED CLASS
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/AstQuery.php'>![Archetype\Endpoints\PHP\AstQuery](https://img.shields.io/badge/-Archetype\Endpoints\PHP\AstQuery-blue)</a>
+[Archetype\Endpoints\PHP\AstQuery](../blob/master/src/Endpoints/PHP/AstQuery.php)
 ```php
 // Get a AstQueryBuilder instance
 $file->astQuery()
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Property.php'>![Archetype\Endpoints\PHP\Property](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Property-blue)</a>
+[Archetype\Endpoints\PHP\Property](../blob/master/src/Endpoints/PHP/Property.php)
 ```php
 // Get class property
 $file->property('table')
@@ -134,7 +134,7 @@ $file->setProperty('propertyWithoutDefaultValue')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Extends_.php'>![Archetype\Endpoints\PHP\Extends_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Extends_-blue)</a>
+[Archetype\Endpoints\PHP\Extends_](../blob/master/src/Endpoints/PHP/Extends_.php)
 ```php
 // Get class extends
 $file->extends()
@@ -144,7 +144,7 @@ $file->extends('App\BaseProduct')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Use_.php'>![Archetype\Endpoints\PHP\Use_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Use_-blue)</a>
+[Archetype\Endpoints\PHP\Use_](../blob/master/src/Endpoints/PHP/Use_.php)
 ```php
 // Get file uses
 $file->use()
@@ -160,7 +160,7 @@ $file->add()->use('AdditionalClass')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Implements_.php'>![Archetype\Endpoints\PHP\Implements_](https://img.shields.io/badge/-Archetype\Endpoints\PHP\Implements_-blue)</a>
+[Archetype\Endpoints\PHP\Implements_](../blob/master/src/Endpoints/PHP/Implements_.php)
 ```php
 // Get class implements
 $file->implements()
@@ -203,14 +203,14 @@ $words = [
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/BelongsTo.php'>![Archetype\Endpoints\Laravel\BelongsTo](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\BelongsTo-blue)</a>
+[Archetype\Endpoints\Laravel\BelongsTo](../blob/master/src/Endpoints/Laravel/BelongsTo.php)
 ```php
 // Add a belongsTo relationship method
 $file->belongsTo('Company')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/BelongsToMany.php'>![Archetype\Endpoints\Laravel\BelongsToMany](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\BelongsToMany-blue)</a>
+[Archetype\Endpoints\Laravel\BelongsToMany](../blob/master/src/Endpoints/Laravel/BelongsToMany.php)
 ```php
 // Add a belongsToMany relationship method
 $file->belongsToMany('Company')
@@ -233,7 +233,7 @@ $file->visible();
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/LaravelFileQueryBuilder.php'>![Archetype\Endpoints\Laravel\LaravelFileQueryBuilder](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\LaravelFileQueryBuilder-blue)</a>
+[Archetype\Endpoints\Laravel\LaravelFileQueryBuilder](../blob/master/src/Endpoints/Laravel/LaravelFileQueryBuilder.php)
 ```php
 // Get the User file
 LaravelFile::user()
@@ -249,27 +249,27 @@ LaravelFile::serviceProviders()
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/HasMany.php'>![Archetype\Endpoints\Laravel\HasMany](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\HasMany-blue)</a>
+[Archetype\Endpoints\Laravel\HasMany](../blob/master/src/Endpoints/Laravel/HasMany.php)
 ```php
 // Add a hasMany relationship method
 $file->hasMany('Company')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/HasOne.php'>![Archetype\Endpoints\Laravel\HasOne](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\HasOne-blue)</a>
+[Archetype\Endpoints\Laravel\HasOne](../blob/master/src/Endpoints/Laravel/HasOne.php)
 ```php
 // Add a hasOne relationship method
 $file->hasOne('Company')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/LaravelMaker.php'>![Archetype\Endpoints\Laravel\LaravelMaker](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\LaravelMaker-blue)</a>
+[Archetype\Endpoints\Laravel\LaravelMaker](../blob/master/src/Endpoints/Laravel/LaravelMaker.php)
 ```php
 // UNDOCUMENTED CLASS
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/EndpointProvider.php'>![Archetype\Endpoints\EndpointProvider](https://img.shields.io/badge/-Archetype\Endpoints\EndpointProvider-blue)</a>
+[Archetype\Endpoints\EndpointProvider](../blob/master/src/Endpoints/EndpointProvider.php)
 ```php
 // UNDOCUMENTED CLASS
 ```

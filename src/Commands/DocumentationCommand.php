@@ -78,14 +78,14 @@ class DocumentationCommand extends Command
 
     public function makeEndpointDoc($class)
     {
-        $sourceLink = 'https://github.com/ajthinking/archetype/blob/master/src/'
+        $sourceLink = '../blob/master/src/'
             . Str::of($class)
             ->replaceFirst('Archetype\\', '')
             ->replace('\\', '/')
             ->finish('.php');
 
         $classBadge = "<a href='$sourceLink'>![$class](https://img.shields.io/badge/-$class-blue)</a>";
-
+        $classBadge = "[$class]($sourceLink)";
         return $classBadge . PHP_EOL
             . '```php' . PHP_EOL . $this->getEndpointExamples($class) . PHP_EOL . '```'
             . PHP_EOL . '<hr>';
