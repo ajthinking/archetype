@@ -7,7 +7,7 @@
 
 * Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive read/write API
 * Dive *into* files and framework/language constructs using `FileQueryBuilder`s and an `AbstractSyntaxTreeQueryBuilder`
-* Inline PHP Template engine
+* Add `Snippet`s with an inline PHP Template engine
 
 <img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">
 
