@@ -173,7 +173,8 @@ $file->add()->implements('InterfaceC')
 ```
 <hr>
 
-<a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/SyntacticSweetener.php'>![Archetype\Endpoints\SyntacticSweetener](https://img.shields.io/badge/-Archetype\Endpoints\SyntacticSweetener-blue)</a>
+[Archetype\Endpoints\SyntacticSweetener](../blob/master/src/Endpoints/SyntacticSweetener.php)
+
 ```php
 use LaravelFile as Assistant;
 
@@ -216,6 +217,8 @@ $file->belongsTo('Company')
 $file->belongsToMany('Company')
 ```
 <hr>
+
+[Archetype\Endpoints\Laravel\ModelProperties](../blob/master/src/Endpoints/Laravel/ModelProperties.php)
 
 <a href='https://github.com/ajthinking/archetype/blob/master/src/Endpoints/Laravel/ModelProperties.php'>![Archetype\Endpoints\Laravel\ModelProperties](https://img.shields.io/badge/-Archetype\Endpoints\Laravel\ModelProperties-blue)</a>
 ```php
