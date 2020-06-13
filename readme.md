@@ -64,6 +64,7 @@ use LaravelFile; // extends PHPFile
 
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
+    ->add()->implements('PlayerInterface')
     ->add()->trait('Dumpable')
     ->table('gdpr_users')
     ->add()->fillable('nickname')
