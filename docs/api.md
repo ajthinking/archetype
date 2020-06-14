@@ -90,12 +90,6 @@ $file->className('MyClass')
 ```
 <hr>
 
-[Archetype\Endpoints\PHP\Method](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/Method.php)
-```php
-// UNDOCUMENTED CLASS
-```
-<hr>
-
 [Archetype\Endpoints\PHP\AstQuery](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/AstQuery.php)
 ```php
 // Get a AstQueryBuilder instance
