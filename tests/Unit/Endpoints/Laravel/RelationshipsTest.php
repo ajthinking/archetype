@@ -18,7 +18,7 @@ class RelationshipsTest extends Archetype\Tests\FileTestCase
     public function it_can_insert_belongs_to_many_methods()
     {
         $file = LaravelFile::load('app/User.php');
-        $file->belongsToMany(['App\Visit']);
+        $file->belongsToMany(['App\Visit', 'App\\Purchase']);
 
         $this->assertContains(
             'visits',
@@ -68,14 +68,14 @@ class RelationshipsTest extends Archetype\Tests\FileTestCase
     }
 
     /** @test */
-    public function it_will_overwrite_already_existing_method()
+    public function it_wont_overwrite_already_existing_method()
     {
         $file = LaravelFile::load('app/User.php')
             ->hasOne(['App\Phone'])
             ->hasOne(['App\Phone']);
 
         $this->assertCount(
-            1,
+            2,
             $file->methodNames()
         );
     }    
