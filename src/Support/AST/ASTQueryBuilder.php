@@ -161,19 +161,12 @@ class ASTQueryBuilder
     protected function whereCallback($callback)
     {
         return $this->next(function($queryNode) use($callback) {
-            return $callback($queryNode->result) ? $queryNode : new Killable;
-        });
-    }
-
-    public function whereASTQuery($callback)
-    {
-        return $this->next(function($queryNode) use($callback) {
             $query = new static(
                 [(clone $queryNode)->result]
-            );
+            );            
             return $callback($query) ? $queryNode : new Killable;
         });
-    }    
+    }  
 
     // public function whereChainingOn($name)
     // {

@@ -126,7 +126,7 @@ class Property extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->property()
-            ->whereASTQuery(function($query) use($key) {
+            ->where(function($query) use($key) {
                 return $query->propertyProperty()
                     ->where('name->name', $key)
                     ->get()->isNotEmpty();
@@ -204,7 +204,7 @@ class Property extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->property()
-            ->whereASTQuery(function($query) use($key) {
+            ->where(function($query) use($key) {
                 return $query->propertyProperty()
                     ->where('name->name', $key)
                     ->get()->isNotEmpty();
