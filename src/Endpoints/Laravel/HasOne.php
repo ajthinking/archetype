@@ -20,18 +20,18 @@ class HasOne extends EndpointProvider
 
     protected function add($targets)
     {
-        $targets = Arr::wrap($targets);
-
-        $this->file->add()->classMethod(
-            collect($targets)->map(function($target) {
-                return Snippet::___HAS_ONE_METHOD___([
-                    '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
-                    '___TARGET_CLASS___' => class_basename($target),
-                    '___TARGET_IN_DOC_BLOCK___' => Str::hasOneDocBlockName($target)
-                ]);
-            })->toArray()
-        );
-
-        return $this->file->continue();
+        return $this->file->astQuery()
+            ->class()
+            ->insertStmts(
+                collect($targets)->map(function($target) {
+                    return Snippet::___HAS_ONE_METHOD___([
+                        '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
+                        '___TARGET_CLASS___' => class_basename($target),
+                        '___TARGET_IN_DOC_BLOCK___' => Str::hasOneDocBlockName($target)
+                    ]);
+                })->toArray()
+            )->commit()
+            ->end()
+            ->continue();
     }
 }

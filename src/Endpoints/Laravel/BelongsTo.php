@@ -20,18 +20,18 @@ class BelongsTo extends EndpointProvider
 
     protected function add($targets)
     {
-        $targets = Arr::wrap($targets);
-
-        $this->file->add()->classMethod(
-            collect($targets)->map(function($target) {
-                return Snippet::___BELONGS_TO_METHOD___([
-                    '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
-                    '___TARGET_CLASS___' => class_basename($target),
-                    '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
-                ]);
-            })->toArray()
-        );
-
-        return $this->file->continue();
+        return $this->file->astQuery()
+            ->class()
+            ->insertStmts(
+                collect(Arr::wrap($targets))->map(function($target) {
+                    return Snippet::___BELONGS_TO_METHOD___([
+                        '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
+                        '___TARGET_CLASS___' => class_basename($target),
+                        '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
+                    ]);
+                })->toArray()
+            )->commit()
+            ->end()
+            ->continue();
     }
 }
