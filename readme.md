@@ -113,10 +113,10 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
     ->astQuery() // get a ASTQueryBuilder
 
     ->method()
-        ->named('up')
+        ->where('name->name', 'up')
     ->staticCall()
         ->where('class', 'Schema')
-        ->named('create')
+        ->where('name->name', 'create')
     ->args
     ->closure()
     ->stmts
