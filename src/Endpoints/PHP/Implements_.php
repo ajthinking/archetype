@@ -55,7 +55,7 @@ class Implements_ extends EndpointProvider
         return $this->set(
             array_merge(
                 $this->get(),
-                $newImplements
+                Arr::wrap($newImplements)
             )
         );
     }
