@@ -6,22 +6,22 @@
 
 List of available traversing methods/properties: https://github.com/ajthinking/archetype/blob/master/src/Traits/PHPParserClassMap.php
 
-```
+```php
 // get a ASTQueryBuilder
 $file->astQuery()
 ```
 
-```
+```php
 // dont allow deep search
 $file->astQuery()->shallow()
 ```
 
-```
+```php
 // allow deep search (default)
 $file->astQuery()->deep()
 ```
 
-```
+```php
 // remember and recall values in middle of query
 file->astQuery()
     ->class()
@@ -36,19 +36,19 @@ file->astQuery()
 
 ```
 
-```
+```php
 // where property path
 $file->astQuery()->method()->where('name->name', 'myMethod')
 ```
 
-```
+```php
 // where callback
 $file->astQuery()->method()->where(function($query) {
     return true;
 })
 ```
 
-```
+```php
 // sub query, useful for lookahead
 $this->file->astQuery()
             ->class()
@@ -60,7 +60,7 @@ $this->file->astQuery()
             })
 ```
 
-```
+```php
 // Remove node
 $file->astQuery()
         ->class()
@@ -69,7 +69,7 @@ $file->astQuery()
         ->remove()
 ```
 
-````
+```php
 // replace node
 $file->astQuery()
             ->class()
@@ -77,7 +77,7 @@ $file->astQuery()
             ->replaceProperty('name', $newClassName)
 ```
 
-```
+```php
 // insert statements
 $this->file->astQuery()
     ->class()
