@@ -136,10 +136,11 @@ The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nik
 
 * Traverse into *nodes* by using methods (`method()`,`staticCall()` ...)
 * Traverse into *node properties* by accessing properties (`args`,`stmts` ...)    
-* Filter results with `where`
-* Resolving matching paths (`get`)
+* Filter results with `where(...)`
+* Resolving matching paths with `get()`
 
 > `ASTQueryBuilder` also supports *removing*, *replacing* and *injecting* nodes :wrench:
+
 > [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/astquerybuilder.md) :point_left: 
 
 ### Template engine
