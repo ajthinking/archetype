@@ -23,7 +23,12 @@ class SnippetTest extends Archetype\Tests\FileTestCase
         ]);
 
         $this->assertEquals(
-            LaravelFile::load('app/User.php')->add()->classMethod([$method])->methodNames(),
+            LaravelFile::load('app/User.php')->astQuery()
+                ->class()
+                ->insertStmt($method)
+                ->commit()
+                ->end()
+                ->methodNames(),
             ['guitars']
         );            
     }    
