@@ -55,8 +55,6 @@ PHPFile::load('app/User.php')
     ->save();
 ```
 
-> [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
-
 ### `LaravelFile` read/write API
 
 ```php
