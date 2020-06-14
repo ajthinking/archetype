@@ -132,10 +132,12 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 
 <img src="https://user-images.githubusercontent.com/3457668/83963046-25785480-a8a3-11ea-9224-b04fa8cebb81.png" width="600px">
 
-* Three kinds of methods are provided (hinted with indentation in the code example)
-    * Traversing (`methods`,`staticCalls`,`firstArg` ...)
-    * Filtering (`named`, `whereClass` ...)
-    * Resolving (`getValue`)
+* Methods and properties include
+    * Traversing into new nodes (`method()`,`staticCall()` ...)
+    * Filtering on node properties (`where` ...)
+    * Traversing into node properties (`args`,`stmts` ...)
+    * Resolving matching paths (`get`)
+    
 * The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). To understand this syntax better tinker with `dd($file->ast()`. 
 
 ### Template engine
