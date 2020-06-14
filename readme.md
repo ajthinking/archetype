@@ -101,7 +101,7 @@ LaravelFile::serviceProviders()->get();
 // ...
 ```
 
-> [Review full QueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/querybuilder.md) :point_left:
+> [~~Review full QueryBuilder Documentation here~~](https://github.com/ajthinking/archetype/blob/master/docs/querybuilder.md) :point_left:
 
 ### Abstract Syntax Tree QueryBuilder
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
@@ -132,7 +132,7 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 
 <img src="https://user-images.githubusercontent.com/3457668/83963046-25785480-a8a3-11ea-9224-b04fa8cebb81.png" width="600px">
 
-The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). Available Query methods mirror the `PhpParser` types and properties. To understand this syntax better you may want to tinker with `dd($file->ast()` while building your queries. Basic conventions are listed below. 
+The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). Available query methods mirror the `PhpParser` types and properties. To understand this syntax better you may want to tinker with `dd($file->ast()` while building your queries. Basic conventions are listed below. 
 
 * Traverse into *nodes* by using methods (`method()`,`staticCall()` ...)
 * Traverse into *node properties* by accessing properties (`args`,`stmts` ...)    
@@ -141,7 +141,7 @@ The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nik
 
 > `ASTQueryBuilder` also supports *removing*, *replacing* and *injecting* nodes :wrench:
 
-> [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/astquerybuilder.md) :point_left: 
+> [~~Review full ASTQueryBuilder Documentation here~~](https://github.com/ajthinking/archetype/blob/master/docs/astquerybuilder.md) :point_left: 
 
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
