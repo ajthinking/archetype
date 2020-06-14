@@ -132,12 +132,14 @@ The ASTQueryBuilder examines all possible paths and automatically terminates tho
 
 <img src="https://user-images.githubusercontent.com/3457668/83963046-25785480-a8a3-11ea-9224-b04fa8cebb81.png" width="600px">
 
-The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). Available Query methods mirror the `PhpParser` types and properties. To understand this syntax better you may want to tinker with `dd($file->ast()` while building your queries. Some conventions are listed below. 
+The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). Available Query methods mirror the `PhpParser` types and properties. To understand this syntax better you may want to tinker with `dd($file->ast()` while building your queries. Basic conventions are listed below. 
 
-    * Traversing into *nodes* by using methods (`method()`,`staticCall()` ...)
-    * Traversing into *node properties* by accessing properties (`args`,`stmts` ...)    
-    * Filtering on *node properties* with `where`
-    * Resolving matching paths (`get`)
+* Traverse into *nodes* by using methods (`method()`,`staticCall()` ...)
+* Traverse into *node properties* by accessing properties (`args`,`stmts` ...)    
+* Filter results with `where`
+* Resolving matching paths (`get`)
+
+You may also remove, replace and inject nodes :rocket:
 
 > [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/astquerybuilder.md) :point_left: 
 
