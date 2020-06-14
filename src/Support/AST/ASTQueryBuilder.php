@@ -299,6 +299,15 @@ class ASTQueryBuilder
         return $this;
     }
 
+    public function insertStmts($newNodes)
+    {
+        collect($newNodes)->each(function($newNode) {
+            $this->insertStmt($newNode);
+        });
+
+        return $this;
+    }
+
     public function insertStmt($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
