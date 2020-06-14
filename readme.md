@@ -141,7 +141,7 @@ The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nik
 
 > `ASTQueryBuilder` also supports *removing*, *replacing* and *injecting* nodes :wrench:
 
-> [~~Review full ASTQueryBuilder Documentation here~~](https://github.com/ajthinking/archetype/blob/master/docs/astquerybuilder.md) :point_left: 
+> [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
 
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
