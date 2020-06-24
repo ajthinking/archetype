@@ -211,7 +211,9 @@ class ASTQueryBuilder
 
     public function recall()
     {
-        return collect(end($this->tree))->filter(fn($item) => $item->result)->map(function($item) {
+        return collect(end($this->tree))->filter(function($item) {
+            return $item->result;
+        })->map(function($item) {
             return (object) $item->memory;
         });
     }
