@@ -203,6 +203,8 @@ To see *all* offending files run `php artisan archetype:errors`. To ignore files
 ### Limitations / Missing features
 In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
 
+* Requires UNIX based file system - no windows support <img src="https://img.shields.io/badge/help wanted-blue">
+
 * Can't use group use syntax (`use Something\{X, Y};`)
 
 * Assumes one class per file
