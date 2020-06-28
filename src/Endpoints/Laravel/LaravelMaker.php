@@ -22,20 +22,21 @@ class LaravelMaker extends Maker
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());        
+            ->outputDriver($this->outputDriver);        
     }
 
     public function model($name)
     {
+        
         $this->setupNames($name);
-
+        
         $contents = Str::of($this->stub('model.stub'))
             ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
             ->replace(['{{ class }}', 'DummyClass'], $this->class)
             ->__toString();                
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());        
+            ->outputDriver($this->outputDriver);        
     }
 
     public function controller($name)
