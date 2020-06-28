@@ -11,6 +11,8 @@
 
 <img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">
 
+> :warning: Outdated gif.
+
 ## Table of Content
   * [Installation](#installation)
   * [Usage](#usage)
