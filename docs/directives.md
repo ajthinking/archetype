@@ -27,5 +27,3 @@ $file->add('-')
 * private
 * static
 * assumeType
-
-[Archetype\Traits\HasDirectiveDefaults](https://github.com/ajthinking/archetype/blob/master/src/Traits/HasDirectiveDefaults.php)
