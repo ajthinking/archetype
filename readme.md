@@ -257,6 +257,7 @@ MIT
 ## Acknowledgements
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
 * PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
+* Schema extractor based on [mpociot/laravel-test-factory-helper](https://github.com/mpociot/laravel-test-factory-helper)
 
 
 ## Like this package?

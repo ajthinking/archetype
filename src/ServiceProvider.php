@@ -13,6 +13,7 @@ use Archetype\Commands\DocumentationCommand;
 use Archetype\Commands\ListAPICommand;
 use Archetype\Commands\RelationshipsDemo;
 use Archetype\Factories\LaravelFileFactory;
+use Archetype\Schema\LaravelSchema;
 use Archetype\Factories\PHPFileFactory;
 use Archetype\Traits\AddsLaravelStringsToStrWithMacros;
 
@@ -46,7 +47,7 @@ class ServiceProvider extends BaseServiceProvider
 
         App::bind('LaravelFile', function() {
             return app()->make(LaravelFileFactory::class);
-        });
+        });        
     }    
 
     protected function publishConfig()

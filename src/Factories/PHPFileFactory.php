@@ -23,14 +23,15 @@ class PHPFileFactory
         $class = static::FILE_TYPE;
         $instance = new $class;
         $instance->inputDriver(self::__driver('input'));
+
         $instance->outputDriver(self::__driver('output'));
 
         return $instance;
     }
 
     protected static function __driver($name)
-    {
-        $driver =[
+    {   
+        $driver = [
             "input" => config('archetype.input', \Archetype\Drivers\FileInput::class),
             "output" => config('archetype.output', \Archetype\Drivers\FileOutput::class),
         ][$name];
