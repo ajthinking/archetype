@@ -20,6 +20,7 @@ class LaravelSchema
     public $strategies = [
         Strategies\FromDatabase::class,
         Strategies\FromMigrations::class,
+        Strategies\FromModels::class,
     ];
 
     public static function get() {
@@ -42,7 +43,7 @@ class LaravelSchema
         }, $schema = false);
 
         // Prepare response
-        if(!$schema) throw new Exception("All schema strategies failed!");        
+        if(!$schema) throw new Exception("All schema strategies failed!" . json_encode($this->log));        
 
         $schema->log = $this->log;
 
