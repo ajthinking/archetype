@@ -18,6 +18,7 @@
     + [File read/write API](#file-read/write-api)
     + [File QueryBuilder](#file-querybuilder)
     + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
+    + [Laravel SChema](#laravel-schema)
     + [Template engine](#template-engine)
     + [Finding errors](#errors)
     + [Limitations / Missing features](#limitations---missing-features)
@@ -141,6 +142,49 @@ The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nik
 > `ASTQueryBuilder` also supports *removing*, *replacing* and *injecting* nodes :wrench:
 
 > [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
+
+### Laravel schema
+Run `LaravelSchema::get()` to get a schema looking something like:
+
+```json
+[
+    {
+        "model": "App\\User",
+        "table": "users",
+        "columns": {
+            "id": {
+                "name": "id",
+                "type": {},
+                "default": null,
+                "notnull": true,
+                "length": null,
+                "precision": 10,
+                "scale": 0,
+                "fixed": false,
+                "unsigned": false,
+                "autoincrement": true,
+                "columnDefinition": null,
+                "comment": null
+            },
+            "name": {
+                "name": "name",
+                "type": {},
+                "default": null,
+                "notnull": true,
+                "length": null,
+                "precision": 10,
+                "scale": 0,
+                "fixed": false,
+                "unsigned": false,
+                "autoincrement": false,
+                "columnDefinition": null,
+                "comment": null,
+                "collation": "BINARY"
+            }
+        }
+    }
+]
+```
 
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
