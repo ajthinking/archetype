@@ -141,6 +141,17 @@ The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nik
 
 > `ASTQueryBuilder` also supports *removing*, *replacing* and *injecting* nodes :wrench:
 
+```
+// Replace a node property
+$file->astQuery()
+    ->class()
+    ->name
+    ->replaceProperty('name', $newClassName)
+    ->commit()
+    ->end()
+    ->save()
+```
+
 > [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
 
 ### Laravel schema
