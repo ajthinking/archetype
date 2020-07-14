@@ -45,7 +45,7 @@ use PHPFile;
 // Create new files
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
-    ->add()->trait('Shippable')
+    ->add()->trait('App\Traits\Shippable')
     ->public()->property('stock', -1)
     ->save();
 ```
