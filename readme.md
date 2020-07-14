@@ -9,7 +9,7 @@
 
 * Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive top level read/write API
 * Read/write deeper on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
-* Extract Application schemas
+* Extract Application entity schemas
 * Add `Snippet`s with an inline PHP Template engine
 
 
