@@ -28,7 +28,7 @@ class FromDatabase
                     'columns' => static::getColumns($model),
                 ];
             })->values()->toArray(),
-            'strategy' => static::class
+            'strategy_used' => static::class
         ];
     }
 

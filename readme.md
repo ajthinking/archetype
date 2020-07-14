@@ -203,7 +203,7 @@ LaravelSchema::get();
             }
         }
     ],
-    "strategy": "Archetype\\Schema\\Strategies\\FromDatabase",
+    "strategy_used": "Archetype\\Schema\\Strategies\\FromDatabase",
     "log": []
 }
 ```
