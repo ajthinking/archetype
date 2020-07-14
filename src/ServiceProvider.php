@@ -48,12 +48,6 @@ class ServiceProvider extends BaseServiceProvider
         App::bind('LaravelFile', function() {
             return app()->make(LaravelFileFactory::class);
         });
-
-        App::bind('LaravelSchema', function() {
-            return LaravelSchema::class;
-        });
-        
-        
     }    
 
     protected function publishConfig()
