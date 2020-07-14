@@ -85,6 +85,9 @@ $file->getReflection()
 // Get file class name
 $file->className()
 
+// Get full class name
+$file->full()->className()
+
 // Set file class name
 $file->className('MyClass')
 ```
