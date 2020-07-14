@@ -153,7 +153,7 @@ $file->astQuery()
     ->save() 
 ```
 
-> [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
+> [More ASTQueryBuilder examples here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
 
 ### Laravel schema 
 Use the `LaravelSchema` class to get an app schema.
