@@ -11,6 +11,16 @@ class ClassNameTest extends Archetype\Tests\FileTestCase
             $file->className() === "User"
         );
     }
+
+    /** @test */
+    public function it_can_retrieve_full_class_name()
+    {
+        $file = PHPFile::load('app/User.php');
+
+        $this->assertTrue(
+            $file->full()->className() === "App\User"
+        );
+    }    
     
     /** @test */
     public function it_can_set_class_name()

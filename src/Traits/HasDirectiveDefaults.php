@@ -50,6 +50,11 @@ trait HasDirectiveDefaults
         return $this->directive('empty', true);
     }
 
+    public function full()
+    {
+        return $this->directive('full', true);
+    }
+
     public function public()
     {
         return $this->directive('flag', 'public');
