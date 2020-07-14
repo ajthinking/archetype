@@ -158,7 +158,7 @@ $file->astQuery()
 ### Laravel schema 
 Use the `LaravelSchema` class to get an app schema.
 
-```
+```php
 use Archetype\Schema\LaravelSchema;
 
 LaravelSchema::get();
