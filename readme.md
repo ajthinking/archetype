@@ -144,46 +144,56 @@ The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nik
 > [Review full ASTQueryBuilder Documentation here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
 
 ### Laravel schema
-Run `LaravelSchema::get()` to get a schema looking something like:
+Use the `LaravelSchema` class to get an app schema:
+
+```
+use Archetype\Schema\LaravelSchema;
+
+LaravelSchema::get();
+```
 
 ```json
-[
-    {
-        "model": "App\\User",
-        "table": "users",
-        "columns": {
-            "id": {
-                "name": "id",
-                "type": {},
-                "default": null,
-                "notnull": true,
-                "length": null,
-                "precision": 10,
-                "scale": 0,
-                "fixed": false,
-                "unsigned": false,
-                "autoincrement": true,
-                "columnDefinition": null,
-                "comment": null
-            },
-            "name": {
-                "name": "name",
-                "type": {},
-                "default": null,
-                "notnull": true,
-                "length": null,
-                "precision": 10,
-                "scale": 0,
-                "fixed": false,
-                "unsigned": false,
-                "autoincrement": false,
-                "columnDefinition": null,
-                "comment": null,
-                "collation": "BINARY"
+{
+    "entities": [
+        {
+            "model": "App\\User",
+            "table": "users",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": {},
+                    "default": null,
+                    "notnull": true,
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "fixed": false,
+                    "unsigned": false,
+                    "autoincrement": true,
+                    "columnDefinition": null,
+                    "comment": null
+                },
+                "name": {
+                    "name": "name",
+                    "type": {},
+                    "default": null,
+                    "notnull": true,
+                    "length": null,
+                    "precision": 10,
+                    "scale": 0,
+                    "fixed": false,
+                    "unsigned": false,
+                    "autoincrement": false,
+                    "columnDefinition": null,
+                    "comment": null,
+                    "collation": "BINARY"
+                }
             }
         }
-    }
-]
+    ],
+    "strategy": "Archetype\\Schema\\Strategies\\FromDatabase",
+    "log": []
+}
 ```
 
 ### Template engine
