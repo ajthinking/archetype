@@ -18,7 +18,7 @@
     + [File read/write API](#file-read/write-api)
     + [File QueryBuilder](#file-querybuilder)
     + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
-    + [Laravel SChema](#laravel-schema)
+    + [Laravel Schema](#laravel-schema)
     + [Template engine](#template-engine)
     + [Finding errors](#errors)
     + [Limitations / Missing features](#limitations---missing-features)
@@ -62,6 +62,7 @@ PHPFile::load('app/User.php')
 ```php
 use LaravelFile; // extends PHPFile
 
+// Expanding on our User model
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->implements('PlayerInterface')
