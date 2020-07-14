@@ -2,8 +2,6 @@
 
 > Work in progress :warning: Only a few examples listed below. 
 
-> Tip! Search for `->astQuery()` in package source code to see real internal use case examples
-
 List of available traversing methods/properties: https://github.com/ajthinking/archetype/blob/master/src/Traits/PHPParserClassMap.php
 
 ```php
