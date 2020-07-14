@@ -38,6 +38,7 @@
 ```
 composer require ajthinking/archetype
 ```
+> Requires UNIX filesystem, PHP >= 7 and Laravel >= 7
 
 ## Usage
 
