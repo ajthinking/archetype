@@ -6,7 +6,7 @@
 [![License](https://poser.pugx.org/ajthinking/archetype/license)](https://packagist.org/packages/ajthinking/archetype)
 
 * Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive read/write API
-* Read/write to/from, classes, framework- and language constructs using `FileQueryBuilders` and an `AbstractSyntaxTreeQueryBuilder`
+* Read/write on classes, framework- and language constructs using `FileQueryBuilders` and an `AbstractSyntaxTreeQueryBuilder`
 * Extract Application schemas
 * Add `Snippet`s with an inline PHP Template engine
 
