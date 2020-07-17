@@ -16,7 +16,7 @@ class FromDatabase
 {
     public static function get()
     {
-        $models = \LaravelFile::models()->get()->map(function($model) {
+        $models = app('LaravelFile')::models()->get()->map(function($model) {
             return 'App\\' . $model->className(); // TODO !!!
         })->values();
 
