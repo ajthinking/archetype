@@ -30,14 +30,14 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
         return $this->where('className', 'User')->get()->first();
     }
 
-    /**
-     * @example Query migrations
-     * @source LaravelFile::migrations()
-     */    
-    public function migrations()
-    {
-        return $this->in('database/migrations');
-    }    
+    // /** THIS BREAKS ON GITHUB ACTIONS (DUE TO COMPOSER CREATE-PROJECT (?))
+    //  * @example Query migrations
+    //  * @source LaravelFile::migrations()
+    //  */    
+    // public function migrations()
+    // {
+    //     return $this->in('database/migrations');
+    // }    
 
     /**
      * @example Query models
