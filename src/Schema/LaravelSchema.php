@@ -19,8 +19,7 @@ class LaravelSchema
 
     public $strategies = [
         Strategies\FromDatabase::class,
-        Strategies\FromMigrations::class,
-        Strategies\FromModels::class,
+        Strategies\FromFiles::class,
     ];
 
     public static function get() {

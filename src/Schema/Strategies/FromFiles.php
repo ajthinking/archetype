@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FromModels
+class FromFiles
 {
     public static function get()
     {
@@ -27,7 +27,7 @@ class FromModels
                     'columns' => [],
                 ];
             })->values()->toArray(),
-            'strategy' => static::class
+            'strategy_used' => static::class
         ];
     }
 }
