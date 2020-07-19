@@ -37,7 +37,10 @@ class LaravelSchema
                 // Attempt next strategy
                 return $strategy::get();
             } catch(\Throwable $e) {
-                $this->log[$strategy] = $e->getMessage();
+                $this->log[$strategy] = [
+                    'message' => $e->getMessage(),
+                    'error' => $e->getTraceAsString()
+                ];
             }
         }, $schema = false);
 
