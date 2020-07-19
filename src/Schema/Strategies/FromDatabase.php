@@ -20,6 +20,8 @@ class FromDatabase
             return 'App\\' . $model->className(); // TODO !!!
         })->values();
 
+        $entities = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+
         return (object) [
             'entities' => $models->map(function($model) {
                 return (object) [
@@ -38,9 +40,6 @@ class FromDatabase
         
         $table = $model->getConnection()->getTablePrefix() . $model->getTable();
         $schema = $model->getConnection()->getDoctrineSchemaManager($table);
-
-        // ALL tables
-        //DB::connection()->getDoctrineSchemaManager()->listTableNames();
 
         $database = null;
         if (strpos($table, '.')) {
