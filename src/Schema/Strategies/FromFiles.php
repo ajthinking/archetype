@@ -24,10 +24,25 @@ class FromFiles
             'entities' => $models->map(function($model) {
                 return (object) [
                     'model' => $model,
-                    'columns' => [],
+                    'columns' => static::getColumnsFromMigrations($model),
                 ];
             })->values()->toArray(),
             'strategy_used' => static::class
         ];
+    }
+
+    protected static function getColumnsFromMigrations($model)
+    {
+        return [];
+        $models = app('LaravelFile')::models()->get();
+        $migrations = app('LaravelFile')::in('database/migrations')->get();
+
+        $table = $model->table() ?? Str::snake($model->className());
+
+        return app('LaravelFile')::in('database/migrations')->get()->map(function($file) {
+            return (object) [
+                'name' => $file->className()
+            ];
+        })->toArray();
     }
 }
