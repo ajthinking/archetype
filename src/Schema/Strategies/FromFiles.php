@@ -34,8 +34,9 @@ class FromFiles
     protected static function getColumnsFromMigrations($model)
     {
         return [];
+
         $models = app('LaravelFile')::models()->get();
-        $migrations = app('LaravelFile')::in('database/migrations')->get();
+        $migrations = app('LaravelFile')::migrations()->get();
 
         $table = $model->table() ?? Str::snake($model->className());
 
