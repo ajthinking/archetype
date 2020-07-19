@@ -39,6 +39,9 @@ class FromDatabase
         $table = $model->getConnection()->getTablePrefix() . $model->getTable();
         $schema = $model->getConnection()->getDoctrineSchemaManager($table);
 
+        // ALL tables
+        //DB::connection()->getDoctrineSchemaManager()->listTableNames();
+
         $database = null;
         if (strpos($table, '.')) {
             list($database, $table) = explode('.', $table);
