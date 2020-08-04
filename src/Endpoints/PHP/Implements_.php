@@ -3,7 +3,7 @@
 namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
-use Arr;
+use Illuminate\Support\Arr;
 
 class Implements_ extends EndpointProvider
 {
