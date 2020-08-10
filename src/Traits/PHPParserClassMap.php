@@ -38,6 +38,7 @@ trait PHPParserClassMap
             'isset' => '\PhpParser\Node\Expr\Isset_',
             'list' => '\PhpParser\Node\Expr\List_',
             'methodCall' => '\PhpParser\Node\Expr\MethodCall',
+            'name' => 'PhpParser\Node\Name',
             'new' => '\PhpParser\Node\Expr\New_',
             'postDec' => '\PhpParser\Node\Expr\PostDec',
             'postInc' => '\PhpParser\Node\Expr\PostInc',
