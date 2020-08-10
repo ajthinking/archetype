@@ -129,6 +129,13 @@ class ASTQueryBuilder
         return is_callable($arg1) ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
     }
 
+    public function whereEquals($expected)
+    {
+        return $this->next(function($queryNode) use($expected) {
+            return $queryNode->result == $expected ? $queryNode : new Killable;
+        });
+    }
+
     protected function next($callback)
     {
         $next = $this->currentNodes()->map($callback)->flatten()->toArray();
