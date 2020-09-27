@@ -32,7 +32,7 @@ class LaravelFileQueryBuilderTest extends Archetype\Tests\FileTestCase
     public function it_can_get_user()
     {        
         $this->assertTrue(
-            get_class(LaravelFile::load('app/User.php')) === 'Archetype\LaravelFile'
+            get_class(LaravelFile::load('app/Models/User.php')) === 'Archetype\LaravelFile'
         );
     }    
 }

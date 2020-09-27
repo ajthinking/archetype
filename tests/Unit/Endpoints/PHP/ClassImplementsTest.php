@@ -5,7 +5,7 @@ class ClassImplementsTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_retrieve_class_implements()
     {
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
 
         $this->assertTrue(
             $file->implements() === []
@@ -15,7 +15,7 @@ class ClassImplementsTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_set_class_implements()
     {
-        $file = PHPFile::load('app/User.php')->implements([
+        $file = PHPFile::load('app/Models/User.php')->implements([
         "MyInterface" 
         ]);
 
@@ -29,7 +29,7 @@ class ClassImplementsTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_add_class_implements()
     {
-        $file = PHPFile::load('app/User.php')
+        $file = PHPFile::load('app/Models/User.php')
             ->add()->implements(['MyFirstInterface'])
             ->add()->implements(['MySecondInterface']);
 

@@ -9,7 +9,7 @@ class ASTQueryBuilderTest extends Archetype\Tests\FileTestCase
     */
     public function it_can_be_instanciated_using_an_ast_object()
     {
-        $ast = LaravelFile::load('app/User.php')->ast();
+        $ast = LaravelFile::load('app/Models/User.php')->ast();
         
         $ASTQB = new ASTQueryBuilder($ast);
 
@@ -22,7 +22,7 @@ class ASTQueryBuilderTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_will_return_instance_of_itself_on_chain()
     {
-        $ast = LaravelFile::load('app/User.php')->ast();
+        $ast = LaravelFile::load('app/Models/User.php')->ast();
 
         $result = (new ASTQueryBuilder($ast))
             ->class();

@@ -7,7 +7,7 @@ class NamespaceTest extends Archetype\Tests\FileTestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            PHPFile::load('app/User.php')->namespace() === 'App'
+            PHPFile::load('app/Models/User.php')->namespace() === 'App\Models'
         );
 
         // on a file without namespace
@@ -21,7 +21,7 @@ class NamespaceTest extends Archetype\Tests\FileTestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            PHPFile::load('app/User.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
+            PHPFile::load('app/Models/User.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
         );
 
         // on a file without namespace
@@ -35,7 +35,7 @@ class NamespaceTest extends Archetype\Tests\FileTestCase
     {
         // on a file with namespace
         $this->assertTrue(
-            PHPFile::load('app/User.php')->remove()->namespace()->namespace() === null
+            PHPFile::load('app/Models/User.php')->remove()->namespace()->namespace() === null
         );
 
         // on a file without namespace

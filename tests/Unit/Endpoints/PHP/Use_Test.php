@@ -6,7 +6,7 @@ class Use_Test extends Archetype\Tests\FileTestCase
     public function it_can_retrieve_use_statements()
     {
         // A file with use statements
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
         $useStatements = $file->use();
         $expectedUseStatements = collect([
             "Illuminate\Notifications\Notifiable",
@@ -25,7 +25,7 @@ class Use_Test extends Archetype\Tests\FileTestCase
         $useStatements = $file->use();
 
         $this->assertTrue(
-            collect($useStatements)->count() === 0
+            collect($useStatements)->count() === 2
         );
 
     }
@@ -34,7 +34,7 @@ class Use_Test extends Archetype\Tests\FileTestCase
     public function it_can_add_use_statements_in_a_namespace()
     {
         // on a file with use statements        
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
 
         $useStatements = $file->add()->use(['Add\This'])->use();
 
@@ -90,7 +90,7 @@ class Use_Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_overwrite_use_statements()
     {
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
 
         $useStatements = $file->use(['Only\This'])->use();
         $expectedUseStatements = collect([

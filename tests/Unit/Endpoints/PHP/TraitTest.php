@@ -6,8 +6,8 @@ class TraitTest extends Archetype\Tests\FileTestCase
     public function it_can_test()
     {
         $this->assertEquals(
-            PHPFile::load('app/User.php')->trait(),
-            ['Notifiable']
+            PHPFile::load('app/Models/User.php')->trait(),
+            ['HasFactory', 'Notifiable']
         );
 
     }

@@ -2,18 +2,17 @@
 
 use PhpParser\BuilderFactory;
 
-class Property2Test extends Archetype\Tests\FileTestCase
+class PropertyTest extends Archetype\Tests\FileTestCase
 {
     protected $emptyClass = '<?php class EmptyClass {}';
 
     /** @test */
     public function it_can_get_a_class_property()
     {
-        $property = PHPFile::load('app/Providers/RouteServiceProvider.php')->property('namespace');
+        $property = PHPFile::load('app/Models/User.php')->property('fillable');
 
-        $this->assertEquals(
-            "App\Http\Controllers",
-            $property
+        $this->assertTrue(
+            is_array($property)
         );
     }
 
@@ -21,7 +20,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     public function it_can_update_existing_class_properties()
     {
         $newValue = 'Reset fillable to a single string!';
-        $property = PHPFile::load('app/User.php')
+        $property = PHPFile::load('app/Models/User.php')
             ->property('fillable', $newValue)
             ->property('fillable');
 
@@ -34,7 +33,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_create_a_new_class_property()
     {
-        $property = PHPFile::load('app/User.php')
+        $property = PHPFile::load('app/Models/User.php')
             ->property('master', 'yoda')
             ->property('master');
 
@@ -86,7 +85,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_remove_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->remove()->property('fillable')
             ->property('fillable');
 
@@ -96,7 +95,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_clear_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->clear()->property('fillable')
             ->property('fillable');
 
@@ -106,7 +105,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_empty_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->empty()->property('fillable')
             ->property('fillable');
 
@@ -116,7 +115,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_empty_string_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->property('someString', 'hiya')
             ->empty()->property('someString')
             ->property('someString');
@@ -127,7 +126,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_empty_non_array_or_string_properties_into_a_default_of_null()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->property('someNonArrayOrStringType', 123)
             ->empty()->property('someNonArrayOrStringType')
             ->property('someNonArrayOrStringType');
@@ -138,7 +137,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_add_to_array_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->add()->property('fillable', 'cool')
             ->property('fillable');
 
@@ -148,7 +147,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_add_to_string_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->property('table', 'users')
             ->add()->property('table', '_backup')
             ->property('table');
@@ -159,7 +158,7 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_add_to_numeric_properties()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->property('allowed_errors', 1)
             ->add()->property('allowed_errors', 99)
             ->property('allowed_errors');
@@ -170,14 +169,14 @@ class Property2Test extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_will_default_to_add_to_an_array_if_null_or_non_value_property_is_encountered()
     {
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->setProperty('realms')
             ->add()->property('realms', 'Atlantis')
             ->property('realms');
 
         $this->assertEquals(['Atlantis'], $output);
 
-        $output = PHPFile::load('app/User.php')
+        $output = PHPFile::load('app/Models/User.php')
             ->setProperty('realms', null)
             ->add()->property('realms', 'Gondor')
             ->property('realms');

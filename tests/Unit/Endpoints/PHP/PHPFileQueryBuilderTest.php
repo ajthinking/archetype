@@ -81,7 +81,7 @@ class PHPFileQueryBuilderTest extends Archetype\Tests\FileTestCase
         );
 
         $this->assertCount(
-            2, LaravelFile::in('app')->where('use', 'count', 4)->get()
+            3, LaravelFile::in('app')->where('use', 'count', 4)->get()
         );        
     }
 
@@ -91,7 +91,7 @@ class PHPFileQueryBuilderTest extends Archetype\Tests\FileTestCase
         $this->assertCount(
             1, LaravelFile::in('app')->where([
                 ['className', 'like', 'provider'],
-                ['methodNames', 'contains', 'mapWebRoutes']
+                ['methodNames', 'contains', 'configureRateLimiting']
             ])->get()
         );        
     }
@@ -102,7 +102,7 @@ class PHPFileQueryBuilderTest extends Archetype\Tests\FileTestCase
         $this->assertCount(
             1, LaravelFile::in('app')
                 ->where('className', 'like', 'provider')
-                ->andWhere('methodNames', 'contains', 'mapWebRoutes')
+                ->andWhere('methodNames', 'contains', 'configureRateLimiting')
                 ->get()
         );        
     }    

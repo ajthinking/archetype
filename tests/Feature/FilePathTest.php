@@ -6,16 +6,16 @@ class FilePathTest extends Archetype\Tests\FileTestCase
     public function a_file_has_an_input_path()
     {
         // relative
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
         $this->assertTrue(
-            $file->inputDriver()->absolutePath() == base_path('app/User.php')
+            $file->inputDriver()->absolutePath() == base_path('app/Models/User.php')
         );
 
         // absolute
-        $path = base_path('app/User.php');
+        $path = base_path('app/Models/User.php');
         $file = PHPFile::load($path);
         $this->assertTrue(
-            $file->inputDriver()->absolutePath() == base_path('app/User.php')
+            $file->inputDriver()->absolutePath() == base_path('app/Models/User.php')
         );        
     }    
     
@@ -23,13 +23,13 @@ class FilePathTest extends Archetype\Tests\FileTestCase
     public function a_file_has_a_filename()
     {
         // relative
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
         $this->assertTrue(
             $file->inputDriver()->filename() == 'User'
         );
 
         // absolute
-        $path = base_path('app/User.php');
+        $path = base_path('app/Models/User.php');
         $file = PHPFile::load($path);
         $this->assertTrue(
             $file->inputDriver()->filename() == 'User'

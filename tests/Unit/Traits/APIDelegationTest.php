@@ -1,11 +1,11 @@
 <?php
 
-class DelegatesAPICallsTest extends Archetype\Tests\FileTestCase 
+class APIDelegationTest extends Archetype\Tests\FileTestCase 
 {
     /** @test */
     public function it_can_delegate_method_calls()
     {
-        $file = PHPFile::load('app/User.php');
+        $file = PHPFile::load('app/Models/User.php');
 
         // Existing method on $this
         $this->assertTrue(

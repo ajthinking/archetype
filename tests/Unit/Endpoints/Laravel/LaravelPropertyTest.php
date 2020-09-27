@@ -6,7 +6,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     public function it_can_retrieve_fillables()
     {
         $this->assertTrue(
-            LaravelFile::load('app/User.php')->fillable() == ['name', 'email', 'password',]
+            LaravelFile::load('app/Models/User.php')->fillable() == ['name', 'email', 'password',]
         );
     }
 
@@ -14,7 +14,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     public function it_can_retrieve_hidden()
     {
         $this->assertTrue(
-            LaravelFile::load('app/User.php')->hidden() == ['password', 'remember_token',]
+            LaravelFile::load('app/Models/User.php')->hidden() == ['password', 'remember_token',]
         );
     }
     
@@ -29,7 +29,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_will_assume_array_if_we_are_inserting_on_a_new_hidden_property()
     {
-        $hidden = LaravelFile::load('app/User.php')
+        $hidden = LaravelFile::load('app/Models/User.php')
             ->remove()->hidden()
             ->hidden('ghost')->hidden();
 
@@ -38,7 +38,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
             $hidden            
         );
 
-        $hidden = LaravelFile::load('app/User.php')
+        $hidden = LaravelFile::load('app/Models/User.php')
             ->remove()->hidden()
             ->hidden(['ghost'])->hidden();
 
@@ -52,7 +52,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     public function it_can_set_fillables()
     {
         $this->assertEquals(
-            LaravelFile::load('app/User.php')->fillable(['guns', 'roses'])->fillable(),
+            LaravelFile::load('app/Models/User.php')->fillable(['guns', 'roses'])->fillable(),
             ['guns', 'roses',]
         );
     }
@@ -61,7 +61,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     public function it_can_add_fillables()
     {
         $this->assertEquals(
-            LaravelFile::load('app/User.php')
+            LaravelFile::load('app/Models/User.php')
                 ->fillable(['guns', 'roses'])
                 ->add()->fillable(['metallica'])
                 ->fillable(),
@@ -73,7 +73,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     public function it_can_set_hidden()
     {
         $this->assertEquals(
-            LaravelFile::load('app/User.php')->hidden(['metallica', 'ozzy'])->hidden(),
+            LaravelFile::load('app/Models/User.php')->hidden(['metallica', 'ozzy'])->hidden(),
             ['metallica', 'ozzy',]
         );
     }
@@ -81,7 +81,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_use_setter_on_associative_arrays()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = LaravelFile::load('app/Models/User.php')
             ->casts(['free' => 'bird'])
             ->casts();
 
@@ -93,7 +93,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_add_to_associative_arrays()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = LaravelFile::load('app/Models/User.php')
             ->add()->casts(['free' => 'bird'])
             ->casts();
 
@@ -106,7 +106,7 @@ class LaravelPropertyTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function it_can_empty_associative_arrays()
     {
-        $output = LaravelFile::load('app/User.php')
+        $output = LaravelFile::load('app/Models/User.php')
             ->empty()->casts()
             ->casts();
 

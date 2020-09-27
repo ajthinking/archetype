@@ -57,7 +57,7 @@ PHPFile::make()->class('acme/Product.php')
 
 ```php
 // Modify existing files  
-PHPFile::load('app/User.php')
+PHPFile::load('app/Models/User.php')
     ->className('NewClassName')
     ->save();
 ```
@@ -259,7 +259,7 @@ Snippet::mySpecialMethod([
 ]);
 
 // Integrated example
-PHPFile::load('app/User.php')
+PHPFile::load('app/Models/User.php')
     ->addMethod(
         Snippet::mySpecialMethod([
             // replacement pairs ...
