@@ -45,7 +45,10 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
      */    
     public function models()
     {
-        return $this->instanceof('Illuminate\Database\Eloquent\Model');
+        $this->instanceof('Illuminate\Database\Eloquent\Model');
+        $this->isNotAbstract();
+
+        return $this;
     }
 
     /**
@@ -77,5 +80,15 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
         });
 
         return $this;
+    }
+
+    protected function isNotAbstract()
+    {
+        $this->result = $this->result->filter(function($file) {
+            $reflection = $file->getReflection();
+            return $reflection && !$reflection->isAbstract();
+        });
+
+        return $this;        
     }
 }
