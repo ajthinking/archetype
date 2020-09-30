@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
-use Archetype\
 
 class LaravelFileQueryBuilderTest extends Archetype\Tests\FileTestCase
 {    
