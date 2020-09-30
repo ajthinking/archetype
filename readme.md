@@ -267,6 +267,20 @@ PHPFile::load('app/Models/User.php')
 
 > :information_source: The `Snippet` class currently only supports templates on *class methods*.
 
+### Note on Facades
+You may use either of the following
+```
+// Using class
+(new \Archetype\PHPFile)->load('...');
+
+// Using facade
+PHPFile::load('...');
+
+// Using facade explicitly
+use Archetype\Facades\PHPFile;
+Archetype\Facades\PHPFile::load('...'); // Using facade explicitly
+```
+
 ### Errors 😵
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
 

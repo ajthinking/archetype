@@ -2,6 +2,8 @@
 
 namespace Archetype;
 
+use Archetype\Drivers\InputInterface;
+use Archetype\Drivers\OutputInterface;
 use Archetype\Traits\DelegatesAPICalls;
 use Archetype\Traits\HasDirectiveDefaults;
 use Archetype\Traits\HasDirectiveHandlers;
@@ -45,6 +47,14 @@ class PHPFile
         Endpoints\PHP\Implements_::class,
         Endpoints\PHP\TraitUse::class,
     ];
+
+    public function __construct(
+        string $input = \Archetype\Drivers\FileInput::class,
+        string $output = \Archetype\Drivers\FileOutput::class)
+    {
+        $this->input = $input;
+        $this->output = $output;
+    }
 
     public function endpointProviders() {
         return collect(self::endpointProviders)->push(
