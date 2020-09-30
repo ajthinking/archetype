@@ -92,12 +92,24 @@ trait HasIO
 
     public function render()
     {
+        //$newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
         return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
     }
 
     public function parse()
     {
+        // $lexer = new \PhpParser\Lexer\Emulative([
+        //     'usedAttributes' => [
+        //         'comments',
+        //         'startLine', 'endLine',
+        //         'startTokenPos', 'endTokenPos',
+        //     ],
+        // ]);
+
+        // $parser = new \PhpParser\Parser\Php7($lexer);
+
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        
 
         try {
             $ast = $parser->parse($this->contents());
@@ -117,12 +129,6 @@ trait HasIO
     protected function getModificationHash()
     {
         return md5(json_encode($this->ast()));
-    }
-    
-    public function print()
-    {
-        $prettyPrinter = new PSR2PrettyPrinter;
-        return $prettyPrinter->prettyPrintFile($this->ast());
     }
     
     public function dd($method = false)
