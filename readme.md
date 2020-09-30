@@ -278,7 +278,7 @@ PHPFile::load('...');
 
 // Using facade explicitly
 use Archetype\Facades\PHPFile;
-Archetype\Facades\PHPFile::load('...'); // Using facade explicitly
+PHPFile::load('...'); // Using facade explicitly
 ```
 
 ### Errors 😵
