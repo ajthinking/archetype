@@ -2,18 +2,12 @@
 
 namespace Archetype\Traits;
 
-use Config;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Archetype\Endpoints\EndpointProvider;
-use Archetype\PHPFile;
 use Archetype\Support\Exceptions\FileParseError;
-use Archetype\Support\Path;
-use Archetype\Support\PHPFileStorage;
 use Archetype\Support\PSR2PrettyPrinter;
 use PHPParser\Error as PHPParserError;
 use PhpParser\ParserFactory;
-use UnexpectedValueException;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\CloningVisitor;
 
 trait HasIO
 {
@@ -54,6 +48,8 @@ trait HasIO
 
         $this->ast($this->parse());
 
+        $this->originalAst = $this->ast;
+
         $this->initialModificationHash = $this->getModificationHash();
 
         return $this;
@@ -64,6 +60,8 @@ trait HasIO
         $this->contents($code);
 
         $this->ast($this->parse());
+
+        $this->originalAst = $this->ast;
 
         $this->initialModificationHash = $this->getModificationHash();
 
@@ -90,36 +88,46 @@ trait HasIO
         echo $this->render();
     }
 
-    public function render()
-    {
-        //$newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
-        return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
-    }
-
     public function parse()
     {
-        // $lexer = new \PhpParser\Lexer\Emulative([
-        //     'usedAttributes' => [
-        //         'comments',
-        //         'startLine', 'endLine',
-        //         'startTokenPos', 'endTokenPos',
-        //     ],
-        // ]);
+        $this->lexer = new \PhpParser\Lexer\Emulative([
+            'usedAttributes' => [
+                'comments',
+                'startLine', 'endLine',
+                'startTokenPos', 'endTokenPos',
+            ],
+        ]);
 
-        // $parser = new \PhpParser\Parser\Php7($lexer);
+        $parser = new \PhpParser\Parser\Php7($this->lexer);
 
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+
+        //$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new CloningVisitor());
         
-
         try {
-            $ast = $parser->parse($this->contents());
+            $this->originalAst = $parser->parse($this->contents());
         } catch (PHPParserError $error) {
             // rethrow with extra information
             throw new FileParseError($this->input->absolutePath(), $error);
         }
 
+        $ast = $traverser->traverse($this->originalAst);
+        
         return $ast;
     }
+
+
+    public function render()
+    {
+        return (new PSR2PrettyPrinter)->printFormatPreserving(
+            $this->ast(),
+            $this->originalAst,
+            $this->lexer->getTokens()
+        );
+        //return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
+    }    
 
     public function hasModifications()
     {
