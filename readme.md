@@ -267,7 +267,7 @@ PHPFile::load('app/Models/User.php')
 
 > :information_source: The `Snippet` class currently only supports templates on *class methods*.
 
-### Note on Facades
+### A note on Facades
 You may use either of the following
 ```php
 // Using class
