@@ -269,7 +269,7 @@ PHPFile::load('app/Models/User.php')
 
 ### Note on Facades
 You may use either of the following
-```
+```php
 // Using class
 (new \Archetype\PHPFile)->load('...');
 
