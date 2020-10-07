@@ -14,6 +14,7 @@ use Archetype\Support\AST\Visitors\NodeRemover;
 use Archetype\Support\AST\Visitors\HashInserter;
 use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
+use Closure;
 use PhpParser\Node\Stmt\Use_;
 use Exception;
 use PhpParser\ConstExprEvaluator;
@@ -247,12 +248,18 @@ class ASTQueryBuilder
         return $this;        
     }
 
+    /**
+     * Replace node
+     *
+     * @param Node|Closure $arg1
+     * @return $this
+     */
     public function replace($arg1)
     {
         return is_callable($arg1) ? $this->replaceWithCallback($arg1) : $this->replaceWithNode($arg1);
     }
 
-    protected function replaceWithCallback($callback)
+    protected function replaceWithCallback(Closure $callback)
     {
         $this->currentNodes()->each(function($node) use($callback) {
             if(!isset($node->result->__object_hash)) return;
