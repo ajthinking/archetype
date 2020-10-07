@@ -48,7 +48,7 @@ trait HasIO
 
         $this->ast($this->parse());
 
-        $this->originalAst = $this->ast;
+        $this->originalAst = $this->ast();
 
         $this->initialModificationHash = $this->getModificationHash();
 
@@ -61,7 +61,7 @@ trait HasIO
 
         $this->ast($this->parse());
 
-        $this->originalAst = $this->ast;
+        $this->originalAst = $this->ast();
 
         $this->initialModificationHash = $this->getModificationHash();
 
