@@ -23,9 +23,7 @@ class ClassExtendsTest extends Archetype\Tests\FileTestCase
     }
     
 
-    /** @test
-     * @group only
-    */
+    /** @test */
     public function it_can_set_class_extends_when_its_empty()
     {
         $file = PHPFile::load('app/Http/Middleware/RedirectIfAuthenticated.php')->extends("My\BaseClass");
