@@ -35,8 +35,7 @@ class TraitUse extends EndpointProvider
                     return join('\\', $trait->parts);
                 })->toArray();
             })
-            ->recall()
-            ->pluck('formatted_traits')
+            ->recall('formatted_traits')
             ->first();
     }
 

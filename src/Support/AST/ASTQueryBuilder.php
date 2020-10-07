@@ -192,11 +192,11 @@ class ASTQueryBuilder
      */
     public function recall($pluck = null)
     {
-        return collect(end($this->tree))->filter(function($item) {
+        $memory = collect(end($this->tree))->filter(function($item) {
             return $item->result;
-        })->map(function($item) use($pluck) {
-            return $pluck ? $item->memory->pluck($pluck) : $item->memory;
-        });
+        })->map->memory;
+
+        return $pluck ? $memory->pluck($pluck) : $memory;
     }
 
     public function get()

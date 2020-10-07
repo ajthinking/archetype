@@ -37,8 +37,7 @@ class Namespace_ extends EndpointProvider
                 $parts = $node->name->parts ?? null;
                 return $parts ? join('\\', $parts) : null;
             })
-            ->recall()
-            ->pluck('formatted_namespace')
+            ->recall('formatted_namespace')
             ->first();
     }
 

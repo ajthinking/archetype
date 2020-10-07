@@ -28,8 +28,7 @@ file->astQuery()
         $parts = $node->parts ?? null;
         return $parts ? join('\\', $parts) : null;
     })
-    ->recall()
-    ->pluck('formatted_extends')
+    ->recall('formatted_extends')
     ->first();
 
 ```
