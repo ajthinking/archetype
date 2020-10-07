@@ -2,8 +2,6 @@
 
 namespace Archetype\Support\AST;
 
-use InvalidArgumentException;
-use LaravelFile;
 use PhpParser\NodeFinder;
 use Archetype\Support\AST\ShallowNodeFinder;
 use Archetype\Traits\HasOperators;
@@ -15,7 +13,6 @@ use Archetype\Support\AST\Visitors\HashInserter;
 use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
 use Closure;
-use PhpParser\Node\Stmt\Use_;
 use Exception;
 use PhpParser\ConstExprEvaluator;
 
@@ -230,22 +227,6 @@ class ASTQueryBuilder
         });
         
         return $this;
-    }    
-
-    public function replaceProperty($key, $value)
-    {
-        $this->currentNodes()->each(function($node) use($key, $value) {
-            if(!isset($node->result->__object_hash)) return;
-
-            $this->resultingAST = NodePropertyReplacer::replace(
-                $node->result->__object_hash,
-                $key,
-                $value,
-                $this->resultingAST
-            );
-        });
-
-        return $this;        
     }
 
     /**
@@ -291,6 +272,22 @@ class ASTQueryBuilder
 
         return $this;
     }
+
+    public function replaceProperty($key, $value)
+    {
+        $this->currentNodes()->each(function($node) use($key, $value) {
+            if(!isset($node->result->__object_hash)) return;
+
+            $this->resultingAST = NodePropertyReplacer::replace(
+                $node->result->__object_hash,
+                $key,
+                $value,
+                $this->resultingAST
+            );
+        });
+
+        return $this;        
+    }    
 
     public function insertStmts($newNodes)
     {
