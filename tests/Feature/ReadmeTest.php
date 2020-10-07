@@ -40,8 +40,64 @@ class ReadmeTest extends Archetype\Tests\FileTestCase
         // The file instances are not using the same references
         // i.e we can change ast of one and expect a diff
         $this->assertNotEquals(
-            $file->className('NewName')->render(),
-            $recreatedFile->render()
-        );        
+            $file->render(),
+            $recreatedFile->className('NewName')->render()
+        );
+
+        $code = <<<'CODE'
+        <?php
+
+        namespace App\Models;
+        
+        use App\Contracts\PlayerInterface;
+        use App\Traits\Dumpable;
+        use Illuminate\Contracts\Auth\MustVerifyEmail;
+        use Illuminate\Database\Eloquent\Factories\HasFactory;
+        use Illuminate\Foundation\Auth\User as Authenticatable;
+        use Illuminate\Notifications\Notifiable;
+        
+        class User extends Authenticatable implements PlayerInterface
+        {
+            use HasFactory, Notifiable;
+            
+            protected $table = 'gdpr_users';
+            
+            /**
+             * The attributes that are mass assignable.
+             *
+             * @var array
+             */
+            protected $fillable = ['name', 'email', 'password', 'nickname'];
+            
+            /**
+             * The attributes that should be cast to native types.
+             *
+             * @var array
+             */
+            protected $casts = [];
+            
+            /**
+             * Get the associated Guild
+             */
+            public function guild()
+            {
+                return $this->belongsTo(Guild::class);
+            }
+            
+            /**
+             * Get the associated Games
+             */
+            public function games()
+            {
+                return $this->hasMany(Game::class);
+            }
+        }
+        CODE;
+
+        
+        $this->assertEquals(
+            $code,
+            $file->render()
+        );
     }
 }
