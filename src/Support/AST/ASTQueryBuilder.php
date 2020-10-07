@@ -46,14 +46,15 @@ class ASTQueryBuilder
         ];
     }
 
-    public static function fromFile($file)
-    {
-        $instance = new static($file->ast());
-        $instance->file = $file;
-        return $instance;
-    }
-
-    public function __call($method, $args)
+    /**
+     * Continue into a Node
+     * Example: $query->classMethod() ...
+     *
+     * @param [string] $method
+     * @param [array] $args
+     * @return void
+     */
+    public function __call(string $method, array $args = [])
     {
         // Can we find a corresponding PHPParser class to enter?
         $class = $this->classMap($method);
@@ -62,7 +63,14 @@ class ASTQueryBuilder
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
 
-    public function __get($name)
+    /**
+     * Continue into a Node property
+     * Example: $query->name ...
+     *
+     * @param [string] $name
+     * @return void
+     */    
+    public function __get(string $name)
     {
         // Can we find a corresponding PHPParser property to enter?
         $property = $this->propertyMap($name);
@@ -173,55 +181,21 @@ class ASTQueryBuilder
             );            
             return $callback($query) ? $queryNode : new Killable;
         });
-    }  
+    }
 
-    // public function whereChainingOn($name)
-    // {
-    //     return $this->next(function($queryNode) use($name) {
-    //         $current = $queryNode->result;
-    //         do {
-    //             $current = $current->var ?? false;
-    //         } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
-
-    //         return $current->name == $name ? $queryNode : new Killable;
-    //     });
-    // }
-
-    // public function flattenChain()
-    // {
-    //     $flattened = $this->currentNodes()->map(function($queryNode) {
-    //         $results = collect();
-    //         $current = $queryNode->result[0];
-
-    //         do {
-    //             $results->push($current);
-    //             $current = $current->var ?? false;
-                
-    //         } while($current && '\\' . get_class($current) == $this->classMap('methodCall'));
-
-    //         return $results->reverse();
-            
-    //     })->flatten();
-
-    //     return $flattened->flatMap(function($methodCall) {
-    //         $var = $methodCall->var->name;
-    //         $name = $methodCall->name;
-    //         $args = $methodCall->args;
-
-    //         return [
-    //             $methodCall->name->name => collect($args)->map(function($arg) {
-    //                 return $arg->value->value;
-    //             })->values()->toArray()
-    //         ];
-    //     })->toArray();
-    // }
-
-    public function recall()
+    /**
+     * Recall data in memory
+     * Use this method in conjunction with remember()
+     *
+     * @param [string] $pluck
+     * @return void
+     */
+    public function recall($pluck = null)
     {
         return collect(end($this->tree))->filter(function($item) {
             return $item->result;
-        })->map(function($item) {
-            return (object) $item->memory;
+        })->map(function($item) use($pluck) {
+            return $pluck ? $item->memory->pluck($pluck) : $item->memory;
         });
     }
 
@@ -296,6 +270,7 @@ class ASTQueryBuilder
     protected function replaceWithNode($newNode)
     {
         $this->currentNodes()->each(function($node) use($newNode) {
+            
             if(!isset($node->result->__object_hash)) return;
 
             $this->resultingAST = NodeReplacer::replace(

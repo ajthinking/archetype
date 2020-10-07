@@ -15,6 +15,12 @@ class AstQuery extends EndpointProvider
      * @return Archetype\Support\AST\ASTQueryBuilder
      */     
     public function astQuery() {
-        return ASTQueryBuilder::fromFile($this->file);
+        // Create AST builder instance
+        $builder = new ASTQueryBuilder($this->file->ast());
+        
+        // Attach the file so we can return it later
+        $builder->file = $this->file;
+        
+        return $builder;
     }
 }

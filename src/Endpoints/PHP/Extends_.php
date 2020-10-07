@@ -48,5 +48,5 @@ class Extends_ extends EndpointProvider
             ->commit()
             ->end()
             ->continue();
-    }    
+    }
 }
