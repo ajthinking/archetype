@@ -23,7 +23,7 @@ class ClassExtendsTest extends Archetype\Tests\FileTestCase
     }
     
 
-    /** @testx
+    /** @test
      * @group only
     */
     public function it_can_set_class_extends_when_its_empty()

@@ -40,8 +40,8 @@ class Extends_ extends EndpointProvider
     {
         return $this->file->astQuery()
             ->class()
-            ->extends
-            ->replace(
+            ->replaceProperty(
+                'extends',
                 new \PhpParser\Node\Name($newExtends)
             )
             ->commit()

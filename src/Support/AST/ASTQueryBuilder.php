@@ -271,10 +271,12 @@ class ASTQueryBuilder
     {
         $this->currentNodes()->each(function($node) use($newNode) {
             
-            if(!isset($node->result->__object_hash)) return;
+            $target = $node->result;
+
+            if(!$target) return;
 
             $this->resultingAST = NodeReplacer::replace(
-                $node->result->__object_hash,
+                $target->__object_hash,
                 $newNode,
                 $this->resultingAST
             );
