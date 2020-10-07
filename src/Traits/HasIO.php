@@ -121,12 +121,15 @@ trait HasIO
 
     public function render()
     {
+        return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
+
+        // This wrecks AST!
         return (new PSR2PrettyPrinter)->printFormatPreserving(
             $this->ast(),
             $this->originalAst,
             $this->lexer->getTokens()
         );
-        //return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
+        
     }    
 
     public function hasModifications()
