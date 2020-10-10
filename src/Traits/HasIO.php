@@ -100,14 +100,13 @@ trait HasIO
 
         $parser = new \PhpParser\Parser\Php7($this->lexer);
 
-
-
         //$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new CloningVisitor());
         
         try {
             $this->originalAst = $parser->parse($this->contents());
+            $this->tokens = $this->lexer->getTokens();
         } catch (PHPParserError $error) {
             // rethrow with extra information
             throw new FileParseError($this->input->absolutePath(), $error);
@@ -127,7 +126,7 @@ trait HasIO
         return (new PSR2PrettyPrinter)->printFormatPreserving(
             $this->ast(),
             $this->originalAst,
-            $this->lexer->getTokens()
+            $this->tokens
         );
         
     }    
