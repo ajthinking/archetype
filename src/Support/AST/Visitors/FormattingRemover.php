@@ -30,11 +30,6 @@ class FormattingRemover extends NodeVisitorAbstract {
         return $node;
     }
 
-    public function afterTraverse($ast)
-    {
-        //dd($ast);
-    }
-
     public static function on($ast)
     {
         $traverser = new NodeTraverser();

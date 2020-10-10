@@ -122,7 +122,7 @@ trait HasIO
     {
         //return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
 
-        // This wrecks AST!
+        // This wrecks AST (slightly)
         return (new PSR2PrettyPrinter)->printFormatPreserving(
             $this->ast(),
             $this->originalAst,
