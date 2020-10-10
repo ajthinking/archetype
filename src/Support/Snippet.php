@@ -63,9 +63,10 @@ class Snippet
             collect($replacementPairs)->values()->toArray(),
             $text
         );
-
         
         $node = (new JsonDecoder())->decode($text);
+
+        
 
         return $node;        
     }

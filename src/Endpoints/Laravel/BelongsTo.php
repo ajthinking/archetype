@@ -16,25 +16,46 @@ class BelongsTo extends EndpointProvider
      */
     public function belongsTo($targets)
     {
-        return $this->add($targets);
+        return $this->addOld($targets);
     }
 
     protected function addOld($targets)
+    {
+        $methods = collect(Arr::wrap($targets))->map(function($target) {
+            $method = Snippet::___BELONGS_TO_METHOD___([
+                '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
+                '___TARGET_CLASS___' => class_basename($target),
+                '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
+            ]);
+
+            return $method;
+        })->toArray();
+
+        return $this->file->astQuery()
+            ->class()
+            ->insertStmts(
+                $methods
+            )->commit()
+            ->end()
+            ->continue();
+    }
+
+    protected function addCleaned($targets)
     {
         return $this->file->astQuery()
             ->class()
             ->insertStmts(
                 collect(Arr::wrap($targets))->map(function($target) {
-                    return Snippet::___HAS_MANY_METHOD___([
-                        '___HAS_MANY_METHOD___' => Str::hasManyMethodName($target),
+                    return Snippet::___BELONGS_TO_METHOD___([
+                        '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),
-                        '___TARGET_IN_DOC_BLOCK___' => Str::hasManyDocBlockName($target)
+                        '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
                     ]);
                 })->toArray()
             )->commit()
             ->end()
             ->continue();
-    }
+    }    
 
     protected function add($targets)
     {
