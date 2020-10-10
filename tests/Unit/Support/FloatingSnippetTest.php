@@ -11,9 +11,7 @@ use PhpParser\BuilderFactory;
 
 class FloatingSnippetTest extends Archetype\Tests\FileTestCase
 {
-    /** @test
-     * @group only
-    */
+    /** @test */
     public function it_can_create_a_snippet_without_position_attributes()
     {
         $manual = $this->belongsToMethod('Demo');

@@ -30,7 +30,7 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
 
         $ln = $comments ? '' : $this->nl;
 
-        return $ln . $this->pAttrGroups($node->attrGroups)
+        return $this->outdent() . $ln . $this->indent() . $this->pAttrGroups($node->attrGroups)
              . $this->pModifiers($node->flags)
              . 'function ' . ($node->byRef ? '&' : '') . $node->name
              . '(' . $this->pMaybeMultiline($node->params) . ')'
@@ -145,6 +145,6 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
      * @return string Reformatted text of comments
      */
     protected function pComments(array $comments) : string {
-        return $this->nl . parent::pComments($comments);
+        return $this->outdent() . $this->nl . $this->indent() . parent::pComments($comments);
     }    
 }

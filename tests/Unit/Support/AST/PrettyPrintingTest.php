@@ -8,16 +8,12 @@ use Archetype\Support\PSR2PrettyPrinter;
 use PhpParser\BuilderFactory;
 use PhpParser\Node;
 
-use Archetype\Support\Snippet;
-use Archetype\Endpoints\EndpointProvider;
-use Archetype\Support\AST\Visitors\FormattingRemover;
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
-
 class PrettyPrintingTest extends Archetype\Tests\FileTestCase
 {
     public function setup() :void
     {
+        parent::setUp();
+
         $this->code = <<< 'CODE'
         <?php
 
@@ -25,6 +21,7 @@ class PrettyPrintingTest extends Archetype\Tests\FileTestCase
         {
             public $name;
             public $gender;
+
             public function fly()
             {
                 return 'flying!';
@@ -38,11 +35,9 @@ class PrettyPrintingTest extends Archetype\Tests\FileTestCase
         CODE; 
     }
 
-    /** @test
-     * @group parser1
-    */    
-    public function there_is_not_a_missing_space_between_methods_when_pretty_printing()
-    {
+    /** @test */    
+    public function two_line_breaks_separate_methods()
+    { 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $prettyPrinter = new PSR2PrettyPrinter;
 
@@ -50,12 +45,18 @@ class PrettyPrintingTest extends Archetype\Tests\FileTestCase
         
         $code = $prettyPrinter->prettyPrint($stmts);
         
-        echo $code;  
+        $this->assertStringContainsString(
+            ';' . PHP_EOL . PHP_EOL . '    public function fly()',
+            LaravelFile::fromString($this->code)->table('users_table')->render()
+        );
+        
+        $this->assertStringContainsString(
+            '}' . PHP_EOL . PHP_EOL . '    public function sleeping()',
+            LaravelFile::fromString($this->code)->table('users_table')->render()
+        );        
     }
 
-    /** @test
-     * @group parser2
-    */       
+    /** @test */       
     public function there_is_not_a_missing_space_between_methods_when_format_preserving_pretty_printing()
     {   
         $lexer = new Lexer\Emulative([
@@ -85,7 +86,13 @@ class PrettyPrintingTest extends Archetype\Tests\FileTestCase
         
         $newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
 
-        echo $newCode;
+        // THe spaces should be fixed!
+        $this->assertMatchesRegularExpression(
+            '/\n    \n    public function eating()/',
+            $newCode
+        );
+
+        $this->markTestIncomplete();
     }
 
     protected function makeMethod($name)
