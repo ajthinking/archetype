@@ -8,10 +8,12 @@ use PhpParser\NodeFinder;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Name;
+use Archetype\Support\FloatingJsonDecoder;
 use PhpParser\JsonDecoder;
 
 use PHPFile;
 use InvalidArgumentException;
+use Archetype\Support\AST\Visitors\AttributeRemover;
 
 class Snippet
 {
@@ -63,10 +65,10 @@ class Snippet
             collect($replacementPairs)->values()->toArray(),
             $text
         );
-        
-        $node = (new JsonDecoder())->decode($text);
 
-        
+        $node = (new JsonDecoder)->decode($text);
+
+        $node = AttributeRemover::on([$node]);
 
         return $node;        
     }

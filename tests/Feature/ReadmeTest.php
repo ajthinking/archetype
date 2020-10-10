@@ -45,6 +45,9 @@ class ReadmeTest extends Archetype\Tests\FileTestCase
         );
     }
 
+    /**
+     * @test
+     */    
     public function it_wont_wreck_file_formatting()
     {
         // TO BE COMPLETED AFTER RESOLVING THE SNIPPET/TEMPLATING/BELONGS TO ETC ISSUE!
@@ -54,55 +57,65 @@ class ReadmeTest extends Archetype\Tests\FileTestCase
 
         namespace App\Models;
         
-        use App\Contracts\PlayerInterface;
-        use App\Traits\Dumpable;
         use Illuminate\Contracts\Auth\MustVerifyEmail;
         use Illuminate\Database\Eloquent\Factories\HasFactory;
         use Illuminate\Foundation\Auth\User as Authenticatable;
         use Illuminate\Notifications\Notifiable;
         
-        class User extends Authenticatable implements PlayerInterface
+        class User extends Authenticatable
         {
             use HasFactory, Notifiable;
-            
-            protected $table = 'gdpr_users';
-            
+        
             /**
              * The attributes that are mass assignable.
              *
              * @var array
              */
-            protected $fillable = ['name', 'email', 'password', 'nickname'];
-            
+            protected $fillable = [
+                'name',
+                'email',
+                'password',
+            ];
+        
+            /**
+             * The attributes that should be hidden for arrays.
+             *
+             * @var array
+             */
+            protected $hidden = [
+                'password',
+                'remember_token',
+            ];
+        
             /**
              * The attributes that should be cast to native types.
              *
              * @var array
              */
-            protected $casts = [];
-            
-            /**
-             * Get the associated Guild
-             */
-            public function guild()
-            {
-                return $this->belongsTo(Guild::class);
-            }
-            
-            /**
-             * Get the associated Games
-             */
-            public function games()
-            {
-                return $this->hasMany(Game::class);
-            }
-        }
+            protected $casts = [
+                'email_verified_at' => 'datetime',
+            ];
+        }        
         CODE;
 
-        
+        // Read and render will produce equal results
         $this->assertEquals(
             $code,
-            $file->render()
+            LaravelFile::fromString($code)->render()
+        );
+
+        // After rendering, the $fillable array should still be vertical
+        $fillableArray = <<<'STOP'
+            protected $fillable = [
+                'name',
+                'email',
+                'password',
+        STOP;
+
+        // Read, EDIT and render wont affect other code
+        $this->assertStringContainsString(
+            $fillableArray,
+            LaravelFile::fromString($code)->table('users_table')->render()
         );        
     }
 }

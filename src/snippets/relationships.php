@@ -32,6 +32,10 @@ class _ extends FakeName
     */
     public function ___BELONGS_TO_METHOD___()
     {
+        $myArray = [
+            'a', 'b',
+            'custom', 'rows'
+        ];
         return $this->belongsTo(___TARGET_CLASS___::class);
     } 
 

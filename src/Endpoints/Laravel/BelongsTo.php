@@ -16,31 +16,11 @@ class BelongsTo extends EndpointProvider
      */
     public function belongsTo($targets)
     {
-        return $this->addOld($targets);
+        return $this->add($targets);
+        return $this->addExplicit($targets);
     }
 
-    protected function addOld($targets)
-    {
-        $methods = collect(Arr::wrap($targets))->map(function($target) {
-            $method = Snippet::___BELONGS_TO_METHOD___([
-                '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
-                '___TARGET_CLASS___' => class_basename($target),
-                '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
-            ]);
-
-            return $method;
-        })->toArray();
-
-        return $this->file->astQuery()
-            ->class()
-            ->insertStmts(
-                $methods
-            )->commit()
-            ->end()
-            ->continue();
-    }
-
-    protected function addCleaned($targets)
+    protected function add($targets)
     {
         return $this->file->astQuery()
             ->class()
@@ -55,9 +35,9 @@ class BelongsTo extends EndpointProvider
             )->commit()
             ->end()
             ->continue();
-    }    
+    }  
 
-    protected function add($targets)
+    protected function addExplicit($targets)
     {
         return $this->file->astQuery()
             ->class()

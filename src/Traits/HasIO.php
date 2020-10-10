@@ -120,7 +120,7 @@ trait HasIO
 
     public function render()
     {
-        return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
+        //return (new PSR2PrettyPrinter)->prettyPrintFile($this->ast());
 
         // This wrecks AST!
         return (new PSR2PrettyPrinter)->printFormatPreserving(
