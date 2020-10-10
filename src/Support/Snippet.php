@@ -8,12 +8,11 @@ use PhpParser\NodeFinder;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Name;
-use Archetype\Support\FloatingJsonDecoder;
 use PhpParser\JsonDecoder;
 
 use PHPFile;
 use InvalidArgumentException;
-use Archetype\Support\AST\Visitors\AttributeRemover;
+use Archetype\Support\AST\Visitors\FormattingRemover;
 
 class Snippet
 {
@@ -68,7 +67,8 @@ class Snippet
 
         $node = (new JsonDecoder)->decode($text);
 
-        $node = AttributeRemover::on([$node]);
+        // Remove attributes that messed with pretty printing
+        $node = FormattingRemover::on($node);
 
         return $node;        
     }

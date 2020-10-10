@@ -4,7 +4,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 
 use Archetype\Support\Snippet;
 use Archetype\Endpoints\EndpointProvider;
-use Archetype\Support\AST\Visitors\AttributeRemover;
+use Archetype\Support\AST\Visitors\FormattingRemover;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use PhpParser\BuilderFactory;
@@ -19,7 +19,22 @@ class FloatingSnippetTest extends Archetype\Tests\FileTestCase
         $manual = $this->belongsToMethod('Demo');
         $fromSnippet = Snippet::___HAS_MANY_METHOD___();
         
-        $fromSnippet = AttributeRemover::on([$fromSnippet]);
+        $fromSnippet = FormattingRemover::on($fromSnippet);
+        
+        $disabled = [
+            'startLine',
+            'startTokenPos',
+            'endLine',
+            'endTokenPos',
+        ];
+
+        foreach($disabled as $key) {
+            $this->assertEquals(
+                -1,
+                $fromSnippet->getAttribute($key)
+            );
+        }
+        
 
         // dd(
         //     $manual->getAttributes(),
@@ -59,5 +74,19 @@ class FloatingSnippetTest extends Archetype\Tests\FileTestCase
             )    
                 
             ->getNode();
-    }    
+    }
+    
+
+    // protected function belongsTo($targets)
+    // {
+    //     return $this->file->astQuery()
+    //         ->class()
+    //         ->insertStmts(
+    //             collect(Arr::wrap($targets))->map(function($target) {
+    //                 return $this->belongsToMethod($target);
+    //             })->toArray()
+    //         )->commit()
+    //         ->end()
+    //         ->continue();
+    // }    
 }

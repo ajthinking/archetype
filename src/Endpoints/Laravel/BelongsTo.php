@@ -17,7 +17,6 @@ class BelongsTo extends EndpointProvider
     public function belongsTo($targets)
     {
         return $this->add($targets);
-        return $this->addExplicit($targets);
     }
 
     protected function add($targets)
@@ -35,55 +34,5 @@ class BelongsTo extends EndpointProvider
             )->commit()
             ->end()
             ->continue();
-    }  
-
-    protected function addExplicit($targets)
-    {
-        return $this->file->astQuery()
-            ->class()
-            ->insertStmts(
-                collect(Arr::wrap($targets))->map(function($target) {
-                    return $this->belongsToMethod($target);
-                })->toArray()
-            )->commit()
-            ->end()
-            ->continue();
     }
-
-    // A VEEEERY EXPLICIT APPROACH
-    // ANOTHER IDEA: STRIP THE LINES/ATTRIBUTES FROM THE SNIPPET CLASS
-    // THAT WILL LEAVE US TO RELY ON PRETTY PRINTING WHICH IS NOT THAT BAD??
-    protected function belongsToMethod($target)
-    {
-        $factory = new BuilderFactory;
-        $name = Str::belongsToMethodName($target);
-        $targetClass = class_basename($target);
-        $targetInDocBlock = Str::hasManyDocBlockName($target);
-
-        return $factory->method($name)
-            ->makePublic()
-            ->setDocComment("/**
-                            * Get the associated $targetInDocBlock
-                            */")
-            ->addStmt(
-                new \PhpParser\Node\Stmt\Return_(
-                    new \PhpParser\Node\Expr\MethodCall(
-                        new \PhpParser\Node\Expr\Variable('this'),
-                        'belongsTo',
-                        [
-                            new \PhpParser\Node\Arg(
-                                new \PhpParser\Node\Expr\ClassConstFetch(
-                                    new \PhpParser\Node\Name($targetClass),
-                                    'class'
-                                )
-                            )
-                        ]
-                    )
-                )
-            )    
-                
-            ->getNode();
-    }
-
-   
 }

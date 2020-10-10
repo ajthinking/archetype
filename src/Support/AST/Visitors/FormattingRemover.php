@@ -9,14 +9,13 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
-class AttributeRemover extends NodeVisitorAbstract {
+class FormattingRemover extends NodeVisitorAbstract {
     public function leaveNode(Node $node) {
         
         $node->setAttribute('startLine', -1);
         $node->setAttribute('startTokenPos', -1);
         $node->setAttribute('endLine', -1);
         $node->setAttribute('endTokenPos', -1);
-        $node->setAttribute('startLine', -1);
         $node->setAttribute('origNode', null);
 
         if($node->getAttribute('comments')) {
@@ -40,6 +39,6 @@ class AttributeRemover extends NodeVisitorAbstract {
     {
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new static);
-        return $traverser->traverse($ast)[0];
+        return $traverser->traverse([$ast])[0];
     }
 }
