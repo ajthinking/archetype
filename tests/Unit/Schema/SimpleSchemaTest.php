@@ -1,5 +1,6 @@
 <?php
 
+use Archetype\Schema\SimpleSchema\Attribute;
 use Archetype\Schema\SimpleSchema\SimpleSchema;
 use Archetype\Schema\SimpleSchema\SimpleSchemaParser;
 
@@ -22,40 +23,39 @@ class SimpleSchemaTest extends Archetype\Tests\FileTestCase
     public function it_will_clean_up_whitespace()
     {
         $parser1 = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES);
+
+
         $parser2 = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES_DIRTY);
 
         $this->assertNotEquals(
             $parser1->original,
             $parser2->original
         );
-
+        
         $this->assertEquals(
             $parser1->cleaned,
             $parser2->cleaned
         );        
+        
     }     
     
     /** @test */
-    public function the_schema_has_entities_with_name_and_attributes()
+    public function the_schema_has_entities()
     {
         $schema = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES)->get();
 
         $this->assertCount(3, $schema->entites);
 
         $this->assertEquals(
+            ['Model1','Model2','Model3'],
             collect($schema->entites)->map->name->toArray(),
-            ['Model1','Model2','Model3']
+            
         );
 
         $this->assertEquals(
-            collect($schema->entites)->map->attributes->toArray(),
-            [
-                ['attribute1', 'attribute2'], // Model1
-                ['attribute1', 'attribute2'], // Model2
-                ['attribute1', 'attribute2']  // Model3
-            ]
+            new Attribute('attribute1', []),
+            collect($schema->entites)->map->attributes[0][0],
+            
         );
-
-
     }    
 }

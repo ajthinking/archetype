@@ -14,11 +14,27 @@ class SegmentParser
 
     public function parse($segment)
     {
-        
         $segmentRows = Str::of($segment)->split('/' . PHP_EOL . '/');
-        $name = $segmentRows->first();
-        $attributes = $segmentRows->slice(1)->values()->toArray();
+        
+        $headline = $segmentRows->first();
+        
+        
 
-        return new Entity($name, $attributes);
+        $headlineParts = Str::of($headline)->split('/ /');
+
+        $name = $headlineParts->first();
+
+        
+
+        $directives = $headlineParts->slice(1)->toArray();
+
+        $attributes = $segmentRows->slice(1)->values()->map(function($row) {
+            $attributeParts = Str::of($row)->split('/ /');
+            $directives = $attributeParts->slice(1)->toArray();
+            $name = $attributeParts->first();            
+            return new Attribute($name, $directives);
+        })->toArray();
+
+        return new Entity($name, $directives, $attributes);
     }
 }

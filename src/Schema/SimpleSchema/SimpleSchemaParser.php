@@ -42,9 +42,9 @@ class SimpleSchemaParser
             // remove comments
             ->replaceMatches('/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/', "")
             // trim preciding line space
-            ->replaceMatches('/[^\S\r\n]/', "")
+            ->replaceMatches('/^([\r\n])\S/', "")
             // trim trailing line space
-            ->replaceMatches('/[\t]+$/', "")
+            ->replaceMatches('/[ \t]+$/m', "")
             // trim preciding newlines
             ->replaceMatches('/^\n+/', "")
             // trim trailing newlines

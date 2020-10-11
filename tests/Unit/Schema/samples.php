@@ -31,4 +31,18 @@ Model3
 attribute1  
 attribute2
 
-CODE; 
+CODE;
+
+const THREE_ENTITIES_WITH_ATTRIBUTES_AND_DIRECTIVES = <<< 'CODE'
+Entity1 d1 d2
+a1 d1 d2
+a2 d1 d2
+
+Entity2 d1 d2
+a1 d1 d2
+a2 d1 d2
+
+Entity3 d1 d2
+a1 d1 d2
+a2 d1 d2
+CODE;
