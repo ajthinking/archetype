@@ -57,32 +57,32 @@ class ProjectTest extends Archetype\Tests\FileTestCase
             'find /home/runner/work/archetype/archetype -name User.php'
         );
 
-        dd($r);
+        // dd($r);
 
 
 
-        dd(
-            $working,
-            $manual1,
-            is_file(
-                $working
-            ),
-            is_file(
-                $manual1
-            ),                                    
-        );
+        // dd(
+        //     $working,
+        //     $manual1,
+        //     is_file(
+        //         $working
+        //     ),
+        //     is_file(
+        //         $manual1
+        //     ),                                    
+        // );
 
-        dd(
-            is_file(
-                base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php')
-            ),
-            is_file(
-                base_path('packages/ajthinking/archetype/tests/.output/app/Models/User.php')
-            ),
-            is_file(
-                __DIR__ . '/../.output/app/Models/User.php'
-            ),                        
-        );
+        // dd(
+        //     is_file(
+        //         base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php')
+        //     ),
+        //     is_file(
+        //         base_path('packages/ajthinking/archetype/tests/.output/app/Models/User.php')
+        //     ),
+        //     is_file(
+        //         __DIR__ . '/../.output/app/Models/User.php'
+        //     ),                        
+        // );
 
         $this->assertContains(
             'social_security_number',
