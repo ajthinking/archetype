@@ -8,15 +8,13 @@ use Archetype\Schema\SimpleSchema\SimpleSchema;
 
 class User extends BaseGenerator
 {
-    public function qualify()
+    public function qualifies()
     {
-        return collect($this->schema->entites)->where('name', 'User')->first();
+        return (boolean) collect($this->schema->entites)->where('name', 'User')->first();
     }
 
     public function build()
     {
-        if(!$this->qualify()) return;
-
         $this->setHidden();
     }
 

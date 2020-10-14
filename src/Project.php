@@ -69,8 +69,8 @@ class Project
     
     public function build()
     {
-        collect($this->generators)->each(function($generator) {
-            $generator::make($this->schema)->build();
+        $this->generators()->filter->qualifies()->each(function($generator) {
+            $generator->build();
         });
 
         return $this;
@@ -79,5 +79,12 @@ class Project
     public function test()
     {
         return $this;
-    }  
+    }
+    
+    protected function generators()
+    {
+        return collect($this->generators)->map(function($generator) {
+            return $generator::make($this->schema);
+        });
+    }
 }

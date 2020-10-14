@@ -16,5 +16,7 @@ abstract class BaseGenerator
         return new static($schema);
     }
 
+    abstract public function qualifies();
+
     abstract public function build();
 }
