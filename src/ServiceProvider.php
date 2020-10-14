@@ -15,6 +15,7 @@ use Archetype\Commands\RelationshipsDemo;
 use Archetype\Factories\LaravelFileFactory;
 use Archetype\Schema\LaravelSchema;
 use Archetype\Factories\PHPFileFactory;
+use Archetype\Factories\ProjectFactory;
 use Archetype\Traits\AddsLaravelStringsToStrWithMacros;
 
 class ServiceProvider extends BaseServiceProvider
@@ -48,6 +49,10 @@ class ServiceProvider extends BaseServiceProvider
         App::bind('LaravelFile', function() {
             return app()->make(LaravelFileFactory::class);
         });
+
+        App::bind('Archetype\Facades\Project', function() {
+            return app()->make(ProjectFactory::class);
+        });        
     }    
 
     protected function publishConfig()
