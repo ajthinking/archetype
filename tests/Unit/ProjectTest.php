@@ -60,7 +60,16 @@ class ProjectTest extends Archetype\Tests\FileTestCase
             ),
             is_dir(
                 __DIR__ . '/../.output'
-            )
+            ),
+            is_file(
+                base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php')
+            ),
+            is_file(
+                base_path('packages/ajthinking/archetype/tests/.output/app/Models/User.php')
+            ),
+            is_file(
+                __DIR__ . '/../.output/app/Models/User.php'
+            ),                        
         );
 
         $this->assertContains(
