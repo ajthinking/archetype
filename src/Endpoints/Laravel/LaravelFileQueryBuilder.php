@@ -52,6 +52,17 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     }
 
     /**
+     * @example Query models
+     * @source LaravelFile::models()
+     */    
+    public function exceptUser()
+    {
+        $this->isNotUser();
+
+        return $this;
+    }    
+
+    /**
      * @example Query controllers
      * @source LaravelFile::controllers()
      */        
@@ -90,5 +101,14 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
         });
 
         return $this;        
+    }
+
+    protected function isNotUser()
+    {
+        $this->result = $this->result->filter(function($file) {
+            return $file->className() != 'User';
+        });
+
+        return $this;         
     }
 }

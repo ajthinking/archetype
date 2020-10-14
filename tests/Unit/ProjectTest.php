@@ -58,6 +58,6 @@ class ProjectTest extends Archetype\Tests\FileTestCase
         $this->assertNotContains(
             'a2',
             LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
-        );        
+        );
     }
 }

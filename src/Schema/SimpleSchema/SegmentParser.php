@@ -2,6 +2,8 @@
 
 namespace Archetype\Schema\SimpleSchema;
 
+use Archetype\Schema\SimpleSchema\Entities\ModelEntity;
+use Archetype\Schema\SimpleSchema\Entities\UserEntity;
 use Archetype\Schema\SimpleSchema\SimpleSchema;
 use Str;
 
@@ -35,6 +37,8 @@ class SegmentParser
             return new Attribute($name, $directives);
         });
 
-        return new Entity($name, $directives, $attributes);
+        if($name == 'User') return new UserEntity($name, $directives, $attributes);
+
+        return new ModelEntity($name, $directives, $attributes);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Archetype\Schema\SimpleSchema;
+namespace Archetype\Schema\SimpleSchema\Entities;
 
-use Archetype\Schema\SimpleSchema\SimpleSchemaParser;
+use Archetype\Schema\SimpleSchema\Entity;
 
-abstract class Entity
+class UserEntity extends Entity
 {
     public $name;
     public $directives;
