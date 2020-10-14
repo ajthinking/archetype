@@ -56,7 +56,7 @@ class ProjectTest extends Archetype\Tests\FileTestCase
         dd(
             exec(
                 'find /home/runner/work/archetype/archetype -name User.php'
-            );
+            )
         );
 
 
