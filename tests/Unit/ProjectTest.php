@@ -47,11 +47,17 @@ class ProjectTest extends Archetype\Tests\FileTestCase
             ->schema("
                 User
                 social_security_number hidden
+                a2 visible
             ")->build();
         
         $this->assertContains(
             'social_security_number',
             LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
         );
+
+        $this->assertNotContains(
+            'a2',
+            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+        );        
     }
 }

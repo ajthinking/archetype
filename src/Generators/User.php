@@ -25,9 +25,6 @@ class User extends BaseGenerator
         $hiddens = collect($this->userEntity()->attributes)->filter(function($attribute) {
             return collect($attribute->directives)->contains('hidden');
         })->map->name->toArray();
-
-        if(!$hiddens) return;
-
         
         LaravelFile::user()
             ->add()->hidden($hiddens)
