@@ -27,7 +27,7 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
      */
     public function user()
     {
-        return $this->where('className', 'User')->get()->first();
+        return $this->in('app')->where('className', 'User')->get()->first();
     }
 
     /**
