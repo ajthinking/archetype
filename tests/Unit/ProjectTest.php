@@ -52,12 +52,12 @@ class ProjectTest extends Archetype\Tests\FileTestCase
         
         $this->assertContains(
             'social_security_number',
-            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+            LaravelFile::load(base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php'))->hidden()
         );
 
         $this->assertNotContains(
             'a2',
-            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+            LaravelFile::load(base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php'))->hidden()
         );        
     }
 }
