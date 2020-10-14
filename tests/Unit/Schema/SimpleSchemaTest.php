@@ -42,20 +42,18 @@ class SimpleSchemaTest extends Archetype\Tests\FileTestCase
     /** @test */
     public function the_schema_has_entities()
     {
-        $schema = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES)->get();
+        $schema = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES)->get();        
 
         $this->assertCount(3, $schema->entites);
 
         $this->assertEquals(
-            ['Model1','Model2','Model3'],
-            collect($schema->entites)->map->name->toArray(),
-            
+            collect(['Model1','Model2','Model3']),
+            collect($schema->entites)->map->name,    
         );
 
         $this->assertEquals(
-            new Attribute('attribute1', []),
-            collect($schema->entites)->map->attributes[0][0],
-            
+            new Attribute('attribute1', collect()),
+            collect($schema->entites)->first()->attributes->first(),  
         );
     }    
 }

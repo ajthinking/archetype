@@ -30,10 +30,10 @@ class SegmentParser
 
         $attributes = $segmentRows->slice(1)->values()->map(function($row) {
             $attributeParts = Str::of($row)->split('/ /');
-            $directives = $attributeParts->slice(1)->values()->toArray();
+            $directives = $attributeParts->slice(1)->values();
             $name = $attributeParts->first();            
             return new Attribute($name, $directives);
-        })->toArray();
+        });
 
         return new Entity($name, $directives, $attributes);
     }

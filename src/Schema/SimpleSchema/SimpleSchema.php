@@ -6,9 +6,9 @@ use Archetype\Schema\SimpleSchema\SimpleSchemaParser;
 
 class SimpleSchema
 {
-    public $entites = [];
+    public $entites;
 
-    public function __construct(array $entites)
+    public function __construct(\Illuminate\Support\Collection $entites)
     {
         $this->entites = $entites;
     }

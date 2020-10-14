@@ -10,7 +10,7 @@ class SimpleSchemaParser
     public $original;
     public $cleaned;
     public $segments = [];
-    public $entites = [];
+    public $entites;
 
     public static function make()
     {
@@ -57,13 +57,13 @@ class SimpleSchemaParser
     {
         $segments = Str::of($this->cleaned)->split('/\n\s*\n/');
 
-        return $segments->toArray();
+        return $segments;
     }
     
     protected function entities()
     {
-        return collect($this->segments)->map(function($segment) {
+        return $this->segments->map(function($segment) {
             return SegmentParser::make()->parse($segment);
-        })->toArray();
+        });
     }    
 }
