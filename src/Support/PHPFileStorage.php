@@ -29,15 +29,15 @@ class PHPFileStorage
             $content
         );
 
-        dd(
-            //$this->getStorageDisk('output')->getDriver()->pathPrefix,
-            $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix(),
-            $this->relative($path, 'output'),
-            is_file(
-                $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix() .
-                $this->relative($path, 'output')
-            )            
-        );
+        // dd(
+        //     //$this->getStorageDisk('output')->getDriver()->pathPrefix,
+        //     $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix(),
+        //     $this->relative($path, 'output'),
+        //     is_file(
+        //         $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix() .
+        //         $this->relative($path, 'output')
+        //     )            
+        // );
 
         return $r;
     }    

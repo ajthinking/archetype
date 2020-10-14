@@ -38,7 +38,7 @@ class ProjectTest extends Archetype\Tests\FileTestCase
         $this->assertTrue(true);
     }
 
-    /** @testx
+    /** @test
      * @group progress
     */
     public function it_can_build()
@@ -50,17 +50,21 @@ class ProjectTest extends Archetype\Tests\FileTestCase
                 a2 visible
             ")->build();
         
+        $working = "/home/runner/work/archetype/archetype/host/packages/ajthinking/archetype/tests/../tests/.output/app/Models/User.php";
+        $manual1 = base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php');
 
         dd(
-            is_dir(
-                base_path('/vendor/ajthinking/archetype/tests/.output')
+            $working,
+            $manual1,
+            is_file(
+                $working
             ),
-            is_dir(
-                base_path('packages/ajthinking/archetype/tests/.output')
-            ),
-            is_dir(
-                __DIR__ . '/../.output'
-            ),
+            is_file(
+                $manual1
+            ),                                    
+        );
+
+        dd(
             is_file(
                 base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php')
             ),
