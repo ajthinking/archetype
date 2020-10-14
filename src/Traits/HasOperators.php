@@ -14,6 +14,7 @@ trait HasOperators
             'contains'  => 'contains',
             'has'       => 'contains',
             'in'        => 'inOperator',
+            'not in'    => 'notInOperator',
             'like'      => 'like',
             'matches'   => 'matches',
             'count'     => 'count',
@@ -44,6 +45,11 @@ trait HasOperators
     {
         return collect($haystack)->contains($candidate);
     }
+
+    protected function notInOperator($candidate, $haystack)
+    {
+        return !$this->inOperator($candate, $haystack);
+    }    
 
     protected function like($candidate, $like)
     {

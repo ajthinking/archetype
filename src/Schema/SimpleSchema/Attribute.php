@@ -14,4 +14,9 @@ class Attribute
         $this->name = $name;
         $this->directives = $directives;
     }
+
+    public function hasDirective(string $directive)
+    {
+        return $this->directives->contains($directive);
+    }
 }

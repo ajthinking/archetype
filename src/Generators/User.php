@@ -10,27 +10,34 @@ class User extends BaseGenerator
 {
     public function qualifies()
     {
-        return (boolean) collect($this->schema->entites)->where('name', 'User')->first();
+        return $this->schema->entites->where('name', 'User')->isNotEmpty();
     }
 
     public function build()
     {
+        $this->file = $this->findOrCreateUserFile();
+
         $this->setHidden();
     }
 
     protected function setHidden()
     {
-        $hiddens = collect($this->userEntity()->attributes)->filter(function($attribute) {
-            return collect($attribute->directives)->contains('hidden');
-        })->map->name->toArray();
+        // Get hidden attribues
+        $hiddens = $this->userEntity()
+            ->attributes->filter->hasDirective('hidden')
+            ->map->name->toArray();
         
-        LaravelFile::user()
-            ->add()->hidden($hiddens)
-            ->save();
+        // Set hidden
+        $this->file->add()->hidden($hiddens)->save();
     }
 
     protected function userEntity()
     {
-        return collect($this->schema->entites)->where('name', 'User')->first();
+        return $this->schema->entites->where('name', 'User')->first();
+    }
+
+    protected function findOrCreateUserFile()
+    {
+        return LaravelFile::user();
     }
 }

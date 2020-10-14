@@ -28,6 +28,12 @@ class PHPFile
 
     protected $initialModificationHash;
 
+    protected $originalAst;
+
+    protected $tokens;
+
+    protected $lexer;
+
     protected $directives = [];
 
     protected const endpointProviders = [
