@@ -81,6 +81,10 @@ class Property extends EndpointProvider
             $value = $this->file->directive('addValue');
         }
 
+        // Dont add nullish values: [], null, 0
+        if(empty($value)) return $this->file;
+
+
         $existing = $this->get($key);
 
         if(is_array($existing)) return $this->addToArray($key, $value, $existing);
