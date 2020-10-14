@@ -38,7 +38,7 @@ class ProjectTest extends Archetype\Tests\FileTestCase
         $this->assertTrue(true);
     }
 
-    /** @test
+    /** @testx
      * @group progress
     */
     public function it_can_build()
