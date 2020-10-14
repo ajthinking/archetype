@@ -53,11 +53,12 @@ class ProjectTest extends Archetype\Tests\FileTestCase
         $working = "/home/runner/work/archetype/archetype/host/packages/ajthinking/archetype/tests/../tests/.output/app/Models/User.php";
         $manual1 = base_path('vendor/ajthinking/archetype/tests/.output/app/Models/User.php');
 
-        dd(
-            exec(
-                'find /home/runner/work/archetype/archetype -name User.php'
-            )
+        $r = shell_exec(
+            'find /home/runner/work/archetype/archetype -name User.php'
         );
+
+        dd($r);
+
 
 
         dd(
