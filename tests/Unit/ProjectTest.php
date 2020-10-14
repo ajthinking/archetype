@@ -59,7 +59,7 @@ class ProjectTest extends Archetype\Tests\FileTestCase
                 base_path('packages/ajthinking/archetype/tests/.output')
             ),
             is_dir(
-                __DIR__ . '/../.output')
+                __DIR__ . '/../.output'
             )
         );
 
