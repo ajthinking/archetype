@@ -17,9 +17,16 @@ class PHPFileStorage
 
     public function get($path)
     {
-        return $this->getStorageDisk('input')->get(
-            $this->relative($path, 'input')
-        );
+        try {
+            return $this->getStorageDisk('input')->get(
+                $this->relative($path, 'input')
+            );
+        } catch(\Illuminate\Contracts\Filesystem\FileNotFoundException $e) {
+            dd(
+                getcwd(),
+                $path,
+            );
+        }
     }
 
     public function put($path, $content)
