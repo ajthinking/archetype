@@ -24,6 +24,11 @@ class PHPFileStorage
 
     public function put($path, $content)
     {
+        dd(
+            $this->getStorageDisk('output'),
+            $this->relative($path, 'output')
+        );
+        
         return $this->getStorageDisk('output')->put(
             $this->relative($path, 'output'),
             $content
