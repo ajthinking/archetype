@@ -36,6 +36,8 @@ abstract class FileTestCase extends BaseTestCase
         $debug = __DIR__ . '/.debug';
         $output = __DIR__ . '/.output';
 
+        dd($output);
+
         is_dir($debug) ? $this->rrmdir($debug) : null;
         is_dir($output) ? $this->rrmdir($output) : null;
     }
