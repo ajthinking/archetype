@@ -50,6 +50,19 @@ class ProjectTest extends Archetype\Tests\FileTestCase
                 a2 visible
             ")->build();
         
+
+        dd(
+            is_dir(
+                base_path('/vendor/ajthinking/archetype/tests/.output')
+            ),
+            is_dir(
+                base_path('packages/ajthinking/archetype/tests/.output')
+            ),
+            is_dir(
+                __DIR__ . '/../.output')
+            )
+        );
+
         $this->assertContains(
             'social_security_number',
             LaravelFile::load(base_path('/vendor/ajthinking/archetype/tests/.output/app/Models/User.php'))->hidden()
