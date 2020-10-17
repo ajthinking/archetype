@@ -6,7 +6,7 @@ class DuplicateEndpointTest extends Archetype\Tests\FileTestCase
 {
     /** @test */
     public function there_are_no_duplicated_endpoints()
-    {   
+    {
         $endpoints = (new LaravelFile)
             ->endpointProviders()
             ->map(function ($provider) {

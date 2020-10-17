@@ -4,5 +4,5 @@ namespace Archetype\Drivers;
 
 Interface InputInterface
 {
-    public function load($path);
+    public function load(string $path = null);
 }

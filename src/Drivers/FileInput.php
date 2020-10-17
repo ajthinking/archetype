@@ -18,19 +18,29 @@ class FileInput implements InputInterface
 
     public $root;
 
+    public function __construct()
+    {
+        $this->root = config('archetype')['roots']['input'];
+    }
+
     public function readPath($path = null)
     {
-        $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
         return $this;
     }
 
-    public function load($path = null)
+    public function load(string $path = null)
     {
-        $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
 
         return (new PHPFileStorage)->get($this->absolutePath());
+    }
+
+    public function fileExists($path)
+    {
+        $checker = new static;
+        $checker->extractPathProperties($path);
+        return is_file($checker->absolutePath());
     }
 
     public function absolutePath()
@@ -41,11 +51,6 @@ class FileInput implements InputInterface
     public function filename()
     {
         return $this->filename;
-    }
-
-    protected function ensureDefaultRootExists()
-    {
-        $this->root = $this->root ?? config('archetype')['roots']['input'];
     }
 
     protected function extractPathProperties($path)

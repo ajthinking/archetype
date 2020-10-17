@@ -2,19 +2,6 @@
 
 namespace Archetype\Endpoints\Laravel;
 
-use Illuminate\Support\Str;
-use Archetype\Endpoints\EndpointProvider;
-use Archetype\Support\PSR2PrettyPrinter;
-use PhpParser\ParserFactory;
-use Illuminate\Support\Facades\Storage;
-use UnexpectedValueException;
-use Archetype\Traits\HasOperators;
-use ReflectionClass;
-use ReflectionMethod;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RecursiveCallbackFilterIterator;
-use InvalidArgumentException;
 use LaravelFile;
 
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
@@ -27,6 +14,17 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
      */
     public function user()
     {
+        // check if app/Models/User exists
+        if($this->file->inputDriver()->fileExists('app/Models/User.php')) {
+            return LaravelFile::load('app/Models/User.php');
+        };
+
+        // check if app/User exists
+        if($this->file->inputDriver()->fileExists('app/User.php')) {
+            return LaravelFile::load('app/User.php');
+        };
+
+        // else look anywhere in app
         return $this->in('app')->where('className', 'User')->get()->first();
     }
 
