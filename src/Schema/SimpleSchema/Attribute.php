@@ -15,8 +15,8 @@ class Attribute
         $this->directives = $directives;
     }
 
-    public function hasDirective(string $directive)
+    public function hasDirective(string $directiveName)
     {
-        return $this->directives->contains($directive);
+        return $this->directives->where('name', $directiveName)->isNotEmpty();
     }
 }
