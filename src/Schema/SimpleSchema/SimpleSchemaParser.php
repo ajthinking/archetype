@@ -10,7 +10,7 @@ class SimpleSchemaParser
     public $original;
     public $cleaned;
     public $segments = [];
-    public $entites;
+    public $entities;
 
     public static function make()
     {
@@ -22,7 +22,7 @@ class SimpleSchemaParser
         $this->original = $text;
         $this->cleaned = $this->clean();
         $this->segments = $this->segment();
-        $this->entites = $this->entities();
+        $this->entities = $this->entities();
 
         // ...
 
@@ -31,7 +31,7 @@ class SimpleSchemaParser
 
     public function get()
     {
-        return new SimpleSchema($this->entites);
+        return new SimpleSchema($this->entities);
     }
 
     protected function clean()

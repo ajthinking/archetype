@@ -44,16 +44,32 @@ class SimpleSchemaTest extends Archetype\Tests\FileTestCase
     {
         $schema = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES)->get();        
 
-        $this->assertCount(3, $schema->entites);
+        $this->assertCount(3, $schema->entities);
 
         $this->assertEquals(
             collect(['Model1','Model2','Model3']),
-            collect($schema->entites)->map->name,    
+            collect($schema->entities)->map->name,    
         );
 
         $this->assertEquals(
             new Attribute('attribute1', collect()),
-            collect($schema->entites)->first()->attributes->first(),  
+            collect($schema->entities)->first()->attributes->first(),  
         );
+    }
+    
+    /** @test */
+    public function entities_can_have_directives()
+    {
+        $schema = SimpleSchema::parse(ENTITY_WITH_ATTRIBUTE_DIRECTIVES)->get();
+
+        $directives = $schema->entities->first()->attributes->first()->directives;
+
+        // float:8,2
+        $this->assertEquals('float', $directives->first()->name);
+        $this->assertEquals(collect([8,2]), $directives->first()->arguments);
+
+        // fillable
+        $this->assertEquals('fillable', $directives->last()->name);
+        $this->assertEquals(collect(), $directives->last()->arguments);        
     }    
 }

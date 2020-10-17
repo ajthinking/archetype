@@ -6,11 +6,11 @@ use Archetype\Schema\SimpleSchema\SimpleSchemaParser;
 
 class SimpleSchema
 {
-    public $entites;
+    public $entities;
 
-    public function __construct(\Illuminate\Support\Collection $entites)
+    public function __construct(\Illuminate\Support\Collection $entities)
     {
-        $this->entites = $entites;
+        $this->entities = $entities;
     }
 
     public static function parse(string $schema)

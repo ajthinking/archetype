@@ -6,6 +6,8 @@ use Archetype\Schema\SimpleSchema\SimpleSchema;
 
 abstract class BaseGenerator
 {
+    public SimpleSchema $schema;
+
     public function __construct(SimpleSchema $schema)
     {
         $this->schema = $schema;

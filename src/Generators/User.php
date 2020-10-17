@@ -10,7 +10,7 @@ class User extends BaseGenerator
 {
     public function qualifies()
     {
-        return $this->schema->entites->where('name', 'User')->isNotEmpty();
+        return $this->schema->entities->where('name', 'User')->isNotEmpty();
     }
 
     public function build()
@@ -33,7 +33,7 @@ class User extends BaseGenerator
 
     protected function userEntity()
     {
-        return $this->schema->entites->where('name', 'User')->first();
+        return $this->schema->entities->where('name', 'User')->first();
     }
 
     protected function findOrCreateUserFile()

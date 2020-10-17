@@ -46,3 +46,8 @@ Entity3 d1 d2
 a1 d1 d2
 a2 d1 d2
 CODE;
+
+const ENTITY_WITH_ATTRIBUTE_DIRECTIVES = <<< 'CODE'
+Shop 
+score float:8,2 fillable
+CODE;
