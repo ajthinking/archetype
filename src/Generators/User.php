@@ -9,13 +9,13 @@ use Archetype\Schema\SimpleSchema\SimpleSchema;
 class User extends BaseGenerator
 {
     public function qualifies()
-    {
+    { 
         return $this->schema->entities->where('name', 'User')->isNotEmpty();
     }
 
     public function build()
     {
-        $this->file = $this->findOrCreateUserFile();
+        $this->file = LaravelFile::user() ?? $this->createUserFile();
 
         $this->setHidden();
     }
@@ -36,8 +36,10 @@ class User extends BaseGenerator
         return $this->schema->entities->where('name', 'User')->first();
     }
 
-    protected function findOrCreateUserFile()
+    protected function createUserFile()
     {
-        return LaravelFile::user();
+        // ... TODO
+
+        return LaravelFile::make()->user();
     }
 }
