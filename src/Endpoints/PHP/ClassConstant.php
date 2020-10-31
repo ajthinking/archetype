@@ -13,7 +13,7 @@ use PhpParser\Node\Const_;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\ClassConst;
 
-class Constant extends EndpointProvider
+class ClassConstant extends EndpointProvider
 {
     /**
      * @example Get class property
@@ -21,9 +21,6 @@ class Constant extends EndpointProvider
      *
      * @example Set class property
      * @source $file->property('table', 'gdpr_users')
-     *
-     * @example Remove class property
-     * @source $file->remove()->property('table')
      *
      * @example Clear class property default value
      * @source $file->clear()->property('table')
@@ -44,10 +41,11 @@ class Constant extends EndpointProvider
      * @param mixed $value
      * @return mixed
      */
-    public function constant($key, $value = Types::NO_VALUE)
+    public function classConstant($key, $value = Types::NO_VALUE)
     {
-        // remove?
-        if($this->file->directive('remove')) return $this->remove($key);
+        // TODO
+        // // remove?
+        // if($this->file->directive('remove')) return $this->remove($key);
 
         // clear?
         if($this->file->directive('clear')) return $this->clear($key);
@@ -74,7 +72,7 @@ class Constant extends EndpointProvider
      * @param mixed $value
      * @return mixed
      */
-    public function setConstant($key, $value = Types::NO_VALUE)
+    public function setClassConstant($key, $value = Types::NO_VALUE)
     {
         return $this->set($key, $value);
     }
@@ -126,25 +124,14 @@ class Constant extends EndpointProvider
         );
     }
 
-    protected function remove($key)
-    {
-        return $this->file->astQuery()
-            ->class()
-            ->constant()
-            ->where(function($query) use($key) {
-                return $query->classConst()
-                    ->where('name->name', $key)
-                    ->get()->isNotEmpty();
-            })
-            ->remove()
-            ->commit()
-            ->end()
-            ->continue();
-    }
+    // protected function remove($key)
+    // {
+    //     // TODO
+    // }
 
     protected function clear($key)
     {
-        return $this->setConstant($key);
+        return $this->setClassConstant($key);
     }
 
     protected function empty($key)
@@ -157,7 +144,7 @@ class Constant extends EndpointProvider
 
         if(is_string($value)) return $this->set($key, '');
 
-        return $this->setConstant($key, $defaultMeaningOfEmpty);
+        return $this->setClassConstant($key, $defaultMeaningOfEmpty);
     }
 
     protected function get($key)
@@ -221,7 +208,16 @@ class Constant extends EndpointProvider
 
     protected function makeConstant($key, $value)
     {
-        $const = new Const_($key, new String_($value));
+        if(is_string($value)) {
+            $value =  new String_($value);
+        } else {
+            // TODO
+            dd("Can only set string");
+        }
+
+
+
+        $const = new Const_($key, $value);
         $constant = new ClassConst([$const]);
         return $constant;
     }
