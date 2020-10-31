@@ -170,6 +170,19 @@ $file->add()->implements('InterfaceC')
 ```
 <hr>
 
+[Archetype\Endpoints\PHP\ClassConstant](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/PHP/ClassConstant.php)
+```php
+// Get class constant
+$file->classConstant('HOME')
+
+// Set class constant
+$file->classConstant('HOME', 'new_home')
+
+// Explicitly set class constant
+$file->setClassConstant('HOME', 'value')
+```
+<hr>
+
 [Archetype\Endpoints\SyntacticSweetener](https://github.com/ajthinking/archetype/blob/master/src/Endpoints/SyntacticSweetener.php)
 
 ```php
@@ -236,6 +249,12 @@ $file->visible();
 ```php
 // Get the User file
 LaravelFile::user()
+
+// Query migrations
+LaravelFile::migrations()
+
+// Query models
+LaravelFile::models()
 
 // Query models
 LaravelFile::models()

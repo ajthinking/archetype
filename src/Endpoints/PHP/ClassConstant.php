@@ -16,26 +16,11 @@ use PhpParser\Node\Stmt\ClassConst;
 class ClassConstant extends EndpointProvider
 {
     /**
-     * @example Get class property
-     * @source $file->property('table')
+     * @example Get class constant
+     * @source $file->classConstant('HOME')
      *
-     * @example Set class property
-     * @source $file->property('table', 'gdpr_users')
-     *
-     * @example Clear class property default value
-     * @source $file->clear()->property('table')
-     *
-     * @example Empty class array property
-     * @source $file->empty()->property('fillable')
-     *
-     * @example Add item to class array property
-     * @source $file->add()->property('fillable', 'nickname')
-     *
-     * @example Append to class string property
-     * @source $file->add()->property('table', '_gdpr')
-     *
-     * @example Add item to class array property
-     * @source $file->add()->property('fillable', 'nickname')
+     * @example Set class constant
+     * @source $file->classConstant('HOME', 'new_home')
      *
      * @param string $key
      * @param mixed $value
@@ -65,8 +50,8 @@ class ClassConstant extends EndpointProvider
     }
 
     /**
-     * @example Explicitly set class property without default value
-     * @source $file->setProperty('propertyWithoutDefaultValue')
+     * @example Explicitly set class constant
+     * @source $file->setClassConstant('HOME', 'value')
      *
      * @param string $key
      * @param mixed $value
