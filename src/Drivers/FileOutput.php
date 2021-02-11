@@ -26,7 +26,7 @@ class FileOutput implements OutputInterface
         $this->ensureDefaultRootExists();
     }    
 
-    public function save($path = null, $code)
+    public function save($path, $code)
     {
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
