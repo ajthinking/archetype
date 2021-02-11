@@ -9,19 +9,17 @@
         "abstract syntax tree",
         "php-parser"
     ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Anders Jürisoo",
             "email": "jurisoo@hotmail.com"
         }
     ],
-    "license": "MIT",
     "require": {
-        "doctrine/dbal": "^2.9"
+        "doctrine/dbal": "^2.9 || ^3.0"
     },
-    "require-dev": {
-
-    },
+    "require-dev": {},
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
@@ -29,14 +27,14 @@
     },
     "extra": {
         "laravel": {
+            "aliases": {
+                "LaravelFile": "Archetype\\Facades\\LaravelFile",
+                "PHPFile": "Archetype\\Facades\\PHPFile"
+            },
             "dont-discover": [],
             "providers": [
                 "Archetype\\ServiceProvider"
-            ],
-            "aliases": {
-                "PHPFile": "Archetype\\Facades\\PHPFile",
-                "LaravelFile": "Archetype\\Facades\\LaravelFile"
-            }            
+            ]
         }
     },
     "autoload": {
