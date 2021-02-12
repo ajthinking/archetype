@@ -1,9 +1,8 @@
 <?php
 
 use Archetype\Facades\Project;
-
-{    
 class ProjectTest extends Archetype\Tests\TestCase
+{
     /** @test */
     public function it_follows_the_builder_pattern()
     {
@@ -52,12 +51,12 @@ class ProjectTest extends Archetype\Tests\TestCase
 
         $this->assertContains(
             'social_security_number',
-            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+            LaravelFile::load(Config::get('archetype.roots.output.root') . '/app/Models/User.php')->hidden()
         );
 
         $this->assertNotContains(
             'a2',
-            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+            LaravelFile::load(Config::get('archetype.roots.output.root') . '/app/Models/User.php')->hidden()
         );
     }
 }

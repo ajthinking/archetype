@@ -2,11 +2,10 @@
 
 namespace Archetype\Support;
 
-use Config;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-
 use Archetype\Support\Path;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PHPFileStorage
 {

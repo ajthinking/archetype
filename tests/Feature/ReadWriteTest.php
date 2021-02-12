@@ -1,17 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Config;
+
 class ReadWriteTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()
     {
         $this->assertFalse(
-            is_dir(__DIR__ . '/../.debug')
+            is_dir(Config::get('archetype.roots.debug.root'))
         );
 
         $this->assertFalse(
-            is_dir(__DIR__ . '/../.output')
-        );        
+            is_dir(Config::get('archetype.roots.output.root'))
+        );
     }
 
     /** @test */
@@ -65,14 +67,14 @@ class ReadWriteTest extends Archetype\Tests\TestCase
         LaravelFile::load('app/Models/User.php')->save();        
         
         $this->assertTrue(
-            is_file(__DIR__ . '/../.output/app/Models/User.php')
+            is_file(Config::get('archetype.roots.output.root') . '/app/Models/User.php')
         );
 
         // debug
         LaravelFile::load('app/Models/User.php')->debug();        
 
         $this->assertTrue(
-            is_file(__DIR__ . '/../.debug/app/Models/User.php')
+            is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php')
         );
     }   
 }
