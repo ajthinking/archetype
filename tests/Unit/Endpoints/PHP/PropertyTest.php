@@ -78,7 +78,7 @@ class PropertyTest extends Archetype\Tests\TestCase
 
         $this->assertStringContainsString(
             'private $parts;',
-            $output,
+            $output
         );
     }
     
