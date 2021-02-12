@@ -62,8 +62,8 @@ class SimpleSchemaParser
     
     protected function entities()
     {
-        return $this->segments->map(function($segment) {
+        return $this->segments->map(function ($segment) {
             return SegmentParser::make()->parse($segment);
         });
-    }    
+    }
 }

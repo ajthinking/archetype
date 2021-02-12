@@ -128,8 +128,7 @@ trait HasIO
             $this->originalAst,
             $this->tokens
         );
-        
-    }    
+    }
 
     public function hasModifications()
     {

@@ -31,5 +31,5 @@ class ClassExtendsTest extends Archetype\Tests\TestCase
         $this->assertTrue(
             $file->extends() === "My\BaseClass"
         );
-    }         
+    }
 }

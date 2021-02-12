@@ -15,12 +15,12 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     public function user()
     {
         // check if app/Models/User exists
-        if($this->file->inputDriver()->fileExists('app/Models/User.php')) {
+        if ($this->file->inputDriver()->fileExists('app/Models/User.php')) {
             return LaravelFile::load('app/Models/User.php');
         };
 
         // check if app/User exists
-        if($this->file->inputDriver()->fileExists('app/User.php')) {
+        if ($this->file->inputDriver()->fileExists('app/User.php')) {
             return LaravelFile::load('app/User.php');
         };
 
@@ -31,16 +31,16 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     /**
      * @example Query migrations
      * @source LaravelFile::migrations()
-     */    
+     */
     public function migrations()
     {
         return $this->in('database/migrations');
-    }    
+    }
 
     /**
      * @example Query models
      * @source LaravelFile::models()
-     */    
+     */
     public function models()
     {
         $this->instanceof('Illuminate\Database\Eloquent\Model');
@@ -52,18 +52,18 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     /**
      * @example Query models
      * @source LaravelFile::models()
-     */    
+     */
     public function exceptUser()
     {
         $this->isNotUser();
 
         return $this;
-    }    
+    }
 
     /**
      * @example Query controllers
      * @source LaravelFile::controllers()
-     */        
+     */
     public function controllers()
     {
         return $this->instanceof('Illuminate\Routing\Controller');
@@ -72,18 +72,20 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
     /**
      * @example Query serviceProviders
      * @source LaravelFile::serviceProviders()
-     */        
+     */
     public function serviceProviders()
     {
         return $this->instanceof('Illuminate\Support\ServiceProvider');
-    }  
+    }
 
     protected function instanceof($class)
     {
         // Ensure we are in a directory context - default to base path
-        if(!isset($this->baseDir)) $this->in('');
+        if (!isset($this->baseDir)) {
+            $this->in('');
+        }
 
-        $this->result = $this->result->filter(function($file) use($class) {
+        $this->result = $this->result->filter(function ($file) use ($class) {
             $reflection = $file->getReflection();
             return $reflection && $reflection->isSubclassOf($class);
         });
@@ -93,20 +95,20 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
 
     protected function isNotAbstract()
     {
-        $this->result = $this->result->filter(function($file) {
+        $this->result = $this->result->filter(function ($file) {
             $reflection = $file->getReflection();
             return $reflection && !$reflection->isAbstract();
         });
 
-        return $this;        
+        return $this;
     }
 
     protected function isNotUser()
     {
-        $this->result = $this->result->filter(function($file) {
+        $this->result = $this->result->filter(function ($file) {
             return $file->className() != 'User';
         });
 
-        return $this;         
+        return $this;
     }
 }

@@ -6,7 +6,7 @@ use App;
 use Config;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-Use Illuminate\Support\Str;
+use Illuminate\Support\Str;
 use Archetype\Commands\DemoCommand;
 use Archetype\Commands\ErrorsCommand;
 use Archetype\Commands\DocumentationCommand;
@@ -42,18 +42,18 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerFacades()
     {
-        App::bind('PHPFile', function() {
+        App::bind('PHPFile', function () {
             return app()->make(PHPFileFactory::class);
         });
 
-        App::bind('LaravelFile', function() {
+        App::bind('LaravelFile', function () {
             return app()->make(LaravelFileFactory::class);
         });
 
-        App::bind('Archetype\Facades\Project', function() {
+        App::bind('Archetype\Facades\Project', function () {
             return app()->make(ProjectFactory::class);
-        });        
-    }    
+        });
+    }
 
     protected function publishConfig()
     {
@@ -71,5 +71,5 @@ class ServiceProvider extends BaseServiceProvider
             ErrorsCommand::class,
             DocumentationCommand::class,
         ]);
-    }  
+    }
 }

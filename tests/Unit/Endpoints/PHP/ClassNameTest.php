@@ -20,7 +20,7 @@ class ClassNameTest extends Archetype\Tests\TestCase
         $this->assertTrue(
             $file->full()->className() === "App\Models\User"
         );
-    }    
+    }
     
     /** @test */
     public function it_can_set_class_name()
@@ -33,6 +33,6 @@ class ClassNameTest extends Archetype\Tests\TestCase
         // on a file without a class
         $this->assertTrue(
             PHPFile::load('public/index.php')->className("NewName")->className() === null
-        );        
+        );
     }
 }

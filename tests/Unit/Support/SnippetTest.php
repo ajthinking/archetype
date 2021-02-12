@@ -12,7 +12,7 @@ class SnippetTest extends Archetype\Tests\TestCase
         $this->assertInstanceOf(
             ClassMethod::class,
             Snippet::___HAS_MANY_METHOD___()
-        );            
+        );
     }
 
     /** @test */
@@ -30,14 +30,14 @@ class SnippetTest extends Archetype\Tests\TestCase
                 ->end()
                 ->methodNames(),
             ['guitars']
-        );            
-    }    
+        );
+    }
     
     /** @test */
     public function it_cant_load_non_existing_snippets_from_defaults()
     {
         $this->assertNull(
             Snippet::NoSUchSnippet()
-        );            
-    }   
+        );
+    }
 }

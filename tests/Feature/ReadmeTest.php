@@ -31,7 +31,7 @@ class ReadmeTest extends Archetype\Tests\TestCase
             $file->render()
         );
 
-        // The original and recreated files will render identical code 
+        // The original and recreated files will render identical code
         $this->assertEquals(
             $file->render(),
             $recreatedFile->render()
@@ -47,7 +47,7 @@ class ReadmeTest extends Archetype\Tests\TestCase
 
     /**
      * @test
-     */    
+     */
     public function it_wont_wreck_file_formatting()
     {
         // TO BE COMPLETED AFTER RESOLVING THE SNIPPET/TEMPLATING/BELONGS TO ETC ISSUE!
@@ -116,6 +116,6 @@ class ReadmeTest extends Archetype\Tests\TestCase
         $this->assertStringContainsString(
             $fillableArray,
             LaravelFile::fromString($code)->table('users_table')->render()
-        );        
+        );
     }
 }

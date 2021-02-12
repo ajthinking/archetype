@@ -25,5 +25,5 @@ class PathTest extends Archetype\Tests\TestCase
         $absolute = Path::make('/app/Models/User.php')->full();
         $this->assertEquals($expected, $relative);
         $this->assertEquals($expected, $absolute);
-    }    
+    }
 }

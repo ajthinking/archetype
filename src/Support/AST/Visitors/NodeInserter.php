@@ -9,7 +9,8 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
-class NodeInserter extends NodeVisitorAbstract {
+class NodeInserter extends NodeVisitorAbstract
+{
     
     public function __construct($id, $newNode)
     {
@@ -17,16 +18,21 @@ class NodeInserter extends NodeVisitorAbstract {
         $this->newNode = $newNode;
     }
 
-    public function leaveNode(Node $node) {
+    public function leaveNode(Node $node)
+    {
         return $node->__object_hash == $this->id ? [$this->newNode, $node] : $node;
     }
 
-    public function beforeTraverse(array $nodes) {
+    public function beforeTraverse(array $nodes)
+    {
         //
     }
 
-    public function afterTraverse(array $nodes) {
-        if($this->id) return $nodes;
+    public function afterTraverse(array $nodes)
+    {
+        if ($this->id) {
+            return $nodes;
+        }
 
         array_push($nodes, $this->newNode);
         
@@ -38,7 +44,8 @@ class NodeInserter extends NodeVisitorAbstract {
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new static(
             null, // will push if no ID is provided
-            $newNode));
+            $newNode
+        ));
         return $traverser->traverse($ast);
     }
 }

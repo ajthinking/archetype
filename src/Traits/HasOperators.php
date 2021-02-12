@@ -49,7 +49,7 @@ trait HasOperators
     protected function notInOperator($candidate, $haystack)
     {
         return !$this->inOperator($candate, $haystack);
-    }    
+    }
 
     protected function like($candidate, $like)
     {

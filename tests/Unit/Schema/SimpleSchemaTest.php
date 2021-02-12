@@ -35,25 +35,24 @@ class SimpleSchemaTest extends Archetype\Tests\TestCase
         $this->assertEquals(
             $parser1->cleaned,
             $parser2->cleaned
-        );        
-        
-    }     
+        );
+    }
     
     /** @test */
     public function the_schema_has_entities()
     {
-        $schema = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES)->get();        
+        $schema = SimpleSchema::parse(THREE_MODELS_WITH_ATTRIBUTES)->get();
 
         $this->assertCount(3, $schema->entities);
 
         $this->assertEquals(
             collect(['Model1','Model2','Model3']),
-            collect($schema->entities)->map->name,    
+            collect($schema->entities)->map->name,
         );
 
         $this->assertEquals(
             new Attribute('attribute1', collect()),
-            collect($schema->entities)->first()->attributes->first(),  
+            collect($schema->entities)->first()->attributes->first(),
         );
     }
     
@@ -70,6 +69,6 @@ class SimpleSchemaTest extends Archetype\Tests\TestCase
 
         // fillable
         $this->assertEquals('fillable', $directives->last()->name);
-        $this->assertEquals(collect(), $directives->last()->arguments);        
-    }    
+        $this->assertEquals(collect(), $directives->last()->arguments);
+    }
 }

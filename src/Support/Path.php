@@ -19,7 +19,7 @@ class Path
 
     public function withDefaultRoot($root)
     {
-        if(!Str::startsWith($this->path, '/')) {
+        if (!Str::startsWith($this->path, '/')) {
             $this->root = Str::start($this->normalize($root), '/');
         }
 
@@ -41,26 +41,28 @@ class Path
         return $this->full();
     }
 
-    protected function normalize($filename) {
+    protected function normalize($filename)
+    {
         $isAbsolute = Str::startsWith($filename, '/');
         $path = [];
-        foreach(explode('/', $filename) as $part) {
+        foreach (explode('/', $filename) as $part) {
           // ignore parts that have no value
-          if (empty($part) || $part === '.') continue;
+            if (empty($part) || $part === '.') {
+                continue;
+            }
       
-          if ($part !== '..') {
-            // cool, we found a new part
-            array_push($path, $part);
-          }
-          else if (count($path) > 0) {
-            // going back up? sure
-            array_pop($path);
-          } else {
-            // now, here we don't like
-            throw new \Exception('Climbing above the root is not permitted.');
-          }
+            if ($part !== '..') {
+              // cool, we found a new part
+                array_push($path, $part);
+            } elseif (count($path) > 0) {
+              // going back up? sure
+                array_pop($path);
+            } else {
+              // now, here we don't like
+                throw new \Exception('Climbing above the root is not permitted.');
+            }
         }
       
         return ($isAbsolute ? '/' : '') . join('/', $path);
-      }    
+    }
 }

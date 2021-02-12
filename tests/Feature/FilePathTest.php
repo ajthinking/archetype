@@ -16,8 +16,8 @@ class FilePathTest extends Archetype\Tests\TestCase
         $file = PHPFile::load($path);
         $this->assertTrue(
             $file->inputDriver()->absolutePath() == base_path('app/Models/User.php')
-        );        
-    }    
+        );
+    }
     
     /** @test */
     public function a_file_has_a_filename()
@@ -33,7 +33,7 @@ class FilePathTest extends Archetype\Tests\TestCase
         $file = PHPFile::load($path);
         $this->assertTrue(
             $file->inputDriver()->filename() == 'User'
-        );        
+        );
     }
     
     public function files_created_with_fromString_must_be_explicitly_named()
@@ -43,5 +43,5 @@ class FilePathTest extends Archetype\Tests\TestCase
         $this->expectException(TypeError::class);
 
         $file->save(); // It dont know where to save!
-    }    
+    }
 }

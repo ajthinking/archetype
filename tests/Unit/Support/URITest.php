@@ -35,9 +35,8 @@ class URITest extends Archetype\Tests\TestCase
             'Custom' => URI::make('Custom\Star')->namespace(),
         ];
 
-        foreach($namespaces as $expected => $actual)
-        {
-            $this->assertEquals($expected,$actual);
+        foreach ($namespaces as $expected => $actual) {
+            $this->assertEquals($expected, $actual);
         }
-    }    
+    }
 }

@@ -57,13 +57,14 @@ class PHPFile
 
     public function __construct(
         string $input = \Archetype\Drivers\FileInput::class,
-        string $output = \Archetype\Drivers\FileOutput::class)
-    {
+        string $output = \Archetype\Drivers\FileOutput::class
+    ) {
         $this->input = $input;
         $this->output = $output;
     }
 
-    public function endpointProviders() {
+    public function endpointProviders()
+    {
         return collect(self::endpointProviders)->push(
             $this->fileQueryBuilder
         );

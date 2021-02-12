@@ -2,9 +2,10 @@
 
 namespace Archetype\Traits;
 
-Use Illuminate\Support\Str;
+use Illuminate\Support\Str;
 
-trait AddsLaravelStringsToStrWithMacros {
+trait AddsLaravelStringsToStrWithMacros
+{
     private function bootStrMacros()
     {
         Str::macro('hasOneMethodName', function ($target) {

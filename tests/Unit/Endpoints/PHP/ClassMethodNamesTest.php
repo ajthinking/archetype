@@ -15,5 +15,5 @@ class ClassMethodNamesTest extends Archetype\Tests\TestCase
         $this->assertTrue(
             $file->methodNames() === ['schedule', 'commands']
         );
-    }   
+    }
 }

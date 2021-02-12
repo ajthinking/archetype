@@ -14,6 +14,5 @@ class Migration extends BaseGenerator
         
     public function build()
     {
-
     }
 }

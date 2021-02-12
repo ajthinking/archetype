@@ -24,7 +24,7 @@ class FileOutput implements OutputInterface
     {
         $this->storage = new PHPFileStorage;
         $this->ensureDefaultRootExists();
-    }    
+    }
 
     public function save($path, $code)
     {
@@ -34,7 +34,7 @@ class FileOutput implements OutputInterface
         $this->storage->put(
             $this->absolutePath(),
             $code
-        );        
+        );
     }
 
     public function debug($path = null)
@@ -45,7 +45,7 @@ class FileOutput implements OutputInterface
     public function absolutePath()
     {
         return $this->absoluteDir() . "/$this->filename" . ($this->extension ? ".$this->extension" : "");
-    }    
+    }
 
     public function setDefaultsFrom($inputDriver)
     {
@@ -64,7 +64,9 @@ class FileOutput implements OutputInterface
     protected function extractPathProperties($path)
     {
         // If no path is supplied, we will rely on default/mirrored input settings
-        if(!$path) return;
+        if (!$path) {
+            return;
+        }
 
         preg_match('/(.*)\..*/', basename($path), $matches);
         $this->filename = $path ? basename($path, '.php') : null;

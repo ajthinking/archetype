@@ -9,7 +9,8 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
-class StmtInserter extends NodeVisitorAbstract {
+class StmtInserter extends NodeVisitorAbstract
+{
     protected $finished = false;
 
     const priority = [
@@ -25,10 +26,15 @@ class StmtInserter extends NodeVisitorAbstract {
         $this->newNode = $newNode;
     }
 
-    public function leaveNode(Node $node) {
-        if($this->finished) return NodeTraverser::STOP_TRAVERSAL;
+    public function leaveNode(Node $node)
+    {
+        if ($this->finished) {
+            return NodeTraverser::STOP_TRAVERSAL;
+        }
         
-        if(!$this->isTarget($node)) return $node;
+        if (!$this->isTarget($node)) {
+            return $node;
+        }
 
         $node->stmts = $this->insertAndSortNodes($node->stmts);
 
@@ -37,8 +43,11 @@ class StmtInserter extends NodeVisitorAbstract {
         return $node;
     }
 
-    public function beforeTraverse(array $nodes) {
-        if($this->id) return;
+    public function beforeTraverse(array $nodes)
+    {
+        if ($this->id) {
+            return;
+        }
         
         $nodes = $this->insertAndSortNodes($nodes);
 
@@ -47,7 +56,8 @@ class StmtInserter extends NodeVisitorAbstract {
         return $nodes;
     }
 
-    public function afterTraverse(array $nodes) {
+    public function afterTraverse(array $nodes)
+    {
         //
     }
     
@@ -69,16 +79,16 @@ class StmtInserter extends NodeVisitorAbstract {
         
         $priority = array_search($class, $this::priority);
         return $priority !== false ? $priority : sizeof($this::priority) + 1;
-    }    
+    }
 
     protected function insertAndSortNodes($stmts)
     {
         $this->position = sizeof($stmts);
 
-        collect($stmts)->first(function($stmt, $index) {
+        collect($stmts)->first(function ($stmt, $index) {
             $candidatePriority = $this->priority($stmt);
             $newNodePritority = $this->priority($this->newNode);
-            if($candidatePriority >= $newNodePritority) {
+            if ($candidatePriority >= $newNodePritority) {
                 $this->position = $index;
                 return true;
             }

@@ -36,7 +36,7 @@ class RelationshipsTest extends Archetype\Tests\TestCase
             'visits',
             $file->methodNames()
         );
-    }     
+    }
     
     /** @test */
     public function it_can_insert_has_many_methods()
@@ -78,5 +78,5 @@ class RelationshipsTest extends Archetype\Tests\TestCase
             2,
             $file->methodNames()
         );
-    }    
+    }
 }

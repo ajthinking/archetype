@@ -18,7 +18,7 @@ class Maker extends EndpointProvider
         $this->setupNames($name);
 
         return $this->file->fromString($this->stub('empty.php.stub'))
-            ->outputDriver($this->outputDriver);        
+            ->outputDriver($this->outputDriver);
     }
 
     public function class($name, $options = [])
@@ -31,7 +31,7 @@ class Maker extends EndpointProvider
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver);        
+            ->outputDriver($this->outputDriver);
     }
 
 
@@ -51,23 +51,23 @@ class Maker extends EndpointProvider
         $this->namespace = URI::make($relativeRoot)->namespace();
 
         $this->class = URI::make($relativeRoot)->class();
-    }    
+    }
 
     protected function outputDriver($inputDriver)
     {
         $outputDriverClass = config('archetype.output', \Archetype\Drivers\FileOutput::class);
-        $this->outputDriver = new $outputDriverClass;        
+        $this->outputDriver = new $outputDriverClass;
         return $this->outputDriver->setDefaultsFrom($inputDriver);
     }
 
     protected function extension()
     {
-        return $this->extension;        
+        return $this->extension;
     }
 
     protected function relativeDir()
     {
-        return $this->relativeDir;        
+        return $this->relativeDir;
     }
 
     protected function stub($name)

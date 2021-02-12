@@ -24,7 +24,7 @@ class BelongsTo extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->insertStmts(
-                collect(Arr::wrap($targets))->map(function($target) {
+                collect(Arr::wrap($targets))->map(function ($target) {
                     return Snippet::___BELONGS_TO_METHOD___([
                         '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),

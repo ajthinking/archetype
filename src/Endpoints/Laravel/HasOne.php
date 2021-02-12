@@ -12,7 +12,7 @@ class HasOne extends EndpointProvider
     /**
      * @example Add a hasOne relationship method
      * @source $file->hasOne('Company')
-     */    
+     */
     public function hasOne($targets)
     {
         return $this->add($targets);
@@ -23,7 +23,7 @@ class HasOne extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->insertStmts(
-                collect($targets)->map(function($target) {
+                collect($targets)->map(function ($target) {
                     return Snippet::___HAS_ONE_METHOD___([
                         '___HAS_ONE_METHOD___' => Str::hasOneMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),

@@ -6,7 +6,7 @@ trait PHPParserClassMap
 {
     public function classMap($class = null)
     {
-        $map = [    
+        $map = [
             // CAMELCASEIFIED WITHOUT _ POSTFIX
             'arrayDimFetch' => '\PhpParser\Node\Expr\ArrayDimFetch',
             'arrayItem' => '\PhpParser\Node\Expr\ArrayItem',
@@ -157,9 +157,13 @@ trait PHPParserClassMap
             'method' => '\PhpParser\Node\Stmt\ClassMethod',
         ];
         
-        if(!$class) return $map;
+        if (!$class) {
+            return $map;
+        }
 
-        if(isset($map[$class])) return $map[$class];
+        if (isset($map[$class])) {
+            return $map[$class];
+        }
 
         return null;
     }
@@ -236,13 +240,17 @@ trait PHPParserClassMap
             'dim' => 'dim',
             'if___' => 'if',
             'unpack' => 'unpack',
-            'replacements' => 'replacements',            
+            'replacements' => 'replacements',
         ];
 
-        if(!$property) return $map;
+        if (!$property) {
+            return $map;
+        }
 
-        if(isset($map[$property])) return $map[$property];
+        if (isset($map[$property])) {
+            return $map[$property];
+        }
 
-        return null;        
+        return null;
     }
 }

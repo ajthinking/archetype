@@ -18,14 +18,14 @@ return [
         'debug' => [
             'driver' => 'local',
             'root' => storage_path('archetype/debug'),
-        ],                                
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
     | The QueryBuilder will ignore these files or folders
     |--------------------------------------------------------------------------
-    */    
+    */
     'ignored_paths' => [
         'node_modules',
         'vendor',
@@ -37,7 +37,7 @@ return [
     |--------------------------------------------------------------------------
     | The Snippet class will search for snippets here (relative base path)
     |--------------------------------------------------------------------------
-    */    
+    */
     'snippets_path' => 'resources/snippets',
 
     /*

@@ -14,5 +14,5 @@ class LaravelTest extends Archetype\Tests\TestCase
         $this->assertTrue(
             base_path() && app()
         );
-    }    
+    }
 }

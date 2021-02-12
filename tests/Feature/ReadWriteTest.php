@@ -30,7 +30,7 @@ class ReadWriteTest extends Archetype\Tests\TestCase
     public function it_can_load_files_with_absolute_path()
     {
         $file = PHPFile::load(
-                base_path('vendor/ajthinking/archetype/src/snippets/relationships.php')
+            base_path('vendor/ajthinking/archetype/src/snippets/relationships.php')
         );
 
         $this->assertTrue(
@@ -48,7 +48,7 @@ class ReadWriteTest extends Archetype\Tests\TestCase
         $this->assertTrue(
             get_class($file) === 'Archetype\PHPFile'
         );
-    }    
+    }
 
     /** @test */
     public function it_can_also_load_laravel_specific_files()
@@ -56,25 +56,26 @@ class ReadWriteTest extends Archetype\Tests\TestCase
         $file = LaravelFile::load('app/Models/User.php');
 
         $this->assertInstanceOf(
-            \Archetype\LaravelFile::class, $file
+            \Archetype\LaravelFile::class,
+            $file
         );
-    } 
+    }
 
     /** @test */
     public function it_can_write_to_default_location()
-    {        
+    {
         // default save location is in .output when in development mode
-        LaravelFile::load('app/Models/User.php')->save();        
+        LaravelFile::load('app/Models/User.php')->save();
         
         $this->assertTrue(
             is_file(Config::get('archetype.roots.output.root') . '/app/Models/User.php')
         );
 
         // debug
-        LaravelFile::load('app/Models/User.php')->debug();        
+        LaravelFile::load('app/Models/User.php')->debug();
 
         $this->assertTrue(
             is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php')
         );
-    }   
+    }
 }

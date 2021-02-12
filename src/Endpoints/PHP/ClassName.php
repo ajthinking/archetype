@@ -9,19 +9,21 @@ class ClassName extends EndpointProvider
     /**
      * @example Get file class name
      * @source $file->className()
-     * 
+     *
      * @example Get full class name
      * @source $file->full()->className()
      *
      * @example Set file class name
      * @source $file->className('MyClass')
-     * 
+     *
      * @param string $name
      * @return mixed
-     */    
+     */
     public function className($name = null)
     {
-        if($name === null) return $this->get();
+        if ($name === null) {
+            return $this->get();
+        }
 
         return $this->set($name);
     }
@@ -34,12 +36,14 @@ class ClassName extends EndpointProvider
             ->name
             ->first();
 
-        if(!$this->directive('full')) return $className;
+        if (!$this->directive('full')) {
+            return $className;
+        }
 
         $namespace = $this->file->namespace();
 
         return $namespace ? "$namespace\\$className" : $className;
-    }    
+    }
 
     protected function set($newClassName)
     {
@@ -50,5 +54,5 @@ class ClassName extends EndpointProvider
             ->commit()
             ->end()
             ->continue();
-    }     
+    }
 }

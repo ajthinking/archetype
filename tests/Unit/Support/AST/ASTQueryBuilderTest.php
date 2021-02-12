@@ -31,7 +31,7 @@ class ASTQueryBuilderTest extends Archetype\Tests\TestCase
             ASTQueryBuilder::class,
             $result
         );
-    }    
+    }
     
     /** @test
     */
@@ -49,7 +49,7 @@ class ASTQueryBuilderTest extends Archetype\Tests\TestCase
             ->args
             ->value
             ->value
-            ->get() // exit ASTQueryBuilder, get a Collection   
+            ->get() // exit ASTQueryBuilder, get a Collection
             ->first();
             
         $this->assertEquals($result, 'users');

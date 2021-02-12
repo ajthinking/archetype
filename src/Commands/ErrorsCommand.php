@@ -49,10 +49,10 @@ class ErrorsCommand extends Command
 
         $filePaths = $queryBuilder->recursiveFileSearch('');
 
-        $this->result = collect($filePaths)->map(function($filePath) {
+        $this->result = collect($filePaths)->map(function ($filePath) {
             try {
                 app()->make('PHPFile')->load($filePath);
-            } catch(FileParseError $error) {
+            } catch (FileParseError $error) {
                 $this->errors->push([
                     'path' => $filePath,
                     'message' => $error->original->getMessage()

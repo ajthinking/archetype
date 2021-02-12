@@ -6,7 +6,7 @@ class FloatDirective // extends BaseDirective
 {
     public int $precision;
 
-    public int $scale;    
+    public int $scale;
 
     public function __construct(int $precision = 8, int $scale = 2)
     {

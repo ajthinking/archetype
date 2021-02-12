@@ -9,8 +9,10 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
-class FormattingRemover extends NodeVisitorAbstract {
-    public function leaveNode(Node $node) {
+class FormattingRemover extends NodeVisitorAbstract
+{
+    public function leaveNode(Node $node)
+    {
         
         $node->setAttribute('startLine', -1);
         $node->setAttribute('startTokenPos', -1);
@@ -18,9 +20,9 @@ class FormattingRemover extends NodeVisitorAbstract {
         $node->setAttribute('endTokenPos', -1);
         $node->setAttribute('origNode', null);
 
-        if($node->getAttribute('comments')) {
+        if ($node->getAttribute('comments')) {
             $originalComments = $node->getAttribute('comments');
-            $newComments = collect($originalComments)->map(function($comment) {
+            $newComments = collect($originalComments)->map(function ($comment) {
                 return new \PhpParser\Comment\Doc($comment->getText());
             })->toArray();
 

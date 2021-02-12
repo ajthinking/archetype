@@ -39,7 +39,7 @@ abstract class EndpointProvider
 
     public function getEndpoints()
     {
-        return $this->ownNonReservedPublicMethods();        
+        return $this->ownNonReservedPublicMethods();
     }
 
     protected function getHandlerMethod($signature, $args)

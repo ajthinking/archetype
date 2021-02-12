@@ -12,7 +12,7 @@ class Project
 
     public $generators = [
         Generators\User::class,
-        Generators\Model::class,        
+        Generators\Model::class,
         Generators\Migration::class,
     ];
 
@@ -21,12 +21,12 @@ class Project
         $this->path = base_path();
 
         return $this;
-    }    
+    }
 
     public function gitInit()
     {
         return $this;
-    }    
+    }
 
     public function gitCommit()
     {
@@ -60,7 +60,9 @@ class Project
     
     public function schema(string $schema = '')
     {
-        if(!$schema) return $this->schema;
+        if (!$schema) {
+            return $this->schema;
+        }
 
         $this->schema = SimpleSchema::parse($schema)->get();
 
@@ -69,7 +71,7 @@ class Project
     
     public function build()
     {
-        $this->generators()->filter->qualifies()->each(function($generator) {
+        $this->generators()->filter->qualifies()->each(function ($generator) {
             $generator->build();
         });
 
@@ -83,7 +85,7 @@ class Project
     
     protected function generators()
     {
-        return collect($this->generators)->map(function($generator) {
+        return collect($this->generators)->map(function ($generator) {
             return $generator::make($this->schema);
         });
     }

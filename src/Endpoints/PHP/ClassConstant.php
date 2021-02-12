@@ -33,16 +33,24 @@ class ClassConstant extends EndpointProvider
         // if($this->file->directive('remove')) return $this->remove($key);
 
         // clear?
-        if($this->file->directive('clear')) return $this->clear($key);
+        if ($this->file->directive('clear')) {
+            return $this->clear($key);
+        }
 
         // empty?
-        if($this->file->directive('empty')) return $this->empty($key);
+        if ($this->file->directive('empty')) {
+            return $this->empty($key);
+        }
 
         // add?
-        if($this->file->directive('add')) return $this->add($key, $value);
+        if ($this->file->directive('add')) {
+            return $this->add($key, $value);
+        }
 
         // get?
-        if($value === Types::NO_VALUE) return $this->get($key);
+        if ($value === Types::NO_VALUE) {
+            return $this->get($key);
+        }
 
         // set!
 
@@ -65,20 +73,28 @@ class ClassConstant extends EndpointProvider
     protected function add($key, $value)
     {
         // no value but has value from intermidiate add directive?
-        if($value === Types::NO_VALUE && $this->file->directive('addValue')) {
+        if ($value === Types::NO_VALUE && $this->file->directive('addValue')) {
             $value = $this->file->directive('addValue');
         }
 
         $existing = $this->get($key);
 
-        if(is_array($existing)) return $this->addToArray($key, $value, $existing);
+        if (is_array($existing)) {
+            return $this->addToArray($key, $value, $existing);
+        }
 
-        if(is_string($existing)) return $this->addToString($key, $value, $existing);
+        if (is_string($existing)) {
+            return $this->addToString($key, $value, $existing);
+        }
 
-        if(is_numeric($existing)) return $this->addToNumeric($key, $value, $existing);
+        if (is_numeric($existing)) {
+            return $this->addToNumeric($key, $value, $existing);
+        }
 
         // Default
-        if($existing === null) return $this->addToUnknownType($key, $value);
+        if ($existing === null) {
+            return $this->addToUnknownType($key, $value);
+        }
 
         throw new Exception("Using 'add' on an existing type we cant handle! Current support: array/string/numeric/null");
     }
@@ -125,9 +141,13 @@ class ClassConstant extends EndpointProvider
 
         $defaultMeaningOfEmpty = null;
 
-        if(is_array($value)) return $this->set($key, []);
+        if (is_array($value)) {
+            return $this->set($key, []);
+        }
 
-        if(is_string($value)) return $this->set($key, '');
+        if (is_string($value)) {
+            return $this->set($key, '');
+        }
 
         return $this->setClassConstant($key, $defaultMeaningOfEmpty);
     }
@@ -193,7 +213,7 @@ class ClassConstant extends EndpointProvider
 
     protected function makeConstant($key, $value)
     {
-        if(is_string($value)) {
+        if (is_string($value)) {
             $value =  new String_($value);
         } else {
             // TODO
@@ -216,7 +236,7 @@ class ClassConstant extends EndpointProvider
 
     protected function prepareValue($value)
     {
-        if($this->file->directive('assumeType') == 'array') {
+        if ($this->file->directive('assumeType') == 'array') {
             return Arr::wrap($value);
         }
 

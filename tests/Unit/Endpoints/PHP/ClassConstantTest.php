@@ -7,7 +7,7 @@ class ClassConstantTest extends Archetype\Tests\TestCase
     {
         $this->assertEquals(
             PHPFile::load('app/Providers/RouteServiceProvider.php')->classConstant('HOME'),
-            '/home'            
+            '/home'
         );
     }
 
@@ -18,7 +18,7 @@ class ClassConstantTest extends Archetype\Tests\TestCase
             PHPFile::load('app/Providers/RouteServiceProvider.php')
                 ->classConstant('HOME', '/new_home')
                 ->classConstant('HOME'),
-            '/new_home'            
+            '/new_home'
         );
     }
 

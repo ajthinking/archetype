@@ -9,6 +9,5 @@ class TraitTest extends Archetype\Tests\TestCase
             PHPFile::load('app/Models/User.php')->trait(),
             ['HasFactory', 'Notifiable']
         );
-
     }
 }

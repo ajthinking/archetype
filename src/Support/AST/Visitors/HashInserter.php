@@ -9,8 +9,10 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
-class HashInserter extends NodeVisitorAbstract {
-    public function leaveNode(Node $node) {
+class HashInserter extends NodeVisitorAbstract
+{
+    public function leaveNode(Node $node)
+    {
         $node->__object_hash = spl_object_hash($node);
         return $node;
     }

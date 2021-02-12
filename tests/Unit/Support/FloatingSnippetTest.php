@@ -26,7 +26,7 @@ class FloatingSnippetTest extends Archetype\Tests\TestCase
             'endTokenPos',
         ];
 
-        foreach($disabled as $key) {
+        foreach ($disabled as $key) {
             $this->assertEquals(
                 -1,
                 $fromSnippet->getAttribute($key)
@@ -69,7 +69,7 @@ class FloatingSnippetTest extends Archetype\Tests\TestCase
                         ]
                     )
                 )
-            )    
+            )
                 
             ->getNode();
     }
@@ -86,5 +86,5 @@ class FloatingSnippetTest extends Archetype\Tests\TestCase
     //         )->commit()
     //         ->end()
     //         ->continue();
-    // }    
+    // }
 }

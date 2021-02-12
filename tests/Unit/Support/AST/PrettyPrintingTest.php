@@ -1,6 +1,10 @@
 <?php
 
-use PhpParser\{Lexer, NodeTraverser, NodeVisitor, Parser, PrettyPrinter};
+use PhpParser\Lexer;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
+use PhpParser\Parser;
+use PhpParser\PrettyPrinter;
 use PhpParser\Error;
 use PhpParser\ParserFactory;
 
@@ -32,12 +36,12 @@ class PrettyPrintingTest extends Archetype\Tests\TestCase
                 return 'zzz...';
             }            
         }
-        CODE; 
+        CODE;
     }
 
-    /** @test */    
+    /** @test */
     public function two_line_breaks_separate_methods()
-    { 
+    {
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $prettyPrinter = new PSR2PrettyPrinter;
 
@@ -53,12 +57,12 @@ class PrettyPrintingTest extends Archetype\Tests\TestCase
         $this->assertStringContainsString(
             '}' . PHP_EOL . PHP_EOL . '    public function sleeping()',
             LaravelFile::fromString($this->code)->table('users_table')->render()
-        );        
+        );
     }
 
-    /** @test */       
+    /** @test */
     public function there_is_not_a_missing_space_between_methods_when_format_preserving_pretty_printing()
-    {   
+    {
         $lexer = new Lexer\Emulative([
             'usedAttributes' => [
                 'comments',
@@ -97,6 +101,6 @@ class PrettyPrintingTest extends Archetype\Tests\TestCase
 
     protected function makeMethod($name)
     {
-        return (new BuilderFactory)->method($name)->getNode();        
+        return (new BuilderFactory)->method($name)->getNode();
     }
 }

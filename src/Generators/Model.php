@@ -37,7 +37,9 @@ class Model extends BaseGenerator
     protected function findOrCreateModelfiles()
     {
         return LaravelFile::models()->exceptUser()->where(
-            'className', 'in', $this->schema->entities->map->name
+            'className',
+            'in',
+            $this->schema->entities->map->name
         )->get();
     }
 }

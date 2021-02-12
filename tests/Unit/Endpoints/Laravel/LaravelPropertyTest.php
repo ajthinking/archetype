@@ -35,7 +35,7 @@ class LaravelPropertyTest extends Archetype\Tests\TestCase
 
         $this->assertEquals(
             ['ghost'],
-            $hidden            
+            $hidden
         );
 
         $hidden = LaravelFile::load('app/Models/User.php')
@@ -44,7 +44,7 @@ class LaravelPropertyTest extends Archetype\Tests\TestCase
 
         $this->assertEquals(
             ['ghost'],
-            $hidden            
+            $hidden
         );
     }
     
@@ -67,7 +67,7 @@ class LaravelPropertyTest extends Archetype\Tests\TestCase
                 ->fillable(),
             ['guns', 'roses', 'metallica']
         );
-    }    
+    }
     
     /** @test */
     public function it_can_set_hidden()
@@ -111,5 +111,5 @@ class LaravelPropertyTest extends Archetype\Tests\TestCase
             ->casts();
 
         $this->assertEquals([], $output);
-    }    
+    }
 }

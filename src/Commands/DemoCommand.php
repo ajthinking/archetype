@@ -46,13 +46,13 @@ class DemoCommand extends Command
             ['installer', 'How to make an installer for your package'],
         ];
 
-        $names = collect($demos)->map(function($demo) {
+        $names = collect($demos)->map(function ($demo) {
             return $demo[0];
         })->toArray();
 
         $this->table(['Demo', 'Description'], $demos);
 
-        $method = $this->choice('Select a demo >>', $names , 0);
+        $method = $this->choice('Select a demo >>', $names, 0);
 
         if ($method != 'stats') {
             throw new NotImplementedYetException('Coming soon');
@@ -67,13 +67,13 @@ class DemoCommand extends Command
 
         $fileCount = $files->count();
 
-        $charCount = $files->sum(function($file) {
+        $charCount = $files->sum(function ($file) {
             return strlen($file->contents());
         });
 
-        $classes = $files->filter(function($file) {
+        $classes = $files->filter(function ($file) {
             return $file->className();
-        })->map(function($file) {
+        })->map(function ($file) {
             return $file->className();
         });
 
@@ -101,7 +101,6 @@ class DemoCommand extends Command
     {
         $this->line('');
         $this->line('Review source: ' .
-            base_path('vendor/ajthinking/archetype/src/Commands/DemoCommand.php')
-        );
+            base_path('vendor/ajthinking/archetype/src/Commands/DemoCommand.php'));
     }
 }

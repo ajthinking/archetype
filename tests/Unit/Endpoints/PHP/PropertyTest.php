@@ -46,7 +46,7 @@ class PropertyTest extends Archetype\Tests\TestCase
     /** @test */
     public function it_can_create_a_new_class_property_when_empty()
     {
-        $property = PHPFile::fromString($this->emptyClass)        
+        $property = PHPFile::fromString($this->emptyClass)
             ->property('master', 'yoda')
             ->property('master');
 
@@ -59,7 +59,7 @@ class PropertyTest extends Archetype\Tests\TestCase
     /** @test */
     public function it_can_set_empty_property_by_using_explicit_set_method()
     {
-        $property = PHPFile::fromString($this->emptyClass)        
+        $property = PHPFile::fromString($this->emptyClass)
             ->setProperty('empty')
             ->property('empty');
 
@@ -181,6 +181,6 @@ class PropertyTest extends Archetype\Tests\TestCase
             ->add()->property('realms', 'Gondor')
             ->property('realms');
 
-        $this->assertEquals(['Gondor'], $output);        
-    }    
+        $this->assertEquals(['Gondor'], $output);
+    }
 }

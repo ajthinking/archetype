@@ -16,7 +16,7 @@ trait ExposesPublicMethodsAsEndpoints
     protected function ownNonReservedPublicMethods()
     {
         return collect($this->ownPublicMethods())
-            ->filter(function($method) {
+            ->filter(function ($method) {
                 return !collect($this->reservedMethods)->contains($method);
             })->values();
     }
@@ -26,10 +26,11 @@ trait ExposesPublicMethodsAsEndpoints
         $reflection = new ReflectionClass(static::class);
         $methods = [];
 
-        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
+        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             if ($method->class == $reflection->getName()) {
                 $methods[] = $method->name;
             }
+        }
 
         return $methods;
     }

@@ -2,4 +2,7 @@
 
 namespace Archetype\Support\AST;
 
-class QueryNode {}
+class QueryNode
+{
+
+}

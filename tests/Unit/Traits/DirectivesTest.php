@@ -23,5 +23,5 @@ class DirectivesTest extends Archetype\Tests\TestCase
         $this->assertEmpty(
             $file->directives()
         );
-    }    
+    }
 }

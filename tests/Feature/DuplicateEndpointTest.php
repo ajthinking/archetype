@@ -17,5 +17,5 @@ class DuplicateEndpointTest extends Archetype\Tests\TestCase
             $endpoints->count(),
             $endpoints->unique()->count()
         );
-    }  
+    }
 }

@@ -16,12 +16,12 @@ class FromFiles
 {
     public static function get()
     {
-        $models = app('LaravelFile')::models()->get()->map(function($model) {
+        $models = app('LaravelFile')::models()->get()->map(function ($model) {
             return 'App\\' . $model->className(); // TODO !!!
         })->values();
 
         return (object) [
-            'entities' => $models->map(function($model) {
+            'entities' => $models->map(function ($model) {
                 return (object) [
                     'model' => $model,
                     'columns' => static::getColumnsFromMigrations($model),
@@ -40,7 +40,7 @@ class FromFiles
 
         $table = $model->table() ?? Str::snake($model->className());
 
-        return app('LaravelFile')::in('database/migrations')->get()->map(function($file) {
+        return app('LaravelFile')::in('database/migrations')->get()->map(function ($file) {
             return (object) [
                 'name' => $file->className()
             ];

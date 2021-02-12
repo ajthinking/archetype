@@ -1,12 +1,13 @@
 <?php
 
 use Archetype\Facades\Project;
+
 class ProjectTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_follows_the_builder_pattern()
     {
-        // MANY OF THESE METHODS ARE JUST PLACEHOLDERS RETURNING $this!        
+        // MANY OF THESE METHODS ARE JUST PLACEHOLDERS RETURNING $this!
         $project = Project::current()
             ->gitInit()
             ->gitCommit('Initial commit')

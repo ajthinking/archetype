@@ -85,5 +85,4 @@ class RecursiveFileSearch
 
         return array_keys(iterator_to_array($iterator));
     }
-}     
-
+}

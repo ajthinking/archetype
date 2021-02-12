@@ -9,11 +9,11 @@ class MethodNames extends EndpointProvider
     /**
      * @example Get class method names
      * @source $file->methodNames()
-     */        
+     */
     public function methodNames()
     {
         return $this->get();
-    }   
+    }
 
     protected function get()
     {
@@ -23,5 +23,5 @@ class MethodNames extends EndpointProvider
             ->name
             ->get()
             ->toArray();
-    }    
+    }
 }

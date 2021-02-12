@@ -12,16 +12,18 @@ class TraitUse extends EndpointProvider
      *
      * @example Set class traits
      * @source INCOMPLETE
-     * 
+     *
      * @example Add class traits
      * @source INCOMPLETE
-     * 
+     *
      * @param string $value
      * @return mixed
      */
     public function trait($value = null)
     {
-        if($value === null) return $this->get();
+        if ($value === null) {
+            return $this->get();
+        }
 
         return $this->set($value);
     }
@@ -30,8 +32,8 @@ class TraitUse extends EndpointProvider
     {
         return $this->file->astQuery()
             ->traitUse()
-            ->remember('formatted_traits', function($node) {
-                return collect($node->traits)->map(function($trait) {
+            ->remember('formatted_traits', function ($node) {
+                return collect($node->traits)->map(function ($trait) {
                     return join('\\', $trait->parts);
                 })->toArray();
             })
