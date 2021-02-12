@@ -1,6 +1,6 @@
 <?php
 
-class APIDelegationTest extends Archetype\Tests\FileTestCase 
+class APIDelegationTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_delegate_method_calls()

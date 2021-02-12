@@ -1,6 +1,6 @@
 <?php
 
-class ReadWriteTest extends Archetype\Tests\FileTestCase
+class ReadWriteTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()

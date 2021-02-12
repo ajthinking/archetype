@@ -2,8 +2,8 @@
 
 use Archetype\Facades\Project;
 
-class ProjectTest extends Archetype\Tests\FileTestCase
 {    
+class ProjectTest extends Archetype\Tests\TestCase
     /** @test */
     public function it_follows_the_builder_pattern()
     {

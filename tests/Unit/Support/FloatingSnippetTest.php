@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use PhpParser\BuilderFactory;
 
-class FloatingSnippetTest extends Archetype\Tests\FileTestCase
+class FloatingSnippetTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_create_a_snippet_without_position_attributes()

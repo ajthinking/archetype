@@ -2,7 +2,7 @@
 
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
-class LaravelFileQueryBuilderTest extends Archetype\Tests\FileTestCase
+class LaravelFileQueryBuilderTest extends Archetype\Tests\TestCase
 {    
     /** @test */
     public function it_can_scope_on_models()

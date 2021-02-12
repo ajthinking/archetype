@@ -1,6 +1,6 @@
 <?php
 
-class LaravelTest extends Archetype\Tests\FileTestCase
+class LaravelTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_run_tests()

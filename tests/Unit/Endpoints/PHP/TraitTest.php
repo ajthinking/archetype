@@ -1,6 +1,6 @@
 <?php
 
-class TraitTest extends Archetype\Tests\FileTestCase
+class TraitTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_test()

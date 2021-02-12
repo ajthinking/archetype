@@ -1,6 +1,6 @@
 <?php
 
-class FilePathTest extends Archetype\Tests\FileTestCase
+class FilePathTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function a_file_has_an_input_path()

@@ -1,6 +1,6 @@
 <?php
 
-class LaravelPropertyTest extends Archetype\Tests\FileTestCase
+class LaravelPropertyTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_fillables()

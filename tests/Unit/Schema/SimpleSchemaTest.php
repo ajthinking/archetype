@@ -6,7 +6,7 @@ use Archetype\Schema\SimpleSchema\SimpleSchemaParser;
 
 require('samples.php');
 
-class SimpleSchemaTest extends Archetype\Tests\FileTestCase
+class SimpleSchemaTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_read_from_a_string_with_a_parse_method()

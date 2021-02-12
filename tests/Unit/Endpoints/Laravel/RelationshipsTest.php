@@ -1,6 +1,6 @@
 <?php
 
-class RelationshipsTest extends Archetype\Tests\FileTestCase
+class RelationshipsTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_insert_belongs_to_methods()

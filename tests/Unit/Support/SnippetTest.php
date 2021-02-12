@@ -4,7 +4,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 
 use Archetype\Support\Snippet;
 
-class SnippetTest extends Archetype\Tests\FileTestCase
+class SnippetTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_load_class_methods_from_snippet_defaults()

@@ -2,7 +2,7 @@
 
 use PhpParser\BuilderFactory;
 
-class PropertyTest extends Archetype\Tests\FileTestCase
+class PropertyTest extends Archetype\Tests\TestCase
 {
     protected $emptyClass = '<?php class EmptyClass {}';
 

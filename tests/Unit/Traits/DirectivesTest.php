@@ -3,7 +3,7 @@
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 use Archetype\Endpoints\Laravel\LaravelFileQueryBuilder;
 
-class DirectivesTest extends Archetype\Tests\FileTestCase
+class DirectivesTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_will_remember_directives_when_chained()

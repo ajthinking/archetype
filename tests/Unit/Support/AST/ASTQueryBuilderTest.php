@@ -3,7 +3,7 @@
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Support\QueryBuilder;
 
-class ASTQueryBuilderTest extends Archetype\Tests\FileTestCase
+class ASTQueryBuilderTest extends Archetype\Tests\TestCase
 {
     /** @test
     */

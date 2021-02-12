@@ -1,6 +1,6 @@
 <?php
 
-class ReadmeTest extends Archetype\Tests\FileTestCase
+class ReadmeTest extends Archetype\Tests\TestCase
 {
     /**
      * Example from: https://github.com/ajthinking/archetype#laravelfile-readwrite-api

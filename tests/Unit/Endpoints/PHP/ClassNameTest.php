@@ -1,6 +1,6 @@
 <?php
 
-class ClassNameTest extends Archetype\Tests\FileTestCase
+class ClassNameTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_class_name()

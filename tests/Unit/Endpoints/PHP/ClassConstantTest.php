@@ -1,6 +1,6 @@
 <?php
 
-class ClassConstantTest extends Archetype\Tests\FileTestCase
+class ClassConstantTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_get_a_class_constant()

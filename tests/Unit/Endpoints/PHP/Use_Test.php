@@ -1,6 +1,6 @@
 <?php
 
-class Use_Test extends Archetype\Tests\FileTestCase
+class Use_Test extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_use_statements()

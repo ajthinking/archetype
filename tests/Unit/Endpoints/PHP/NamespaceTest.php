@@ -1,6 +1,6 @@
 <?php
 
-class NamespaceTest extends Archetype\Tests\FileTestCase
+class NamespaceTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_namespace()

@@ -8,7 +8,7 @@ use Archetype\Support\PSR2PrettyPrinter;
 use PhpParser\BuilderFactory;
 use PhpParser\Node;
 
-class PrettyPrintingTest extends Archetype\Tests\FileTestCase
+class PrettyPrintingTest extends Archetype\Tests\TestCase
 {
     public function setup() :void
     {

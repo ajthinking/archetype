@@ -3,7 +3,7 @@
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 use Archetype\Endpoints\Laravel\LaravelFileQueryBuilder;
 
-class PHPFileQueryBuilderTest extends Archetype\Tests\FileTestCase
+class PHPFileQueryBuilderTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_instanciate_via_php_or_laravel_file_with_in_method()
