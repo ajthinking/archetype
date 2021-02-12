@@ -22,11 +22,11 @@ jobs:
             os: ubuntu-latest
             experimental: false
 
-          - php-version: 7.4
-            laravel-version: 8
-            os: windows-latest
-            dependencies: locked
-            experimental: false
+          # - php-version: 7.4
+          #   laravel-version: 8
+          #   os: windows-latest
+          #   dependencies: locked
+          #   experimental: false
 
           - php-version: 7.4
             laravel-version: 8
@@ -34,7 +34,7 @@ jobs:
             dependencies: locked
             experimental: false
 
-    name: PHP ${{ matrix.php-version }} - L${{ matrix.laravel-version }} - ${{ matrix.os }}
+    name: PHP ${{ matrix.php-version }} - L${{ matrix.laravel-version }} - ${{ matrix.os }} - ${{ matrix.dependencies }}
 
     runs-on: ${{ matrix.os }}
 
