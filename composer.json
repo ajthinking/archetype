@@ -19,7 +19,9 @@
     "require": {
         "doctrine/dbal": "^2.9 || ^3.0"
     },
-    "require-dev": {},
+    "require-dev": {
+        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
