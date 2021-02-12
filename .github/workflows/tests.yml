@@ -1,34 +1,108 @@
 name: tests
-# Since this package must be tested inside a Laravel application this workflow does the following:
-# Create a fresh Laravel host app
-# Checkout package into host/packages/ajthinking/archetype
-# Add the package in host composer.json repositories section
-# Require the package using @dev
-# Publishing config
-# Running tests: vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
 
 on: [push, pull_request]
 
+env:
+  COMPOSER_FLAGS: "--ansi --no-interaction --no-progress --no-suggest --prefer-dist -o -n"
+
 jobs:
   laravel-tests:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [7.2, 7.3, 7.4, 8.0]
+        laravel-version: [6, 7, 8]
+        os: [ubuntu-latest]
+        experimental: [false]
+
+        dependencies: [locked]
+
+        experimental: [false]
+
+        include:
+        #   - php-version: 7.4
+        #     laravel-version: 8
+        #     dependencies: highest
+        #     os: ubuntu-latest
+        #     experimental: false
+
+        #   - php-version: 7.4
+        #     laravel-version: 8
+        #     os: windows-latest
+        #     dependencies: locked
+        #     experimental: false
+
+        #   - php-version: 7.4
+        #     laravel-version: 8
+        #     os: macos-latest
+        #     dependencies: locked
+        #     experimental: false
+
+    name: PHP ${{ matrix.php-version }} - L${{ matrix.laravel-version }} - ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+
+    continue-on-error: ${{ matrix.experimental }}
+
     steps:
-    - name: Install host app
-      run: composer create-project --prefer-dist laravel/laravel host
-      
-    - name: Checkout the package
-      uses: actions/checkout@v2
-      with:
-        path: host/packages/ajthinking/archetype
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Add composer.json repository
-      working-directory: ./host
-      run: composer config repositories.archetype path "/home/runner/work/archetype/archetype/host/packages/ajthinking/archetype"
+      - name: Determine composer cache directory
+        id: determine-composer-cache-directory
+        run: 'echo "::set-output name=directory::$(composer config cache-dir)"'
 
-    - name: Require the package
-      working-directory: ./host
-      run: composer require ajthinking/archetype @dev
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.determine-composer-cache-directory.outputs.directory }}
+          key: dependencies-os-${{ matrix.os }}-php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: dependencies-os-${{ matrix.os }}-php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-composer-
 
-    - name: Run tests
-      working-directory: ./host      
-      run: vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
+          coverage: none
+          ini-values: "memory_limit=-1"
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install highest dependencies from composer.json
+        if: matrix.dependencies == 'highest'
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer config platform --unset && composer update ${{ env.COMPOSER_FLAGS }}
+
+      - name: Install lowest dependencies from composer.json
+        if: matrix.dependencies == 'lowest'
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer install ${{ env.COMPOSER_FLAGS }} --prefer-lowest
+
+      - name: Install dependencies from composer.lock
+        if: matrix.dependencies == 'locked'
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer install ${{ env.COMPOSER_FLAGS }}
+
+      - name: Select Laravel version
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer require "laravel/framework:${{ matrix.laravel-version }}.*" --no-update
+
+      - name: Run tests
+        run: vendor/bin/phpunit --verbose
