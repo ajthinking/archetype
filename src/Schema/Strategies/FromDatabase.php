@@ -16,14 +16,14 @@ class FromDatabase
 {
     public static function get()
     {
-        $models = app('LaravelFile')::models()->get()->map(function($model) {
+        $models = app('LaravelFile')::models()->get()->map(function ($model) {
             return 'App\\' . $model->className(); // TODO !!!
         })->values();
 
         $entities = DB::connection()->getDoctrineSchemaManager()->listTableNames();
 
         return (object) [
-            'entities' => $models->map(function($model) {
+            'entities' => $models->map(function ($model) {
                 return (object) [
                     'model' => $model,
                     'table' => static::getTable($model),
@@ -48,8 +48,8 @@ class FromDatabase
 
         $columns = $schema->listTableColumns($table, $database);
 
-        $columns = collect($columns)->map(function($column) use($model) {
-            return $column->toArray();                
+        $columns = collect($columns)->map(function ($column) use ($model) {
+            return $column->toArray();
         });
 
         return $columns->toArray();

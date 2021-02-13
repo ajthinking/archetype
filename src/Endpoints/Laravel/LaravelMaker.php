@@ -22,7 +22,7 @@ class LaravelMaker extends Maker
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver);        
+            ->outputDriver($this->outputDriver);
     }
 
     public function model($name)
@@ -33,10 +33,10 @@ class LaravelMaker extends Maker
         $contents = Str::of($this->stub('model.stub'))
             ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
             ->replace(['{{ class }}', 'DummyClass'], $this->class)
-            ->__toString();                
+            ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver);        
+            ->outputDriver($this->outputDriver);
     }
 
     public function controller($name)
@@ -47,10 +47,10 @@ class LaravelMaker extends Maker
             ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
             ->replace(['{{ rootNamespace }}'], $this->namespace)
             ->replace(['{{ class }}', 'DummyClass'], $this->class)
-            ->__toString();                
+            ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());        
+            ->outputDriver($this->outputDriver());
     }
 
     public function migration($name)
@@ -61,10 +61,10 @@ class LaravelMaker extends Maker
             ->replace(['DummyNamespace', '{{ namespace }}'], $this->namespace)
             ->replace(['{{ rootNamespace }}'], $this->namespace)
             ->replace(['{{ class }}', 'DummyClass'], $this->class)
-            ->__toString();                
+            ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());        
+            ->outputDriver($this->outputDriver());
     }
     
     public function factory($name)
@@ -73,11 +73,11 @@ class LaravelMaker extends Maker
 
         $contents = Str::of($this->stub('factory.stub'))
             ->replace(['{{ rootNamespace }}'], $this->namespace)
-            ->__toString();                
+            ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());        
-    }    
+            ->outputDriver($this->outputDriver());
+    }
 
     protected function stub($name)
     {
@@ -87,12 +87,12 @@ class LaravelMaker extends Maker
             'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs',
             'vendor/laravel/framework/src/Illuminate/Database/Migrations/stubs',
             'vendor/laravel/framework/src/Illuminate/Database/Console/Factories/stubs',
-        ])->first(function($dir) use($name) {
+        ])->first(function ($dir) use ($name) {
             return is_file(base_path($dir . "/$name"));
         });
 
         return file_get_contents(
             base_path($dir . "/$name")
         );
-    }    
+    }
 }

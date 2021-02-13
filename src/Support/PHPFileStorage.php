@@ -2,11 +2,10 @@
 
 namespace Archetype\Support;
 
-use Config;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-
 use Archetype\Support\Path;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PHPFileStorage
 {
@@ -36,11 +35,11 @@ class PHPFileStorage
         //     is_file(
         //         $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix() .
         //         $this->relative($path, 'output')
-        //     )            
+        //     )
         // );
 
         return $r;
-    }    
+    }
 
     public function relative($path, $rootName)
     {
@@ -51,9 +50,9 @@ class PHPFileStorage
 
     public function fullPathFor($type, $path)
     {
-        return Str::startsWith($path, '/') ? $path 
-        : static::getStorageRootPath($type) . "/$path";        
-    }    
+        return Str::startsWith($path, '/') ? $path
+        : static::getStorageRootPath($type) . "/$path";
+    }
 
     protected function getStorageRootPath($name)
     {
@@ -72,5 +71,5 @@ class PHPFileStorage
         ]);
 
         return Storage::disk("roots.$unique_id");
-    }    
+    }
 }

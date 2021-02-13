@@ -20,8 +20,8 @@ class ReflectionProxy extends EndpointProvider
 
         try {
             return $class ? new ReflectionClass($class) : null;
-        } catch(Exception $e) {
-           return null;
+        } catch (Exception $e) {
+            return null;
         }
     }
 }

@@ -4,11 +4,12 @@ namespace Archetype\Support\AST;
 
 use Archetype\Support\AST\QueryNode;
 
-class Survivor extends QueryNode {
+class Survivor extends QueryNode
+{
 
     public $memory;
 
-    public $result;    
+    public $result;
 
     public function __construct($result)
     {
@@ -28,6 +29,4 @@ class Survivor extends QueryNode {
         $this->result = $result;
         return $this;
     }
-
-
 }

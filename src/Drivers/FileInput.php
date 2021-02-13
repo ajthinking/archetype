@@ -63,7 +63,7 @@ class FileInput implements InputInterface
         
         $pathIsAbsolute = Str::startsWith($path, '/');
         
-        if($pathIsAbsolute) {
+        if ($pathIsAbsolute) {
             $this->absoluteDir = dirname($path);
         } else {
             $this->absoluteDir = dirname($this->root['root'] . "/" . $path);

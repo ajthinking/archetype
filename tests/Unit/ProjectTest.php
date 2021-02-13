@@ -2,12 +2,12 @@
 
 use Archetype\Facades\Project;
 
-class ProjectTest extends Archetype\Tests\FileTestCase
-{    
+class ProjectTest extends Archetype\Tests\TestCase
+{
     /** @test */
     public function it_follows_the_builder_pattern()
     {
-        // MANY OF THESE METHODS ARE JUST PLACEHOLDERS RETURNING $this!        
+        // MANY OF THESE METHODS ARE JUST PLACEHOLDERS RETURNING $this!
         $project = Project::current()
             ->gitInit()
             ->gitCommit('Initial commit')
@@ -52,12 +52,12 @@ class ProjectTest extends Archetype\Tests\FileTestCase
 
         $this->assertContains(
             'social_security_number',
-            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+            LaravelFile::load(Config::get('archetype.roots.output.root') . '/app/Models/User.php')->hidden()
         );
 
         $this->assertNotContains(
             'a2',
-            LaravelFile::load(__DIR__ . '/../.output/app/Models/User.php')->hidden()
+            LaravelFile::load(Config::get('archetype.roots.output.root') . '/app/Models/User.php')->hidden()
         );
     }
 }

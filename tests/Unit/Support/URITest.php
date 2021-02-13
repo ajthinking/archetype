@@ -2,7 +2,7 @@
 
 use Archetype\Support\URI;
 
-class URITest extends Archetype\Tests\FileTestCase
+class URITest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_enterpret_input_as_path_or_name()
@@ -35,9 +35,8 @@ class URITest extends Archetype\Tests\FileTestCase
             'Custom' => URI::make('Custom\Star')->namespace(),
         ];
 
-        foreach($namespaces as $expected => $actual)
-        {
-            $this->assertEquals($expected,$actual);
+        foreach ($namespaces as $expected => $actual) {
+            $this->assertEquals($expected, $actual);
         }
-    }    
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Use_Test extends Archetype\Tests\FileTestCase
+class Use_Test extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_use_statements()
@@ -14,7 +14,7 @@ class Use_Test extends Archetype\Tests\FileTestCase
             "Illuminate\Foundation\Auth\User as Authenticatable",
         ]);
 
-        $expectedUseStatements->each(function($expectedUseStatement) use($useStatements){
+        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
             $this->assertTrue(
                 collect($useStatements)->contains($expectedUseStatement)
             );
@@ -27,13 +27,12 @@ class Use_Test extends Archetype\Tests\FileTestCase
         $this->assertTrue(
             collect($useStatements)->count() === 2
         );
-
     }
     
     /** @test */
     public function it_can_add_use_statements_in_a_namespace()
     {
-        // on a file with use statements        
+        // on a file with use statements
         $file = PHPFile::load('app/Models/User.php');
 
         $useStatements = $file->add()->use(['Add\This'])->use();
@@ -41,15 +40,15 @@ class Use_Test extends Archetype\Tests\FileTestCase
         $expectedUseStatements = collect([
             "Illuminate\Notifications\Notifiable",
             "Illuminate\Contracts\Auth\MustVerifyEmail",
-            "Illuminate\Foundation\Auth\User as Authenticatable",            
-            "Add\This",            
+            "Illuminate\Foundation\Auth\User as Authenticatable",
+            "Add\This",
         ]);
 
-        $expectedUseStatements->each(function($expectedUseStatement) use($useStatements){
+        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
             $this->assertTrue(
                 collect($useStatements)->contains($expectedUseStatement)
             );
-        });        
+        });
     }
 
     /** @test */
@@ -60,11 +59,11 @@ class Use_Test extends Archetype\Tests\FileTestCase
         
         $useStatements = $file->add()->use(['Add\This'])->use();
         
-        $expectedUseStatements = collect([            
-            "Add\This",            
+        $expectedUseStatements = collect([
+            "Add\This",
         ]);
 
-        $expectedUseStatements->each(function($expectedUseStatement) use($useStatements){
+        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
             $this->assertTrue(
                 collect($useStatements)->contains($expectedUseStatement)
             );
@@ -73,19 +72,19 @@ class Use_Test extends Archetype\Tests\FileTestCase
 
     /** @test */
     public function it_can_add_use_statements_with_alias()
-    {        
+    {
         $file = PHPFile::load('public/index.php');
         $useStatements = $file->add()->use(['Add\This as Wow'])->use();
-        $expectedUseStatements = collect([            
-            "Add\This as Wow",            
+        $expectedUseStatements = collect([
+            "Add\This as Wow",
         ]);
         
-        $expectedUseStatements->each(function($expectedUseStatement) use($useStatements){
+        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
             $this->assertTrue(
                 collect($useStatements)->contains($expectedUseStatement)
             );
         });
-    }    
+    }
 
     /** @test */
     public function it_can_overwrite_use_statements()
@@ -102,6 +101,6 @@ class Use_Test extends Archetype\Tests\FileTestCase
         $this->assertEquals(
             $useStatements->first(),
             'Only\This'
-        );        
+        );
     }
 }

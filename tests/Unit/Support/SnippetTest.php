@@ -4,7 +4,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 
 use Archetype\Support\Snippet;
 
-class SnippetTest extends Archetype\Tests\FileTestCase
+class SnippetTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_load_class_methods_from_snippet_defaults()
@@ -12,7 +12,7 @@ class SnippetTest extends Archetype\Tests\FileTestCase
         $this->assertInstanceOf(
             ClassMethod::class,
             Snippet::___HAS_MANY_METHOD___()
-        );            
+        );
     }
 
     /** @test */
@@ -30,14 +30,14 @@ class SnippetTest extends Archetype\Tests\FileTestCase
                 ->end()
                 ->methodNames(),
             ['guitars']
-        );            
-    }    
+        );
+    }
     
     /** @test */
     public function it_cant_load_non_existing_snippets_from_defaults()
     {
         $this->assertNull(
             Snippet::NoSUchSnippet()
-        );            
-    }   
+        );
+    }
 }

@@ -56,7 +56,9 @@ class ASTQueryBuilder
     {
         // Can we find a corresponding PHPParser class to enter?
         $class = $this->classMap($method);
-        if($class) return $this->traverseIntoClass($class);        
+        if ($class) {
+            return $this->traverseIntoClass($class);
+        }
 
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
@@ -67,37 +69,41 @@ class ASTQueryBuilder
      *
      * @param [string] $name
      * @return void
-     */    
+     */
     public function __get(string $name)
     {
         // Can we find a corresponding PHPParser property to enter?
         $property = $this->propertyMap($name);
-        if($property) return $this->traverseIntoProperty($property);        
+        if ($property) {
+            return $this->traverseIntoProperty($property);
+        }
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
-    }    
+    }
 
     public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
     {
-        return $this->next(function($queryNode) use($expectedClass, $finderMethod) {
+        return $this->next(function ($queryNode) use ($expectedClass, $finderMethod) {
             // Search the abstract syntax tree
             $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
             // Wrap matches in Survivor object
-            return collect($results)->map(function($result) use($queryNode) {
+            return collect($results)->map(function ($result) use ($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
-        });     
+        });
     }
 
     public function traverseIntoProperty($property)
     {
-        return $this->next(function($queryNode) use($property) {
-            if(!isset($queryNode->result->$property)) return new Killable;
+        return $this->next(function ($queryNode) use ($property) {
+            if (!isset($queryNode->result->$property)) {
+                return new Killable;
+            }
             
             $value = $queryNode->result->$property;
             
-            if(is_array($value)) {
-                return collect($value)->map(function($item) use($value, $queryNode) {
+            if (is_array($value)) {
+                return collect($value)->map(function ($item) use ($value, $queryNode) {
                     return Survivor::fromParent($queryNode)->withResult($item);
                 })->toArray();
             }
@@ -120,9 +126,11 @@ class ASTQueryBuilder
 
     public function remember($key, $callback)
     {
-        $this->currentNodes()->each(function($queryNode) use($key, $callback) {
+        $this->currentNodes()->each(function ($queryNode) use ($key, $callback) {
             
-            if($queryNode instanceof Killable) return;
+            if ($queryNode instanceof Killable) {
+                return;
+            }
             
             $queryNode->memory[$key] = $callback($queryNode->result);
         });
@@ -137,7 +145,7 @@ class ASTQueryBuilder
 
     public function whereEquals($expected)
     {
-        return $this->next(function($queryNode) use($expected) {
+        return $this->next(function ($queryNode) use ($expected) {
             return $queryNode->result == $expected ? $queryNode : new Killable;
         });
     }
@@ -160,10 +168,10 @@ class ASTQueryBuilder
 
     protected function wherePath($path, $expected)
     {
-        return $this->next(function($queryNode) use($path, $expected) {
+        return $this->next(function ($queryNode) use ($path, $expected) {
             $steps = collect(explode('->', $path));
 
-            $result = $steps->reduce(function($result, $step) {
+            $result = $steps->reduce(function ($result, $step) {
                 return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
             }, $queryNode->result);
 
@@ -173,10 +181,10 @@ class ASTQueryBuilder
 
     protected function whereCallback($callback)
     {
-        return $this->next(function($queryNode) use($callback) {
+        return $this->next(function ($queryNode) use ($callback) {
             $query = new static(
                 [(clone $queryNode)->result]
-            );            
+            );
             return $callback($query) ? $queryNode : new Killable;
         });
     }
@@ -190,7 +198,7 @@ class ASTQueryBuilder
      */
     public function recall($pluck = null)
     {
-        $memory = collect(end($this->tree))->filter(function($item) {
+        $memory = collect(end($this->tree))->filter(function ($item) {
             return $item->result;
         })->map->memory;
 
@@ -205,20 +213,22 @@ class ASTQueryBuilder
     public function first()
     {
         return $this->get()->first();
-    }    
+    }
 
     public function getEvaluated()
     {
-        return $this->get()->map(function($item) {
+        return $this->get()->map(function ($item) {
             return (new ConstExprEvaluator())->evaluateSilently($item);
         });
     }
 
     public function remove()
     {
-        $this->currentNodes()->each(function($node) {
+        $this->currentNodes()->each(function ($node) {
             
-            if(!isset($node->result->__object_hash)) return;
+            if (!isset($node->result->__object_hash)) {
+                return;
+            }
             
             $this->resultingAST = NodeRemover::remove(
                 $node->result->__object_hash,
@@ -242,8 +252,10 @@ class ASTQueryBuilder
 
     protected function replaceWithCallback(Closure $callback)
     {
-        $this->currentNodes()->each(function($node) use($callback) {
-            if(!isset($node->result->__object_hash)) return;
+        $this->currentNodes()->each(function ($node) use ($callback) {
+            if (!isset($node->result->__object_hash)) {
+                return;
+            }
 
             $this->resultingAST = NodeReplacer::replace(
                 $node->result->__object_hash,
@@ -252,16 +264,18 @@ class ASTQueryBuilder
             );
         });
 
-        return $this;        
+        return $this;
     }
 
     protected function replaceWithNode($newNode)
     {
-        $this->currentNodes()->each(function($node) use($newNode) {
+        $this->currentNodes()->each(function ($node) use ($newNode) {
             
             $target = $node->result;
 
-            if(!$target) return;
+            if (!$target) {
+                return;
+            }
 
             $this->resultingAST = NodeReplacer::replace(
                 $target->__object_hash,
@@ -275,8 +289,10 @@ class ASTQueryBuilder
 
     public function replaceProperty($key, $value)
     {
-        $this->currentNodes()->each(function($node) use($key, $value) {
-            if(!isset($node->result->__object_hash)) return;
+        $this->currentNodes()->each(function ($node) use ($key, $value) {
+            if (!isset($node->result->__object_hash)) {
+                return;
+            }
 
             $this->resultingAST = NodePropertyReplacer::replace(
                 $node->result->__object_hash,
@@ -286,12 +302,12 @@ class ASTQueryBuilder
             );
         });
 
-        return $this;        
-    }    
+        return $this;
+    }
 
     public function insertStmts($newNodes)
     {
-        collect($newNodes)->each(function($newNode) {
+        collect($newNodes)->each(function ($newNode) {
             $this->insertStmt($newNode);
         });
 
@@ -300,12 +316,12 @@ class ASTQueryBuilder
 
     public function insertStmt($newNode)
     {
-        $this->currentNodes()->each(function($node) use($newNode) {
+        $this->currentNodes()->each(function ($node) use ($newNode) {
 
             $target = $node->result;
 
             // Assume insertion targets namespace stmts (if present at index 0)
-            if(is_array($target) && !empty($target) && get_class($target[0]) == 'PhpParser\\Node\\Stmt\Namespace_') {
+            if (is_array($target) && !empty($target) && get_class($target[0]) == 'PhpParser\\Node\\Stmt\Namespace_') {
                 $target = $target[0];
             }
 
@@ -317,7 +333,7 @@ class ASTQueryBuilder
         });
 
         return $this;
-    }   
+    }
 
     public function dd()
     {
@@ -336,7 +352,7 @@ class ASTQueryBuilder
     public function end()
     {
         return $this->file;
-    }    
+    }
 
     protected function currentNodes()
     {

@@ -10,19 +10,23 @@ class Implements_ extends EndpointProvider
     /**
      * @example Get class implements
      * @source $file->implements()
-     * 
+     *
      * @example Set class implements
      * @source $file->implements(['InterfaceA', 'InterfaceB'])
-     * 
+     *
      * @example Add class implements
      * @source $file->add()->implements('InterfaceC')
      * @return mixed
-     */    
+     */
     public function implements($name = null)
     {
-        if($this->file->directive('add')) return $this->add($name);
+        if ($this->file->directive('add')) {
+            return $this->add($name);
+        }
         
-        if($name === null) return $this->get();
+        if ($name === null) {
+            return $this->get();
+        }
 
         return $this->set($name);
     }
@@ -33,7 +37,7 @@ class Implements_ extends EndpointProvider
             ->class()
             ->implements
             ->get()
-            ->map(function($name) {
+            ->map(function ($name) {
                 return implode('\\', $name->parts);
             })->toArray();
     }
@@ -62,7 +66,7 @@ class Implements_ extends EndpointProvider
 
     protected function makeNameObject($names)
     {
-        return collect(Arr::wrap($names))->map(function($name) {
+        return collect(Arr::wrap($names))->map(function ($name) {
             return new \PhpParser\Node\Name($name);
         })->toArray();
     }

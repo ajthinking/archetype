@@ -15,7 +15,7 @@ class ModelProperties extends EndpointProvider
         'timestamps'    => 'boolean',
         'visible'       => 'array',
         'guarded'       => 'array',
-        'unguarded'     => 'array',  
+        'unguarded'     => 'array',
         'fillable'      => 'array',
         'hidden'        => 'array',
     ];

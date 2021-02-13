@@ -2,7 +2,7 @@
 
 use Archetype\LaravelFile;
 
-class DuplicateEndpointTest extends Archetype\Tests\FileTestCase
+class DuplicateEndpointTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function there_are_no_duplicated_endpoints()
@@ -17,5 +17,5 @@ class DuplicateEndpointTest extends Archetype\Tests\FileTestCase
             $endpoints->count(),
             $endpoints->unique()->count()
         );
-    }  
+    }
 }

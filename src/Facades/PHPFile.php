@@ -4,6 +4,10 @@ namespace Archetype\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class PHPFile extends Facade {
-   protected static function getFacadeAccessor() { return 'PHPFile'; }   
+class PHPFile extends Facade
+{
+    protected static function getFacadeAccessor()
+    {
+        return 'PHPFile';
+    }
 }

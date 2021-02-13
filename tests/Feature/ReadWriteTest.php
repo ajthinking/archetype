@@ -1,17 +1,19 @@
 <?php
 
-class ReadWriteTest extends Archetype\Tests\FileTestCase
+use Illuminate\Support\Facades\Config;
+
+class ReadWriteTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_wont_see_debug_or_output_folders_because_they_are_removed_at_start_up()
     {
         $this->assertFalse(
-            is_dir(__DIR__ . '/../.debug')
+            is_dir(Config::get('archetype.roots.debug.root'))
         );
 
         $this->assertFalse(
-            is_dir(__DIR__ . '/../.output')
-        );        
+            is_dir(Config::get('archetype.roots.output.root'))
+        );
     }
 
     /** @test */
@@ -28,7 +30,7 @@ class ReadWriteTest extends Archetype\Tests\FileTestCase
     public function it_can_load_files_with_absolute_path()
     {
         $file = PHPFile::load(
-                base_path('vendor/ajthinking/archetype/src/snippets/relationships.php')
+            base_path('vendor/ajthinking/archetype/src/snippets/relationships.php')
         );
 
         $this->assertTrue(
@@ -46,7 +48,7 @@ class ReadWriteTest extends Archetype\Tests\FileTestCase
         $this->assertTrue(
             get_class($file) === 'Archetype\PHPFile'
         );
-    }    
+    }
 
     /** @test */
     public function it_can_also_load_laravel_specific_files()
@@ -54,25 +56,26 @@ class ReadWriteTest extends Archetype\Tests\FileTestCase
         $file = LaravelFile::load('app/Models/User.php');
 
         $this->assertInstanceOf(
-            \Archetype\LaravelFile::class, $file
+            \Archetype\LaravelFile::class,
+            $file
         );
-    } 
+    }
 
     /** @test */
     public function it_can_write_to_default_location()
-    {        
+    {
         // default save location is in .output when in development mode
-        LaravelFile::load('app/Models/User.php')->save();        
+        LaravelFile::load('app/Models/User.php')->save();
         
         $this->assertTrue(
-            is_file(__DIR__ . '/../.output/app/Models/User.php')
+            is_file(Config::get('archetype.roots.output.root') . '/app/Models/User.php')
         );
 
         // debug
-        LaravelFile::load('app/Models/User.php')->debug();        
+        LaravelFile::load('app/Models/User.php')->debug();
 
         $this->assertTrue(
-            is_file(__DIR__ . '/../.debug/app/Models/User.php')
+            is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php')
         );
-    }   
+    }
 }

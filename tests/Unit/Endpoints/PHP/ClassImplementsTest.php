@@ -1,6 +1,6 @@
 <?php
 
-class ClassImplementsTest extends Archetype\Tests\FileTestCase
+class ClassImplementsTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_class_implements()
@@ -16,12 +16,12 @@ class ClassImplementsTest extends Archetype\Tests\FileTestCase
     public function it_can_set_class_implements()
     {
         $file = PHPFile::load('app/Models/User.php')->implements([
-        "MyInterface" 
+        "MyInterface"
         ]);
 
         $this->assertTrue(
             $file->implements() === [
-                "MyInterface" 
+                "MyInterface"
             ]
         );
     }
@@ -39,5 +39,5 @@ class ClassImplementsTest extends Archetype\Tests\FileTestCase
                 'MySecondInterface'
             ]
         );
-    }    
+    }
 }

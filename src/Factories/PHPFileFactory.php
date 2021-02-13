@@ -30,12 +30,12 @@ class PHPFileFactory
     }
 
     protected static function __driver($name)
-    {   
+    {
         $driver = [
             "input" => config('archetype.input', \Archetype\Drivers\FileInput::class),
             "output" => config('archetype.output', \Archetype\Drivers\FileOutput::class),
         ][$name];
 
         return new $driver;
-    }    
+    }
 }

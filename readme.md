@@ -303,28 +303,11 @@ In general this package assumes code to be parsed follows guidellines and conven
 ## Contributing
 
 ### Development installation
-The test suite requires that you are inside laravel application
-```bash
-laravel new host
-cd host
-git clone git@github.com:ajthinking/archetype.git packages/ajthinking/archetype
 ```
-Add this to the host projects `composer.json`
-```json
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/PATH/TO/PROJECTS/host/packages/ajthinking/archetype"
-        }
-    ],
-```
-Then,
-```bash
-composer require ajthinking/archetype @dev
-```
-Finally in host root run
-```bash
-vendor/phpunit/phpunit/phpunit packages/ajthinking/archetype/tests
+git clone git@github.com:ajthinking/archetype.git
+cd archetype
+composer install
+./vendor/bin/phpunit tests
 ```
 
 ### Roadmap

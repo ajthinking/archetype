@@ -2,7 +2,7 @@
 
 use Archetype\Support\Path;
 
-class PathTest extends Archetype\Tests\FileTestCase
+class PathTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_create_paths_with_explicit_default_root()
@@ -25,5 +25,5 @@ class PathTest extends Archetype\Tests\FileTestCase
         $absolute = Path::make('/app/Models/User.php')->full();
         $this->assertEquals($expected, $relative);
         $this->assertEquals($expected, $absolute);
-    }    
+    }
 }

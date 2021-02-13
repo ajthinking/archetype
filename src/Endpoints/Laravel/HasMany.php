@@ -12,7 +12,7 @@ class HasMany extends EndpointProvider
     /**
      * @example Add a hasMany relationship method
      * @source $file->hasMany('Company')
-     */    
+     */
     public function hasMany($targets)
     {
         return $this->add($targets);
@@ -23,7 +23,7 @@ class HasMany extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->insertStmts(
-                collect(Arr::wrap($targets))->map(function($target) {
+                collect(Arr::wrap($targets))->map(function ($target) {
                     return Snippet::___HAS_MANY_METHOD___([
                         '___HAS_MANY_METHOD___' => Str::hasManyMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),

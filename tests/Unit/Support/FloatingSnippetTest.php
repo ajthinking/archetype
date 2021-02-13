@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use PhpParser\BuilderFactory;
 
-class FloatingSnippetTest extends Archetype\Tests\FileTestCase
+class FloatingSnippetTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_create_a_snippet_without_position_attributes()
@@ -26,7 +26,7 @@ class FloatingSnippetTest extends Archetype\Tests\FileTestCase
             'endTokenPos',
         ];
 
-        foreach($disabled as $key) {
+        foreach ($disabled as $key) {
             $this->assertEquals(
                 -1,
                 $fromSnippet->getAttribute($key)
@@ -69,7 +69,7 @@ class FloatingSnippetTest extends Archetype\Tests\FileTestCase
                         ]
                     )
                 )
-            )    
+            )
                 
             ->getNode();
     }
@@ -86,5 +86,5 @@ class FloatingSnippetTest extends Archetype\Tests\FileTestCase
     //         )->commit()
     //         ->end()
     //         ->continue();
-    // }    
+    // }
 }

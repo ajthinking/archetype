@@ -30,12 +30,12 @@ class SegmentParser
 
         $directives = $headlineParts->slice(1)->toArray();
 
-        $attributes = $segmentRows->slice(1)->values()->map(function($row) {
+        $attributes = $segmentRows->slice(1)->values()->map(function ($row) {
             $attributeParts = Str::of($row)->split('/ /');
-            $directives = $attributeParts->slice(1)->values()->map(function($directiveString) {
+            $directives = $attributeParts->slice(1)->values()->map(function ($directiveString) {
                 $directiveName = (string) Str::of($directiveString)->before(':');
                 
-                if(Str::of($directiveString)->contains(':')) {
+                if (Str::of($directiveString)->contains(':')) {
                     $directiveArgs = Str::of($directiveString)->after(':')->split('/\,/');
                 } else {
                     $directiveArgs = collect();
@@ -43,11 +43,13 @@ class SegmentParser
 
                 return new Directive($directiveName, $directiveArgs);
             });
-            $name = $attributeParts->first();            
+            $name = $attributeParts->first();
             return new Attribute($name, $directives);
         });
 
-        if($name == 'User') return new UserEntity($name, $directives, $attributes);
+        if ($name == 'User') {
+            return new UserEntity($name, $directives, $attributes);
+        }
 
         return new ModelEntity($name, $directives, $attributes);
     }

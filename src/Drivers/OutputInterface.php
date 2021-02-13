@@ -2,7 +2,7 @@
 
 namespace Archetype\Drivers;
 
-Interface OutputInterface
+interface OutputInterface
 {
     public function save($path, $content);
 

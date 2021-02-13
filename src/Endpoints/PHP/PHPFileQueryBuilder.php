@@ -23,7 +23,7 @@ class PHPFileQueryBuilder extends EndpointProvider
 {
     use HasOperators;
 
-    const PHPSignature = '/\.php$/';   
+    const PHPSignature = '/\.php$/';
     
     public function __construct($file = null)
     {
@@ -43,7 +43,7 @@ class PHPFileQueryBuilder extends EndpointProvider
     /**
      * @example Get all files in root recursively
      * @source PHPFile::all()
-     */    
+     */
     public function all()
     {
         return $this->in('')->get();
@@ -52,13 +52,13 @@ class PHPFileQueryBuilder extends EndpointProvider
     /**
      * @example Query files in directory
      * @source PHPFile::in('app/HTTP')
-     */    
+     */
     public function in($directory)
     {
         $this->baseDir = $directory;
 
         $this->result = collect($this->recursiveFileSearch($this->baseDir))
-            ->map(function($filePath) {
+            ->map(function ($filePath) {
                 $type = class_basename($this->file);
                 return app()->make($type)->load($filePath);
             });
@@ -69,31 +69,33 @@ class PHPFileQueryBuilder extends EndpointProvider
     /**
      * @example Where file->endpoint Equals value
      * @source PHPFile::where('className', 'User')
-     * 
+     *
      * @example Where file->endpoints <operator> value
      * @source PHPFile::where('implements', 'contains', 'MyInterface')
-     * 
+     *
      * @example Multiple conditions with array
      * @source PHPFile::where([['className', 'User'], ['use', 'includes', 'SomeClass']])
-     * 
+     *
      * @example Where callback returns true
      * @source PHPFile::where(fn($file) => $file->canUseReflection())
      */
     public function where($arg1, $arg2 = null, $arg3 = null)
     {
         // Ensure we are in a directory context - default to base path
-        if(!isset($this->baseDir)) $this->in('');
+        if (!isset($this->baseDir)) {
+            $this->in('');
+        }
 
         // If an array is passed
-        if(is_array($arg1)) {
-            collect($arg1)->each(function($clause) {
+        if (is_array($arg1)) {
+            collect($arg1)->each(function ($clause) {
                 $this->where(...$clause);
             });
             return $this;
         }
 
         // If a function is passed
-        if(is_callable($arg1)) {
+        if (is_callable($arg1)) {
             $this->result = $this->result->filter($arg1);
             return $this;
         }
@@ -108,7 +110,7 @@ class PHPFileQueryBuilder extends EndpointProvider
         }
 
         // Dispatch to HasOperators trait method
-        $this->result = $this->result->filter(function($file) use ($property, $operator, $value) {
+        $this->result = $this->result->filter(function ($file) use ($property, $operator, $value) {
             $operatorMethod = $this->operatorMethod($operator);
 
             return $this->$operatorMethod(
@@ -136,20 +138,23 @@ class PHPFileQueryBuilder extends EndpointProvider
     public function get()
     {
         // Ensure we are in a directory context - default to base path
-        if(!isset($this->baseDir)) $this->in('');
+        if (!isset($this->baseDir)) {
+            $this->in('');
+        }
         return $this->result;
     }
 
     /**
      * @example Get the first match
      * @source PHPFile::where(...)->first()
-     */    
+     */
     public function first()
     {
         return $this->get()->first();
     }
 
-    public function recursiveFileSearch($directory) {
+    public function recursiveFileSearch($directory)
+    {
         $directory = base_path($directory);
 
         return RecursiveFileSearch::in($directory)
@@ -164,5 +169,5 @@ class PHPFileQueryBuilder extends EndpointProvider
         $reflection = new ReflectionClass(static::class);
         $methods = collect($reflection->getMethods(ReflectionMethod::IS_PUBLIC))->pluck('name');
         return collect($methods)->contains($signature) ? $signature : false;
-    }    
+    }
 }

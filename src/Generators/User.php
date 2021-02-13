@@ -9,7 +9,7 @@ use Archetype\Schema\SimpleSchema\SimpleSchema;
 class User extends BaseGenerator
 {
     public function qualifies()
-    { 
+    {
         return $this->schema->entities->where('name', 'User')->isNotEmpty();
     }
 

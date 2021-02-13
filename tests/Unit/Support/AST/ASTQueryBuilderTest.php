@@ -3,7 +3,7 @@
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Support\QueryBuilder;
 
-class ASTQueryBuilderTest extends Archetype\Tests\FileTestCase
+class ASTQueryBuilderTest extends Archetype\Tests\TestCase
 {
     /** @test
     */
@@ -31,7 +31,7 @@ class ASTQueryBuilderTest extends Archetype\Tests\FileTestCase
             ASTQueryBuilder::class,
             $result
         );
-    }    
+    }
     
     /** @test
     */
@@ -49,7 +49,7 @@ class ASTQueryBuilderTest extends Archetype\Tests\FileTestCase
             ->args
             ->value
             ->value
-            ->get() // exit ASTQueryBuilder, get a Collection   
+            ->get() // exit ASTQueryBuilder, get a Collection
             ->first();
             
         $this->assertEquals($result, 'users');

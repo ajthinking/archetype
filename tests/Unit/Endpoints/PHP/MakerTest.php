@@ -1,6 +1,6 @@
 <?php
 
-class MakerTest extends Archetype\Tests\FileTestCase
+class MakerTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_make_files_with_basic_php_templates()

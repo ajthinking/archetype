@@ -1,6 +1,6 @@
 <?php
 
-class NamespaceTest extends Archetype\Tests\FileTestCase
+class NamespaceTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_retrieve_namespace()
@@ -27,7 +27,7 @@ class NamespaceTest extends Archetype\Tests\FileTestCase
         // on a file without namespace
         $this->assertTrue(
             PHPFile::load('public/index.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
-        );        
+        );
     }
     
     /** @test */
@@ -41,6 +41,6 @@ class NamespaceTest extends Archetype\Tests\FileTestCase
         // on a file without namespace
         $this->assertTrue(
             PHPFile::load('public/index.php')->remove()->namespace()->namespace() === null
-        );        
-    }        
+        );
+    }
 }

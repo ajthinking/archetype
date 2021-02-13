@@ -24,7 +24,7 @@ class Project
 
     protected function makeSchema()
     {
-        $this->models = LaravelFile::models()->get()->map(function($model) {
+        $this->models = LaravelFile::models()->get()->map(function ($model) {
             $model->foreignColumns = $this->findForeignColumns($model);
             return $model;
         });
@@ -38,7 +38,7 @@ class Project
         );
 
         // Assume only one migration
-       $migration = LaravelFile::in('database/migrations')
+        $migration = LaravelFile::in('database/migrations')
             ->where('className', 'like', $tableName)
             ->get()
             ->first();

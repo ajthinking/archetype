@@ -12,7 +12,7 @@ class BelongsToMany extends EndpointProvider
     /**
      * @example Add a belongsToMany relationship method
      * @source $file->belongsToMany('Company')
-     */    
+     */
     public function belongsToMany($targets)
     {
         return $this->add($targets);
@@ -23,7 +23,7 @@ class BelongsToMany extends EndpointProvider
         return $this->file->astQuery()
             ->class()
             ->insertStmts(
-                collect(Arr::wrap($targets))->map(function($target) {
+                collect(Arr::wrap($targets))->map(function ($target) {
                     return Snippet::___BELONGS_TO_MANY_METHOD___([
                         '___BELONGS_TO_MANY_METHOD___' => Str::belongsToManyMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),

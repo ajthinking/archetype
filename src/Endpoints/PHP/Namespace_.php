@@ -13,18 +13,22 @@ class Namespace_ extends EndpointProvider
      *
      * @example Set file namespace
      * @source $file->namespace('App\Models')
-     * 
+     *
      * @example Remove file namespace
      * @source $file->remove()->namespace()
-     * 
+     *
      * @param string $value
      * @return mixed
      */
     public function namespace(string $value = null)
     {
-        if($this->file->directive('remove')) return $this->remove();
+        if ($this->file->directive('remove')) {
+            return $this->remove();
+        }
 
-        if($value === null) return $this->get();
+        if ($value === null) {
+            return $this->get();
+        }
 
         return $this->set($value);
     }
@@ -33,7 +37,7 @@ class Namespace_ extends EndpointProvider
     {
         return $this->file->astQuery()
             ->namespace()
-            ->remember('formatted_namespace', function($node) {
+            ->remember('formatted_namespace', function ($node) {
                 $parts = $node->name->parts ?? null;
                 return $parts ? join('\\', $parts) : null;
             })
@@ -45,9 +49,9 @@ class Namespace_ extends EndpointProvider
     {
         $namespace = $this->file->astQuery()
             ->namespace()
-            ->first();        
+            ->first();
         
-        if($namespace) {
+        if ($namespace) {
             // Modifying existing namespace
             $namespace->name->parts = explode("\\", $newNamespace);
         } else {
@@ -72,8 +76,10 @@ class Namespace_ extends EndpointProvider
         // humans would not expect that
         // instead just unwrap the statements
         // this assumes 0 or 1 namespaces
-        if($namespace) $this->file->ast($namespace->stmts);
+        if ($namespace) {
+            $this->file->ast($namespace->stmts);
+        }
 
         return $this->file->continue();
-    }    
+    }
 }

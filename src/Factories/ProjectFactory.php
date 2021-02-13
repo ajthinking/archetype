@@ -22,5 +22,5 @@ class ProjectFactory
     {
         $class = static::PROJECT_TYPE;
         return new $class;
-    }    
+    }
 }

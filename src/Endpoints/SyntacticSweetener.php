@@ -28,7 +28,7 @@ class SyntacticSweetener extends EndpointProvider
     {
         // Do nothing :)
         return $this->file;
-    }    
+    }
 
     protected function getHandlerMethod($signature, $args)
     {
@@ -39,6 +39,4 @@ class SyntacticSweetener extends EndpointProvider
     {
         return $this->words;
     }
-    
-
 }

@@ -40,9 +40,9 @@ class DocumentationCommand extends Command
         $endpoints = PHPFile::in('packages/ajthinking/archetype/src/Endpoints')->get()
             ->map->getReflection()->filter()->map->name;
 
-        $endpointDocs = $endpoints->map(function($class) {
+        $endpointDocs = $endpoints->map(function ($class) {
             // Manually defined class doc?
-            if(is_file($this->docFilePath($class))) {
+            if (is_file($this->docFilePath($class))) {
                 return file_get_contents(
                     $this->docFilePath($class)
                 );
@@ -74,7 +74,7 @@ class DocumentationCommand extends Command
                     ->replace('\\', '/')
                     ->finish('.md')
             );
-    }    
+    }
 
     public function makeEndpointDoc($class)
     {
@@ -93,28 +93,29 @@ class DocumentationCommand extends Command
 
     protected function getEndpointExamples($class)
     {
-        try{
+        try {
             $methodsToDocument = (new $class)->getEndpoints();
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             $methodsToDocument = [];
         }
 
         $extractor = new \Archetype\Support\DocumentationExtractor(
-            $class, ['example', 'source']
+            $class,
+            ['example', 'source']
         );
 
-        $examples = collect($methodsToDocument)->map(function($method) use($extractor) {            
+        $examples = collect($methodsToDocument)->map(function ($method) use ($extractor) {
 
             try {
                 $annotations = collect($extractor->getFromMethod($method));
-            } catch(ReflectionException $e) {
+            } catch (ReflectionException $e) {
                 $annotations = collect($extractor->getFromMethod('__call'));
             }
 
-            return $annotations->chunk(2)->map(function($pair) {
+            return $annotations->chunk(2)->map(function ($pair) {
                 return '// ' . implode(' ', $pair->first()['params']) . PHP_EOL
                     . implode(' ', $pair->last()['params']);
-                })->implode(PHP_EOL . PHP_EOL);
+            })->implode(PHP_EOL . PHP_EOL);
         })->filter()->implode(PHP_EOL . PHP_EOL);
 
         return $examples ? $examples : '// UNDOCUMENTED CLASS';

@@ -5,3 +5,4 @@ notes
 sketches/
 .vscode/
 vendor/
+.phpunit.result.cache

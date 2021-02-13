@@ -25,7 +25,7 @@ class Snippet
         )->get()->mapInto(static::class);
 
         $hasCustoms = is_dir(base_path(config('archetype.snippets_path')));
-        if($hasCustoms) {
+        if ($hasCustoms) {
             $containers = $containers->concat(PHPFile::in(
                 config('archetype.snippets_path')
             )->get()->mapInto(static::class));
@@ -33,12 +33,14 @@ class Snippet
         
         
         // Find the first matching node
-        $node = $containers->map(function($container) use($name) {
+        $node = $containers->map(function ($container) use ($name) {
             return $container->getNodeByName($name);
         })->filter()->first();
 
         // If not found
-        if(!$node) return null; //throw new InvalidArgumentException("Could not find snippet named $name");
+        if (!$node) {
+            return null; //throw new InvalidArgumentException("Could not find snippet named $name");
+        }
 
         // Replace and return
         return static::replace($node, $replacementPairs);
@@ -52,7 +54,7 @@ class Snippet
     public static function replace($node, $replacementPairs)
     {
         // REPLACE IDENTIFIERS
-        // REPLACE NAMES        
+        // REPLACE NAMES
         // REPLACE COMMENTS
 
         $text = json_encode($node);
@@ -70,7 +72,7 @@ class Snippet
         // Remove attributes that messed with pretty printing
         $node = FormattingRemover::on($node);
 
-        return $node;        
+        return $node;
     }
 
 
@@ -88,7 +90,7 @@ class Snippet
         return collect((new NodeFinder)->findInstanceOf(
             $this->file->ast(),
             ClassMethod::class
-        ))->filter(function($node) use($requestedName) {
+        ))->filter(function ($node) use ($requestedName) {
             return $node->name->name == $requestedName;
         })->first();
     }

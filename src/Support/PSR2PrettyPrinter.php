@@ -8,7 +8,8 @@ use PhpParser\PrettyPrinter\Standard as StandardPrettyPrinter;
 use PhpParser\Node\Stmt\Nop;
 use PhpParser\Node\Expr\Array_;
 
-class PSR2PrettyPrinter extends StandardPrettyPrinter {
+class PSR2PrettyPrinter extends StandardPrettyPrinter
+{
 
     public function __construct($options = [])
     {
@@ -18,12 +19,14 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
     }
 
     // Fix empty line before class definition
-    protected function pStmt_Class(Class_ $node) {
+    protected function pStmt_Class(Class_ $node)
+    {
         return PHP_EOL . $this->pClassCommon($node, ' ' . $node->name); // $this->pStmts($node->stmts)
     }
 
     // Fix empty line before class definition
-    protected function pStmt_ClassMethod(ClassMethod $node) {
+    protected function pStmt_ClassMethod(ClassMethod $node)
+    {
         $comments = $node->getComments();
         
 
@@ -38,9 +41,10 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
              . (null !== $node->stmts
                 ? $this->nl . '{' . $this->pStmts($node->stmts) . $this->nl . '}'
                 : ';');
-    }    
+    }
 
-    protected function pExpr_Array(Array_ $node) {
+    protected function pExpr_Array(Array_ $node)
+    {
         // Fix proper multiline here
         return parent::pExpr_array($node);
     }
@@ -50,14 +54,15 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
      *
      * @param [type] $nodes
      * @return void
-     */    
-    protected function pClassCommon(Class_ $node, $afterClassToken) {
+     */
+    protected function pClassCommon(Class_ $node, $afterClassToken)
+    {
         return $this->pModifiers($node->flags)
         . 'class' . $afterClassToken
         . (null !== $node->extends ? ' extends ' . $this->p($node->extends) : '')
         . (!empty($node->implements) ? ' implements ' . $this->pCommaSeparated($node->implements) : '')
         . $this->nl . '{' . $this->pSeparatedStmts($node->stmts) . $this->nl . '}';
-    }    
+    }
 
     protected function implementsSeparated($nodes)
     {
@@ -69,13 +74,14 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
     }
 
     /**
-     * Add linebreaks between stmts 
+     * Add linebreaks between stmts
      *
      * @param array $nodes
      * @param boolean $indent
      * @return string
      */
-    protected function pSeparatedStmts(array $nodes, bool $indent = true) : string {
+    protected function pSeparatedStmts(array $nodes, bool $indent = true) : string
+    {
 
         if ($indent) {
             $this->indent();
@@ -83,7 +89,7 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
 
         $result = '';
 
-        foreach ($nodes as $index=>$node) {
+        foreach ($nodes as $index => $node) {
             $comments = $node->getComments();
             if ($comments) {
                 $result .= $this->nl . $this->pComments($comments);
@@ -94,8 +100,8 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
 
             $result .= $this->nl . $this->p($node);
 
-            if($index < count($nodes) - 1) {
-                $result .= $this->nl;    
+            if ($index < count($nodes) - 1) {
+                $result .= $this->nl;
             }
         }
 
@@ -106,7 +112,8 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
         return $result;
     }
     
-    protected function pAttrGroups(array $nodes, bool $inline = false): string {
+    protected function pAttrGroups(array $nodes, bool $inline = false): string
+    {
         $result = '';
         $sep = $inline ? ' ' : $this->nl;
         foreach ($nodes as $node) {
@@ -116,7 +123,8 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
         return $result;
     }
     
-    protected function pMaybeMultiline(array $nodes, bool $trailingComma = false) {
+    protected function pMaybeMultiline(array $nodes, bool $trailingComma = false)
+    {
         if (!$this->hasNodeWithComments($nodes)) {
             return $this->pCommaSeparated($nodes);
         } else {
@@ -128,7 +136,8 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
      * @param Node[] $nodes
      * @return bool
      */
-    protected function hasNodeWithComments(array $nodes) {
+    protected function hasNodeWithComments(array $nodes)
+    {
         foreach ($nodes as $node) {
             if ($node && $node->getComments()) {
                 return true;
@@ -144,7 +153,8 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter {
      *
      * @return string Reformatted text of comments
      */
-    protected function pComments(array $comments) : string {
+    protected function pComments(array $comments) : string
+    {
         return $this->nl . parent::pComments($comments);
-    }    
+    }
 }

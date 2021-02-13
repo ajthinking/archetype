@@ -1,6 +1,6 @@
 <?php
 
-class RelationshipsTest extends Archetype\Tests\FileTestCase
+class RelationshipsTest extends Archetype\Tests\TestCase
 {
     /** @test */
     public function it_can_insert_belongs_to_methods()
@@ -36,7 +36,7 @@ class RelationshipsTest extends Archetype\Tests\FileTestCase
             'visits',
             $file->methodNames()
         );
-    }     
+    }
     
     /** @test */
     public function it_can_insert_has_many_methods()
@@ -78,5 +78,5 @@ class RelationshipsTest extends Archetype\Tests\FileTestCase
             2,
             $file->methodNames()
         );
-    }    
+    }
 }

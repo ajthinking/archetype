@@ -42,7 +42,7 @@ class RelationshipsDemo extends Command
         // read our application into a Project class
         $project = new Project();
 
-        $project->missingRelationshipMethods()->each(function($suggestion) {
+        $project->missingRelationshipMethods()->each(function ($suggestion) {
             if ($this->confirm("Do you want to add User HasMany Cars?")) {
                 $this->info("Cool!");
             }

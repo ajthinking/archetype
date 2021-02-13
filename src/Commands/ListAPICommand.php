@@ -45,8 +45,8 @@ class ListAPICommand extends Command
 
     protected function showGrouped()
     {
-        $formattedAPI = $this->api()->map(function($endpoints, $provider) {
-            return collect($endpoints)->map(function($endpoint) use ($endpoints, $provider) {
+        $formattedAPI = $this->api()->map(function ($endpoints, $provider) {
+            return collect($endpoints)->map(function ($endpoint) use ($endpoints, $provider) {
                 return [
                     $endpoint,
                     'N/A',
@@ -55,7 +55,7 @@ class ListAPICommand extends Command
             })->toArray();
         });
 
-        $formattedAPI->each(function($endpoints, $provider) {
+        $formattedAPI->each(function ($endpoints, $provider) {
             $this->info(PHP_EOL . $provider);
             $this->table(
                 ['method', 'parameters', 'description'],
@@ -66,14 +66,14 @@ class ListAPICommand extends Command
 
     protected function showAtoZ()
     {
-        Collection::macro('flattenOneLevel', function() {
-            return $this->reduce(function($flattened, $item) {
+        Collection::macro('flattenOneLevel', function () {
+            return $this->reduce(function ($flattened, $item) {
                 return $flattened->concat($item);
             }, collect());
         });
 
-        $formattedAPI = $this->api()->map(function($endpoints, $provider) {
-            return collect($endpoints)->map(function($endpoint) use ($endpoints, $provider) {
+        $formattedAPI = $this->api()->map(function ($endpoints, $provider) {
+            return collect($endpoints)->map(function ($endpoint) use ($endpoints, $provider) {
                 return [
                     $endpoint,
                     Str::replaceFirst('Archetype\\Endpoints\\', '', $provider),
@@ -92,7 +92,7 @@ class ListAPICommand extends Command
     protected function api()
     {
         return (new \Archetype\LaravelFile)
-            ->endpointProviders()->filter(function($provider) {
+            ->endpointProviders()->filter(function ($provider) {
                 return ! $this->option('provider') || class_basename($provider) == $this->option('provider');
             })->mapWithKeys(function ($provider, $key) {
                 return [
@@ -120,6 +120,6 @@ class ListAPICommand extends Command
                     ->toArray(),
                 'docblock' => $method->getDocComment()
             ];
-        });    
+        });
     }
 }

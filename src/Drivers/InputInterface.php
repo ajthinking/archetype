@@ -2,7 +2,7 @@
 
 namespace Archetype\Drivers;
 
-Interface InputInterface
+interface InputInterface
 {
     public function load(string $path = null);
 }
