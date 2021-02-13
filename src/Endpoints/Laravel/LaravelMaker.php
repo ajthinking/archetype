@@ -82,6 +82,7 @@ class LaravelMaker extends Maker
     protected function stub($name)
     {
         $dir = collect([
+            'stubs',
             'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs',
             'vendor/laravel/framework/src/Illuminate/Routing/Console/stubs',
             'vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs',
