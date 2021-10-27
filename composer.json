@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "doctrine/dbal": "^2.9 || ^2.10 || ^3.0",
+        "doctrine/dbal": "^2.9 || ^3.0",
         "nikic/php-parser": "^4.11"
     },
     "require-dev": {
