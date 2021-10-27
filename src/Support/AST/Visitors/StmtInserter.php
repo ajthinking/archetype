@@ -87,8 +87,8 @@ class StmtInserter extends NodeVisitorAbstract
 
         collect($stmts)->first(function ($stmt, $index) {
             $candidatePriority = $this->priority($stmt);
-            $newNodePritority = $this->priority($this->newNode);
-            if ($candidatePriority >= $newNodePritority) {
+            $newNodePriority = $this->priority($this->newNode);
+            if ($candidatePriority >= $newNodePriority) {
                 $this->position = $index;
                 return true;
             }

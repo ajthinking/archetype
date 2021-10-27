@@ -22,7 +22,7 @@ class User extends BaseGenerator
 
     protected function setHidden()
     {
-        // Get hidden attribues
+        // Get hidden attributes
         $hiddens = $this->userEntity()
             ->attributes->filter->hasDirective('hidden')
             ->map->name->toArray();

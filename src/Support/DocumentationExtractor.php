@@ -118,7 +118,7 @@ class DocumentationExtractor
     
     /**
      * Parse a doc comment string
-     * with annotions tag previously specified
+     * with annotations tag previously specified
      *
      * @param  string $string
      * @return array
