@@ -1,7 +1,7 @@
 {
     "name": "ajthinking/archetype",
     "type": "package",
-    "description": "Programatically edit PHP and Laravel files.",
+    "description": "Programmatically edit PHP and Laravel files.",
     "keywords": [
         "php",
         "laravel",
