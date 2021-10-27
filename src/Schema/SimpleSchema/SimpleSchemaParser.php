@@ -41,15 +41,15 @@ class SimpleSchemaParser
             ->replaceMatches('/\r\n/', "\n")
             // remove comments
             ->replaceMatches('/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/', "")
-            // trim preciding line space
+            // trim preceding line space
             ->replaceMatches('/^[ \r]+/m', "")
             // trim trailing line space
             ->replaceMatches('/[ \t]+$/m', "")
-            // trim preciding newlines
+            // trim preceding newlines
             ->replaceMatches('/^\n+/', "")
             // trim trailing newlines
             ->replaceMatches('/\n+$/', "")
-            // remove exessive newlines
+            // remove excessive newlines
             ->replaceMatches('/\n\s+\n/', PHP_EOL . PHP_EOL);
     }
 

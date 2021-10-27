@@ -72,7 +72,7 @@ class ClassConstant extends EndpointProvider
 
     protected function add($key, $value)
     {
-        // no value but has value from intermidiate add directive?
+        // no value but has value from intermediate add directive?
         if ($value === Types::NO_VALUE && $this->file->directive('addValue')) {
             $value = $this->file->directive('addValue');
         }

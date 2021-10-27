@@ -20,7 +20,7 @@ class Model extends BaseGenerator
 
     protected function setHidden()
     {
-        // Get hidden attribues
+        // Get hidden attributes
         $hiddens = $this->userEntity()
             ->attributes->filter->hasDirective('hidden')
             ->map->name->toArray();
@@ -34,7 +34,7 @@ class Model extends BaseGenerator
         return $this->schema->entities->where('name', 'User')->first();
     }
 
-    protected function findOrCreateModelfiles()
+    protected function findOrCreateModelFiles()
     {
         return LaravelFile::models()->exceptUser()->where(
             'className',

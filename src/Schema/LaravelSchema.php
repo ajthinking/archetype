@@ -31,7 +31,7 @@ class LaravelSchema
     {
         // Get schema
         $schema = collect($this->strategies)->reduce(function ($schema, $strategy) {
-            // A strategy has already succeded? Return the schema!
+            // A strategy has already succeeded? Return the schema!
             if ($schema) {
                 return $schema;
             }

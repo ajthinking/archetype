@@ -64,7 +64,7 @@ class PHPFileStorage
         $root = $this->roots[$name]['root'];
         $unique_id = Str::slug($root);
 
-        // Laravel config is imutable, so use the actual root as the key
+        // Laravel config is immutable, so use the actual root as the key
         Config::set("filesystems.disks.roots.$unique_id", [
             'driver' => 'local',
             'root' => $root,
