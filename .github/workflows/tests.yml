@@ -1,6 +1,6 @@
 name: tests
 
-on: [push, pull_request, workflow_dispatch]
+on: [push, pull_request]
 
 env:
   COMPOSER_FLAGS: "--ansi --no-interaction --no-progress --no-suggest --prefer-dist -o -n"
