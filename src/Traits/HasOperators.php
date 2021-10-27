@@ -48,7 +48,7 @@ trait HasOperators
 
     protected function notInOperator($candidate, $haystack)
     {
-        return !$this->inOperator($candate, $haystack);
+        return !$this->inOperator($candidate, $haystack);
     }
 
     protected function like($candidate, $like)
