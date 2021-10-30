@@ -91,7 +91,7 @@ class PHPFileQueryBuilderTest extends Archetype\Tests\TestCase
         );
 
         $this->assertCount(
-            4,
+            3,
             LaravelFile::in('app')->where('use', 'count', 4)->get()
         );
     }
