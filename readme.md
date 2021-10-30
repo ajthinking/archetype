@@ -27,7 +27,6 @@
   * [Configuration](#configuration)
   * [Contributing](#contributing)
     + [Development installation](#development-installation)
-    + [Roadmap](#roadmap)
   * [License](#license)
   * [Acknowledgements](#acknowledgements)
   * [Like this package?](#like-this-package-)
@@ -310,12 +309,6 @@ composer install
 ./vendor/bin/phpunit tests
 ```
 
-### Roadmap
-PRs and issues are welcome. Have a look at the [Trello board](https://trello.com/b/1M2VRnoQ/archetype) for planned features.
-
-<a href="https://trello.com/b/1M2VRnoQ/archetype">
-    <img src="https://user-images.githubusercontent.com/3457668/83963060-332dda00-a8a3-11ea-844d-5d4d4d6987ff.png" width="600px">
-</a>
 
 ## License
 MIT
