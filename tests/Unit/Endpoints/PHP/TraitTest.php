@@ -7,7 +7,7 @@ class TraitTest extends Archetype\Tests\TestCase
     {
         $this->assertEquals(
             PHPFile::load('app/Models/User.php')->trait(),
-            ['HasFactory', 'Notifiable']
+            ['HasApiTokens', 'HasFactory', 'Notifiable']
         );
     }
 }
