@@ -4,6 +4,7 @@
 
 ![tests](https://github.com/ajthinking/archetype/workflows/tests/badge.svg)
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
+[![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/archetype.svg)](https://packagist.org/packages/ajthinking/archetype)
 
 * Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
