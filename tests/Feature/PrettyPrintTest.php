@@ -1,5 +1,8 @@
 <?php
 
+use Archetype\Facades\LaravelFile;
+use Archetype\Facades\PHPFile;
+
 class PrettyPrintTest extends Archetype\Tests\TestCase
 {	
     public function test_arrays_are_beutiful_when_loaded_and_rendered()
@@ -10,8 +13,6 @@ class PrettyPrintTest extends Archetype\Tests\TestCase
 
     public function test_arrays_are_beutiful_when_loaded_modified_and_rendered()
     {
-		$this->markTestIncomplete();
-
 		$output = LaravelFile::user()
 			->add('also')->to()->property('fillable')
 			->render();
@@ -19,20 +20,22 @@ class PrettyPrintTest extends Archetype\Tests\TestCase
         $this->assertMultilineArray('fillable', $output);
     }	
 
-    public function test_arrays_are_beutiful_when_created_and_rendered()
+    public function test_arrays_are_beautiful_when_created_and_rendered()
     {
-		$this->markTestIncomplete();
-
 		$output = PHPFile::class('FillableClass')
 			->add()->property('fillable', ['first', 'second', 'third'])
 			->render();
-        
-		$this->assertMultilineArray('ints', $output);
+
+		$this->assertMultilineArray('fillable', $output);
     }
 	
     public function test_arrays_are_beutiful_when_empty()
     {
-		$this->markTestIncomplete();
+		$output = PHPFile::class('FillableClass')
+			->property('fillable', [])
+			->render();
+		
+		$this->assertSingleLineEmptyArray('fillable', $output);
     }	
 
     public function test_arrays_have_trailing_comma_after_last_item()
