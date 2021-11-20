@@ -73,4 +73,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 			$commas + 1
 		);
 	}
+
+	public function assertSingleLineEmptyArray($name, $output) {
+		$this->assertMatchesRegularExpression("/$name \= (\[\];]*)/s", $output);
+	}	
 }

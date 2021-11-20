@@ -28,8 +28,6 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
     protected function pStmt_ClassMethod(ClassMethod $node)
     {
         $comments = $node->getComments();
-        
-
 
         $ln = $comments ? '' : $this->nl;
 
@@ -45,8 +43,9 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
 
     protected function pExpr_Array(Array_ $node)
     {
-        // Fix proper multiline here
-        return parent::pExpr_array($node);
+		$stmts = $this->pCommaSeparatedMultiline($node->items, true);
+		$lineBreaked = $stmts ? $stmts . $this->nl : $stmts;
+		return "[{$lineBreaked}]";
     }
 
     /**
@@ -121,29 +120,6 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
         }
 
         return $result;
-    }
-    
-    protected function pMaybeMultiline(array $nodes, bool $trailingComma = false)
-    {
-        if (!$this->hasNodeWithComments($nodes)) {
-            return $this->pCommaSeparated($nodes);
-        } else {
-            return $this->pCommaSeparatedMultiline($nodes, $trailingComma) . $this->nl;
-        }
-    }
-    
-    /**
-     * @param Node[] $nodes
-     * @return bool
-     */
-    protected function hasNodeWithComments(array $nodes)
-    {
-        foreach ($nodes as $node) {
-            if ($node && $node->getComments()) {
-                return true;
-            }
-        }
-        return false;
     }
     
     /**
