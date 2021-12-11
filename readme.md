@@ -287,7 +287,7 @@ If a file can't be parsed, a `FileParseError` will be thrown. This can happen if
 To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
 
 ### Limitations / Missing features
-In general this package assumes code to be parsed follows guidellines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
+In general this package assumes code to be parsed follows guidelines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
 
 * Requires UNIX based file system - no windows support <img src="https://img.shields.io/badge/help wanted-blue">
 
