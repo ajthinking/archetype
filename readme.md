@@ -8,8 +8,6 @@
 
 * Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
-* Extract Application entity schemas
-* Add `Snippet`s with an inline PHP Template engine
 
 
 <!--<img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">-->
@@ -21,7 +19,7 @@
     + [LaravelFile read/write API](#-laravelfile--read-write-api)
     + [File QueryBuilder](#file-querybuilder)
     + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
-    + [Template engine](#template-engine)
+    <!--+ [Template engine](#template-engine)-->
     + [Errors](#errors---)
     + [Limitations / Missing features](#limitations---missing-features)
   * [Configuration](#configuration)
@@ -157,6 +155,7 @@ $file->astQuery()
 
 > [More ASTQueryBuilder examples here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
 
+<!--
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
@@ -210,6 +209,8 @@ PHPFile::load('app/Models/User.php')
 ````
 
 > :information_source: The `Snippet` class currently only supports templates on *class methods*.
+
+-->
 
 ### A note on Facades
 You may use either of the following
