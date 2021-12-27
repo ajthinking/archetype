@@ -45,7 +45,6 @@ use PHPFile;
 // Create new files
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
-    ->add()->trait('Acme\Traits\Shippable')
     ->public()->property('stock', -1)
     ->save();
 ```
@@ -66,7 +65,6 @@ use LaravelFile; // extends PHPFile
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->implements('PlayerInterface')
-    ->add()->trait('Dumpable')
     ->table('gdpr_users')
     ->add()->fillable('nickname')
     ->remove()->hidden()

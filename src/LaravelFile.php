@@ -18,7 +18,7 @@ class LaravelFile extends PHPFile
         Endpoints\Laravel\BelongsToMany::class,
     ];
 
-    protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
+    protected string $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
 
     public function endpointProviders()
     {

@@ -1,5 +1,7 @@
 <?php
 
+use Archetype\Facades\LaravelFile;
+
 class ReadmeTest extends Archetype\Tests\TestCase
 {
     /**
@@ -12,7 +14,6 @@ class ReadmeTest extends Archetype\Tests\TestCase
         $file = LaravelFile::user()
             ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
             ->add()->implements('PlayerInterface')
-            ->add()->trait('Dumpable')
             ->table('gdpr_users')
             ->add()->fillable('nickname')
             ->remove()->hidden()
