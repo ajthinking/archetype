@@ -1,106 +1,94 @@
 <?php
 
-class Use_Test extends Archetype\Tests\TestCase
-{
-    /** @test */
-    public function it_can_retrieve_use_statements()
-    {
-        // A file with use statements
-        $file = PHPFile::load('app/Models/User.php');
-        $useStatements = $file->use();
-        $expectedUseStatements = collect([
-            "Illuminate\Notifications\Notifiable",
-            "Illuminate\Contracts\Auth\MustVerifyEmail",
-            "Illuminate\Foundation\Auth\User as Authenticatable",
-        ]);
+use Archetype\Facades\PHPFile;
 
-        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-            $this->assertTrue(
-                collect($useStatements)->contains($expectedUseStatement)
-            );
-        });
+it('can_retrieve_use_statements', function () {
+	// A file with use statements
+	$file = PHPFile::load('app/Models/User.php');
+	$useStatements = $file->use();
+	$expectedUseStatements = collect([
+		"Illuminate\Notifications\Notifiable",
+		"Illuminate\Contracts\Auth\MustVerifyEmail",
+		"Illuminate\Foundation\Auth\User as Authenticatable",
+	]);
 
-        // A file without use statements
-        $file = PHPFile::load('public/index.php');
-        $useStatements = $file->use();
+	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
+		$this->assertTrue(
+			collect($useStatements)->contains($expectedUseStatement)
+		);
+	});
 
-        $this->assertTrue(
-            collect($useStatements)->count() === 2
-        );
-    }
-    
-    /** @test */
-    public function it_can_add_use_statements_in_a_namespace()
-    {
-        // on a file with use statements
-        $file = PHPFile::load('app/Models/User.php');
+	// A file without use statements
+	$file = PHPFile::load('public/index.php');
+	$useStatements = $file->use();
 
-        $useStatements = $file->add()->use(['Add\This'])->use();
+	$this->assertTrue(
+		collect($useStatements)->count() === 2
+	);
+});
 
-        $expectedUseStatements = collect([
-            "Illuminate\Notifications\Notifiable",
-            "Illuminate\Contracts\Auth\MustVerifyEmail",
-            "Illuminate\Foundation\Auth\User as Authenticatable",
-            "Add\This",
-        ]);
+it('can_add_use_statements_in_a_namespace', function () {
+	// on a file with use statements
+	$file = PHPFile::load('app/Models/User.php');
 
-        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-            $this->assertTrue(
-                collect($useStatements)->contains($expectedUseStatement)
-            );
-        });
-    }
+	$useStatements = $file->add()->use(['Add\This'])->use();
 
-    /** @test */
-    public function it_can_add_use_statements_when_not_in_a_namespace()
-    {
-                
-        $file = PHPFile::load('public/index.php');
-        
-        $useStatements = $file->add()->use(['Add\This'])->use();
-        
-        $expectedUseStatements = collect([
-            "Add\This",
-        ]);
+	$expectedUseStatements = collect([
+		"Illuminate\Notifications\Notifiable",
+		"Illuminate\Contracts\Auth\MustVerifyEmail",
+		"Illuminate\Foundation\Auth\User as Authenticatable",
+		"Add\This",
+	]);
 
-        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-            $this->assertTrue(
-                collect($useStatements)->contains($expectedUseStatement)
-            );
-        });
-    }
+	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
+		$this->assertTrue(
+			collect($useStatements)->contains($expectedUseStatement)
+		);
+	});
+});
 
-    /** @test */
-    public function it_can_add_use_statements_with_alias()
-    {
-        $file = PHPFile::load('public/index.php');
-        $useStatements = $file->add()->use(['Add\This as Wow'])->use();
-        $expectedUseStatements = collect([
-            "Add\This as Wow",
-        ]);
-        
-        $expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-            $this->assertTrue(
-                collect($useStatements)->contains($expectedUseStatement)
-            );
-        });
-    }
+it('can_add_use_statements_when_not_in_a_namespace', function () {
+	$file = PHPFile::load('public/index.php');
+	
+	$useStatements = $file->add()->use(['Add\This'])->use();
+	
+	$expectedUseStatements = collect([
+		"Add\This",
+	]);
 
-    /** @test */
-    public function it_can_overwrite_use_statements()
-    {
-        $file = PHPFile::load('app/Models/User.php');
+	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
+		$this->assertTrue(
+			collect($useStatements)->contains($expectedUseStatement)
+		);
+	});
+});
 
-        $useStatements = $file->use(['Only\This'])->use();
-        $expectedUseStatements = collect([
-            "Only\This",
-        ]);
+it('can_add_use_statements_with_alias', function () {
+	$file = PHPFile::load('public/index.php');
+	$useStatements = $file->add()->use(['Add\This as Wow'])->use();
+	$expectedUseStatements = collect([
+		"Add\This as Wow",
+	]);
+	
+	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
+		$this->assertTrue(
+			collect($useStatements)->contains($expectedUseStatement)
+		);
+	});
+});
 
-        $this->assertCount(1, collect($useStatements));
+it('can_overwrite_use_statements', function () {
+	$file = PHPFile::load('app/Models/User.php');
 
-        $this->assertEquals(
-            $useStatements->first(),
-            'Only\This'
-        );
-    }
-}
+	$useStatements = $file->use(['Only\This'])->use();
+	$expectedUseStatements = collect([
+		"Only\This",
+	]);
+
+	$this->assertCount(1, collect($useStatements));
+
+	$this->assertEquals(
+		$useStatements->first(),
+		'Only\This'
+	);
+});

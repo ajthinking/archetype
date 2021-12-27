@@ -1,13 +1,10 @@
 <?php
 
-class TraitTest extends Archetype\Tests\TestCase
-{
-    /** @test */
-    public function it_can_test()
-    {
-        $this->assertEquals(
-            PHPFile::load('app/Models/User.php')->trait(),
-            ['HasApiTokens', 'HasFactory', 'Notifiable']
-        );
-    }
-}
+use Archetype\Facades\PHPFile;
+
+it('can_get_trait_names', function() {
+	$this->assertEquals(
+		PHPFile::load('app/Models/User.php')->trait(), // Seems strange
+		['HasApiTokens', 'HasFactory', 'Notifiable']
+	);
+});
