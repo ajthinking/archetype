@@ -26,9 +26,8 @@ class ClassConstant extends EndpointProvider
      */
     public function classConstant($key, $value = Types::NO_VALUE)
     {
-        // TODO
-        // // remove?
-        // if($this->file->directive('remove')) return $this->remove($key);
+        // remove?
+        if($this->file->directive('remove')) return $this->remove($key);
 
         // clear?
         if ($this->file->directive('clear')) {
@@ -122,10 +121,22 @@ class ClassConstant extends EndpointProvider
         );
     }
 
-    // protected function remove($key)
-    // {
-    //     // TODO
-    // }
+    protected function remove($key)
+    {
+		return $this->file->astQuery()
+            ->class()
+            ->classConst()
+            ->where(function ($query) use ($key) {
+                return $query->const()
+					->where('name->name', $key)
+                    ->get()
+					->isNotEmpty();
+            })
+            ->remove()
+            ->commit()
+            ->end()
+            ->continue();			
+    }
 
     protected function clear($key)
     {

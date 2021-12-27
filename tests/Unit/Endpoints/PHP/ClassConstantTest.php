@@ -34,4 +34,15 @@ class ClassConstantTest extends Archetype\Tests\TestCase
             'it will work'
         );
     }
+
+    /** @test */
+    public function it_can_remove_an_existing_class_constant()
+    {
+		$this->assertNull(
+			PHPFile::make()->class('Dummy')
+				->classConstant('MSG', 'hi')
+				->remove()->classConstant('MSG')
+				->classConstant('MSG')
+		);		
+    }	
 }
