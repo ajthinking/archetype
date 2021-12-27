@@ -101,4 +101,4 @@ jobs:
           command: composer require "laravel/framework:${{ matrix.laravel-version }}.*" --no-update
 
       - name: Run tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/pest --verbose
