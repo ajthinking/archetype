@@ -24,8 +24,6 @@ class TraitUse extends EndpointProvider
         if ($value === null) {
             return $this->get();
         }
-
-        return $this->set($value);
     }
 
     protected function get()
@@ -39,15 +37,5 @@ class TraitUse extends EndpointProvider
             })
             ->recall('formatted_traits')
             ->first();
-    }
-
-    protected function add($value)
-    {
-        return $this->file->continue();
-    }
-
-    protected function set($value)
-    {
-        return $this->file->continue();
     }
 }

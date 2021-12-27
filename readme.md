@@ -8,8 +8,6 @@
 
 * Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
-* Extract Application entity schemas
-* Add `Snippet`s with an inline PHP Template engine
 
 
 <!--<img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">-->
@@ -21,8 +19,7 @@
     + [LaravelFile read/write API](#-laravelfile--read-write-api)
     + [File QueryBuilder](#file-querybuilder)
     + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
-    + [Laravel schema](#laravel-schema)
-    + [Template engine](#template-engine)
+    <!--+ [Template engine](#template-engine)-->
     + [Errors](#errors---)
     + [Limitations / Missing features](#limitations---missing-features)
   * [Configuration](#configuration)
@@ -36,7 +33,7 @@
 ```
 composer require ajthinking/archetype
 ```
-> Requires UNIX filesystem, PHP >= 7 and Laravel >= 7
+> Requires UNIX filesystem, PHP >= 7.4 and Laravel >= 7
 
 ## Usage
 
@@ -48,7 +45,6 @@ use PHPFile;
 // Create new files
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
-    ->add()->trait('Acme\Traits\Shippable')
     ->public()->property('stock', -1)
     ->save();
 ```
@@ -69,7 +65,6 @@ use LaravelFile; // extends PHPFile
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->implements('PlayerInterface')
-    ->add()->trait('Dumpable')
     ->table('gdpr_users')
     ->add()->fillable('nickname')
     ->remove()->hidden()
@@ -158,61 +153,7 @@ $file->astQuery()
 
 > [More ASTQueryBuilder examples here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
 
-### Laravel schema 
-Use the `LaravelSchema` class to get an app schema.
-
-```php
-use Archetype\Schema\LaravelSchema;
-
-LaravelSchema::get();
-```
-
-```json
-{
-    "entities": [
-        {
-            "model": "App\\User",
-            "table": "users",
-            "columns": {
-                "id": {
-                    "name": "id",
-                    "type": {},
-                    "default": null,
-                    "notnull": true,
-                    "length": null,
-                    "precision": 10,
-                    "scale": 0,
-                    "fixed": false,
-                    "unsigned": false,
-                    "autoincrement": true,
-                    "columnDefinition": null,
-                    "comment": null
-                },
-                "name": {
-                    "name": "name",
-                    "type": {},
-                    "default": null,
-                    "notnull": true,
-                    "length": null,
-                    "precision": 10,
-                    "scale": 0,
-                    "fixed": false,
-                    "unsigned": false,
-                    "autoincrement": false,
-                    "columnDefinition": null,
-                    "comment": null,
-                    "collation": "BINARY"
-                }
-            }
-        }
-    ],
-    "strategy_used": "Archetype\\Schema\\Strategies\\FromDatabase",
-    "log": []
-}
-```
-
-> Schema feature is under construction ⚠
-
+<!--
 ### Template engine
 Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
 
@@ -267,6 +208,8 @@ PHPFile::load('app/Models/User.php')
 
 > :information_source: The `Snippet` class currently only supports templates on *class methods*.
 
+-->
+
 ### A note on Facades
 You may use either of the following
 ```php
@@ -318,7 +261,6 @@ MIT
 ## Acknowledgements
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
 * PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
-* Schema extractor based on [mpociot/laravel-test-factory-helper](https://github.com/mpociot/laravel-test-factory-helper)
 
 
 ## Like this package?

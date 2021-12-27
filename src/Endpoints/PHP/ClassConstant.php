@@ -2,10 +2,8 @@
 
 namespace Archetype\Endpoints\PHP;
 
-use App\Helpers\Dev;
 use Archetype\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
-use PhpParser\BuilderFactory;
 use Archetype\Support\Types;
 use Illuminate\Support\Arr;
 use Exception;
@@ -53,7 +51,6 @@ class ClassConstant extends EndpointProvider
         }
 
         // set!
-
         return $this->set($key, $value);
     }
 

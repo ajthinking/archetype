@@ -4,16 +4,15 @@ namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
 use Archetype\Support\URI;
-use Archetype\PHPFile;
 use Illuminate\Support\Str;
 
 class Maker extends EndpointProvider
 {
-    protected $filename;
-    protected $extension = '.php';
-    protected $relativeDir = '';
+    protected string $filename;
+    protected string $extension = '.php';
+    protected string $relativeDir = '';
 
-    public function file($name, $options = [])
+    public function file(string $name)
     {
         $this->setupNames($name);
 
@@ -21,7 +20,7 @@ class Maker extends EndpointProvider
             ->outputDriver($this->outputDriver);
     }
 
-    public function class($name, $options = [])
+    public function class($name)
     {
         $this->setupNames($name, 'class_root');
 

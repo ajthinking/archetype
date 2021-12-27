@@ -20,13 +20,13 @@ class PHPFile
 
     protected $output;
 
-    protected $contents;
+    protected string $contents;
 
-    protected $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
+    protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
 
     protected $ast;
 
-    protected $initialModificationHash;
+    protected string $initialModificationHash;
 
     protected $originalAst;
 

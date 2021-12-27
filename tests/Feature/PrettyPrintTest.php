@@ -36,10 +36,5 @@ class PrettyPrintTest extends Archetype\Tests\TestCase
 			->render();
 		
 		$this->assertSingleLineEmptyArray('fillable', $output);
-    }	
-
-    public function test_arrays_have_trailing_comma_after_last_item()
-    {
-		$this->markTestIncomplete();
     }		
 }
