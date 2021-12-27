@@ -2,20 +2,15 @@
 
 use Archetype\LaravelFile;
 
-class DuplicateEndpointTest extends Archetype\Tests\TestCase
-{
-    /** @test */
-    public function there_are_no_duplicated_endpoints()
-    {
-        $endpoints = (new LaravelFile)
-            ->endpointProviders()
-            ->map(function ($provider) {
-                return (new $provider())->getEndpoints();
-            })->flatten();
+test('no_duplicated_endpoints', function() {
+	$endpoints = (new LaravelFile)
+		->endpointProviders()
+		->map(function ($provider) {
+			return (new $provider())->getEndpoints();
+		})->flatten();
 
-        $this->assertEquals(
-            $endpoints->count(),
-            $endpoints->unique()->count()
-        );
-    }
-}
+	$this->assertEquals(
+		$endpoints->count(),
+		$endpoints->unique()->count()
+	);
+});

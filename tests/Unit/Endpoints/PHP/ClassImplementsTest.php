@@ -1,43 +1,36 @@
 <?php
 
-class ClassImplementsTest extends Archetype\Tests\TestCase
-{
-    /** @test */
-    public function it_can_retrieve_class_implements()
-    {
-        $file = PHPFile::load('app/Models/User.php');
+use Archetype\Facades\PHPFile;
 
-        $this->assertTrue(
-            $file->implements() === []
-        );
-    }
+it('can_retrieve_class_implements', function() {
+	$file = PHPFile::load('app/Models/User.php');
 
-    /** @test */
-    public function it_can_set_class_implements()
-    {
-        $file = PHPFile::load('app/Models/User.php')->implements([
-        "MyInterface"
-        ]);
+	$this->assertTrue(
+		$file->implements() === []
+	);
+});
 
-        $this->assertTrue(
-            $file->implements() === [
-                "MyInterface"
-            ]
-        );
-    }
+it('can_set_class_implements', function() {
+	$file = PHPFile::load('app/Models/User.php')->implements([
+	"MyInterface"
+	]);
 
-    /** @test */
-    public function it_can_add_class_implements()
-    {
-        $file = PHPFile::load('app/Models/User.php')
-            ->add()->implements(['MyFirstInterface'])
-            ->add()->implements(['MySecondInterface']);
+	$this->assertTrue(
+		$file->implements() === [
+			"MyInterface"
+		]
+	);
+});
 
-        $this->assertTrue(
-            $file->implements() === [
-                'MyFirstInterface',
-                'MySecondInterface'
-            ]
-        );
-    }
-}
+it('can_add_class_implements', function() {
+	$file = PHPFile::load('app/Models/User.php')
+		->add()->implements(['MyFirstInterface'])
+		->add()->implements(['MySecondInterface']);
+
+	$this->assertTrue(
+		$file->implements() === [
+			'MyFirstInterface',
+			'MySecondInterface'
+		]
+	);
+});
