@@ -23,22 +23,10 @@ class PHPFileStorage
 
     public function put($path, $content)
     {
-        $r = $this->getStorageDisk('output')->put(
+        return $this->getStorageDisk('output')->put(
             $this->relative($path, 'output'),
             $content
         );
-
-        // dd(
-        //     //$this->getStorageDisk('output')->getDriver()->pathPrefix,
-        //     $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix(),
-        //     $this->relative($path, 'output'),
-        //     is_file(
-        //         $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix() .
-        //         $this->relative($path, 'output')
-        //     )
-        // );
-
-        return $r;
     }
 
     public function relative($path, $rootName)
