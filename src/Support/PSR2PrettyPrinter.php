@@ -21,7 +21,7 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
     // Fix empty line before class definition
     protected function pStmt_Class(Class_ $node)
     {
-        return PHP_EOL . $this->pClassCommon($node, ' ' . $node->name); // $this->pStmts($node->stmts)
+        return PHP_EOL . $this->pClassCommon($node, ' ' . $node->name);
     }
 
     // Fix empty line before class definition
@@ -81,7 +81,6 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
      */
     protected function pSeparatedStmts(array $nodes, bool $indent = true) : string
     {
-
         if ($indent) {
             $this->indent();
         }
