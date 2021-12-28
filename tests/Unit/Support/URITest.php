@@ -2,7 +2,7 @@
 
 use Archetype\Support\URI;
 
-it('can_enterpret_input_as_path_or_name', function() {
+it('can enterpret input as path or name', function() {
 	$this->assertTrue(URI::make('')->isPath());
 	$this->assertTrue(URI::make('car')->isPath());
 	$this->assertTrue(URI::make('car.php')->isPath());
@@ -16,7 +16,7 @@ it('can_enterpret_input_as_path_or_name', function() {
 	$this->assertTrue(URI::make('\\App\\Car')->isName());
 });
 
-it('can_get_resolve_namespace', function() {
+it('can get resolve namespace', function() {
 	$namespaces = [
 		// from paths
 		'App' => URI::make('app/Cool')->namespace(),

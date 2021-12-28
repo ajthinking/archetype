@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('can_retrieve_class_extends', function() {
+it('can retrieve class extends', function() {
 	$file = PHPFile::load('app/Models/User.php');
 
 	$this->assertTrue(
@@ -10,7 +10,7 @@ it('can_retrieve_class_extends', function() {
 	);
 });
 
-it('can_set_class_extends', function() {
+it('can set class extends', function() {
 	$file = PHPFile::load('app/Models/User.php')->extends("My\BaseClass");
 
 	$this->assertTrue(
@@ -19,7 +19,7 @@ it('can_set_class_extends', function() {
 });
     
 
-it('can_set_class_extends_when_its_empty', function() {
+it('can set class extends when its empty', function() {
 	$file = PHPFile::load('app/Http/Middleware/RedirectIfAuthenticated.php')->extends("My\BaseClass");
 
 	$this->assertTrue(

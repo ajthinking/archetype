@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('can_delegate_method_calls', function () {
+it('can delegate method calls', function () {
 	$file = PHPFile::load('app/Models/User.php');
 
 	// Existing method on $this

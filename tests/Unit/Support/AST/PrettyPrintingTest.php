@@ -30,7 +30,7 @@ class Bird
 }
 CODE;
 
-it('two_line_breaks_separate_methods', function() {
+it('two line breaks separate methods', function() {
 	$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 	$prettyPrinter = new PSR2PrettyPrinter;
 
@@ -49,7 +49,7 @@ it('two_line_breaks_separate_methods', function() {
 	);
 });
 
-it('there_is_not_a_missing_space_between_methods_when_format_preserving_pretty_printing', function() {
+it('there is not a missing space between methods when format preserving pretty printing', function() {
 	$this->markTestIncomplete();
 	
 	$lexer = new Lexer\Emulative([

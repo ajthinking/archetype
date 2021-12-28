@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('can_retrieve_class_implements', function() {
+it('can retrieve class implements', function() {
 	$file = PHPFile::load('app/Models/User.php');
 
 	$this->assertTrue(
@@ -10,7 +10,7 @@ it('can_retrieve_class_implements', function() {
 	);
 });
 
-it('can_set_class_implements', function() {
+it('can set class implements', function() {
 	$file = PHPFile::load('app/Models/User.php')->implements([
 	"MyInterface"
 	]);
@@ -22,7 +22,7 @@ it('can_set_class_implements', function() {
 	);
 });
 
-it('can_add_class_implements', function() {
+it('can add class implements', function() {
 	$file = PHPFile::load('app/Models/User.php')
 		->add()->implements(['MyFirstInterface'])
 		->add()->implements(['MySecondInterface']);

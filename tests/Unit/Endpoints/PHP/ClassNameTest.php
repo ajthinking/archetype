@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('can_retrieve_class_name', function() {
+it('can retrieve class name', function() {
 	$file = PHPFile::load('app/Models/User.php');
 
 	$this->assertTrue(
@@ -10,7 +10,7 @@ it('can_retrieve_class_name', function() {
 	);
 });
     
-it('can_retrieve_full_class_name', function() {
+it('can retrieve full class name', function() {
 	$file = PHPFile::load('app/Models/User.php');
 
 	$this->assertTrue(
@@ -18,7 +18,7 @@ it('can_retrieve_full_class_name', function() {
 	);
 });
 
-it('can_set_class_name', function() {
+it('can set class name', function() {
 	// on a file with a class
 	$this->assertTrue(
 		PHPFile::load('app/Models/User.php')->className("NewName")->className() === "NewName"

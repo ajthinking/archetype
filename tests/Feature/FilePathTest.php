@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-test('a_file_has_an_input_path', function() {
+test('a file has an input path', function() {
 	// relative
 	$file = PHPFile::load('app/Models/User.php');
 	$this->assertTrue(
@@ -17,7 +17,7 @@ test('a_file_has_an_input_path', function() {
 	);
 });
     
-test('a_file_has_a_filename', function() {
+test('a file has a filename', function() {
 	// relative
 	$file = PHPFile::load('app/Models/User.php');
 	$this->assertTrue(
@@ -32,7 +32,7 @@ test('a_file_has_a_filename', function() {
 	);
 });
     
-test('files_created_with_fromString_must_be_explicitly_named', function() {
+test('files created with fromString must be explicitly named', function() {
 	$file = PHPFile::fromString('<?php');
 
 	$this->expectException(TypeError::class);

@@ -2,6 +2,7 @@
 
 namespace Archetype\Tests;
 
+use Archetype\Tests\Support\TestablePHPFileFactory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 
@@ -13,6 +14,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         $this->cleanupDirectories();
         $this->setupLaravelDirectories();
+		$this->registerTestFacades();
     }
 
     protected function tearDown(): void
@@ -28,18 +30,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('archetype.roots.output.root', base_path('.output'));
     }
 
-    protected function getPackageAliases($app)
-    {
-        return [
-          'LaravelFile' => \Archetype\Facades\LaravelFile::class,
-          'PHPFile' => \Archetype\Facades\PHPFile::class,
-        ];
-    }
-
     protected function getPackageProviders($app)
     {
         return [\Archetype\ServiceProvider::class];
     }
+
+	protected function registerTestFacades()
+	{
+        app()->bind('TestablePHPFile', function () {
+            return app()->make(Support\Factories\TestablePHPFileFactory::class);
+        });
+	}
 
     protected function setupLaravelDirectories()
     {

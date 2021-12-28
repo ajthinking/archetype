@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('will_remember_directives_when_chained', function () {
+it('will remember directives when chained', function () {
 	$file = PHPFile::load('app/Models/User.php')->add()->remove();
 
 	$this->assertEquals(
@@ -11,7 +11,7 @@ it('will_remember_directives_when_chained', function () {
 	);
 });
     
-it('will_forget_directives_on_continue', function () {
+it('will forget directives on continue', function () {
 	$file = PHPFile::load('app/Models/User.php')->add()->remove()->continue();
 	$this->assertEmpty(
 		$file->directives()

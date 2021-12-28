@@ -1,11 +1,12 @@
 <?php
 
 use Archetype\Facades\LaravelFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 /**
  * Example from: https://github.com/ajthinking/archetype#laravelfile-readwrite-api
  */
-it('can_edit_files_and_produce_valid_ast', function() {
+it('can edit files and produce valid ast', function() {
 	$file = LaravelFile::user()
 		->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
 		->add()->implements('PlayerInterface')

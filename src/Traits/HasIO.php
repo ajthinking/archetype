@@ -112,7 +112,7 @@ trait HasIO
         }
 
         $ast = $traverser->traverse($this->originalAst);
-        
+
         return $ast;
     }
 
