@@ -1,151 +1,104 @@
 <?php
 
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
-it('can_get_a_class_property', function() {
-	$property = PHPFile::load('app/Models/User.php')->property('fillable');
-
-	$this->assertTrue(
-		is_array($property)
-	);
+it('can get a class property', function() {
+	PHPFile::load('app/Models/User.php')
+		->assertProperty('fillable', ['name', 'email', 'password']);
 });
 
-it('can_update_existing_class_properties', function() {
-	$newValue = 'Reset fillable to a single string!';
-	$property = PHPFile::load('app/Models/User.php')
-		->property('fillable', $newValue)
-		->property('fillable');
-
-	$this->assertEquals(
-		$property,
-		$newValue
-	);
+it('can update existing class properties', function() {
+	PHPFile::load('app/Models/User.php')
+		->property('fillable', 'new value!')
+		->assertProperty('fillable', 'new value!');	
 });
 
-it('can_create_a_new_class_property', function() {
-	$property = PHPFile::load('app/Models/User.php')
+it('can create a new class property', function() {
+	PHPFile::load('app/Models/User.php')
 		->property('master', 'yoda')
-		->property('master');
-
-	$this->assertEquals(
-		$property,
-		'yoda'
-	);
+		->assertProperty('master', 'yoda');
 });
 	
-it('can_create_a_new_class_property_when_empty', function() {
-	$property = PHPFile::make()->class('Dummy')
+it('can create a new class property when empty', function() {
+	PHPFile::make()->class('Dummy')
 		->property('master', 'yoda')
-		->property('master');
-
-	$this->assertEquals(
-		$property,
-		'yoda'
-	);
+		->assertProperty('master', 'yoda');
 });
 	
-it('can_set_empty_property_by_using_explicit_set_method', function() {
-	$property = PHPFile::make()->class('Dummy')
+it('can set empty property by using explicit set method', function() {
+	PHPFile::make()->class('Dummy')
 		->setProperty('empty')
-		->property('empty');
-
-	$this->assertEquals(
-		$property,
-		null
-	);
+		->assertProperty('empty', null);
 });
 
-it('can_set_visibility_using_directives', function() {
-	$output = PHPFile::make()->class('Dummy')
+it('can set visibility using directives', function() {
+	PHPFile::make()->class('Dummy')
 		->private()->setProperty('parts')
-		->render();
-
-	$this->assertStringContainsString(
-		'private $parts;',
-		$output
-	);
+		->assertContains('private $parts;');
 });
 	
-it('can_remove_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can remove properties', function() {
+	PHPFile::load('app/Models/User.php')
 		->remove()->property('fillable')
-		->property('fillable');
-
-	$this->assertNull($output);
+		->assertNoProperty('fillable');
 });
 	
-it('can_clear_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can clear properties', function() {
+	PHPFile::load('app/Models/User.php')
 		->clear()->property('fillable')
-		->property('fillable');
-
-	$this->assertNull($output);
+		->assertProperty('fillable', null);
 });
 
-it('can_empty_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can empty properties', function() {
+	PHPFile::load('app/Models/User.php')
 		->empty()->property('fillable')
-		->property('fillable');
-
-		$this->assertEquals($output, []);
+		->assertProperty('fillable', []);
 });
 	
-it('can_empty_string_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can empty string properties', function() {
+	PHPFile::load('app/Models/User.php')
 		->property('someString', 'hiya')
 		->empty()->property('someString')
-		->property('someString');
-
-	$this->assertEquals($output, '');
+		->assertProperty('someString', '');
 });
 
-it('can_empty_non_array_or_string_properties_into_a_default_of_null', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can empty non array or string properties into a default of null', function() {
+	PHPFile::load('app/Models/User.php')
 		->property('someNonArrayOrStringType', 123)
 		->empty()->property('someNonArrayOrStringType')
-		->property('someNonArrayOrStringType');
-
-	$this->assertNull($output);
+		->assertProperty('someNonArrayOrStringType', null);
 });
 	
-it('can_add_to_array_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can add to array properties', function() {
+	PHPFile::load('app/Models/User.php')
 		->add()->property('fillable', 'cool')
-		->property('fillable');
-
-	$this->assertEquals(['name', 'email', 'password', 'cool'], $output);
+		->assertProperty('fillable', ['name', 'email', 'password', 'cool']);
 });
 
-it('can_add_to_string_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
+it('can add to string properties', function() {
+	PHPFile::load('app/Models/User.php')
 		->property('table', 'users')
 		->add()->property('table', '_backup')
-		->property('table');
-
-	$this->assertEquals('users_backup', $output);
+		->assertProperty('table', 'users_backup');
 });
 
-it('can_add_to_numeric_properties', function() {
-	$output = PHPFile::load('app/Models/User.php')
-		->property('allowed_errors', 1)
-		->add()->property('allowed_errors', 99)
-		->property('allowed_errors');
-
-	$this->assertEquals(100, $output);
+it('can add to numeric properties', function() {
+	PHPFile::load('app/Models/User.php')
+		->property('allowed errors', 1)
+		->add()->property('allowed errors', 99)
+		->assertProperty('allowed errors', 100);
 });
 
-it('will_default_to_add_to_an_array_if_null_or_non_value_property_is_encountered', function() {
-	$output = PHPFile::load('app/Models/User.php')
-		->setProperty('realms')
-		->add()->property('realms', 'Atlantis')
-		->property('realms');
-
-	$this->assertEquals(['Atlantis'], $output);
-
-	$output = PHPFile::load('app/Models/User.php')
+it('will default to add to an array if a null property is encountered', function() {
+	PHPFile::load('app/Models/User.php')
 		->setProperty('realms', null)
 		->add()->property('realms', 'Gondor')
-		->property('realms');
+		->assertProperty('realms', ['Gondor']);
+});
 
-	$this->assertEquals(['Gondor'], $output);
+it('will default to add to an array if a non value property is encountered', function() {
+	PHPFile::load('app/Models/User.php')
+		->setProperty('realms')
+		->add()->property('realms', 'Atlantis')
+		->assertProperty('realms', ['Atlantis']);
 });

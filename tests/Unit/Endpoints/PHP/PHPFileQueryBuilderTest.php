@@ -5,7 +5,7 @@ use Archetype\Endpoints\Laravel\LaravelFileQueryBuilder;
 use Archetype\Facades\LaravelFile;
 use Archetype\Facades\PHPFile;
 
-it('can_instanciate_via_php_or_laravel_file_with_in_method', function() {
+it('can instanciate via php or laravel file with in method', function() {
 	$this->assertInstanceOf(
 		PHPFileQueryBuilder::class,
 		PHPFile::in('app')
@@ -17,7 +17,7 @@ it('can_instanciate_via_php_or_laravel_file_with_in_method', function() {
 	);
 });
 
-it('will_return_a_collection_on_get', function() {
+it('will return a collection on get', function() {
 	$this->assertInstanceOf(
 		\Illuminate\Support\Collection::class,
 		LaravelFile::in('app')->get()
@@ -29,7 +29,7 @@ it('will_return_a_collection_on_get', function() {
 	);
 });
     
-it('can_filter_with_in_method', function() {
+it('can filter with in method', function() {
 	$this->assertCount(
 		1,
 		LaravelFile::in('public')->get()
@@ -41,7 +41,7 @@ it('can_filter_with_in_method', function() {
 	);
 });
 
-it('can_filter_with_where_method', function() {
+it('can filter with where method', function() {
 	$this->assertCount(
 		0,
 		LaravelFile::in('public')->where('className', 'User')->get()
@@ -88,7 +88,7 @@ it('can_filter_with_where_method', function() {
 	);
 });
 
-it('can_filter_with_where_method_using_an_array', function() {
+it('can filter with where method using an array', function() {
 	$this->assertCount(
 		1,
 		LaravelFile::in('app')->where([
@@ -98,7 +98,7 @@ it('can_filter_with_where_method_using_an_array', function() {
 	);
 });
 
-it('can_add_filters_with_andWhere', function() {
+it('can add filters with andWhere', function() {
 	$this->assertCount(
 		1,
 		LaravelFile::in('app')
@@ -108,7 +108,7 @@ it('can_add_filters_with_andWhere', function() {
 	);
 });
 
-it('can_filter_with_closure', function() {
+it('can filter with closure', function() {
 	$this->assertCount(
 		2,
 		LaravelFile::in('app')->where(function ($file) {
@@ -117,14 +117,14 @@ it('can_filter_with_closure', function() {
 	);
 });
     
-it('can_query_non_class_files_and_files_missing_extend', function() {
+it('can query non class files and files missing extend', function() {
 	$files = LaravelFile::where('extends', 'Authenticatable')->get();
 	$this->assertTrue(
 		$files->count() > 0
 	);
 });
     
-it('can_chain', function() {
+it('can chain', function() {
 	$files = LaravelFile::where('extends', 'ServiceProvider')
 		->where('methodNames', 'contains', 'boot')
 		->where(function ($file) {
@@ -137,7 +137,7 @@ it('can_chain', function() {
 	);
 });
     
-it('has_a_first_method', function() {
+it('has a first method', function() {
 	$this->assertInstanceOf(
 		\Archetype\LaravelFile::class,
 		LaravelFile::in('public')->first()

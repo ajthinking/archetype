@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('can_retrieve_use_statements', function () {
+it('can retrieve use statements', function () {
 	// A file with use statements
 	$file = PHPFile::load('app/Models/User.php');
 	$useStatements = $file->use();
@@ -27,7 +27,7 @@ it('can_retrieve_use_statements', function () {
 	);
 });
 
-it('can_add_use_statements_in_a_namespace', function () {
+it('can add use statements in a namespace', function () {
 	// on a file with use statements
 	$file = PHPFile::load('app/Models/User.php');
 
@@ -47,7 +47,7 @@ it('can_add_use_statements_in_a_namespace', function () {
 	});
 });
 
-it('can_add_use_statements_when_not_in_a_namespace', function () {
+it('can add use statements when not in a namespace', function () {
 	$file = PHPFile::load('public/index.php');
 	
 	$useStatements = $file->add()->use(['Add\This'])->use();
@@ -63,7 +63,7 @@ it('can_add_use_statements_when_not_in_a_namespace', function () {
 	});
 });
 
-it('can_add_use_statements_with_alias', function () {
+it('can add use statements with alias', function () {
 	$file = PHPFile::load('public/index.php');
 	$useStatements = $file->add()->use(['Add\This as Wow'])->use();
 	$expectedUseStatements = collect([
@@ -77,7 +77,7 @@ it('can_add_use_statements_with_alias', function () {
 	});
 });
 
-it('can_overwrite_use_statements', function () {
+it('can overwrite use statements', function () {
 	$file = PHPFile::load('app/Models/User.php');
 
 	$useStatements = $file->use(['Only\This'])->use();

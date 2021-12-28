@@ -3,12 +3,12 @@
 use Archetype\Facades\LaravelFile;
 use Archetype\Facades\PHPFile;
 
-test('arrays_are_beutiful_when_loaded_and_rendered', function() {
+test('arrays are beutiful when loaded and rendered', function() {
 	$output = LaravelFile::user()->render();
 	$this->assertMultilineArray('fillable', $output);
 });
 
-test('arrays_are_beutiful_when_loaded_modified_and_rendered', function() {
+test('arrays are beutiful when loaded modified and rendered', function() {
 	$output = LaravelFile::user()
 		->add('also')->to()->property('fillable')
 		->render();
@@ -16,7 +16,7 @@ test('arrays_are_beutiful_when_loaded_modified_and_rendered', function() {
 	$this->assertMultilineArray('fillable', $output);
 });
 
-test('arrays_are_beautiful_when_created_and_rendered', function() {
+test('arrays are beautiful when created and rendered', function() {
 	$output = PHPFile::class('FillableClass')
 		->add()->property('fillable', ['first', 'second', 'third'])
 		->render();
@@ -24,7 +24,7 @@ test('arrays_are_beautiful_when_created_and_rendered', function() {
 	$this->assertMultilineArray('fillable', $output);
 });
 
-test('arrays_are_beutiful_when_empty', function() {
+test('arrays are beutiful when empty', function() {
 	$output = PHPFile::class('FillableClass')
 		->property('fillable', [])
 		->render();

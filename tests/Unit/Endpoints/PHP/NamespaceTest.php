@@ -2,7 +2,7 @@
 
 use Archetype\Facades\PHPFile;
 
-it('can_retrieve_namespace', function() {
+it('can retrieve namespace', function() {
 	// on a file with namespace
 	$this->assertTrue(
 		PHPFile::load('app/Models/User.php')->namespace() === 'App\Models'
@@ -14,7 +14,7 @@ it('can_retrieve_namespace', function() {
 	);
 });
 
-it('can_set_namespace', function() {
+it('can set namespace', function() {
 	// on a file with namespace
 	$this->assertTrue(
 		PHPFile::load('app/Models/User.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
@@ -26,7 +26,7 @@ it('can_set_namespace', function() {
 	);
 });
     
-it('can_remove_namespace', function() {
+it('can remove namespace', function() {
 	// on a file with namespace
 	$this->assertTrue(
 		PHPFile::load('app/Models/User.php')->remove()->namespace()->namespace() === null

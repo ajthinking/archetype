@@ -2,7 +2,7 @@
 
 use Archetype\LaravelFile;
 
-test('no_duplicated_endpoints', function() {
+test('no duplicated endpoints', function() {
 	$endpoints = (new LaravelFile)
 		->endpointProviders()
 		->map(function ($provider) {

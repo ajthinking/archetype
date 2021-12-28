@@ -2,7 +2,7 @@
 
 use Archetype\Support\Path;
 
-it('can_create_paths_with_explicit_default_root', function() {
+it('can create paths with explicit default root', function() {
 	$relative = Path::make('app/Models/User.php')->withDefaultRoot(base_path())->full();
 	$expected = base_path('app/Models/User.php');
 	$this->assertEquals($expected, $relative);
@@ -13,7 +13,7 @@ it('can_create_paths_with_explicit_default_root', function() {
 	$this->assertEquals($expected, $absolute);
 });
 
-it('can_create_paths_with_assumed_root', function() {
+it('can create paths with assumed root', function() {
 	$expected = '/app/Models/User.php';
 	$relative = Path::make('app/Models/User.php')->full();
 	$absolute = Path::make('/app/Models/User.php')->full();
