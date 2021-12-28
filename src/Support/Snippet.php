@@ -2,16 +2,11 @@
 
 namespace Archetype\Support;
 
+use Archetype\Facades\PHPFile;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Node\Stmt\Property;
 use PhpParser\NodeFinder;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name\FullyQualified;
-use PhpParser\Node\Name;
 use PhpParser\JsonDecoder;
 
-use PHPFile;
-use InvalidArgumentException;
 use Archetype\Support\AST\Visitors\FormattingRemover;
 
 class Snippet

@@ -32,10 +32,6 @@
     },
     "extra": {
         "laravel": {
-            "aliases": {
-                "LaravelFile": "Archetype\\Facades\\LaravelFile",
-                "PHPFile": "Archetype\\Facades\\PHPFile"
-            },
             "dont-discover": [],
             "providers": [
                 "Archetype\\ServiceProvider"

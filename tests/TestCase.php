@@ -28,14 +28,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('archetype.roots.output.root', base_path('.output'));
     }
 
-    protected function getPackageAliases($app)
-    {
-        return [
-          'LaravelFile' => \Archetype\Facades\LaravelFile::class,
-          'PHPFile' => \Archetype\Facades\PHPFile::class,
-        ];
-    }
-
     protected function getPackageProviders($app)
     {
         return [\Archetype\ServiceProvider::class];
