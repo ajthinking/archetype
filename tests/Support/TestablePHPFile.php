@@ -6,6 +6,7 @@ use Archetype\PHPFile;
 
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertStringContainsString;
 
 class TestablePHPFile extends PHPFile
@@ -65,6 +66,16 @@ class TestablePHPFile extends PHPFile
 		assertStringContainsString(
 			$string,
 			$this->render()
+		);
+
+		return $this;
+	}
+
+	public function assertValidPhp()
+	{
+		assertInstanceOf(
+			TestablePHPFile::class,
+			PHPFile::fromString($this->render())
 		);
 
 		return $this;

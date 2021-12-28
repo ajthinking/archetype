@@ -1,7 +1,8 @@
 <?php
 
 use Archetype\Facades\LaravelFile;
-use Archetype\Facades\PHPFile;
+use Archetype\Support\Exceptions\FileParseError;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Illuminate\Support\Facades\Config;
 
 it('wont see debug or output folders because they are removed at start up', function() {
@@ -18,7 +19,7 @@ it('can load php files', function() {
 	$file = PHPFile::load('public/index.php');
 
 	$this->assertTrue(
-		get_class($file) === 'Archetype\PHPFile'
+		get_class($file) === \Archetype\Tests\Support\TestablePHPFile::class
 	);
 });
 
@@ -28,7 +29,7 @@ it('can load files with absolute path', function() {
 	);
 
 	$this->assertTrue(
-		get_class($file) === 'Archetype\PHPFile'
+		get_class($file) === \Archetype\Tests\Support\TestablePHPFile::class
 	);
 });
 
@@ -38,7 +39,7 @@ it('will accept forbidden directories when explicitly passed', function() {
 	)->get()->first();
 
 	$this->assertTrue(
-		get_class($file) === 'Archetype\PHPFile'
+		get_class($file) === \Archetype\Tests\Support\TestablePHPFile::class
 	);
 });
 
@@ -65,4 +66,15 @@ it('can write to default location', function() {
 	$this->assertTrue(
 		is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php')
 	);
+});
+
+it('will throw error if code cant be parsed', function() {
+	$this->expectException(FileParseError::class);
+
+	PHPFile::fromString("<?php bad code");
+});
+
+it('can ensure code is valid', function() {
+	PHPFile::fromString('<?php $ok = 1;')
+		->assertValidPhp();
 });

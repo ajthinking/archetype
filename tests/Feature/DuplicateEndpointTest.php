@@ -1,10 +1,9 @@
 <?php
 
-use Archetype\LaravelFile;
+use Archetype\Facades\LaravelFile;
 
 test('no duplicated endpoints', function() {
-	$endpoints = (new LaravelFile)
-		->endpointProviders()
+	$endpoints = LaravelFile::endpointProviders()
 		->map(function ($provider) {
 			return (new $provider())->getEndpoints();
 		})->flatten();
