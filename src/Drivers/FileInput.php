@@ -18,9 +18,9 @@ class FileInput implements InputInterface
 
     public $root;
 
-    public function __construct()
+    public function __construct($root = null)
     {
-        $this->root = config('archetype')['roots']['input'];
+        $this->root = $root ?? config('archetype')['roots']['input'];
     }
 
     public function readPath($path = null)
@@ -32,6 +32,8 @@ class FileInput implements InputInterface
     public function load(string $path = null)
     {
         $this->extractPathProperties($path);
+
+		dd($this);
 
         return (new PHPFileStorage)->get($this->absolutePath());
     }
