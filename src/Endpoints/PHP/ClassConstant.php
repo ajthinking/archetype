@@ -224,11 +224,8 @@ class ClassConstant extends EndpointProvider
         if (is_string($value)) {
             $value =  new String_($value);
         } else {
-            // TODO
             dd("Can only set string");
         }
-
-
 
         $const = new Const_($key, $value);
         $constant = new ClassConst([$const]);

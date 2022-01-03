@@ -33,8 +33,6 @@ class FileInput implements InputInterface
     {
         $this->extractPathProperties($path);
 
-		dd($this);
-
         return (new PHPFileStorage)->get($this->absolutePath());
     }
 

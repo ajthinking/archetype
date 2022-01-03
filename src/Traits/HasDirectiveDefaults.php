@@ -17,29 +17,9 @@ trait HasDirectiveDefaults
         return $this;
     }
 
-	public function after($value)
-	{
-		dd("NOT IMPLEMENTED");
-
-		return $this->directive('after', $value);
-	}
-
     public function include($value = Types::NO_VALUE)
     {
         return $this->unique($value = Types::NO_VALUE);
-    }
-
-    public function unique($value = Types::NO_VALUE)
-    {
-        dd("NOT IMPLEMENTED");
-
-        $this->directive('unique', true);
-
-        if ($value !== Types::NO_VALUE) {
-            $this->directive('uniqueValue', $value);
-        }
-
-        return $this;
     }
 
     public function remove()
