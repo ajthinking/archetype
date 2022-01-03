@@ -1,6 +1,7 @@
 <?php
 
 use Archetype\Facades\LaravelFile;
+use Archetype\Facades\PHPFile;
 use Archetype\Support\AST\ASTQueryBuilder;
 
 it('can be instanciated using an ast object', function() {
@@ -43,4 +44,16 @@ it('can query deep', function() {
 		->first();
 		
 	$this->assertEquals($result, 'users');
+});
+
+it('can query with explicit class names', function() {
+	// Short node names may be amgigious. If needed, refer to explicit class names
+	$names = PHPFile::fromString('<?php CONST CHANNEL = "tv4", TIME = "20:00";')
+		->astQuery()
+		->traverseIntoClass(\PhpParser\Node\Stmt\Const_::class) // const declaration outside of class
+		->traverseIntoClass(\PhpParser\Node\Const_::class) // one of potentially many assignments
+		->name->name
+		->get();
+
+	$this->assertEquals($names->all(), ['CHANNEL', 'TIME']);
 });

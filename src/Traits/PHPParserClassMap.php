@@ -4,12 +4,7 @@ namespace Archetype\Traits;
 
 trait PHPParserClassMap
 {
-	// Why this is a evil method:
-	// It has a strange name
-	// It does many things
-	// It has a huge array inside of it
-	// It does not throw an error when class is missing
-    public function shortNodeNameMap(string $class = null)
+    public function classMap(string $class = null)
     {
         $map = [
             'array' => \PhpParser\Node\Expr\Array_::class,
@@ -18,15 +13,12 @@ trait PHPParserClassMap
             'arrowFunction' => \PhpParser\Node\Expr\ArrowFunction::class,
             'assign' => \PhpParser\Node\Expr\Assign::class,
             'assignOp' => \PhpParser\Node\Expr\AssignOp::class,
-            'assignOp' => \PhpParser\Node\Expr\AssignOp::class,
             'assignRef' => \PhpParser\Node\Expr\AssignRef::class,
-            'binaryOp' => \PhpParser\Node\Expr\BinaryOp::class,
             'binaryOp' => \PhpParser\Node\Expr\BinaryOp::class,
             'bitwiseNot' => \PhpParser\Node\Expr\BitwiseNot::class,
             'booleanNot' => \PhpParser\Node\Expr\BooleanNot::class,
             'break' => \PhpParser\Node\Stmt\Break_::class,
             'case' => \PhpParser\Node\Stmt\Case_::class,
-            'cast' => \PhpParser\Node\Expr\Cast::class,
             'cast' => \PhpParser\Node\Expr\Cast::class,
             'catch' => \PhpParser\Node\Stmt\Catch_::class,
             'class' => \PhpParser\Node\Stmt\Class_::class,
@@ -37,8 +29,8 @@ trait PHPParserClassMap
             'clone' => \PhpParser\Node\Expr\Clone_::class,
             'closure' => \PhpParser\Node\Expr\Closure::class,
             'closureUse' => \PhpParser\Node\Expr\ClosureUse::class,
-			'const' => \PhpParser\Node\Const_::class, // REVIEW
-			'constStmt' => \PhpParser\Node\Stmt\Const_::class, // REVIEW
+			'const' => \PhpParser\Node\Const_::class, // one of potentially many consts in the same declaration
+			'constStmt' => \PhpParser\Node\Stmt\Const_::class, // a node statement ouside of a class. NOTE NAME CHANGE!
             'constFetch' => \PhpParser\Node\Expr\ConstFetch::class,
             'continue' => \PhpParser\Node\Stmt\Continue_::class,
             'declare' => \PhpParser\Node\Stmt\Declare_::class,
