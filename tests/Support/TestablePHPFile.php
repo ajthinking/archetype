@@ -7,6 +7,7 @@ use Archetype\PHPFile;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertMatchesRegularExpression;
 use function PHPUnit\Framework\assertStringContainsString;
 
 class TestablePHPFile extends PHPFile
@@ -80,4 +81,23 @@ class TestablePHPFile extends PHPFile
 
 		return $this;
 	}
+
+	public function assertMultilineArray($name) {
+		preg_match("/$name \= (\[[^\;]*)/s", $this->render(), $matches);
+		$code = $matches[1];
+		$commas = substr_count($code, ',');
+		
+		assertEquals(
+			substr_count($code, PHP_EOL),
+			$commas + 1
+		);
+
+		return $this;
+	}
+
+	public function assertSingleLineEmptyArray($name) {
+		assertMatchesRegularExpression("/$name \= (\[\];]*)/s", $this->render());
+
+		return $this;		
+	}	
 }

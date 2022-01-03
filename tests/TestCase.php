@@ -63,19 +63,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
             File::deleteDirectory($directory);
         });
     }
-
-	public function assertMultilineArray($name, $output) {
-		preg_match("/$name \= (\[[^\;]*)/s", $output, $matches);
-		$code = $matches[1];
-		$commas = substr_count($code, ',');
-		
-		$this->assertEquals(
-			substr_count($code, PHP_EOL),
-			$commas + 1
-		);
-	}
-
-	public function assertSingleLineEmptyArray($name, $output) {
-		$this->assertMatchesRegularExpression("/$name \= (\[\];]*)/s", $output);
-	}	
 }
