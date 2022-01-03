@@ -111,7 +111,7 @@ Example: how can we fetch explicit column names in a migration file?
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
     ->astQuery() // get a ASTQueryBuilder
 
-    ->method()
+    ->classMethod()
         ->where('name->name', 'up')
     ->staticCall()
         ->where('class', 'Schema')

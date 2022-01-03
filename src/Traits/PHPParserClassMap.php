@@ -153,9 +153,6 @@ trait PHPParserClassMap
             'unset_' => '\PhpParser\Node\Stmt\Unset_',
             'use_' => '\PhpParser\Node\Stmt\Use_',
             'while_' => '\PhpParser\Node\Stmt\While_',
-            
-            // SHORTCUTS AND CUSTOMIZATIONS
-            'method' => '\PhpParser\Node\Stmt\ClassMethod',
         ];
         
         if (!$class) {
