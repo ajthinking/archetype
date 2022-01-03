@@ -4,11 +4,7 @@ namespace Archetype;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Archetype\Commands\DemoCommand;
 use Archetype\Commands\ErrorsCommand;
-use Archetype\Commands\DocumentationCommand;
-use Archetype\Commands\ListAPICommand;
-use Archetype\Commands\RelationshipsDemo;
 use Archetype\Factories\LaravelFileFactory;
 use Archetype\Factories\PHPFileFactory;
 use Archetype\Traits\AddsLaravelStringsToStrWithMacros;
@@ -51,11 +47,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerCommands()
     {
         $this->commands([
-            ListAPICommand::class,
-            DemoCommand::class,
-            RelationshipsDemo::class,
             ErrorsCommand::class,
-            DocumentationCommand::class,
         ]);
     }
 }

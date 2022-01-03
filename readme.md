@@ -6,31 +6,11 @@
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
 [![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/archetype.svg)](https://packagist.org/packages/ajthinking/archetype)
 
-* Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive top level read/write API
+* Programatically modify php files with an intuiutive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
 
-
-<!--<img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">-->
-
-## Table of Content
-  * [Installation](#installation)
-  * [Usage](#usage)
-    + [PHPFile read/write API](#-phpfile--read-write-api)
-    + [LaravelFile read/write API](#-laravelfile--read-write-api)
-    + [File QueryBuilder](#file-querybuilder)
-    + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
-    <!--+ [Template engine](#template-engine)-->
-    + [Errors](#errors---)
-    + [Limitations / Missing features](#limitations---missing-features)
-  * [Configuration](#configuration)
-  * [Contributing](#contributing)
-    + [Development installation](#development-installation)
-  * [License](#license)
-  * [Acknowledgements](#acknowledgements)
-  * [Like this package?](#like-this-package-)
-
 ## Installation
-```
+```bash
 composer require ajthinking/archetype
 ```
 > Requires UNIX filesystem, PHP >= 7.4 and Laravel >= 7
@@ -40,7 +20,7 @@ composer require ajthinking/archetype
 ### `PHPFile` read/write API
 
 ```php
-use PHPFile;
+use Archetype\Facades\PHPFile;
 
 // Create new files
 PHPFile::make()->class('acme/Product.php')
@@ -59,7 +39,7 @@ PHPFile::load('app/Models/User.php')
 ### `LaravelFile` read/write API
 
 ```php
-use LaravelFile; // extends PHPFile
+use Archetype\Facades\LaravelFile; // extends PHPFile
 
 // Expanding on our User model
 LaravelFile::user()
@@ -76,9 +56,7 @@ LaravelFile::user()
 
 Result:
 
-<img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
-
-> [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+IMAGE_PLACEHOLDER
 
 ### File QueryBuilder
 Filter and retrieve a set of files to interact with. 
@@ -99,8 +77,6 @@ LaravelFile::controllers()->get();
 LaravelFile::serviceProviders()->get();
 // ...
 ```
-
-> [See a few more QueryBuilder examples in the tests](https://github.com/ajthinking/archetype/blob/master/tests/Unit/Endpoints/PHP/PHPFileQueryBuilderTest.php) :point_left:
 
 ### Abstract Syntax Tree QueryBuilder
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
@@ -127,9 +103,7 @@ LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php'
 	->get(); // exit ASTQueryBuilder, get a Collection        
 ```
 
-The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
-
-<img src="https://user-images.githubusercontent.com/3457668/83963046-25785480-a8a3-11ea-9224-b04fa8cebb81.png" width="600px">
+The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query: IMAGE_PLACEHOLDER
 
 The ASTQueryBuilder relies entirely on [nikic/php-parser](https://github.com/nikic/php-parser). Available query methods mirror the `PhpParser` types and properties. To understand this syntax better you may want to tinker with `dd($file->ast())` while building your queries. Basic conventions are listed below. 
 
@@ -151,106 +125,24 @@ $file->astQuery()
     ->save() 
 ```
 
-> [More ASTQueryBuilder examples here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
-
-<!--
-### Template engine
-Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
-
-```php
-<?php
-
-/**
- * Optionally use FAKE names to silence IDE warnings
- */
-use Archetype\Support\FakeName; 
-use Archetype\Support\FakeName as ANY;
-use Archetype\Support\FakeName as ___TARGET_CLASS___;
-
-/**
- * This is just a placeholder class where we can add our snippets
- */
-class _ extends FakeName
-{
-    /**
-    * ___DOC_BLOCK___
-    */
-    public function mySpecialMethod($arg)
-    {
-        $want = abs($arg);
-        return $this->doSomethingWith(___TARGET_CLASS___::class, 'my template')
-            ->use(ANY::thing(new static('you' . $want)));
-    }    
-}
-```
-
-Your snippet is then instantly available anywhere in your code:
-```php
-use Archetype\Support\Snippet;
-
-// Get the snippet
-Snippet::mySpecialMethod()
-
-// Pass an array of replacement pairs to replace any handles:
-Snippet::mySpecialMethod([
-    '___DOC_BLOCK___' => 'Inserted with archetype :)',
-    '___TARGET_CLASS___' => 'App\Rocket'
-]);
-
-// Integrated example
-PHPFile::load('app/Models/User.php')
-    ->addMethod(
-        Snippet::mySpecialMethod([
-            // replacement pairs ...
-        ])
-    )->save();
-````
-
-> :information_source: The `Snippet` class currently only supports templates on *class methods*.
-
--->
-
-### A note on Facades
-You may use either of the following
-```php
-// Using class
-(new \Archetype\PHPFile)->load('...');
-
-// Using facade
-PHPFile::load('...');
-
-// Using facade explicitly
-use Archetype\Facades\PHPFile;
-PHPFile::load('...'); // Using facade explicitly
-```
-
 ### Errors 😵
-If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
+If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
 
 To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
 
-### Limitations / Missing features
-In general this package assumes code to be parsed follows guidelines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
-
-* Requires UNIX based file system - no windows support <img src="https://img.shields.io/badge/help wanted-blue">
-
-* Can't use group use syntax (`use Something\{X, Y};`)
-
-* Assumes one class per file
-
-* Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
-
 ## Configuration
-    php artisan vendor:publish --provider="Archetype\ServiceProvider"
+```bash
+php artisan vendor:publish --provider="Archetype\ServiceProvider"
+```
 
 ## Contributing
-
+PRs welcome :pray:
 ### Development installation
 ```
 git clone git@github.com:ajthinking/archetype.git
 cd archetype
 composer install
-./vendor/bin/phpunit tests
+./vendor/bin/pest
 ```
 
 
