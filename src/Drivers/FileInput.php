@@ -18,9 +18,9 @@ class FileInput implements InputInterface
 
     public $root;
 
-    public function __construct($root = null)
+    public function __construct()
     {
-        $this->root = $root ?? config('archetype')['roots']['input'];
+        $this->root = config('archetype')['roots']['input'];
     }
 
     public function readPath($path = null)
