@@ -2,7 +2,7 @@
 
 namespace Archetype;
 
-use App;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Archetype\Commands\DemoCommand;
 use Archetype\Commands\ErrorsCommand;
