@@ -4,10 +4,14 @@ namespace Archetype\Traits;
 
 trait PHPParserClassMap
 {
-    public function classMap($class = null)
+	// Why this is a evil method:
+	// It has a strange name
+	// It does many things
+	// It has a huge array inside of it
+	// It does not throw an error when class is missing
+    public function classMap(string $class = null)
     {
         $map = [
-            // CAMELCASEIFIED WITHOUT _ POSTFIX
             'array' => '\PhpParser\Node\Expr\Array_',
             'arrayDimFetch' => '\PhpParser\Node\Expr\ArrayDimFetch',
             'arrayItem' => '\PhpParser\Node\Expr\ArrayItem',
@@ -123,89 +127,71 @@ trait PHPParserClassMap
         return null;
     }
 
-    public function propertyMap($property)
+    public function propertyMap(string $property = null)
     {
-        // Collisions:
-        // 0 => "method",
-        // 58 => "class",
-        // 66 => "else",
-        // 68 => "finally",
-        // 76 => "if",
-        // 86 => "static",
-        // 91 => "trait",
-        
-        // TEMPORARY FIX WITH NAMESPACING $1___
-        // CONSIDER USING A MAGIC GETTER TO ALLOW SAME NAME AS METHOD?
-
         $map = [
-            'expr' => 'expr',
-            'attributes' => 'attributes',
-            'type' => 'type',
-            'name' => 'name',
-            'alias' => 'alias',
-            'vars' => 'vars',
-            'stmts' => 'stmts',
-            'traits' => 'traits',
-            'adaptations' => 'adaptations',
-            'insteadof' => 'insteadof',
-            'trait___' => 'trait',
-            'method___' => 'method',
-            'newModifier' => 'newModifier',
-            'newName' => 'newName',
-            'types' => 'types',
-            'var' => 'var',
-            'flags' => 'flags',
-            'extends' => 'extends',
-            'implements' => 'implements',
-            'default' => 'default',
-            'cond' => 'cond',
-            'num' => 'num',
-            'byRef' => 'byRef',
-            'params' => 'params',
-            'returnType' => 'returnType',
-            'magicNames' => 'magicNames',
-            'remaining' => 'remaining',
-            'key' => 'key',
-            'value' => 'value',
-            'catches' => 'catches',
-            'finally___' => 'finally',
-            'exprs' => 'exprs',
-            'declares' => 'declares',
-            'props' => 'props',
-            'elseifs' => 'elseifs',
-            'else___' => 'else',
-            'consts' => 'consts',
-            'cases' => 'cases',
-            'keyVar' => 'keyVar',
-            'valueVar' => 'valueVar',
-            'init' => 'init',
-            'loop' => 'loop',
-            'prefix' => 'prefix',
-            'use' => 'use',
-            'uses' => 'uses',
-            'specialClassNames' => 'specialClassNames',
-            'variadic' => 'variadic',
-            'left' => 'left',
-            'right' => 'right',
-            'items' => 'items',
-            'parts' => 'parts',
-            'class___' => 'class',
-            'args' => 'args',
-            'static___' => 'static',
-            'dim' => 'dim',
-            'if___' => 'if',
-            'unpack' => 'unpack',
-            'replacements' => 'replacements',
+            'expr',
+            'attributes',
+            'type',
+            'name',
+            'alias',
+            'vars',
+            'stmts',
+            'traits',
+            'adaptations',
+            'insteadof',
+            'trait',
+            'method',
+            'newModifier',
+            'newName',
+            'types',
+            'var',
+            'flags',
+            'extends',
+            'implements',
+            'default',
+            'cond',
+            'num',
+            'byRef',
+            'params',
+            'returnType',
+            'magicNames',
+            'remaining',
+            'key',
+            'value',
+            'catches',
+            'finally',
+            'exprs',
+            'declares',
+            'props',
+            'elseifs',
+            'else',
+            'consts',
+            'cases',
+            'keyVar',
+            'valueVar',
+            'init',
+            'loop',
+            'prefix',
+            'use',
+            'uses',
+            'specialClassNames',
+            'variadic',
+            'left',
+            'right',
+            'items',
+            'parts',
+            'class',
+            'args',
+            'static',
+            'dim',
+            'if',
+            'unpack',
+            'replacements',
         ];
 
-        if (!$property) {
-            return $map;
-        }
+        if (!$property) return $map;
 
-        if (isset($map[$property])) {
-            return $map[$property];
-        }
-
-        return null;
+        return in_array($property, $map) ? $property : null;
     }
 }
