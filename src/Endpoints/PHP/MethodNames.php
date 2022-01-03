@@ -18,7 +18,7 @@ class MethodNames extends EndpointProvider
     protected function get()
     {
         return $this->file->astQuery()
-            ->method()
+            ->classMethod()
             ->name
             ->name
             ->get()
