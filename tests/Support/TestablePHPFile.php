@@ -99,5 +99,26 @@ class TestablePHPFile extends PHPFile
 		assertMatchesRegularExpression("/$name \= (\[\];]*)/s", $this->render());
 
 		return $this;		
+	}
+
+	public function assertLinebreaksBetweenClassStmts() {
+		// Reparse to resolve formatting 
+		$this->fromString($this->render());
+
+		$class = $this->astQuery()->class()->first();
+		$stmts = $this->astQuery()->class()->stmts->get();
+
+		$lineNumberCursor = $class->getStartLine() + 2;
+		
+		$stmts->each(function($stmt, $index) use(&$lineNumberCursor) {
+			assertEquals(
+				$lineNumberCursor,
+				$stmt->getStartLine()
+			);
+
+			$lineNumberCursor = $stmt->getEndLine() + 2;
+		});
+
+		return $this;
 	}	
 }
