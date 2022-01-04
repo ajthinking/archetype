@@ -19,8 +19,10 @@ test('arrays are beautiful when created and rendered', function() {
 		->assertMultilineArray('counts');
 });
 
-test('arrays are beutiful when empty', function() {
-	PHPFile::class('FillableClass')
-		->property('fillable', [])
-		->assertSingleLineEmptyArray('fillable');
+test('class statements have linebreaks between them', function() {
+	PHPFile::make()->class('CountClass')
+		->property('a', 1)
+		->property('b', 2)
+		->property('c', 3)
+		->assertLinebreaksBetweenClassStmts();
 });
