@@ -61,11 +61,12 @@ it('can write to default location', function() {
 it('will throw error if code cant be parsed', function() {
 	$this->expectException(FileParseError::class);
 
-	PHPFile::fromString("<?php bad code");
+	PHPFile::directive('addMissingTags', false) // this is the default when not testing
+		->fromString("<?php bad code");
 });
 
 it('can ensure code is valid', function() {
-	PHPFile::fromString('<?php $ok = 1;')
+	PHPFile::fromString('$ok = 1')
 		->assertValidPhp();
 });
 
