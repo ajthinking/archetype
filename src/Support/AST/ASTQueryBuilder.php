@@ -14,6 +14,7 @@ use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
 use Closure;
 use Exception;
+use Illuminate\Support\Arr;
 use PhpParser\ConstExprEvaluator;
 
 class ASTQueryBuilder
@@ -31,6 +32,8 @@ class ASTQueryBuilder
     public $resultingAST;
 
     public $file;
+
+	public $tree;
 
     public function __construct($ast)
     {
@@ -138,6 +141,13 @@ class ASTQueryBuilder
         return $this;
     }
 
+	public function tap($callback)
+	{
+		$callback($this, $this->currentNodes());
+
+		return $this;
+	}
+
     public function where($arg1, $arg2 = null)
     {
         return is_callable($arg1) ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
@@ -183,8 +193,9 @@ class ASTQueryBuilder
     {
         return $this->next(function ($queryNode) use ($callback) {
             $query = new static(
-                [(clone $queryNode)->result]
+                Arr::wrap((clone $queryNode)->result)
             );
+
             return $callback($query) ? $queryNode : new Killable;
         });
     }
@@ -335,10 +346,23 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function dd()
+    public function dd($callback = null)
     {
+		if($callback instanceof \Closure) {
+			dd($callback($this));
+		}
+
         dd($this->get());
     }
+
+    public function ddSimple()
+    {
+        dd(
+			$this->get()->map(function($result) {
+				return (new ASTSimplifier)->simplify($result);
+			})
+		);
+    }	
     
     public function commit()
     {
