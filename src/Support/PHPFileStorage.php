@@ -16,6 +16,10 @@ class PHPFileStorage
 
     public function get($path)
     {
+		if(Str::of($path)->startsWith('/')) {
+			return file_get_contents($path);
+		}
+
         return $this->getStorageDisk('input')->get(
             $this->relative($path, 'input')
         );
