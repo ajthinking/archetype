@@ -56,6 +56,8 @@ trait HasIO
 
     public function fromString($code)
     {
+		$code = $this->prepareCode($code);
+		
         $this->contents($code);
 
         $this->ast($this->parse());
@@ -161,4 +163,19 @@ trait HasIO
 
         return $this;
     }
+
+	protected function prepareCode($code)
+	{
+		if(!$this->directive('addMissingTags')) return $code;
+	
+		if(!str_contains($code, '<?php')) {
+			$code = '<?php ' . PHP_EOL . PHP_EOL . $code;
+		}
+
+		if(!preg_match_all("/[\};]\s*$/", $code)) {
+			$code .= ';';
+		}
+
+		return $code;
+	}
 }

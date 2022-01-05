@@ -11,11 +11,11 @@ class LaravelFile extends PHPFile
         Endpoints\Laravel\LaravelMaker::class,
 
         // Resources
-        Endpoints\Laravel\ModelProperties::class,
-        Endpoints\Laravel\HasOne::class,
-        Endpoints\Laravel\HasMany::class,
         Endpoints\Laravel\BelongsTo::class,
         Endpoints\Laravel\BelongsToMany::class,
+        Endpoints\Laravel\HasMany::class,
+        Endpoints\Laravel\HasOne::class,
+        Endpoints\Laravel\ModelProperties::class,
     ];
 
     protected string $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;

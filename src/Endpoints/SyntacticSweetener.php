@@ -29,7 +29,7 @@ class SyntacticSweetener extends EndpointProvider
 
     protected function getHandlerMethod($signature, $args)
     {
-        return collect($this->words)->contains($signature) ? $signature : false;
+        return in_array($signature, $this->words) ? $signature : false;
     }
 
     public function getEndpoints()

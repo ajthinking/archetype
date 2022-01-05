@@ -37,6 +37,11 @@ trait HasDirectiveDefaults
         return $this->directive('empty', true);
     }
 
+	public function addMissingTags()
+	{
+        return $this->directive('addMissingTags', false);
+	}
+
     public function full()
     {
         return $this->directive('full', true);

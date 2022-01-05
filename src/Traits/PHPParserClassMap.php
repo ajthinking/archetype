@@ -7,6 +7,7 @@ trait PHPParserClassMap
     public function classMap(string $class = null)
     {
         $map = [
+			'arg' => \PhpParser\Node\Arg::class,
             'array' => \PhpParser\Node\Expr\Array_::class,
             'arrayDimFetch' => \PhpParser\Node\Expr\ArrayDimFetch::class,
             'arrayItem' => \PhpParser\Node\Expr\ArrayItem::class,
