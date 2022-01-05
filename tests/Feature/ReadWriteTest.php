@@ -23,16 +23,6 @@ it('can load php files', function() {
 	);
 });
 
-it('can load files with absolute path', function() {
-	$file = PHPFile::load(
-		base_path('vendor/ajthinking/archetype/src/snippets/relationships.php')
-	);
-
-	$this->assertTrue(
-		get_class($file) === \Archetype\Tests\Support\TestablePHPFile::class
-	);
-});
-
 it('will accept forbidden directories when explicitly passed', function() {
 	$file = PHPFile::in(
 		'vendor/ajthinking/archetype/src/snippets'
@@ -77,4 +67,16 @@ it('will throw error if code cant be parsed', function() {
 it('can ensure code is valid', function() {
 	PHPFile::fromString('<?php $ok = 1;')
 		->assertValidPhp();
+});
+
+it('can load files inside default root using an absolute path', function() {
+	PHPFile::load(
+		base_path('app/Models/User.php')
+	)->assertValidPhp();
+});
+
+it('can load files outside default root using an absolute path', function() {
+	PHPFile::load(
+		__DIR__."/../TestCase.php"
+	)->assertValidPhp();
 });
