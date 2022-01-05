@@ -2,8 +2,6 @@
 
 namespace Archetype;
 
-use Archetype\Drivers\InputInterface;
-use Archetype\Drivers\OutputInterface;
 use Archetype\Traits\DelegatesAPICalls;
 use Archetype\Traits\HasDirectiveDefaults;
 use Archetype\Traits\HasDirectiveHandlers;
@@ -38,21 +36,21 @@ class PHPFile
 
     protected const endpointProviders = [
         // Utilities
-        Endpoints\SyntacticSweetener::class,
         Endpoints\PHP\AstQuery::class,
+        Endpoints\PHP\Maker::class,		
         Endpoints\PHP\ReflectionProxy::class,
+        Endpoints\SyntacticSweetener::class,
 
         // Resources
-        Endpoints\PHP\Maker::class,
-        Endpoints\PHP\Property::class,
         Endpoints\PHP\ClassConstant::class,
-        Endpoints\PHP\MethodNames::class,
-        Endpoints\PHP\Namespace_::class,
-        Endpoints\PHP\Use_::class,
         Endpoints\PHP\ClassName::class,
         Endpoints\PHP\Extends_::class,
         Endpoints\PHP\Implements_::class,
+        Endpoints\PHP\MethodNames::class,
+        Endpoints\PHP\Namespace_::class,
+        Endpoints\PHP\Property::class,
         Endpoints\PHP\TraitUse::class,
+        Endpoints\PHP\Use_::class,
     ];
 
     public function __construct(

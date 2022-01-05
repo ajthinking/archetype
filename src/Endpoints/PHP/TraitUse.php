@@ -3,6 +3,7 @@
 namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
+use Exception;
 
 class TraitUse extends EndpointProvider
 {
@@ -24,6 +25,8 @@ class TraitUse extends EndpointProvider
         if ($value === null) {
             return $this->get();
         }
+
+		throw new Exception("Trait endpoint only supports get");
     }
 
     protected function get()

@@ -27,7 +27,6 @@ class LaravelMaker extends Maker
 
     public function model($name)
     {
-        
         $this->setupNames($name);
         
         $contents = Str::of($this->stub('model.stub'))
