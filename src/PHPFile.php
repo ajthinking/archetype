@@ -49,7 +49,6 @@ class PHPFile
         Endpoints\PHP\MethodNames::class,
         Endpoints\PHP\Namespace_::class,
         Endpoints\PHP\Property::class,
-        Endpoints\PHP\TraitUse::class,
         Endpoints\PHP\Use_::class,
     ];
 
