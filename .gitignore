@@ -6,3 +6,4 @@ sketches/
 .vscode/
 vendor/
 .phpunit.result.cache
+logs

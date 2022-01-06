@@ -6,25 +6,20 @@ use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Archetype\Support\AST\ASTQueryBuilder;
 
 it('can be instanciated using an ast object', function() {
-	$ast = LaravelFile::load('app/Models/User.php')->ast();
-	
-	$ASTQB = new ASTQueryBuilder($ast);
-
 	$this->assertInstanceOf(
 		ASTQueryBuilder::class,
-		$ASTQB
+		new ASTQueryBuilder(
+			LaravelFile::load('app/Models/User.php')->ast()
+		)
 	);
 });
 
 it('will return instance of itself on chain', function() {
 	$ast = LaravelFile::load('app/Models/User.php')->ast();
 
-	$result = (new ASTQueryBuilder($ast))
-		->class();
-
 	$this->assertInstanceOf(
 		ASTQueryBuilder::class,
-		$result
+		(new ASTQueryBuilder($ast))->class()->classMethod()
 	);
 });
 
@@ -32,16 +27,16 @@ it('can query deep', function() {
 	$result = LaravelFile::load(
 		'database/migrations/2014_10_12_000000_create_users_table.php'
 	)
-		->astQuery() // get a ASTQueryBuilder
+		->astQuery()
 		->classMethod()
-			->where('name->name', 'up')
+		->where('name->name', 'up')
 		->staticCall()
-			->where('class', 'Schema')
-			->where('name->name', 'create')
+		->where('class', 'Schema')
+		->where('name->name', 'create')
 		->args
 		->value
 		->value
-		->get() // exit ASTQueryBuilder, get a Collection
+		->get()
 		->first();
 		
 	$this->assertEquals($result, 'users');
@@ -84,23 +79,8 @@ it('can query beyond an array using in a where closure', function() {
 	$this->assertCount(1, $matches);
 });
 
-// it('can filter on arguments', function() {
-// 	$matches = PHPFile::fromString('work("0h")')
-// 		->astQuery()
-// 		->funcCall()
-// 		->where(function($query) {
-// 			return $query
-// 				->args // should work!
-// 				->where('value', '1h')
-// 				->get()->isNotEmpty();
-// 		})
-// 		->get();
-	
-// 	$this->assertCount(1, $matches);
-// });
-
 context('when searching method chains', function() {
-	$code = "<?php start()->work('1h')->work('2h')->work('3h')";
+	$code = "start()->work('1h')->work('2h')->work('3h')";
 
 	it('will match all methodCalls by default', function() use($code) {
 		$matches = PHPFile::fromString($code)
@@ -121,25 +101,15 @@ context('when searching method chains', function() {
 		
 		$this->assertCount(1, $matches);
 		$this->assertEquals('3h', $matches->first()->args[0]->value->value);
-	});
-
-	// it('can filter on multiple arguments', function() use($code) {
-	// 	$matches = PHPFile::fromString($code)
-	// 		->astQuery()
-	// 		->methodCall()
-	// 		->where(function($query) {
-	// 			return $query->shallow()
-	// 				->arg()
-	// 				->tap(function($node, $tree) {
-	// 					dump($tree->first()->result[0]->value->value);
-	// 				})
-					
-	// 				->where('value->value', '2h')
-	// 				->get()->isNotEmpty();
-	// 		})
-	// 		->get();
-		
-	// 	$this->assertCount(1, $matches);
-	// });	
+	});	
 });
 
+// it('can visuzlize', function() {
+// 	PHPFile::fromString("start()->work('1h')->work('2h')->work('3h')")
+// 		->astQuery()
+// 		->methodCall()
+// 		->shallow()->arg()
+// 		->string()
+// 		->where('value', '1h')
+// 		->renderGraphs();
+// });
