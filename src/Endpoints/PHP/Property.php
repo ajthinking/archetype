@@ -153,7 +153,7 @@ class Property extends EndpointProvider
             ->where(function ($query) use ($key) {
                 return $query->propertyProperty()
                     ->where('name->name', $key)
-                    ->get()->isNotEmpty();
+                    ->isNotEmpty();
             })
             ->remove()
             ->commit()
@@ -235,7 +235,7 @@ class Property extends EndpointProvider
             ->where(function ($query) use ($key) {
                 return $query->propertyProperty()
                     ->where('name->name', $key)
-                    ->get()->isNotEmpty();
+                    ->isNotEmpty();
             })
             ->replace(function ($property) {
                 $property->flags = $this->flagCode();

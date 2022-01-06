@@ -65,14 +65,22 @@ it('can query beyond an array', function() {
 	$this->assertCount(1, $matches);
 });
 
+it('can traverse into property when result is an array', function() {
+	$matches = PHPFile::fromString('1;2;')->astQuery() // Two(!) Expression:s
+		->expr
+		->get();
+
+	$this->assertCount(2, $matches);
+});
+
 it('can query beyond an array using in a where closure', function() {
-	$matches = PHPFile::fromString('hey("0h")')
+	$matches = PHPFile::fromString('ho("0h")')
 		->astQuery()
 		->funcCall()
-		->args
 		->where(function($query) {
-			return $query->string()
-				->get()->isNotEmpty();
+			return $query->args 
+				->string()
+				->isNotEmpty();
 		})
 		->get();
 	
@@ -103,13 +111,3 @@ context('when searching method chains', function() {
 		$this->assertEquals('3h', $matches->first()->args[0]->value->value);
 	});	
 });
-
-// it('can visuzlize', function() {
-// 	PHPFile::fromString("start()->work('1h')->work('2h')->work('3h')")
-// 		->astQuery()
-// 		->methodCall()
-// 		->shallow()->arg()
-// 		->string()
-// 		->where('value', '1h')
-// 		->renderGraphs();
-// });
