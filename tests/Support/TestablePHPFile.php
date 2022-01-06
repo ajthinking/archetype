@@ -12,6 +12,8 @@ use function PHPUnit\Framework\assertStringContainsString;
 
 class TestablePHPFile extends PHPFile
 {
+	public string $astQueryBuilder = TestableASTQueryBuilder::class;
+
 	public function assertClassConstant(string $name, $value)
 	{
 		assertEquals($this->classConstant($name), $value);

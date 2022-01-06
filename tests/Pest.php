@@ -11,5 +11,4 @@ if (!function_exists('context')) {
     }
 }
 
-
 uses(TestCase::class)->in(__DIR__);

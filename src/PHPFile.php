@@ -2,6 +2,7 @@
 
 namespace Archetype;
 
+use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Traits\DelegatesAPICalls;
 use Archetype\Traits\HasDirectiveDefaults;
 use Archetype\Traits\HasDirectiveHandlers;
@@ -21,6 +22,8 @@ class PHPFile
     protected string $contents;
 
     protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
+
+	public string $astQueryBuilder = ASTQueryBuilder::class;
 
     protected $ast;
 
