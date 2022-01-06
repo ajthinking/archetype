@@ -12,11 +12,13 @@ use Archetype\Support\AST\Visitors\NodeRemover;
 use Archetype\Support\AST\Visitors\HashInserter;
 use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
+use Archetype\Support\HigherOrderDumper;
 use Archetype\Traits\Dumpable;
 use Archetype\Traits\Tappable;
 use Closure;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use PhpParser\ConstExprEvaluator;
 
 class ASTQueryBuilder
@@ -79,6 +81,9 @@ class ASTQueryBuilder
         // Can we find a corresponding PHPParser property to enter?
         $property = $this->propertyMap($name);
         if ($property) return $this->traverseIntoProperty($property);
+
+		if($name == 'dd') return HigherOrderDumper::dd($this);
+		if($name == 'dump') return HigherOrderDumper::dump($this);
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }
@@ -166,13 +171,18 @@ class ASTQueryBuilder
     protected function wherePath($path, $expected)
     {
         return $this->next(function ($queryNode) use ($path, $expected) {
-            $steps = collect(explode('->', $path));
+            $nodes = collect(Arr::wrap($queryNode->result));
+			$steps = collect(explode('->', $path));
 
-            $result = $steps->reduce(function ($result, $step) {
-                return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
-            }, $queryNode->result);
+			return $nodes->map(function($node) use($steps, $expected, $queryNode) {
+				$actual = $steps->reduce(function ($result, $step) {
+					return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
+				}, $node);
 
-            return $result == $expected ? $queryNode : new Killable;
+				return $actual == $expected
+					? Survivor::fromParent($queryNode)->withResult($node)
+					: new Killable;
+			});
         });
     }
 
@@ -183,9 +193,20 @@ class ASTQueryBuilder
                 Arr::wrap((clone $queryNode)->result)
             );
 
-            return $callback($query) ? $queryNode : new Killable;
+            return $this->whereClauseCallbackIsFulfilled($callback($query))
+				? $queryNode
+				: new Killable;
         });
     }
+
+	protected function whereClauseCallbackIsFulfilled($result)
+	{
+		if($result instanceof ASTQueryBuilder) return $result->isNotEmpty();
+
+		if($result instanceof Collection) return $result->isNotEmpty();
+
+		return $result;
+	}
 
     /**
      * Recall data in memory

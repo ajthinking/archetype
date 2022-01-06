@@ -20,16 +20,19 @@ trait RenderGraphs
 
 				$ast = Arr::wrap($node->result);
 				if(empty($ast)) continue;
-				$hash = $ast[0]->__object_hash;
-				array_push($map, $hash);
-				$id = array_search($hash, $map);
+				if(is_object($ast[0])) {
+					$hash = $ast[0]->__object_hash;
+					array_push($map, $hash);
+					$id = array_search($hash, $map);
+				}
+
 				$parent = $node->parent ?? null;
 				$parentHash = $parent ? Arr::wrap($node->parent->result)[0]->__object_hash : null;
 				$parentId = $parentHash ? array_search($parentHash, $map) : -1;
 
 				$name = 'level_'.$level
 					.'_index_'.$nodeIndex
-					.'_id_'.$id
+					.($id !== null ? '_id_'.$id : '_id_X')
 					.($parentId !== -1 ? '_parent_'.$parentId : '');
 				
 				(new \PHPAstVisualizer\Printer)->print($ast)

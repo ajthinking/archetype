@@ -11,7 +11,7 @@ it('can be instanciated using an ast object', function() {
 });
 
 it('will return instance of itself on chain', function() {
-	$ast = LaravelFile::load('app/Models/User.php')->ast();
+	$ast = PHPFile::load('app/Models/User.php')->ast();
 
 	(new ASTQueryBuilder($ast))
 		->class()
@@ -67,11 +67,7 @@ it('can query beyond an array using in a where closure', function() {
 	PHPFile::fromString('ho("0h")')
 		->astQuery()
 		->funcCall()
-		->where(function($query) {
-			return $query->args 
-				->string()
-				->isNotEmpty();
-		})
+		->where(fn($query) => $query->args->string())
 		->assertMatchCount(1);
 });
 
@@ -95,4 +91,52 @@ context('when searching method chains', function() {
 			->assertMatchCount(1)
 			->assertMatches(collect('3h'));
 	});	
+});
+
+test('resolved where closures with matches are considered truthy', function() {
+	PHPFile::fromString('class Cool extends Ice {}')
+		->astQuery()
+		->class()
+		->where(fn($query) => $query->where('extends->parts', ['Ice'])->get())
+		->assertMatchCount(1);
+});
+
+test('unresolved where closures with matches are considered truthy', function() {
+	PHPFile::fromString('class Cool extends Ice {}')
+		->astQuery()
+		->class()
+		->where(fn($query) => $query->where('extends->parts', ['Ice']))
+		->assertMatchCount(1);
+});
+
+test('resolved where closures without matches are considered falsy', function() {
+	PHPFile::fromString('class Cool extends Ice {}')
+		->astQuery()
+		->class()
+		->where(fn($query) => $query->where('extends->parts', ['Baby'])->get())
+		->assertMatchCount(0);
+});
+
+test('unresolved where closures without matches are considered falsy', function() {
+	PHPFile::fromString('class Cool extends Ice {}')
+		->astQuery()
+		->class()
+		->where(fn($query) => $query->where('extends->parts', ['Baby']))
+		->assertMatchCount(0);
+});
+
+test('where closures returning true are considered truthy', function() {
+	PHPFile::fromString('class Cool extends Ice {}')
+		->astQuery()
+		->class()
+		->where(fn($_) => true)
+		->assertMatchCount(1);
+});
+
+test('where closures returning false are considered falsy', function() {
+	PHPFile::fromString('class Cool extends Ice {}')
+		->astQuery()
+		->class()
+		->where(fn($_) => false)
+		->assertMatchCount(0);
 });
