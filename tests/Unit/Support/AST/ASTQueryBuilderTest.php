@@ -3,30 +3,29 @@
 use Archetype\Facades\LaravelFile;
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
-use Archetype\Support\AST\ASTQueryBuilder;
+use Archetype\Tests\Support\TestableASTQueryBuilder as ASTQueryBuilder;
 
 it('can be instanciated using an ast object', function() {
-	$this->assertInstanceOf(
-		ASTQueryBuilder::class,
-		new ASTQueryBuilder(
-			LaravelFile::load('app/Models/User.php')->ast()
-		)
-	);
+	$ast = LaravelFile::load('public/index.php')->ast();
+	(new ASTQueryBuilder($ast))->assertInstanceOf(ASTQueryBuilder::class);
 });
 
 it('will return instance of itself on chain', function() {
 	$ast = LaravelFile::load('app/Models/User.php')->ast();
 
-	$this->assertInstanceOf(
-		ASTQueryBuilder::class,
-		(new ASTQueryBuilder($ast))->class()->classMethod()
-	);
+	(new ASTQueryBuilder($ast))
+		->class()
+		->classMethod()
+		->assertInstanceOf(ASTQueryBuilder::class);
 });
 
-it('can query deep', function() {
-	$result = LaravelFile::load(
-		'database/migrations/2014_10_12_000000_create_users_table.php'
-	)
+it('will returns a collection on get', function() {
+	(new ASTQueryBuilder([]))
+		->assertMatches(collect());
+});
+
+it('can queries deep by default which means it will skip intermediate missing layers', function() {
+	PHPFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
 		->astQuery()
 		->classMethod()
 		->where('name->name', 'up')
@@ -36,45 +35,36 @@ it('can query deep', function() {
 		->args
 		->value
 		->value
-		->get()
-		->first();
-		
-	$this->assertEquals($result, 'users');
+		->assertMatches(collect(['users']));
 });
 
 it('can query with explicit class names', function() {
 	// Short node names may be amgigious. If needed, refer to explicit class names
-	$names = PHPFile::fromString('CONST CHANNEL = "tv4", TIME = "20:00"')
+	PHPFile::fromString('CONST CHANNEL = "tv4", TIME = "20:00"')
 		->astQuery()
 		->traverseIntoClass(\PhpParser\Node\Stmt\Const_::class) // const declaration outside of class
 		->traverseIntoClass(\PhpParser\Node\Const_::class) // one of potentially many assignments
 		->name->name
-		->get();
-
-	$this->assertEquals($names->all(), ['CHANNEL', 'TIME']);
+		->assertMatches(collect(['CHANNEL', 'TIME']));
 });
 
 it('can query beyond an array', function() {
-	$matches = PHPFile::fromString('hey("0h")')
+	PHPFile::fromString('hey("0h")')
 		->astQuery()
 		->funcCall()
 		->args
 		->string()
-		->get();
-	
-	$this->assertCount(1, $matches);
+		->assertMatchCount(1);
 });
 
 it('can traverse into property when result is an array', function() {
-	$matches = PHPFile::fromString('1;2;')->astQuery() // Two(!) Expression:s
+	PHPFile::fromString('1;2;')->astQuery() // Two(!) Expression:s
 		->expr
-		->get();
-
-	$this->assertCount(2, $matches);
+		->assertMatchCount(2);
 });
 
 it('can query beyond an array using in a where closure', function() {
-	$matches = PHPFile::fromString('ho("0h")')
+	PHPFile::fromString('ho("0h")')
 		->astQuery()
 		->funcCall()
 		->where(function($query) {
@@ -82,32 +72,27 @@ it('can query beyond an array using in a where closure', function() {
 				->string()
 				->isNotEmpty();
 		})
-		->get();
-	
-	$this->assertCount(1, $matches);
+		->assertMatchCount(1);
 });
 
 context('when searching method chains', function() {
-	$code = "start()->work('1h')->work('2h')->work('3h')";
-
-	it('will match all methodCalls by default', function() use($code) {
-		$matches = PHPFile::fromString($code)
+	it('will match all methodCalls by default', function() {
+		PHPFile::fromString('$lets->go()->go()->go()')
 			->astQuery()
 			->methodCall()
-			->get();
-		
-		$this->assertCount(3, $matches);
+			->assertMatchCount(3);
 	});
 
-	it('will match only the outer methodCall when doing a shallow query', function() use($code) {
-		$matches = PHPFile::fromString($code)
+	it('will match only the outermost methodCall when doing a shallow query', function() {
+		PHPFile::fromString("start()->work('1h')->work('2h')->work('3h')")
 			->astQuery()
 			->expression()
 			->shallow()
 			->methodCall()
-			->get();
-		
-		$this->assertCount(1, $matches);
-		$this->assertEquals('3h', $matches->first()->args[0]->value->value);
+			->arg()
+			->string()
+			->value
+			->assertMatchCount(1)
+			->assertMatches(collect('3h'));
 	});	
 });
