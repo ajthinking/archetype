@@ -11,6 +11,8 @@ class Survivor extends QueryNode
 
     public $result;
 
+	public $parent;
+
     public function __construct($result)
     {
         $this->result = $result;
