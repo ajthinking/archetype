@@ -27,7 +27,6 @@ class TestablePHPFile extends PHPFile
             ->where(function ($query) use ($name) {
                 return $query->const()
 					->where('name->name', $name)
-                    ->get()
 					->isNotEmpty();
             })->get()
 			->isNotEmpty();
@@ -45,7 +44,6 @@ class TestablePHPFile extends PHPFile
             ->where(function ($query) use ($name) {
                 return $query->propertyProperty()
 					->where('name->name', $name)
-                    ->get()
 					->isNotEmpty();
             })->get()
 			->isNotEmpty();

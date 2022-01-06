@@ -129,7 +129,6 @@ class ClassConstant extends EndpointProvider
             ->where(function ($query) use ($key) {
                 return $query->const()
 					->where('name->name', $key)
-                    ->get()
 					->isNotEmpty();
             })
             ->remove()
