@@ -4,10 +4,13 @@ namespace Archetype\Traits;
 
 trait Dumpable
 {
-    public function dd($property = null)
+    public function dd($target = null)
     {
-		if(is_string($property)) {
-			dd($this->$property);
+		if(is_string($target)) {
+			
+			if(method_exists($this, $target)) dd($this->$target());
+
+			dd($this->$target);
 		}		
 
         dd($this);
