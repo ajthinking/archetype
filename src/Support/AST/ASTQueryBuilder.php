@@ -12,6 +12,8 @@ use Archetype\Support\AST\Visitors\NodeRemover;
 use Archetype\Support\AST\Visitors\HashInserter;
 use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
+use Archetype\Traits\Dumpable;
+use Archetype\Traits\Tappable;
 use Closure;
 use Exception;
 use Illuminate\Support\Arr;
@@ -19,15 +21,15 @@ use PhpParser\ConstExprEvaluator;
 
 class ASTQueryBuilder
 {
-    use HasOperators;
-    
-    use PHPParserClassMap;
+    use HasOperators,
+		PHPParserClassMap,
+		RenderGraphs,
+		Dumpable,
+		Tappable;
 
     public $allowDeepQueries = true;
 
     public $currentDepth = 0;
-
-    public $initialAST;
 
     public $resultingAST;
 
@@ -37,7 +39,6 @@ class ASTQueryBuilder
 
     public function __construct($ast)
     {
-        $this->initialAST = $ast;
         $this->resultingAST = $ast;
 
         $this->tree = [
@@ -77,9 +78,7 @@ class ASTQueryBuilder
     {
         // Can we find a corresponding PHPParser property to enter?
         $property = $this->propertyMap($name);
-        if ($property) {
-            return $this->traverseIntoProperty($property);
-        }
+        if ($property) return $this->traverseIntoProperty($property);
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }
@@ -99,19 +98,14 @@ class ASTQueryBuilder
     public function traverseIntoProperty($property)
     {
         return $this->next(function ($queryNode) use ($property) {
-            if (!isset($queryNode->result->$property)) {
-                return new Killable;
-            }
-            
-            $value = $queryNode->result->$property;
-            
-            if (is_array($value)) {
-                return collect($value)->map(function ($item) use ($value, $queryNode) {
-                    return Survivor::fromParent($queryNode)->withResult($item);
-                })->toArray();
-            }
+			$results = Arr::wrap($queryNode->result);
+			$values = collect($results)->map(function($result) use($property) {
+				return $result->$property ?? null;
+			})->filter()->flatten();
 
-            return Survivor::fromParent($queryNode)->withResult($value);
+			return $values->map(function ($value) use ($queryNode) {
+				return Survivor::fromParent($queryNode)->withResult($value);
+			});
         });
     }
 
@@ -140,13 +134,6 @@ class ASTQueryBuilder
 
         return $this;
     }
-
-	public function tap($callback)
-	{
-		$callback($this, $this->currentNodes());
-
-		return $this;
-	}
 
     public function where($arg1, $arg2 = null)
     {
@@ -220,6 +207,11 @@ class ASTQueryBuilder
     {
         return collect(end($this->tree))->pluck('result')->flatten();
     }
+
+	public function isNotEmpty()
+	{
+		return $this->get()->isNotEmpty();
+	}
 
     public function first()
     {
@@ -345,24 +337,6 @@ class ASTQueryBuilder
 
         return $this;
     }
-
-    public function dd($callback = null)
-    {
-		if($callback instanceof \Closure) {
-			dd($callback($this));
-		}
-
-        dd($this->get());
-    }
-
-    public function ddSimple()
-    {
-        dd(
-			$this->get()->map(function($result) {
-				return (new ASTSimplifier)->simplify($result);
-			})
-		);
-    }	
     
     public function commit()
     {
@@ -382,33 +356,4 @@ class ASTQueryBuilder
     {
         return collect($this->tree[$this->currentDepth]);
     }
-
-	public function renderGraphs()
-	{
-		$map = [];
-
-		foreach($this->tree as $level => $queryNodes) {
-			foreach($queryNodes as $nodeIndex => $node) {
-
-				$ast = Arr::wrap($node->result);
-				if(empty($ast)) continue;
-				$hash = $ast[0]->__object_hash;
-				array_push($map, $hash);
-				$id = array_search($hash, $map);
-				$parent = $node->parent ?? null;
-				$parentHash = $parent ? Arr::wrap($node->parent->result)[0]->__object_hash : null;
-				$parentId = $parentHash ? array_search($parentHash, $map) : -1;
-
-				$name = 'level_'.$level
-					.'_index_'.$nodeIndex
-					.'_id_'.$id
-					.($parentId !== -1 ? '_parent_'.$parentId : '');
-				
-				(new \PHPAstVisualizer\Printer)->print($ast)
-					->export('png', __DIR__."/../../../logs/$name.png");
-			}
-		}
-
-
-	}
 }
