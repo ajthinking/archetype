@@ -6,7 +6,7 @@ use Archetype\Endpoints\EndpointProvider;
 use Archetype\Support\URI;
 use Illuminate\Support\Str;
 
-class Maker extends EndpointProvider
+class Make extends EndpointProvider
 {
     protected string $filename;
     protected string $extension = '.php';
@@ -20,7 +20,7 @@ class Maker extends EndpointProvider
             ->outputDriver($this->outputDriver);
     }
 
-    public function class($name)
+    public function class($name = 'Dummy')
     {
         $this->setupNames($name, 'class_root');
 

@@ -4,7 +4,7 @@ namespace Archetype\Traits;
 
 use Archetype\Support\Types;
 
-trait HasDirectiveDefaults
+trait HasDirectives
 {
     public function add($value = Types::NO_VALUE)
     {
@@ -15,11 +15,6 @@ trait HasDirectiveDefaults
         }
 
         return $this;
-    }
-
-    public function include($value = Types::NO_VALUE)
-    {
-        return $this->unique($value = Types::NO_VALUE);
     }
 
     public function remove()
@@ -37,9 +32,9 @@ trait HasDirectiveDefaults
         return $this->directive('empty', true);
     }
 
-	public function addMissingTags()
+	public function addMissingTags($trueOrFalse = true)
 	{
-        return $this->directive('addMissingTags', false);
+        return $this->directive('addMissingTags', $trueOrFalse);
 	}
 
     public function full()

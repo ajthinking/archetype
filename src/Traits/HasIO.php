@@ -165,9 +165,9 @@ trait HasIO
     }
 
 	protected function prepareCode($code)
-	{
+	{		
 		if(!$this->directive('addMissingTags')) return $code;
-	
+
 		if(!str_contains($code, '<?php')) {
 			$code = '<?php ' . PHP_EOL . PHP_EOL . $code;
 		}

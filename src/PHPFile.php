@@ -4,7 +4,7 @@ namespace Archetype;
 
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Traits\DelegatesAPICalls;
-use Archetype\Traits\HasDirectiveDefaults;
+use Archetype\Traits\HasDirectives;
 use Archetype\Traits\HasDirectiveHandlers;
 use Archetype\Traits\HasIO;
 
@@ -12,7 +12,7 @@ class PHPFile
 {
     use HasIO;
     use DelegatesAPICalls;
-    use HasDirectiveDefaults;
+    use HasDirectives;
     use HasDirectiveHandlers;
 
     protected $input;
@@ -40,7 +40,7 @@ class PHPFile
     protected const endpointProviders = [
         // Utilities
         Endpoints\PHP\AstQuery::class,
-        Endpoints\PHP\Maker::class,		
+        Endpoints\PHP\Make::class,		
         Endpoints\PHP\ReflectionProxy::class,
         Endpoints\SyntacticSweetener::class,
 

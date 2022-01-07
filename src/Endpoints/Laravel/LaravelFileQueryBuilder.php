@@ -109,5 +109,5 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
         });
 
         return $this;
-    }
+    }	
 }

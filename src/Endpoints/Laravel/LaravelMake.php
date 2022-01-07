@@ -2,13 +2,10 @@
 
 namespace Archetype\Endpoints\Laravel;
 
-use Archetype\Endpoints\EndpointProvider;
-use Archetype\Endpoints\Laravel\Maker\Unimplemented;
-use Archetype\Endpoints\PHP\Maker;
-use Archetype\Support\URI;
+use Archetype\Endpoints\PHP\Make;
 use Illuminate\Support\Str;
 
-class LaravelMaker extends Maker
+class LaravelMake extends Make
 {
     public function command($name, $options = [])
     {
@@ -49,7 +46,7 @@ class LaravelMaker extends Maker
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());
+            ->outputDriver($this->outputDriver);
     }
 
     public function migration($name)
@@ -63,7 +60,7 @@ class LaravelMaker extends Maker
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());
+            ->outputDriver($this->outputDriver);
     }
     
     public function factory($name)
@@ -75,7 +72,7 @@ class LaravelMaker extends Maker
             ->__toString();
 
         return $this->file->fromString($contents)
-            ->outputDriver($this->outputDriver());
+            ->outputDriver($this->outputDriver);
     }
 
     protected function stub($name)

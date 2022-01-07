@@ -8,7 +8,7 @@ class LaravelFile extends PHPFile
 {
     protected const endpointProviders = [
         // Utilities
-        Endpoints\Laravel\LaravelMaker::class,
+        Endpoints\Laravel\LaravelMake::class,
 
         // Resources
         Endpoints\Laravel\BelongsTo::class,
