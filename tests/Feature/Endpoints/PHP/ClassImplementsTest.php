@@ -1,36 +1,24 @@
 <?php
 
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can retrieve class implements', function() {
-	$file = PHPFile::load('app/Models/User.php');
-
-	$this->assertTrue(
-		$file->implements() === []
-	);
+	PHPFile::load('app/Models/User.php')
+		->assertImplements([]);
 });
 
 it('can set class implements', function() {
-	$file = PHPFile::load('app/Models/User.php')->implements([
-	"MyInterface"
-	]);
-
-	$this->assertTrue(
-		$file->implements() === [
-			"MyInterface"
-		]
-	);
+	PHPFile::load('app/Models/User.php')
+		->implements(['MyInterface'])
+		->assertImplements(['MyInterface']);
 });
 
 it('can add class implements', function() {
-	$file = PHPFile::load('app/Models/User.php')
+	PHPFile::load('app/Models/User.php')
 		->add()->implements(['MyFirstInterface'])
-		->add()->implements(['MySecondInterface']);
-
-	$this->assertTrue(
-		$file->implements() === [
+		->add()->implements(['MySecondInterface'])
+		->assertImplements([
 			'MyFirstInterface',
 			'MySecondInterface'
-		]
-	);
+		]);
 });

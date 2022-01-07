@@ -87,6 +87,8 @@ trait HasIO
     public function preview()
     {
         echo $this->render();
+
+		return $this;
     }
 
     public function parse()
