@@ -7,9 +7,13 @@ use PhpParser\BuilderHelpers;
 use Archetype\Support\Types;
 use Illuminate\Support\Arr;
 use Exception;
+use PhpParser\ConstExprEvaluator;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Stmt\Expression;
+use PhpParser\Node\Expr;
+use PhpParser\BuilderFactory;
 
 class ClassConstant extends EndpointProvider
 {
@@ -188,7 +192,7 @@ class ClassConstant extends EndpointProvider
             ->class()
             ->classConst()->consts
             ->where('name->name', $key)
-            ->get()->isNotEmpty();
+            ->isNotEmpty();
 
         return $propertyExists ? $this->update($key, $value) : $this->create($key, $value);
     }
@@ -219,16 +223,8 @@ class ClassConstant extends EndpointProvider
     }
 
     protected function makeConstant($key, $value)
-    {
-        if (is_string($value)) {
-            $value =  new String_($value);
-        } else {
-            dd("Can only set string");
-        }
-
-        $const = new Const_($key, $value);
-        $constant = new ClassConst([$const]);
-        return $constant;
+    {	
+		return (new BuilderFactory)->classConst($key, $value)->getNode();
     }
 
     protected function addToUnknownType($key, $value)

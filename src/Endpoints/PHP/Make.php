@@ -12,7 +12,7 @@ class Make extends EndpointProvider
     protected string $extension = '.php';
     protected string $relativeDir = '';
 
-    public function file(string $name)
+    public function file(string $name = 'dummy.php')
     {
         $this->setupNames($name);
 

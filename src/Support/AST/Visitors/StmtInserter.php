@@ -14,8 +14,9 @@ class StmtInserter extends NodeVisitorAbstract
     protected $finished = false;
 
     const priority = [
-        'PhpParser\Node\Stmt\Namespace_',
-        'PhpParser\Node\Stmt\TraitUse',
+		'PhpParser\Node\Stmt\Namespace_',
+		'PhpParser\Node\Stmt\TraitUse',
+		'PhpParser\Node\Stmt\ClassConst',
         'PhpParser\Node\Stmt\Property',
         'PhpParser\Node\Stmt\ClassMethod',
     ];

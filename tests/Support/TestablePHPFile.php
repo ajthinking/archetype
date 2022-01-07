@@ -4,6 +4,8 @@ namespace Archetype\Tests\Support;
 
 use Archetype\PHPFile;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertEmpty;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertInstanceOf;
@@ -28,7 +30,14 @@ class TestablePHPFile extends PHPFile
 		}
 
 		return $this;
-	}	
+	}
+
+	public function assertExtends(string $expected = null)
+	{
+		assertEquals($expected, $this->extends());
+
+		return $this;
+	}
 
 	public function assertInstanceOf($class)
 	{
@@ -49,6 +58,13 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
+	public function assertImplements(array $expected = null)
+	{
+		assertEquals($expected, $this->implements());
+
+		return $this;
+	}
+
 	public function assertNoClassConstant(string $name)
 	{
 		$exists = $this->astQuery()
@@ -62,6 +78,13 @@ class TestablePHPFile extends PHPFile
 			->isNotEmpty();
 
 		assertFalse($exists);
+
+		return $this;
+	}
+
+	public function assertNoClassConstants()
+	{
+		assertEmpty($this->astQuery()->classConst()->get());
 
 		return $this;
 	}
@@ -110,6 +133,13 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
+	public function assertBeautifulPhp()
+	{
+		$this->assertLinebreaksBetweenClassStmts();
+
+		return $this;
+	}	
+
 	public function assertMultilineArray($name) {
 		preg_match("/$name \= (\[[^\;]*)/s", $this->render(), $matches);
 		$code = $matches[1];
@@ -139,9 +169,16 @@ class TestablePHPFile extends PHPFile
 		$lineNumberCursor = $class->getStartLine() + 2;
 		
 		$stmts->each(function($stmt, $index) use(&$lineNumberCursor) {
+			$startLine = collect([
+				$stmt->getStartLine(),
+				collect($stmt->getComments())->map->getStartLine()->min()
+			])->min();
+
 			assertEquals(
 				$lineNumberCursor,
-				$stmt->getStartLine()
+				$startLine,
+				'Missing linebreaks between class statements:'
+					.PHP_EOL.PHP_EOL.$this->render()
 			);
 
 			$lineNumberCursor = $stmt->getEndLine() + 2;
