@@ -65,6 +65,13 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
+	public function assertClassName(string $name = null)
+	{
+		assertEquals($name, $this->className());
+
+		return $this;
+	}
+
 	public function assertNoClassConstant(string $name)
 	{
 		$exists = $this->astQuery()
@@ -153,6 +160,13 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
+	public function assertNamespace(string $expected = null)
+	{
+		assertEquals($expected, $this->namespace());
+
+		return $this;
+	}
+
 	public function assertSingleLineEmptyArray($name) {
 		assertMatchesRegularExpression("/$name \= (\[\];]*)/s", $this->render());
 
@@ -164,6 +178,8 @@ class TestablePHPFile extends PHPFile
 		$this->fromString($this->render());
 
 		$class = $this->astQuery()->class()->first();
+		if(!$class) return;
+
 		$stmts = $this->astQuery()->class()->stmts->get();
 
 		$lineNumberCursor = $class->getStartLine() + 2;

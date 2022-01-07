@@ -1,6 +1,6 @@
 <?php
 
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can retrieve use statements', function () {
 	// A file with use statements
