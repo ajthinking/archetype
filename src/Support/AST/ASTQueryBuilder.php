@@ -35,7 +35,7 @@ class ASTQueryBuilder
 
     public $resultingAST;
 
-    public $file;
+    public $parent;
 
 	public $tree;
 
@@ -63,7 +63,7 @@ class ASTQueryBuilder
         // Can we find a corresponding PHPParser class to enter?
         $class = $this->classMap($method);
         if ($class) {
-            return $this->traverseIntoClass($class);
+            return $this->traverseIntoClass($class, ...$args);
         }
 
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
@@ -84,21 +84,42 @@ class ASTQueryBuilder
 
 		if($name == 'dd') return HigherOrderDumper::dd($this);
 		if($name == 'dump') return HigherOrderDumper::dump($this);
+		if($name == 'where') return new HigherOrderWhere($this);
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }
 
-    public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
+    public function traverseIntoClass($expectedClass, $path = null, $finderMethod = 'findInstanceOf')
     {
-        return $this->next(function ($queryNode) use ($expectedClass, $finderMethod) {
-            // Search the abstract syntax tree
-            $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
-            // Wrap matches in Survivor object
-            return collect($results)->map(function ($result) use ($queryNode) {
+		$steps = $path ? collect(explode('->', $path)) : collect();
+
+        return $this->next(function ($queryNode) use ($expectedClass, $finderMethod, $steps) {
+            $classMatches = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
+
+			$classAndPathMatches = collect($classMatches)->map(function ($node) use($steps) {
+				return $steps->reduce(function ($result, $step) {
+					$hasPath = is_object($result) && isset($result->$step) && $result->$step;
+					return $hasPath ? $result->$step : null;
+				}, $node);                
+            })->filter();
+			
+            return $classAndPathMatches->map(function ($result) use ($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
         });
     }
+
+    // public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
+    // {
+    //     return $this->next(function ($queryNode) use ($expectedClass, $finderMethod) {
+    //         // Search the abstract syntax tree
+    //         $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
+    //         // Wrap matches in Survivor object
+    //         return collect($results)->map(function ($result) use ($queryNode) {
+    //             return Survivor::fromParent($queryNode)->withResult($result);
+    //         })->toArray();
+    //     });
+    // }	
 
     public function traverseIntoProperty($property)
     {
@@ -140,19 +161,30 @@ class ASTQueryBuilder
         return $this;
     }
 
+	public function is($expected)
+	{
+		return $this->whereEquals($expected);
+	}
+
+	public function whereEquals($expected)
+	{
+        return $this->next(function ($queryNode) use ($expected) {
+            $nodes = collect(Arr::wrap($queryNode->result));
+
+			return $nodes->map(function($node) use($expected, $queryNode) {
+				return $node === $expected
+					? Survivor::fromParent($queryNode)->withResult($node)
+					: new Killable;
+			});
+        });
+	}
+
     public function where($arg1, $arg2 = null)
     {
         return $arg1 instanceof Closure ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
     }
 
-    public function whereEquals($expected)
-    {
-        return $this->next(function ($queryNode) use ($expected) {
-            return $queryNode->result == $expected ? $queryNode : new Killable;
-        });
-    }
-
-    protected function next($callback)
+    public function next($callback)
     {
         $next = $this->currentNodes()->map($callback)->flatten()->toArray();
 
@@ -361,7 +393,7 @@ class ASTQueryBuilder
     
     public function commit()
     {
-        $this->file->ast(
+        $this->parent->ast(
             $this->resultingAST
         );
 
@@ -370,10 +402,10 @@ class ASTQueryBuilder
 
     public function end()
     {
-        return $this->file;
+        return $this->parent;
     }
 
-    protected function currentNodes()
+    public function currentNodes()
     {
         return collect($this->tree[$this->currentDepth]);
     }

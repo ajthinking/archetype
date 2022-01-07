@@ -21,7 +21,7 @@ class AstQuery extends EndpointProvider
         $builder = new $builderClass($this->file->ast());
         
         // Attach the file so we can return it later
-        $builder->file = $this->file;
+        $builder->parent = $this->file;
         
         return $builder;
     }

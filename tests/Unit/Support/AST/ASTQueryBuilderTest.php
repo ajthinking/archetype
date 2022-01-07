@@ -140,3 +140,33 @@ test('where closures returning false are considered falsy', function() {
 		->where(fn($_) => false)
 		->assertMatchCount(0);
 });
+
+test('it can use higher order queries', function() {
+	// get all array properties with string items inside
+	PHPFile::load('app/Exceptions/Handler.php')
+		->astQuery()
+		->class()
+		->property()
+		->propertyProperty()
+		->where->array()->string()->get()
+		->name->name
+		->assertMatches(collect(['dontFlash']));
+});
+
+test('whereEquals can filter on result itself', function() {
+	PHPFile::load('app/Models/User.php')
+		->astQuery()
+		->string()
+		->value
+		->assertMatchCount(7)
+		->whereEquals('email')
+		->assertMatchCount(1)
+		->assertMatches(collect(['email']));
+});
+
+it('can traverse into class properties by passing an arrow separated string', function() {
+	PHPFile::load('app/Providers/AppServiceProvider.php')
+		->astQuery()
+		->classMethod('name->name')
+		->assertMatches(collect(['register', 'boot']));
+});
