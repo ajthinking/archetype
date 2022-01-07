@@ -3,7 +3,7 @@
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 use Archetype\Endpoints\Laravel\LaravelFileQueryBuilder;
 use Archetype\Facades\LaravelFile;
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can instanciate via php or laravel file with in method', function() {
 	$this->assertInstanceOf(
@@ -141,5 +141,15 @@ it('has a first method', function() {
 	$this->assertInstanceOf(
 		\Archetype\LaravelFile::class,
 		LaravelFile::in('public')->first()
+	);
+});
+
+it('will accept forbidden directories when explicitly passed', function() {
+	$file = PHPFile::in(
+		'vendor/ajthinking/archetype/src/snippets'
+	)->get()->first();
+
+	$this->assertTrue(
+		get_class($file) === \Archetype\Tests\Support\TestablePHPFile::class
 	);
 });

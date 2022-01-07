@@ -11,4 +11,11 @@ if (!function_exists('context')) {
     }
 }
 
+if (!function_exists('describe')) {
+    function describe(string $description, Closure $closure)
+    {
+        $closure();
+    }
+}
+
 uses(TestCase::class)->in(__DIR__);

@@ -14,6 +14,34 @@ class TestablePHPFile extends PHPFile
 {
 	public string $astQueryBuilder = TestableASTQueryBuilder::class;
 
+	public function assertDirective($name, $expected)
+	{
+		assertEquals($expected, $this->directive($name));
+
+		return $this;
+	}
+
+	public function assertDirectives($expectedMap)
+	{
+		foreach($expectedMap as $name => $expected) {
+			$this->assertDirective($name, $expected);
+		}
+
+		return $this;
+	}	
+
+	public function assertInstanceOf($class)
+	{
+		assertInstanceOf($class, $this);
+
+		return $this;
+	}
+	
+	public function assertInstanceOfTestablePHPile()
+	{
+		return $this->assertInstanceOf(\Archetype\Tests\Support\TestablePHPFile::class);
+	}
+
 	public function assertClassConstant(string $name, $value)
 	{
 		assertEquals($this->classConstant($name), $value);
