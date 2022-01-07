@@ -1,39 +1,39 @@
 <?php
 
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can retrieve namespace', function() {
-	// on a file with namespace
-	$this->assertTrue(
-		PHPFile::load('app/Models/User.php')->namespace() === 'App\Models'
-	);
-
-	// on a file without namespace
-	$this->assertTrue(
-		PHPFile::load('public/index.php')->namespace() === null
-	);
+	PHPFile::load('app/Models/User.php')
+		->assertNamespace('App\Models');
 });
 
-it('can set namespace', function() {
-	// on a file with namespace
-	$this->assertTrue(
-		PHPFile::load('app/Models/User.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
-	);
+it('can attempt to retrieve namespace', function() {
+	PHPFile::load('public/index.php')
+		->assertNamespace(null);
+});
 
-	// on a file without namespace
-	$this->assertTrue(
-		PHPFile::load('public/index.php')->namespace('New\Namespace')->namespace() === 'New\Namespace'
-	);
+it('can update namespace', function() {
+	PHPFile::load('app/Models/User.php')
+		->namespace('New\Namespace')
+		->assertNamespace('New\Namespace');
+});
+
+it('can give a file a namespace', function() {
+	PHPFile::load('public/index.php')
+		->namespace('New\Namespace')
+		->assertNamespace('New\Namespace')
+		->assertValidPhp()
+		->assertBeautifulPhp();
 });
     
 it('can remove namespace', function() {
-	// on a file with namespace
-	$this->assertTrue(
-		PHPFile::load('app/Models/User.php')->remove()->namespace()->namespace() === null
-	);
+	PHPFile::load('app/Models/User.php')
+		->remove()->namespace()
+		->assertNamespace(null);
+});
 
-	// on a file without namespace
-	$this->assertTrue(
-		PHPFile::load('public/index.php')->remove()->namespace()->namespace() === null
-	);
+it('can attempt to remove namespace ', function() {
+	PHPFile::load('public/index.php')
+		->remove()->namespace()
+		->assertNamespace(null);
 });

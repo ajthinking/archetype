@@ -1,31 +1,37 @@
 <?php
 
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can retrieve class name', function() {
-	$file = PHPFile::load('app/Models/User.php');
-
-	$this->assertTrue(
-		$file->className() === "User"
-	);
+	PHPFile::load('app/Models/User.php')
+		->assertClassName("User");
 });
     
 it('can retrieve full class name', function() {
-	$file = PHPFile::load('app/Models/User.php');
-
-	$this->assertTrue(
-		$file->full()->className() === "App\Models\User"
-	);
+	PHPFile::load('app/Models/User.php')
+		->full()->assertClassName("App\Models\User");
 });
 
-it('can set class name', function() {
-	// on a file with a class
-	$this->assertTrue(
-		PHPFile::load('app/Models/User.php')->className("NewName")->className() === "NewName"
-	);
+it('can set class name on a loaded file with a class', function() {
+	PHPFile::load('app/Models/User.php')
+		->className("NewName")
+		->assertClassName("NewName")
+		->assertValidPhp()
+		->assertBeautifulPhp();
+});
 
-	// on a file without a class
-	$this->assertTrue(
-		PHPFile::load('public/index.php')->className("NewName")->className() === null
-	);
+it('can set class name on a created file with a class', function() {
+	PHPFile::make()->class()
+		->className("NewName")
+		->assertClassName("NewName")
+		->assertValidPhp()
+		->assertBeautifulPhp();
+});
+
+it('can attempt to set class on a file without a class', function() {
+	PHPFile::make()->file()
+		->className("NewName")
+		->assertClassName(null)
+		->assertValidPhp()
+		->assertBeautifulPhp();
 });
