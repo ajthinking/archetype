@@ -11,13 +11,11 @@
 
 ## Getting started
 ```bash
-# requires UNIX filesystem,
-# PHP >= 7.4 and Laravel >= 7
-
 composer require ajthinking/archetype
 ```
+> 
 
-Check out introduction below :point_down: or review the full docs [here](docs.md)
+That's it! Check out introduction of concepts below or review the [API DOCS](docs.md)
  
 ## `PHPFile` read/write API
 
@@ -184,6 +182,11 @@ To see *all* offending files run `php artisan archetype:errors`. To ignore files
 ```bash
 php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
+
+## Requirmenst
+* UNIX filesystem
+* PHP >= 7.4
+* Laravel >= 7
 
 ## Contributing
 PRs welcome :pray:
