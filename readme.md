@@ -166,13 +166,11 @@ MIT
 PHPFile::make()->file('dummy.php')
 	->render()
 ```
-<details><summary>Output</summary>
 
 ```
 <?php
 ```
 
-</details>
 
 ### Make a class file
 ```php example
@@ -200,13 +198,10 @@ PHPFile::load('app/Models/User.php')
 	->className();
 ```
 
-<details><summary>Output</summary>
-
 ```
 User
 ```
 
-</details>
 
 ### Change class name
 ```php example
@@ -214,10 +209,7 @@ PHPFile::make()->class('Dumb')
 	->className('Dumber')
 	->className()
 ```
-<details><summary>Output</summary>
 
 ```
 Dumber
 ```
-
-</details>
