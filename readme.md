@@ -124,42 +124,7 @@ $file->astQuery()
     ->save() 
 ```
 
-## Errors 😵
-If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
-
-To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
-
-## Configuration
-```bash
-php artisan vendor:publish --provider="Archetype\ServiceProvider"
-```
-
-## Contributing
-PRs welcome :pray:
-### Development installation
-```
-git clone git@github.com:ajthinking/archetype.git
-cd archetype
-composer install
-./vendor/bin/pest
-```
-
-
-## License
-MIT
-
-
-## Acknowledgements
-* Built with [nikic/php-parser](https://github.com/nikic/php-parser)
-* PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
-
-
-## Like this package?
-<a href="https://github.com/ajthinking/archetype/stargazers" >Star it :star: </a>
-
-[Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
-
-[Github Sponsors :octocat::heart:](https://github.com/sponsors/ajthinking)
+## API
 
 ### Make an empty file
 ```php example
@@ -270,3 +235,40 @@ PHPFile::make()->class('Dumb')
 ```string
 Dumber
 ```
+
+## Errors 😵
+If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
+
+To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
+
+## Configuration
+```bash
+php artisan vendor:publish --provider="Archetype\ServiceProvider"
+```
+
+## Contributing
+PRs welcome :pray:
+### Development installation
+```
+git clone git@github.com:ajthinking/archetype.git
+cd archetype
+composer install
+./vendor/bin/pest
+```
+
+
+## License
+MIT
+
+
+## Acknowledgements
+* Built with [nikic/php-parser](https://github.com/nikic/php-parser)
+* PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
+
+
+## Like this package?
+<a href="https://github.com/ajthinking/archetype/stargazers" >Star it :star: </a>
+
+[Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
+
+[Github Sponsors :octocat::heart:](https://github.com/sponsors/ajthinking)
