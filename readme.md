@@ -6,7 +6,7 @@
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
 [![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/archetype.svg)](https://packagist.org/packages/ajthinking/archetype)
 
-* Programatically modify php files with an intuiutive top level read/write API
+* Programatically modify php files with an intuitive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
 
 ## Installation
@@ -15,9 +15,8 @@ composer require ajthinking/archetype
 ```
 > Requires UNIX filesystem, PHP >= 7.4 and Laravel >= 7
 
-## Usage
 
-### `PHPFile` read/write API
+## `PHPFile` read/write API
 
 ```php
 use Archetype\Facades\PHPFile;
@@ -36,7 +35,7 @@ PHPFile::load('app/Models/User.php')
     ->save();
 ```
 
-### `LaravelFile` read/write API
+## `LaravelFile` read/write API
 
 ```php
 use Archetype\Facades\LaravelFile; // extends PHPFile
@@ -58,7 +57,7 @@ Result:
 
 IMAGE_PLACEHOLDER
 
-### File QueryBuilder
+## File QueryBuilders
 Filter and retrieve a set of files to interact with. 
 
 ```php
@@ -78,7 +77,7 @@ LaravelFile::serviceProviders()->get();
 // ...
 ```
 
-### Abstract Syntax Tree QueryBuilder
+## Abstract Syntax Tree QueryBuilder
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
 Example: how can we fetch explicit column names in a migration file?
@@ -125,7 +124,7 @@ $file->astQuery()
     ->save() 
 ```
 
-### Errors 😵
+## Errors 😵
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
 
 To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
@@ -161,3 +160,64 @@ MIT
 [Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
 
 [Github Sponsors :octocat::heart:](https://github.com/sponsors/ajthinking)
+
+### Make an empty file
+```php example
+PHPFile::make()->file('dummy.php')
+	->render()
+```
+<details><summary>Output</summary>
+
+```
+<?php
+```
+
+</details>
+
+### Make a class file
+```php example
+PHPFile::make()->class('Car')
+	->render()
+```
+
+<details><summary>Output</summary>
+
+```
+<?php
+
+namespace App;
+
+class Car
+{
+}
+```
+
+</details>
+
+### Get class name
+```php example
+PHPFile::load('app/Models/User.php')
+	->className();
+```
+
+<details><summary>Output</summary>
+
+```
+User
+```
+
+</details>
+
+### Change class name
+```php example
+PHPFile::make()->class('Dumb')
+	->className('Dumber')
+	->className()
+```
+<details><summary>Output</summary>
+
+```
+Dumber
+```
+
+</details>
