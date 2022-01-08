@@ -9,11 +9,15 @@
 * Programatically modify php files with an intuitive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
 
-## Installation
+## Getting started
 ```bash
+# requires UNIX filesystem,
+# PHP >= 7.4 and Laravel >= 7
+
 composer require ajthinking/archetype
 ```
-> Requires UNIX filesystem, PHP >= 7.4 and Laravel >= 7
+
+Check out introduction below :point_down: or review the full docs [here](docs.md)
  
 ## `PHPFile` read/write API
 
@@ -33,8 +37,6 @@ PHPFile::load('app/Models/User.php')
     ->className('NewClassName')
     ->save();
 ```
-
-> [More examples](docs.md)
 
 ## `LaravelFile` read/write API
 
@@ -105,8 +107,6 @@ class User extends Authenticatable
 
 </details>
 
-> [More examples](docs.md)
-
 ## File QueryBuilders
 Filter and retrieve a set of files to interact with. 
 
@@ -126,8 +126,6 @@ LaravelFile::controllers()->get();
 LaravelFile::serviceProviders()->get();
 // ...
 ```
-
-> [More examples](docs.md)
 
 ## Abstract Syntax Tree QueryBuilder
 
@@ -176,8 +174,6 @@ $file->astQuery()
     ->end() // exit query
     ->save() 
 ```
-
-> [More examples](docs.md)
 
 ## Errors 😵
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
