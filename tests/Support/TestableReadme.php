@@ -41,10 +41,16 @@ class TestableReadme
 			$codeEndLine = $lines->slice($cursor)->search('```');
 
 			$cursor = $codeEndLine + 1;
-			$outputStartLine = $lines->slice($cursor)->search('```');
+
+			$outputStartLine = $lines->slice($cursor)->filter(function($line) {
+	
+				return Str::of($line)->startsWith('```');
+			})->keys()->first();
 
 			$cursor = $outputStartLine + 1;
 			$outputEndLine = $lines->slice($cursor)->search('```');
+
+			
 
 			$cursor = $outputEndLine + 1;
 			
