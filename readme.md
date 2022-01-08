@@ -16,7 +16,6 @@ composer require ajthinking/archetype
 > Requires UNIX filesystem, PHP >= 7.4 and Laravel >= 7
  
 ## `PHPFile` read/write API
-> See full API docs [here](docs.md)
 
 ```php
 use Archetype\Facades\PHPFile;
@@ -35,8 +34,9 @@ PHPFile::load('app/Models/User.php')
     ->save();
 ```
 
+> More examples in the [docs](docs.md)
+
 ## `LaravelFile` read/write API
-> See full API docs [here](docs.md)
 
 ```php
 use Archetype\Facades\LaravelFile; // extends PHPFile
@@ -54,9 +54,58 @@ LaravelFile::user()
     ->save();
 ```
 
-Result:
+<details><summary>Show output</summary>
 
-IMAGE_PLACEHOLDER
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+}
+```
+
+</details>
+
+> More examples in the [docs](docs.md)
 
 ## File QueryBuilders
 Filter and retrieve a set of files to interact with. 
@@ -77,6 +126,8 @@ LaravelFile::controllers()->get();
 LaravelFile::serviceProviders()->get();
 // ...
 ```
+
+> More examples in the [docs](docs.md)
 
 ## Abstract Syntax Tree QueryBuilder
 
@@ -126,7 +177,7 @@ $file->astQuery()
     ->save() 
 ```
 
-> See full API docs [here](docs.md)
+> More examples in the [docs](docs.md)
 
 ## Errors 😵
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
