@@ -5,21 +5,21 @@ namespace Archetype\Tests\Support;
 use function PHPUnit\Framework\assertEquals;
 use Illuminate\Support\Str;
 
-class TestableReadme
+class TestableMarkdown
 {
 	public string $content;
 
 	public array $examples = [];
 
-	public function __construct()
+	public function __construct($path)
 	{
-		$this->contents = file_get_contents(__DIR__.'/../../readme.md');
+		$this->contents = file_get_contents($path);
 		$this->parseExamples();
 	}
 
-	public static function make()
+	public static function make($path)
 	{
-		return new static;
+		return new static($path);
 	}
 
 	protected function parseExamples()

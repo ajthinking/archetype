@@ -38,7 +38,7 @@ PHPFile::load('app/Models/User.php')
 
 ## `LaravelFile` read/write API
 
-```php
+```php example
 use Archetype\Facades\LaravelFile; // extends PHPFile
 
 // Expanding on our User model
@@ -51,7 +51,8 @@ LaravelFile::user()
     ->empty()->casts()
     ->hasMany('App\Game')
     ->belongsTo('App\Guild')
-    ->save();
+    ->save()
+	->render();
 ```
 
 <details><summary>Show output</summary>
@@ -61,15 +62,18 @@ LaravelFile::user()
 
 namespace App\Models;
 
+use App\Contracts\PlayerInterface;
+use App\Traits\Dumpable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements PlayerInterface
 {
     use HasApiTokens, HasFactory, Notifiable;
+    protected $table = 'gdpr_users';
 
     /**
      * The attributes that are mass assignable.
@@ -80,16 +84,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'nickname',
     ];
 
     /**
@@ -97,10 +92,25 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $casts = [];
+    
+    /**
+     * Get the associated Guild
+     */
+    public function guild()
+    {
+        return $this->belongsTo(Guild::class);
+    }
+    
+    /**
+     * Get the associated Games
+     */
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
 }
+
 ```
 
 </details>
