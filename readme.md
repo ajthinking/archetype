@@ -14,9 +14,9 @@
 composer require ajthinking/archetype
 ```
 > Requires UNIX filesystem, PHP >= 7.4 and Laravel >= 7
-
-
+ 
 ## `PHPFile` read/write API
+> See full API docs [here](docs.md)
 
 ```php
 use Archetype\Facades\PHPFile;
@@ -36,6 +36,7 @@ PHPFile::load('app/Models/User.php')
 ```
 
 ## `LaravelFile` read/write API
+> See full API docs [here](docs.md)
 
 ```php
 use Archetype\Facades\LaravelFile; // extends PHPFile
@@ -78,6 +79,7 @@ LaravelFile::serviceProviders()->get();
 ```
 
 ## Abstract Syntax Tree QueryBuilder
+
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
 Example: how can we fetch explicit column names in a migration file?
@@ -124,117 +126,7 @@ $file->astQuery()
     ->save() 
 ```
 
-## API
-
-### Make an empty file
-```php example
-PHPFile::make()->file('dummy.php')
-	->render()
-```
-
-```php
-<?php
-```
-
-
-### Make a class file
-```php example
-PHPFile::make()->class('Car')
-	->render()
-```
-
-<details><summary>Output</summary>
-
-```php
-<?php
-
-namespace App;
-
-class Car
-{
-}
-```
-
-
-</details>
-
-### Load an existing file
-```php
-PHPFile::load('app/Models/User.php')
-	->render()
-```
-<details><summary>Output</summary>
-
-```php
-<?php
-
-namespace App\Models;
-
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-}
-```
-
-</details>
-
-### Get class name
-```php example
-PHPFile::load('app/Models/User.php')
-	->className();
-```
-
-```string
-User
-```
-
-
-### Change class name
-```php example
-PHPFile::make()->class('Dumb')
-	->className('Dumber')
-	->className()
-```
-
-```string
-Dumber
-```
+> See full API docs [here](docs.md)
 
 ## Errors 😵
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
