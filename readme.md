@@ -34,7 +34,7 @@ PHPFile::load('app/Models/User.php')
     ->save();
 ```
 
-> More examples in the [docs](docs.md)
+> [more examples](docs.md)
 
 ## `LaravelFile` read/write API
 
@@ -105,7 +105,7 @@ class User extends Authenticatable
 
 </details>
 
-> More examples in the [docs](docs.md)
+> [More examples in the [docs](docs.md)
 
 ## File QueryBuilders
 Filter and retrieve a set of files to interact with. 
@@ -127,7 +127,7 @@ LaravelFile::serviceProviders()->get();
 // ...
 ```
 
-> More examples in the [docs](docs.md)
+> [more examples](docs.md)
 
 ## Abstract Syntax Tree QueryBuilder
 
@@ -177,7 +177,7 @@ $file->astQuery()
     ->save() 
 ```
 
-> More examples in the [docs](docs.md)
+> [more examples](docs.md)
 
 ## Errors 😵
 If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
