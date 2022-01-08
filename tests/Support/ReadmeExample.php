@@ -20,8 +20,9 @@ class ReadmeExample
 	{
 		$expected = $this->output;
 		$actual = eval($this->preparedCode());
-		
-		assertEquals($expected, $actual);
+		$message = "Expected: $expected".PHP_EOL.PHP_EOL."Got: $actual".PHP_EOL.PHP_EOL;
+
+		assertEquals($expected, $actual, $message);
 
 		return $this;
 	}
@@ -32,9 +33,20 @@ class ReadmeExample
 			->prepend('return ')
 			->append(';')
 			->replace(
+				'use Archetype\Facades\PHPFile;',
+				''
+			)
+			->replace(
+				'use Archetype\Facades\LaravelFile;',
+				''
+			)			
+			->replace(
 				'PHPFile',
 				'\Archetype\Facades\PHPFile'
-
+			)			
+			->replace(
+				'LaravelFile',
+				'\Archetype\Facades\LaravelFile',				
 			);
 	}
 }

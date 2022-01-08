@@ -1,12 +1,13 @@
 <?php
 
-use function PHPUnit\Framework\assertTrue;
+use Archetype\Tests\Support\TestableMarkdown;
 
-use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
-use Archetype\Tests\Support\TestableReadme as Readme;
+test('readme examples are valid', function ($example) {
+    $example->assertCodeReturnsOutput();
+})->with(TestableMarkdown::make(__DIR__.'/../../readme.md')->examples);
 
-it('is cool', function() {
-	foreach(Readme::make()->examples as $example) {
-		$example->assertCodeReturnsOutput();
-	}
-});
+test('docs examples are valid', function ($example) {
+    $example->assertCodeReturnsOutput();
+})->with(
+	TestableMarkdown::make(__DIR__.'/../../docs.md')->examples
+);
