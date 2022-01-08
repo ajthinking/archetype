@@ -3,92 +3,64 @@
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can retrieve use statements', function () {
-	// A file with use statements
-	$file = PHPFile::load('app/Models/User.php');
-	$useStatements = $file->use();
-	$expectedUseStatements = collect([
-		"Illuminate\Notifications\Notifiable",
-		"Illuminate\Contracts\Auth\MustVerifyEmail",
-		"Illuminate\Foundation\Auth\User as Authenticatable",
-	]);
+	PHPFile::load('app/Models/User.php')
+		->assertUse([
+			'Illuminate\Contracts\Auth\MustVerifyEmail',
+			'Illuminate\Database\Eloquent\Factories\HasFactory',
+			'Illuminate\Foundation\Auth\User as Authenticatable',
+			'Illuminate\Notifications\Notifiable',
+			'Laravel\Sanctum\HasApiTokens',
+		]);
+});
 
-	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-		$this->assertTrue(
-			collect($useStatements)->contains($expectedUseStatement)
-		);
-	});
-
-	// A file without use statements
-	$file = PHPFile::load('public/index.php');
-	$useStatements = $file->use();
-
-	$this->assertTrue(
-		collect($useStatements)->count() === 2
-	);
+it('can attempt to retrieve use statements', function() {
+	PHPFile::make()->class()
+		->assertUse([]);
 });
 
 it('can add use statements in a namespace', function () {
-	// on a file with use statements
-	$file = PHPFile::load('app/Models/User.php');
-
-	$useStatements = $file->add()->use(['Add\This'])->use();
-
-	$expectedUseStatements = collect([
-		"Illuminate\Notifications\Notifiable",
-		"Illuminate\Contracts\Auth\MustVerifyEmail",
-		"Illuminate\Foundation\Auth\User as Authenticatable",
-		"Add\This",
-	]);
-
-	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-		$this->assertTrue(
-			collect($useStatements)->contains($expectedUseStatement)
-		);
-	});
+	PHPFile::load('app/Models/User.php')
+		->add()->use(['Add\This'])
+		->assertUse([
+			"Add\This",			
+			'Illuminate\Contracts\Auth\MustVerifyEmail',
+			'Illuminate\Database\Eloquent\Factories\HasFactory',
+			'Illuminate\Foundation\Auth\User as Authenticatable',
+			'Illuminate\Notifications\Notifiable',
+			'Laravel\Sanctum\HasApiTokens',
+		])
+		->assertValidPhp()
+		->assertBeautifulPhp();		
 });
 
 it('can add use statements when not in a namespace', function () {
-	$file = PHPFile::load('public/index.php');
-	
-	$useStatements = $file->add()->use(['Add\This'])->use();
-	
-	$expectedUseStatements = collect([
-		"Add\This",
-	]);
-
-	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-		$this->assertTrue(
-			collect($useStatements)->contains($expectedUseStatement)
-		);
-	});
+	PHPFile::make()->file()
+		->add()->use(['Add\This'])
+		->assertUse([
+			'Add\This',
+		])
+		->assertValidPhp()
+		->assertBeautifulPhp();		
 });
 
 it('can add use statements with alias', function () {
-	$file = PHPFile::load('public/index.php');
-	$useStatements = $file->add()->use(['Add\This as Wow'])->use();
-	$expectedUseStatements = collect([
-		"Add\This as Wow",
-	]);
-	
-	$expectedUseStatements->each(function ($expectedUseStatement) use ($useStatements) {
-		$this->assertTrue(
-			collect($useStatements)->contains($expectedUseStatement)
-		);
-	});
+	PHPFile::load('public/index.php')
+		->add()->use(['Add\This as Wow'])
+		->assertUse([
+			"Add\This as Wow",
+			'Illuminate\Contracts\Http\Kernel',
+			'Illuminate\Http\Request',
+		])
+		->assertValidPhp()
+		->assertBeautifulPhp();		
 });
 
 it('can overwrite use statements', function () {
-	$file = PHPFile::load('app/Models/User.php');
-
-	$useStatements = $file->use(['Only\This'])->use();
-	$expectedUseStatements = collect([
+	PHPFile::load('app/Models/User.php')
+		->use(['Only\This'])
+		->assertUse([
 		"Only\This",
-	]);
-
-	$this->assertCount(1, collect($useStatements));
-
-	$this->assertEquals(
-		$useStatements->first(),
-		'Only\This'
-	);
+	])
+	->assertValidPhp()
+	->assertBeautifulPhp();	
 });

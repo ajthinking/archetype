@@ -3,6 +3,7 @@
 namespace Archetype\Tests\Support;
 
 use Archetype\PHPFile;
+use Illuminate\Support\Collection;
 
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEmpty;
@@ -72,6 +73,13 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
+	public function assertMethodNames(array $expected = null)
+	{
+		assertEquals($expected, $this->methodNames());
+
+		return $this;
+	}
+
 	public function assertNoClassConstant(string $name)
 	{
 		$exists = $this->astQuery()
@@ -129,6 +137,13 @@ class TestablePHPFile extends PHPFile
 
 		return $this;
 	}
+
+	public function assertUse(array $expected = null)
+	{
+		assertEquals($expected, $this->use());
+
+		return $this;
+	}	
 
 	public function assertValidPhp()
 	{
