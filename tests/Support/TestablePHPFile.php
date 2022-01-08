@@ -5,7 +5,6 @@ namespace Archetype\Tests\Support;
 use Archetype\PHPFile;
 use Illuminate\Support\Collection;
 
-use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEmpty;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
@@ -16,6 +15,8 @@ use function PHPUnit\Framework\assertStringContainsString;
 class TestablePHPFile extends PHPFile
 {
 	public string $astQueryBuilder = TestableASTQueryBuilder::class;
+
+	public string $fileQueryBuilder = TestablePHPFileQueryBuilder::class;
 
 	public function assertDirective($name, $expected)
 	{

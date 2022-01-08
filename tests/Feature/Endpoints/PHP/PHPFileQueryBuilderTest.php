@@ -1,155 +1,108 @@
 <?php
 
-use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
-use Archetype\Endpoints\Laravel\LaravelFileQueryBuilder;
-use Archetype\Facades\LaravelFile;
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
+use Archetype\Tests\Support\TestablePHPFileQueryBuilder;
+use Illuminate\Support\Collection;
 
 it('can instanciate via php or laravel file with in method', function() {
-	$this->assertInstanceOf(
-		PHPFileQueryBuilder::class,
-		PHPFile::in('app')
-	);
-
-	$this->assertInstanceOf(
-		LaravelFileQueryBuilder::class,
-		LaravelFile::in('app')
-	);
+	PHPFile::in('app')
+		->assertInstanceOf(TestablePHPFileQueryBuilder::class);
 });
 
 it('will return a collection on get', function() {
 	$this->assertInstanceOf(
-		\Illuminate\Support\Collection::class,
-		LaravelFile::in('app')->get()
-	);
-	
-	$this->assertInstanceOf(
-		\Illuminate\Support\Collection::class,
-		LaravelFile::get()
+		Collection::class,
+		PHPFile::in('app')->get()
 	);
 });
     
 it('can filter with in method', function() {
-	$this->assertCount(
-		1,
-		LaravelFile::in('public')->get()
-	);
-
-	$this->assertCount(
-		8,
-		LaravelFile::in('app/Http/Middleware')->get()
-	);
+	PHPFile::in('app/Http/Middleware')->assertMatchCount(8);
 });
 
-it('can filter with where method', function() {
-	$this->assertCount(
-		0,
-		LaravelFile::in('public')->where('className', 'User')->get()
-	);
-	
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where('className', '=', 'User')->get()
-	);
+it('can filter with where equals className', function() {
+	PHPFile::in('app/Models')->where('className', 'User')
+		->assertMatchCount(1);
+});
 
-	$this->assertCount(
-		4,
-		LaravelFile::in('app/Providers')->where('className', '!=', 'AppServiceProvider')->get()
-	);
+it('can filter with where equals className explicitly', function() {
+	PHPFile::in('app/Models')->where('className', '=', 'User')
+		->assertMatchCount(1);
+});
 
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where('use', 'contains', 'Illuminate\Contracts\Auth\MustVerifyEmail')->get()
-	);
+it('can filter with where not equals className', function() {
+	PHPFile::in('app/Models')->where('className', '!=', 'User')
+		->assertMatchCount(0);
+});
 
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where('className', 'like', 'Controller')->get()
-	);
+it('can filter with where use contains class', function() {
+	PHPFile::in('app')
+		->where('use', 'contains', 'Illuminate\Contracts\Auth\MustVerifyEmail')
+		->assertMatchCount(1);
+});
 
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where('className', 'like', 'controller')->get()
-	);
-	
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where('className', 'matches', '/^Controller/')->get()
-	);
-	
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where('className', 'in', ['Dog', 'User', 'Cat'])->get()
-	);
+it('can filter with like', function() {
+	PHPFile::in('app')->where('className', 'like', 'Controller')
+		->assertMatchCount(1);
+});
 
-	$this->assertCount(
-		3,
-		LaravelFile::in('app')->where('use', 'count', 4)->get()
-	);
+it('can filter with regex', function() {
+	PHPFile::in('app')->where('className', 'matches', '/^Controller/')
+		->assertMatchCount(1);
+});
+
+it('can filter with in', function() {
+	PHPFile::in('app')->where('className', 'in', ['Dog', 'User', 'Cat'])
+		->assertMatchCount(1);
+});
+
+it('can filter with count', function() {
+	PHPFile::in('app')->where('use', 'count', 4)
+		->assertMatchCount(3);
 });
 
 it('can filter with where method using an array', function() {
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')->where([
+	PHPFile::in('app')
+		->where([
 			['className', 'like', 'provider'],
 			['methodNames', 'contains', 'configureRateLimiting']
-		])->get()
-	);
+		])->assertMatchCount(1);
 });
 
 it('can add filters with andWhere', function() {
-	$this->assertCount(
-		1,
-		LaravelFile::in('app')
-			->where('className', 'like', 'provider')
-			->andWhere('methodNames', 'contains', 'configureRateLimiting')
-			->get()
-	);
+	PHPFile::in('app')
+		->where('className', 'like', 'provider')
+		->andWhere('methodNames', 'contains', 'configureRateLimiting')
+		->assertMatchCount(1);
 });
 
 it('can filter with closure', function() {
-	$this->assertCount(
-		2,
-		LaravelFile::in('app')->where(function ($file) {
-			return preg_match('/^.*Kernel$/', $file->extends());
-		})->get()
-	);
+	PHPFile::in('app')->where(function ($file) {
+		return preg_match('/^.*Kernel$/', $file->extends());
+	})->assertMatchCount(2);
 });
     
-it('can query non class files and files missing extend', function() {
-	$files = LaravelFile::where('extends', 'Authenticatable')->get();
-	$this->assertTrue(
-		$files->count() > 0
-	);
+it('can query all files in application root including non classes without extend', function() {
+	PHPFile::where('extends', 'Authenticatable')
+		->assertMatchCount(1);
 });
     
-it('can chain', function() {
-	$files = LaravelFile::where('extends', 'ServiceProvider')
+it('can chain multiple where clauses', function() {
+	PHPFile::where('extends', 'ServiceProvider')
 		->where('methodNames', 'contains', 'boot')
 		->where(function ($file) {
 			return $file->className() == 'AuthServiceProvider';
-		})->get();
-
-	$this->assertCount(
-		1,
-		$files
-	);
+		})->assertMatchCount(1);
 });
     
-it('has a first method', function() {
-	$this->assertInstanceOf(
-		\Archetype\LaravelFile::class,
-		LaravelFile::in('public')->first()
-	);
+it('can get first match', function() {
+	PHPFile::in('public')
+		->first()
+		->assertInstanceOf(\Archetype\Tests\Support\TestablePHPFile::class);
 });
 
 it('will accept forbidden directories when explicitly passed', function() {
-	$file = PHPFile::in(
-		'vendor/ajthinking/archetype/src/snippets'
-	)->get()->first();
-
-	$this->assertTrue(
-		get_class($file) === \Archetype\Tests\Support\TestablePHPFile::class
-	);
+	PHPFile::in('vendor/ajthinking/archetype/src/snippets')
+		->first()
+		->assertInstanceOf(\Archetype\Tests\Support\TestablePHPFile::class);
 });
