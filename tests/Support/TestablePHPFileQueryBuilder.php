@@ -2,14 +2,13 @@
 
 namespace Archetype\Tests\Support;
 
-use Archetype\PHPFile;
-use Archetype\Support\AST\ASTQueryBuilder;
+use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 use Illuminate\Support\Collection;
 
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertInstanceOf;
 
-class TestableASTQueryBuilder extends ASTQueryBuilder
+class TestablePHPFileQueryBuilder extends PHPFileQueryBuilder
 {
 	public function assertMatchCount($count)
 	{
