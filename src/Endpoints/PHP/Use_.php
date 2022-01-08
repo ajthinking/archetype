@@ -46,7 +46,7 @@ class Use_ extends EndpointProvider
             ->map(function ($useStatement) {
                 $base = join('\\', $useStatement->name->parts);
                 return $base . ($useStatement->alias ? ' as ' . $useStatement->alias : '');
-            });
+            })->toArray();
     }
 
     protected function set($newUseStatements)
