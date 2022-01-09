@@ -2,31 +2,17 @@
 
 namespace Archetype;
 
-use App;
-use Config;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Illuminate\Support\Str;
-use Archetype\Commands\DemoCommand;
 use Archetype\Commands\ErrorsCommand;
-use Archetype\Commands\DocumentationCommand;
-use Archetype\Commands\ListAPICommand;
-use Archetype\Commands\RelationshipsDemo;
 use Archetype\Factories\LaravelFileFactory;
-use Archetype\Schema\LaravelSchema;
 use Archetype\Factories\PHPFileFactory;
-use Archetype\Factories\ProjectFactory;
 use Archetype\Traits\AddsLaravelStringsToStrWithMacros;
 
 class ServiceProvider extends BaseServiceProvider
 {
     use AddsLaravelStringsToStrWithMacros;
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register()
     {
         $this->registerFacades();
@@ -49,10 +35,6 @@ class ServiceProvider extends BaseServiceProvider
         App::bind('LaravelFile', function () {
             return app()->make(LaravelFileFactory::class);
         });
-
-        App::bind('Archetype\Facades\Project', function () {
-            return app()->make(ProjectFactory::class);
-        });
     }
 
     protected function publishConfig()
@@ -65,11 +47,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerCommands()
     {
         $this->commands([
-            ListAPICommand::class,
-            DemoCommand::class,
-            RelationshipsDemo::class,
             ErrorsCommand::class,
-            DocumentationCommand::class,
         ]);
     }
 }

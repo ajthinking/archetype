@@ -2,8 +2,6 @@
 
 namespace Archetype\Endpoints;
 
-use Illuminate\Support\Str;
-use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Endpoints\EndpointProvider;
 
 class SyntacticSweetener extends EndpointProvider
@@ -26,13 +24,12 @@ class SyntacticSweetener extends EndpointProvider
 
     public function __call($method, $args)
     {
-        // Do nothing :)
         return $this->file;
     }
 
     protected function getHandlerMethod($signature, $args)
     {
-        return collect($this->words)->contains($signature) ? $signature : false;
+        return in_array($signature, $this->words) ? $signature : false;
     }
 
     public function getEndpoints()

@@ -16,6 +16,10 @@ class PHPFileStorage
 
     public function get($path)
     {
+		if(Str::of($path)->startsWith('/')) {
+			return file_get_contents($path);
+		}
+
         return $this->getStorageDisk('input')->get(
             $this->relative($path, 'input')
         );
@@ -23,22 +27,10 @@ class PHPFileStorage
 
     public function put($path, $content)
     {
-        $r = $this->getStorageDisk('output')->put(
+        return $this->getStorageDisk('output')->put(
             $this->relative($path, 'output'),
             $content
         );
-
-        // dd(
-        //     //$this->getStorageDisk('output')->getDriver()->pathPrefix,
-        //     $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix(),
-        //     $this->relative($path, 'output'),
-        //     is_file(
-        //         $this->getStorageDisk('output')->getDriver()->getAdapter()->getPathPrefix() .
-        //         $this->relative($path, 'output')
-        //     )
-        // );
-
-        return $r;
     }
 
     public function relative($path, $rootName)

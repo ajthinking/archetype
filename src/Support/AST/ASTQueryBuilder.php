@@ -12,29 +12,35 @@ use Archetype\Support\AST\Visitors\NodeRemover;
 use Archetype\Support\AST\Visitors\HashInserter;
 use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
+use Archetype\Support\HigherOrderDumper;
+use Archetype\Traits\Dumpable;
+use Archetype\Traits\Tappable;
 use Closure;
 use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use PhpParser\ConstExprEvaluator;
 
 class ASTQueryBuilder
 {
-    use HasOperators;
-    
-    use PHPParserClassMap;
+    use HasOperators,
+		PHPParserClassMap,
+		RenderGraphs,
+		Dumpable,
+		Tappable;
 
     public $allowDeepQueries = true;
 
     public $currentDepth = 0;
 
-    public $initialAST;
-
     public $resultingAST;
 
-    public $file;
+    public $parent;
+
+	public $tree;
 
     public function __construct($ast)
     {
-        $this->initialAST = $ast;
         $this->resultingAST = $ast;
 
         $this->tree = [
@@ -57,7 +63,7 @@ class ASTQueryBuilder
         // Can we find a corresponding PHPParser class to enter?
         $class = $this->classMap($method);
         if ($class) {
-            return $this->traverseIntoClass($class);
+            return $this->traverseIntoClass($class, ...$args);
         }
 
         throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
@@ -74,41 +80,58 @@ class ASTQueryBuilder
     {
         // Can we find a corresponding PHPParser property to enter?
         $property = $this->propertyMap($name);
-        if ($property) {
-            return $this->traverseIntoProperty($property);
-        }
+        if ($property) return $this->traverseIntoProperty($property);
+
+		if($name == 'dd') return HigherOrderDumper::dd($this);
+		if($name == 'dump') return HigherOrderDumper::dump($this);
+		if($name == 'where') return new HigherOrderWhere($this);
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }
 
-    public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
+    public function traverseIntoClass($expectedClass, $path = null, $finderMethod = 'findInstanceOf')
     {
-        return $this->next(function ($queryNode) use ($expectedClass, $finderMethod) {
-            // Search the abstract syntax tree
-            $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
-            // Wrap matches in Survivor object
-            return collect($results)->map(function ($result) use ($queryNode) {
+		$steps = $path ? collect(explode('->', $path)) : collect();
+
+        return $this->next(function ($queryNode) use ($expectedClass, $finderMethod, $steps) {
+            $classMatches = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
+
+			$classAndPathMatches = collect($classMatches)->map(function ($node) use($steps) {
+				return $steps->reduce(function ($result, $step) {
+					$hasPath = is_object($result) && isset($result->$step) && $result->$step;
+					return $hasPath ? $result->$step : null;
+				}, $node);                
+            })->filter();
+			
+            return $classAndPathMatches->map(function ($result) use ($queryNode) {
                 return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
         });
     }
 
+    // public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
+    // {
+    //     return $this->next(function ($queryNode) use ($expectedClass, $finderMethod) {
+    //         // Search the abstract syntax tree
+    //         $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
+    //         // Wrap matches in Survivor object
+    //         return collect($results)->map(function ($result) use ($queryNode) {
+    //             return Survivor::fromParent($queryNode)->withResult($result);
+    //         })->toArray();
+    //     });
+    // }	
+
     public function traverseIntoProperty($property)
     {
         return $this->next(function ($queryNode) use ($property) {
-            if (!isset($queryNode->result->$property)) {
-                return new Killable;
-            }
-            
-            $value = $queryNode->result->$property;
-            
-            if (is_array($value)) {
-                return collect($value)->map(function ($item) use ($value, $queryNode) {
-                    return Survivor::fromParent($queryNode)->withResult($item);
-                })->toArray();
-            }
+			$results = Arr::wrap($queryNode->result);
+			$values = collect($results)->map(function($result) use($property) {
+				return $result->$property ?? null;
+			})->filter()->flatten();
 
-            return Survivor::fromParent($queryNode)->withResult($value);
+			return $values->map(function ($value) use ($queryNode) {
+				return Survivor::fromParent($queryNode)->withResult($value);
+			});
         });
     }
 
@@ -138,19 +161,30 @@ class ASTQueryBuilder
         return $this;
     }
 
+	public function is($expected)
+	{
+		return $this->whereEquals($expected);
+	}
+
+	public function whereEquals($expected)
+	{
+        return $this->next(function ($queryNode) use ($expected) {
+            $nodes = collect(Arr::wrap($queryNode->result));
+
+			return $nodes->map(function($node) use($expected, $queryNode) {
+				return $node === $expected
+					? Survivor::fromParent($queryNode)->withResult($node)
+					: new Killable;
+			});
+        });
+	}
+
     public function where($arg1, $arg2 = null)
     {
-        return is_callable($arg1) ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
+        return $arg1 instanceof Closure ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
     }
 
-    public function whereEquals($expected)
-    {
-        return $this->next(function ($queryNode) use ($expected) {
-            return $queryNode->result == $expected ? $queryNode : new Killable;
-        });
-    }
-
-    protected function next($callback)
+    public function next($callback)
     {
         $next = $this->currentNodes()->map($callback)->flatten()->toArray();
 
@@ -169,13 +203,18 @@ class ASTQueryBuilder
     protected function wherePath($path, $expected)
     {
         return $this->next(function ($queryNode) use ($path, $expected) {
-            $steps = collect(explode('->', $path));
+            $nodes = collect(Arr::wrap($queryNode->result));
+			$steps = collect(explode('->', $path));
 
-            $result = $steps->reduce(function ($result, $step) {
-                return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
-            }, $queryNode->result);
+			return $nodes->map(function($node) use($steps, $expected, $queryNode) {
+				$actual = $steps->reduce(function ($result, $step) {
+					return is_object($result) && isset($result->$step) ? $result->$step : new Killable;
+				}, $node);
 
-            return $result == $expected ? $queryNode : new Killable;
+				return $actual == $expected
+					? Survivor::fromParent($queryNode)->withResult($node)
+					: new Killable;
+			});
         });
     }
 
@@ -183,11 +222,23 @@ class ASTQueryBuilder
     {
         return $this->next(function ($queryNode) use ($callback) {
             $query = new static(
-                [(clone $queryNode)->result]
+                Arr::wrap((clone $queryNode)->result)
             );
-            return $callback($query) ? $queryNode : new Killable;
+
+            return $this->whereClauseCallbackIsFulfilled($callback($query))
+				? $queryNode
+				: new Killable;
         });
     }
+
+	protected function whereClauseCallbackIsFulfilled($result)
+	{
+		if($result instanceof ASTQueryBuilder) return $result->isNotEmpty();
+
+		if($result instanceof Collection) return $result->isNotEmpty();
+
+		return $result;
+	}
 
     /**
      * Recall data in memory
@@ -209,6 +260,11 @@ class ASTQueryBuilder
     {
         return collect(end($this->tree))->pluck('result')->flatten();
     }
+
+	public function isNotEmpty()
+	{
+		return $this->get()->isNotEmpty();
+	}
 
     public function first()
     {
@@ -334,15 +390,10 @@ class ASTQueryBuilder
 
         return $this;
     }
-
-    public function dd()
-    {
-        dd($this->get());
-    }
     
     public function commit()
     {
-        $this->file->ast(
+        $this->parent->ast(
             $this->resultingAST
         );
 
@@ -351,10 +402,10 @@ class ASTQueryBuilder
 
     public function end()
     {
-        return $this->file;
+        return $this->parent;
     }
 
-    protected function currentNodes()
+    public function currentNodes()
     {
         return collect($this->tree[$this->currentDepth]);
     }

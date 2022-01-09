@@ -2,7 +2,6 @@
 
 namespace Archetype\Traits;
 
-use BadMethodCallException;
 use ReflectionClass;
 use ReflectionMethod;
 

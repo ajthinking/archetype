@@ -2,9 +2,8 @@
 
 namespace Archetype\Endpoints\Laravel;
 
-use LaravelFile;
-
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
+use Archetype\Facades\LaravelFile;
 
 class LaravelFileQueryBuilder extends PHPFileQueryBuilder
 {
@@ -110,5 +109,5 @@ class LaravelFileQueryBuilder extends PHPFileQueryBuilder
         });
 
         return $this;
-    }
+    }	
 }

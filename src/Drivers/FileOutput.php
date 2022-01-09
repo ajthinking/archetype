@@ -5,6 +5,7 @@ namespace Archetype\Drivers;
 use Archetype\Drivers\OutputInterface;
 use Illuminate\Support\Str;
 use Archetype\Support\PHPFileStorage;
+use TypeError;
 
 class FileOutput implements OutputInterface
 {
@@ -30,6 +31,7 @@ class FileOutput implements OutputInterface
     {
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
+		$this->ensureFilenameIsSet();
 
         $this->storage->put(
             $this->absolutePath(),
@@ -73,12 +75,18 @@ class FileOutput implements OutputInterface
         
         preg_match('/.*\.(.*)/', basename($path), $matches);
         $this->extension = $matches[1] ?? null;
-        
-        $pathIsAbsolute = Str::startsWith($path, '/');
     }
     
     protected function absoluteDir()
     {
-        return $this->root['root'] . "/" . $this->relativeDir;
+        return collect([
+			$this->root['root'],
+			$this->relativeDir,
+		])->filter()->join("/");
     }
+
+	protected function ensureFilenameIsSet()
+	{
+		if(!$this->filename) throw new TypeError('Could not find a filename');
+	}
 }

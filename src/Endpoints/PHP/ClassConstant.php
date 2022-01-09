@@ -2,16 +2,18 @@
 
 namespace Archetype\Endpoints\PHP;
 
-use App\Helpers\Dev;
 use Archetype\Endpoints\EndpointProvider;
 use PhpParser\BuilderHelpers;
-use PhpParser\BuilderFactory;
 use Archetype\Support\Types;
 use Illuminate\Support\Arr;
 use Exception;
+use PhpParser\ConstExprEvaluator;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Stmt\Expression;
+use PhpParser\Node\Expr;
+use PhpParser\BuilderFactory;
 
 class ClassConstant extends EndpointProvider
 {
@@ -28,9 +30,8 @@ class ClassConstant extends EndpointProvider
      */
     public function classConstant($key, $value = Types::NO_VALUE)
     {
-        // TODO
-        // // remove?
-        // if($this->file->directive('remove')) return $this->remove($key);
+        // remove?
+        if($this->file->directive('remove')) return $this->remove($key);
 
         // clear?
         if ($this->file->directive('clear')) {
@@ -53,7 +54,6 @@ class ClassConstant extends EndpointProvider
         }
 
         // set!
-
         return $this->set($key, $value);
     }
 
@@ -125,10 +125,21 @@ class ClassConstant extends EndpointProvider
         );
     }
 
-    // protected function remove($key)
-    // {
-    //     // TODO
-    // }
+    protected function remove($key)
+    {
+		return $this->file->astQuery()
+            ->class()
+            ->classConst()
+            ->where(function ($query) use ($key) {
+                return $query->const()
+					->where('name->name', $key)
+					->isNotEmpty();
+            })
+            ->remove()
+            ->commit()
+            ->end()
+            ->continue();			
+    }
 
     protected function clear($key)
     {
@@ -181,7 +192,7 @@ class ClassConstant extends EndpointProvider
             ->class()
             ->classConst()->consts
             ->where('name->name', $key)
-            ->get()->isNotEmpty();
+            ->isNotEmpty();
 
         return $propertyExists ? $this->update($key, $value) : $this->create($key, $value);
     }
@@ -212,19 +223,8 @@ class ClassConstant extends EndpointProvider
     }
 
     protected function makeConstant($key, $value)
-    {
-        if (is_string($value)) {
-            $value =  new String_($value);
-        } else {
-            // TODO
-            dd("Can only set string");
-        }
-
-
-
-        $const = new Const_($key, $value);
-        $constant = new ClassConst([$const]);
-        return $constant;
+    {	
+		return (new BuilderFactory)->classConst($key, $value)->getNode();
     }
 
     protected function addToUnknownType($key, $value)

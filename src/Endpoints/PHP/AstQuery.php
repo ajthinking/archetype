@@ -2,7 +2,6 @@
 
 namespace Archetype\Endpoints\PHP;
 
-use Illuminate\Support\Str;
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Endpoints\EndpointProvider;
 
@@ -16,11 +15,13 @@ class AstQuery extends EndpointProvider
      */
     public function astQuery()
     {
+		$builderClass = $this->file->astQueryBuilder;
+
         // Create AST builder instance
-        $builder = new ASTQueryBuilder($this->file->ast());
+        $builder = new $builderClass($this->file->ast());
         
         // Attach the file so we can return it later
-        $builder->file = $this->file;
+        $builder->parent = $this->file;
         
         return $builder;
     }

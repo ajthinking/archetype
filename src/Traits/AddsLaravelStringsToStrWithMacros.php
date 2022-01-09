@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait AddsLaravelStringsToStrWithMacros
 {
-    private function bootStrMacros()
+    protected function bootStrMacros()
     {
         Str::macro('hasOneMethodName', function ($target) {
             return static::camel(

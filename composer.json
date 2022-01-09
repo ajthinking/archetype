@@ -17,12 +17,13 @@
         }
     ],
     "require": {
-        "doctrine/dbal": "^2.9 || ^2.10 || ^3.0",
         "nikic/php-parser": "^4.11"
     },
     "require-dev": {
+        "ircmaxell/php-ast-visualizer": "dev-master",
         "laravel/laravel": "^6.0 || ^7.0 || ^8.0",
         "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
+        "pestphp/pest": "^1.21",
         "phpunit/phpunit": "^8.0 || ^9.5"
     },
     "config": {
@@ -32,10 +33,6 @@
     },
     "extra": {
         "laravel": {
-            "aliases": {
-                "LaravelFile": "Archetype\\Facades\\LaravelFile",
-                "PHPFile": "Archetype\\Facades\\PHPFile"
-            },
             "dont-discover": [],
             "providers": [
                 "Archetype\\ServiceProvider"

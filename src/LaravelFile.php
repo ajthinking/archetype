@@ -8,17 +8,17 @@ class LaravelFile extends PHPFile
 {
     protected const endpointProviders = [
         // Utilities
-        Endpoints\Laravel\LaravelMaker::class,
+        Endpoints\Laravel\LaravelMake::class,
 
         // Resources
-        Endpoints\Laravel\ModelProperties::class,
-        Endpoints\Laravel\HasOne::class,
-        Endpoints\Laravel\HasMany::class,
         Endpoints\Laravel\BelongsTo::class,
         Endpoints\Laravel\BelongsToMany::class,
+        Endpoints\Laravel\HasMany::class,
+        Endpoints\Laravel\HasOne::class,
+        Endpoints\Laravel\ModelProperties::class,
     ];
 
-    protected $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
+    protected string $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
 
     public function endpointProviders()
     {

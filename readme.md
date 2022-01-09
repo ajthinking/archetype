@@ -1,4 +1,4 @@
-# ```php::archetype```(:fire::fire::fire:);
+![image](https://user-images.githubusercontent.com/3457668/148050728-f80fb02c-e24e-4957-b960-8e52796fbf23.png)
 
 ### Enabling Rapid-Application-Development-tools, PR-bots, code analyzers and other things
 
@@ -6,49 +6,25 @@
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
 [![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/archetype.svg)](https://packagist.org/packages/ajthinking/archetype)
 
-* Programatically modify `PHPFile`s and `LaravelFile`s  with an intuiutive top level read/write API
+* Programatically modify php files with an intuitive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
-* Extract Application entity schemas
-* Add `Snippet`s with an inline PHP Template engine
 
-
-<!--<img src="https://user-images.githubusercontent.com/3457668/73567244-43055f80-4466-11ea-8103-cc68fba870d7.gif" alt="Intro gif">-->
-
-## Table of Content
-  * [Installation](#installation)
-  * [Usage](#usage)
-    + [PHPFile read/write API](#-phpfile--read-write-api)
-    + [LaravelFile read/write API](#-laravelfile--read-write-api)
-    + [File QueryBuilder](#file-querybuilder)
-    + [Abstract Syntax Tree QueryBuilder](#abstract-syntax-tree-querybuilder)
-    + [Laravel schema](#laravel-schema)
-    + [Template engine](#template-engine)
-    + [Errors](#errors---)
-    + [Limitations / Missing features](#limitations---missing-features)
-  * [Configuration](#configuration)
-  * [Contributing](#contributing)
-    + [Development installation](#development-installation)
-  * [License](#license)
-  * [Acknowledgements](#acknowledgements)
-  * [Like this package?](#like-this-package-)
-
-## Installation
-```
+## Getting started
+```bash
 composer require ajthinking/archetype
 ```
-> Requires UNIX filesystem, PHP >= 7 and Laravel >= 7
+> 
 
-## Usage
-
-### `PHPFile` read/write API
+That's it! Check out introduction of concepts below or review the [API examples](docs.md)
+ 
+## `PHPFile` read/write API
 
 ```php
-use PHPFile;
+use Archetype\Facades\PHPFile;
 
 // Create new files
 PHPFile::make()->class('acme/Product.php')
     ->use('Shippable')
-    ->add()->trait('Acme\Traits\Shippable')
     ->public()->property('stock', -1)
     ->save();
 ```
@@ -60,32 +36,86 @@ PHPFile::load('app/Models/User.php')
     ->save();
 ```
 
-### `LaravelFile` read/write API
+## `LaravelFile` read/write API
 
-```php
-use LaravelFile; // extends PHPFile
+```php example
+use Archetype\Facades\LaravelFile; // extends PHPFile
 
 // Expanding on our User model
 LaravelFile::user()
     ->add()->use(['App\Traits\Dumpable', 'App\Contracts\PlayerInterface'])
     ->add()->implements('PlayerInterface')
-    ->add()->trait('Dumpable')
     ->table('gdpr_users')
     ->add()->fillable('nickname')
     ->remove()->hidden()
     ->empty()->casts()
     ->hasMany('App\Game')
     ->belongsTo('App\Guild')
-    ->save();
+    ->save()
+	->render();
 ```
 
-Result:
+<details><summary>Show output</summary>
 
-<img src="https://user-images.githubusercontent.com/3457668/84030881-1376de80-a995-11ea-9ab0-431eaf9401a7.png" width=600>
+```php
+<?php
 
-> [Review full API documentation here](https://github.com/ajthinking/archetype/blob/master/docs/api.md) :point_left:
+namespace App\Models;
 
-### File QueryBuilder
+use App\Contracts\PlayerInterface;
+use App\Traits\Dumpable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable implements PlayerInterface
+{
+    use HasApiTokens, HasFactory, Notifiable;
+    protected $table = 'gdpr_users';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'nickname',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [];
+    
+    /**
+     * Get the associated Guild
+     */
+    public function guild()
+    {
+        return $this->belongsTo(Guild::class);
+    }
+    
+    /**
+     * Get the associated Games
+     */
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
+}
+
+```
+
+</details>
+
+## File QueryBuilders
 Filter and retrieve a set of files to interact with. 
 
 ```php
@@ -105,9 +135,8 @@ LaravelFile::serviceProviders()->get();
 // ...
 ```
 
-> [See a few more QueryBuilder examples in the tests](https://github.com/ajthinking/archetype/blob/master/tests/Unit/Endpoints/PHP/PHPFileQueryBuilderTest.php) :point_left:
+## Abstract Syntax Tree QueryBuilder
 
-### Abstract Syntax Tree QueryBuilder
 As seen in the previous examples we can query and manipulate nodes with simple or primitive values, such as *strings* and *arrays*. However, if we want to perform custom or more in dept queries we must use the `ASTQueryBuilder`.
 
 Example: how can we fetch explicit column names in a migration file?
@@ -115,21 +144,20 @@ Example: how can we fetch explicit column names in a migration file?
 ```php
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
     ->astQuery() // get a ASTQueryBuilder
-
-    ->method()
-        ->where('name->name', 'up')
-    ->staticCall()
-        ->where('class', 'Schema')
-        ->where('name->name', 'create')
-    ->args
+    ->classMethod()
+	->where('name->name', 'up')
+	->staticCall()
+	->where('class', 'Schema')
+    ->where('name->name', 'create')
+	->args
     ->closure()
     ->stmts
     ->methodCall()
-        ->where('var->name', 'table')
+    ->where('var->name', 'table')
     ->args
 	->value
 	->value
-	->get(); // exit ASTQueryBuilder, get a Collection        
+	->get();
 ```
 
 The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
@@ -156,158 +184,29 @@ $file->astQuery()
     ->save() 
 ```
 
-> [More ASTQueryBuilder examples here](https://github.com/ajthinking/archetype/blob/master/docs/src/Support/AST/ASTQueryBuilder.md) :point_left: 
-
-### Laravel schema 
-Use the `LaravelSchema` class to get an app schema.
-
-```php
-use Archetype\Schema\LaravelSchema;
-
-LaravelSchema::get();
-```
-
-```json
-{
-    "entities": [
-        {
-            "model": "App\\User",
-            "table": "users",
-            "columns": {
-                "id": {
-                    "name": "id",
-                    "type": {},
-                    "default": null,
-                    "notnull": true,
-                    "length": null,
-                    "precision": 10,
-                    "scale": 0,
-                    "fixed": false,
-                    "unsigned": false,
-                    "autoincrement": true,
-                    "columnDefinition": null,
-                    "comment": null
-                },
-                "name": {
-                    "name": "name",
-                    "type": {},
-                    "default": null,
-                    "notnull": true,
-                    "length": null,
-                    "precision": 10,
-                    "scale": 0,
-                    "fixed": false,
-                    "unsigned": false,
-                    "autoincrement": false,
-                    "columnDefinition": null,
-                    "comment": null,
-                    "collation": "BINARY"
-                }
-            }
-        }
-    ],
-    "strategy_used": "Archetype\\Schema\\Strategies\\FromDatabase",
-    "log": []
-}
-```
-
-> Schema feature is under construction ⚠
-
-### Template engine
-Let's make a snippet for a method we want to insert. Start by creating a file `storage/archetype/snippets/my-stuff.php` like shown below. In the file, we put our template code including any encapsuling constructs (in our case we will have to put a class since methods only exists inside classes). Name anything you want to be configurable with a handle for instance `'___TARGET_CLASS___'`. Even your snippet name itself may be a handle as long as it is unique.
-
-```php
-<?php
-
-/**
- * Optionally use FAKE names to silence IDE warnings
- */
-use Archetype\Support\FakeName; 
-use Archetype\Support\FakeName as ANY;
-use Archetype\Support\FakeName as ___TARGET_CLASS___;
-
-/**
- * This is just a placeholder class where we can add our snippets
- */
-class _ extends FakeName
-{
-    /**
-    * ___DOC_BLOCK___
-    */
-    public function mySpecialMethod($arg)
-    {
-        $want = abs($arg);
-        return $this->doSomethingWith(___TARGET_CLASS___::class, 'my template')
-            ->use(ANY::thing(new static('you' . $want)));
-    }    
-}
-```
-
-Your snippet is then instantly available anywhere in your code:
-```php
-use Archetype\Support\Snippet;
-
-// Get the snippet
-Snippet::mySpecialMethod()
-
-// Pass an array of replacement pairs to replace any handles:
-Snippet::mySpecialMethod([
-    '___DOC_BLOCK___' => 'Inserted with archetype :)',
-    '___TARGET_CLASS___' => 'App\Rocket'
-]);
-
-// Integrated example
-PHPFile::load('app/Models/User.php')
-    ->addMethod(
-        Snippet::mySpecialMethod([
-            // replacement pairs ...
-        ])
-    )->save();
-````
-
-> :information_source: The `Snippet` class currently only supports templates on *class methods*.
-
-### A note on Facades
-You may use either of the following
-```php
-// Using class
-(new \Archetype\PHPFile)->load('...');
-
-// Using facade
-PHPFile::load('...');
-
-// Using facade explicitly
-use Archetype\Facades\PHPFile;
-PHPFile::load('...'); // Using facade explicitly
-```
-
-### Errors 😵
-If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load the file *but also* when performing queries matching problematic files.
+## Errors 😵
+If a file can't be parsed, a `FileParseError` will be thrown. This can happen if you try to explicitly load a broken file *but also* when performing queries matching one or more problematic files.
 
 To see *all* offending files run `php artisan archetype:errors`. To ignore files with problems, put them in `config/archetype.php` -> `ignored_paths`.
 
-### Limitations / Missing features
-In general this package assumes code to be parsed follows guidelines and conventions from [PSR](https://www.php-fig.org/psr/) and [Laravel](https://laravel.com/docs). Some examples are listed below.
-
-* Requires UNIX based file system - no windows support <img src="https://img.shields.io/badge/help wanted-blue">
-
-* Can't use group use syntax (`use Something\{X, Y};`)
-
-* Assumes one class per file
-
-* Assumes no multiple/grouped property declarations (`protected $a, $b = 1;`)
-
 ## Configuration
-    php artisan vendor:publish --provider="Archetype\ServiceProvider"
+```bash
+php artisan vendor:publish --provider="Archetype\ServiceProvider"
+```
+
+## Requirmenst
+* UNIX filesystem
+* PHP >= 7.4
+* Laravel >= 7
 
 ## Contributing
-
+PRs and issues are welcome :pray: Feel free to take a stab at the [incomplete test](https://github.com/ajthinking/archetype/search?q=%24this-%3EmarkTestIncomplete).
 ### Development installation
 ```
 git clone git@github.com:ajthinking/archetype.git
 cd archetype
 composer install
-./vendor/bin/phpunit tests
+./vendor/bin/pest
 ```
 
 
@@ -318,7 +217,6 @@ MIT
 ## Acknowledgements
 * Built with [nikic/php-parser](https://github.com/nikic/php-parser)
 * PSR Printing fixes borrowed from [tcopestake/PHP-Parser-PSR-2-pretty-printer](https://github.com/tcopestake/PHP-Parser-PSR-2-pretty-printer)
-* Schema extractor based on [mpociot/laravel-test-factory-helper](https://github.com/mpociot/laravel-test-factory-helper)
 
 
 ## Like this package?

@@ -5,7 +5,6 @@ namespace Archetype\Traits;
 use Archetype\Support\Exceptions\FileParseError;
 use Archetype\Support\PSR2PrettyPrinter;
 use PHPParser\Error as PHPParserError;
-use PhpParser\ParserFactory;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 
@@ -57,6 +56,8 @@ trait HasIO
 
     public function fromString($code)
     {
+		$code = $this->prepareCode($code);
+		
         $this->contents($code);
 
         $this->ast($this->parse());
@@ -86,6 +87,8 @@ trait HasIO
     public function preview()
     {
         echo $this->render();
+
+		return $this;
     }
 
     public function parse()
@@ -113,7 +116,7 @@ trait HasIO
         }
 
         $ast = $traverser->traverse($this->originalAst);
-        
+
         return $ast;
     }
 
@@ -162,4 +165,19 @@ trait HasIO
 
         return $this;
     }
+
+	protected function prepareCode($code)
+	{		
+		if(!$this->directive('addMissingTags')) return $code;
+
+		if(!str_contains($code, '<?php')) {
+			$code = '<?php ' . PHP_EOL . PHP_EOL . $code;
+		}
+
+		if(!preg_match_all("/[\};]\s*$/", $code)) {
+			$code .= ';';
+		}
+
+		return $code;
+	}
 }

@@ -2,10 +2,9 @@
 
 namespace Archetype;
 
-use Archetype\Drivers\InputInterface;
-use Archetype\Drivers\OutputInterface;
+use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Traits\DelegatesAPICalls;
-use Archetype\Traits\HasDirectiveDefaults;
+use Archetype\Traits\HasDirectives;
 use Archetype\Traits\HasDirectiveHandlers;
 use Archetype\Traits\HasIO;
 
@@ -13,20 +12,22 @@ class PHPFile
 {
     use HasIO;
     use DelegatesAPICalls;
-    use HasDirectiveDefaults;
+    use HasDirectives;
     use HasDirectiveHandlers;
 
     protected $input;
 
     protected $output;
 
-    protected $contents;
+    protected string $contents;
 
-    protected $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
+    protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
+
+	public string $astQueryBuilder = ASTQueryBuilder::class;
 
     protected $ast;
 
-    protected $initialModificationHash;
+    protected string $initialModificationHash;
 
     protected $originalAst;
 
@@ -38,21 +39,20 @@ class PHPFile
 
     protected const endpointProviders = [
         // Utilities
-        Endpoints\SyntacticSweetener::class,
         Endpoints\PHP\AstQuery::class,
+        Endpoints\PHP\Make::class,		
         Endpoints\PHP\ReflectionProxy::class,
+        Endpoints\SyntacticSweetener::class,
 
         // Resources
-        Endpoints\PHP\Maker::class,
-        Endpoints\PHP\Property::class,
         Endpoints\PHP\ClassConstant::class,
-        Endpoints\PHP\MethodNames::class,
-        Endpoints\PHP\Namespace_::class,
-        Endpoints\PHP\Use_::class,
         Endpoints\PHP\ClassName::class,
         Endpoints\PHP\Extends_::class,
         Endpoints\PHP\Implements_::class,
-        Endpoints\PHP\TraitUse::class,
+        Endpoints\PHP\MethodNames::class,
+        Endpoints\PHP\Namespace_::class,
+        Endpoints\PHP\Property::class,
+        Endpoints\PHP\Use_::class,
     ];
 
     public function __construct(

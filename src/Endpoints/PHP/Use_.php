@@ -3,11 +3,7 @@
 namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
-use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\BuilderFactory;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Use_ as PhpParserUse_;
-use PhpParser\NodeTraverser;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -50,7 +46,7 @@ class Use_ extends EndpointProvider
             ->map(function ($useStatement) {
                 $base = join('\\', $useStatement->name->parts);
                 return $base . ($useStatement->alias ? ' as ' . $useStatement->alias : '');
-            });
+            })->toArray();
     }
 
     protected function set($newUseStatements)

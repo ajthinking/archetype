@@ -1,45 +1,28 @@
 <?php
 
-use Archetype\Facades\LaravelFile;
-use Archetype\Facades\PHPFile;
+use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
-class PrettyPrintTest extends Archetype\Tests\TestCase
-{	
-    public function test_arrays_are_beutiful_when_loaded_and_rendered()
-    {
-		$output = LaravelFile::user()->render();
-        $this->assertMultilineArray('fillable', $output);
-    }
+test('arrays are beutiful when loaded and rendered', function() {
+	PHPFile::load('app/Models/User.php')
+		->assertMultilineArray('fillable');
+});
 
-    public function test_arrays_are_beutiful_when_loaded_modified_and_rendered()
-    {
-		$output = LaravelFile::user()
-			->add('also')->to()->property('fillable')
-			->render();
+test('arrays are beutiful when loaded modified and rendered', function() {
+	PHPFile::load('app/Models/User.php')
+		->add('also')->to()->property('fillable')
+		->assertMultilineArray('fillable');
+});
 
-        $this->assertMultilineArray('fillable', $output);
-    }	
+test('arrays are beautiful when created and rendered', function() {
+	PHPFile::make()->class('CountClass')
+		->add()->property('counts', ['first', 'second', 'third'])
+		->assertMultilineArray('counts');
+});
 
-    public function test_arrays_are_beautiful_when_created_and_rendered()
-    {
-		$output = PHPFile::class('FillableClass')
-			->add()->property('fillable', ['first', 'second', 'third'])
-			->render();
-
-		$this->assertMultilineArray('fillable', $output);
-    }
-	
-    public function test_arrays_are_beutiful_when_empty()
-    {
-		$output = PHPFile::class('FillableClass')
-			->property('fillable', [])
-			->render();
-		
-		$this->assertSingleLineEmptyArray('fillable', $output);
-    }	
-
-    public function test_arrays_have_trailing_comma_after_last_item()
-    {
-		$this->markTestIncomplete();
-    }		
-}
+test('class statements have linebreaks between them', function() {
+	PHPFile::make()->class('CountClass')
+		->property('a', 1)
+		->property('b', 2)
+		->property('c', 3)
+		->assertLinebreaksBetweenClassStmts();
+});
