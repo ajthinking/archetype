@@ -58,14 +58,3 @@ it('can remove an existing class constant in a loaded file', function() {
 		->assertNoClassConstant('HOME')
 		->assertBeautifulPhp();
 });
-
-it('a', function() {
-LaravelFile::user()
-	->astQuery()
-    ->class()
-    ->name
-    ->replaceProperty('name', 'Urre')
-    ->commit() // updates the file's AST
-    ->end() // exit query
-    ->preview(); 
-});

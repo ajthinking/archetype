@@ -2,12 +2,16 @@
 
 use Archetype\Tests\Support\TestableMarkdown;
 
-test('readme examples are valid', function ($example) {
-    $example->assertCodeReturnsOutput();
-})->with(TestableMarkdown::make(__DIR__.'/../../readme.md')->examples);
-
-test('docs examples are valid', function ($example) {
+test('readme examples are valid', function ($heading, $example) {
     $example->assertCodeReturnsOutput();
 })->with(
-	TestableMarkdown::make(__DIR__.'/../../docs.md')->examples
+	TestableMarkdown::make(__DIR__.'/../../readme.md')
+		->toPestTestArray()
+);
+
+test('docs examples are valid', function ($heading, $example) {
+    $example->assertValid();
+})->with(
+	TestableMarkdown::make(__DIR__.'/../../docs.md')
+		->toPestTestArray()
 );

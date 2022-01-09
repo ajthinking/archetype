@@ -11,16 +11,25 @@ class TestableMarkdown
 
 	public array $examples = [];
 
-	public function __construct($path)
+	public function __construct(string $contents)
 	{
-		$this->contents = file_get_contents($path);
+		$this->contents = $contents;
 		$this->parseExamples();
 	}
 
 	public static function make($path)
 	{
-		return new static($path);
+		return new static(
+			file_get_contents($path)
+		);
 	}
+
+	public function toPestTestArray()
+	{
+		return collect($this->examples)->map(function($example) {
+			return [$example->config['heading'], $example];
+		})->toArray();
+	}	
 
 	protected function parseExamples()
 	{
@@ -30,42 +39,77 @@ class TestableMarkdown
 		while($cursor < $lines->count()) {
 			$line = $lines[$cursor];
 
-			$codeStartLine = $this->isExampleStart($line) ? $cursor : null;
-			
-			if(!$codeStartLine) {
+			if($this->isHeading($line)) {
+				$sectionLines = $this->getSectionLines($lines, $cursor);
+				$this->registerExample($sectionLines->values());
+				$cursor += $sectionLines->count();
+			} else {
 				$cursor++;
 				continue;
 			}
-
-			$cursor = $codeStartLine + 1;
-			$codeEndLine = $lines->slice($cursor)->search('```');
-
-			$cursor = $codeEndLine + 1;
-
-			$outputStartLine = $lines->slice($cursor)->filter(function($line) {
-	
-				return Str::of($line)->startsWith('```');
-			})->keys()->first();
-
-			$cursor = $outputStartLine + 1;
-			$outputEndLine = $lines->slice($cursor)->search('```');
-
-			
-
-			$cursor = $outputEndLine + 1;
-			
-			$code = $lines->slice($codeStartLine+1, $codeEndLine - $codeStartLine-1)->implode(PHP_EOL);
-			$output = $lines->slice($outputStartLine+1, $outputEndLine - $outputStartLine-1)->implode(PHP_EOL);
-
-			array_push(
-				$this->examples,
-				new ReadmeExample($code, $output)
-			);
 		}
 	}
 
 	protected function isExampleStart(string $line)
 	{
-		return preg_match("/^```php example/", $line);
+		return preg_match("/^```php example.*/", $line);
+	}
+
+	protected function isHeading(string $line)
+	{
+		return preg_match("/^[#]+ .*/", $line);
+	}
+
+	protected function getDirectives(string $line)
+	{
+		preg_match("/^```php example (.*)/", $line, $matches);
+
+		if(!$matches) return ['assertCodeReturnsOutput'];
+
+		return [$matches[1]];
+	}
+
+	protected function getSectionLines($lines, $startLineIndex)
+	{
+		$endLineIndex = $lines->slice($startLineIndex+1)->search(function($line) {
+			return $this->isHeading($line);
+		});
+
+		return $lines->slice($startLineIndex)->take(
+			$endLineIndex ? $endLineIndex - $startLineIndex : 10000000
+		);
+	}
+
+	protected function registerExample($lines)
+	{
+		$config = [
+			'heading' => $lines->first(),
+		];
+
+		$codeTags = $lines->filter(function($line) {
+			return preg_match("/^```/", $line);
+		})->keys();
+
+		if($codeTags->isEmpty()) return;
+		
+		if(!$this->isExampleStart($lines[$codeTags[0]])) return;
+
+		$codeStartLine = $codeTags[0];
+		$codeEndLine = $codeTags[1];
+
+		$code = $lines->slice($codeStartLine+1, $codeEndLine - $codeStartLine-1)->implode(PHP_EOL);
+		$config['code'] = $code;
+
+		if($codeTags->count() > 2) {
+			$outputStartLine = $codeTags[2];
+			$outputEndLine = $codeTags[3];			
+			$output = $lines->slice($outputStartLine+1, $outputEndLine - $outputStartLine-1)->implode(PHP_EOL);
+			$config['output'] = $output;
+		}
+
+		array_push(
+			$this->examples,
+			new ReadmeExample($config)			
+		);	
 	}
 }

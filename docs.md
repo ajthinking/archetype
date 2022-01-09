@@ -1,4 +1,4 @@
-## API
+## API examples
 
 ### Make an empty file
 ```php example
@@ -11,7 +11,7 @@ PHPFile::make()->file('dummy.php')
 ```
 
 
-### Make a class file
+### Make a class
 ```php example
 PHPFile::make()->class('Car')
 	->render()
@@ -87,6 +87,36 @@ class User extends Authenticatable
 ```
 
 </details>
+
+
+### Make a file from a string
+```php example
+PHPFile::fromString('<?php $hey = 1337;')
+```
+
+### Make a file from a pseudo php string
+```php example
+PHPFile::addMissingTags()->fromString('$hey = 1337')
+```
+
+### Render file
+Renders a file
+```php example
+PHPFile::make()->file('dummy.php')
+	->render()
+```
+
+```
+<?php
+```
+
+### Save file
+Renders a file to disk
+```php example
+PHPFile::make()->file('dummy.php')
+	->save()
+```
+
 
 ### Get class name
 ```php example

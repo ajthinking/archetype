@@ -15,7 +15,7 @@ composer require ajthinking/archetype
 ```
 > 
 
-That's it! Check out introduction of concepts below or review the [API DOCS](docs.md)
+That's it! Check out introduction of concepts below or review the [API examples](docs.md)
  
 ## `PHPFile` read/write API
 

@@ -3,22 +3,42 @@
 namespace Archetype\Tests\Support;
 
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertTrue;
+
+use Exception;
 use Illuminate\Support\Str;
 
 class ReadmeExample
 {
-	public string $code;
-	public string $output;
+	public array $config = [
+		'code' => '',
+		'output' => '',
+		'directives' => ['assertCodeReturnsOutput']
+	];
 
-	public function __construct($code, $output)
+	public function __construct(array $config)
 	{
-		$this->code = $code;
-		$this->output = $output;
+		$this->config = array_merge($this->config, $config);
 	}
+
+	public function code()
+	{
+		return $this->config['code'];
+	}
+
+	public function heading()
+	{
+		return $this->config['heading'];
+	}	
+
+	public function output()
+	{
+		return $this->config['output'] ?? null;
+	}	
 
 	public function assertCodeReturnsOutput()
 	{
-		$expected = $this->output;
+		$expected = $this->output();
 		$actual = eval($this->preparedCode());
 		$message = "Expected: $expected".PHP_EOL.PHP_EOL."Got: $actual".PHP_EOL.PHP_EOL;
 
@@ -27,9 +47,28 @@ class ReadmeExample
 		return $this;
 	}
 
+	public function assertCanRun()
+	{
+		try {
+			eval($this->preparedCode());
+			assertTrue(true);
+		} catch(Exception $e) {
+			assertTrue(false, 'Could not eval code!');
+		}
+
+		return $this;
+	}
+
+	public function assertValid()
+	{
+		return $this->output()
+			? $this->assertCodeReturnsOutput()
+			: $this->assertCanRun();
+	}
+
 	protected function preparedCode()
 	{
-		return Str::of($this->code)
+		return Str::of($this->code())
 			->prepend('return ')
 			->append(';')
 			->replace(
