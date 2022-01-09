@@ -144,21 +144,20 @@ Example: how can we fetch explicit column names in a migration file?
 ```php
 LaravelFile::load('database/migrations/2014_10_12_000000_create_users_table.php')
     ->astQuery() // get a ASTQueryBuilder
-
     ->classMethod()
-        ->where('name->name', 'up')
-    ->staticCall()
-        ->where('class', 'Schema')
-        ->where('name->name', 'create')
-    ->args
+	->where('name->name', 'up')
+	->staticCall()
+	->where('class', 'Schema')
+    ->where('name->name', 'create')
+	->args
     ->closure()
     ->stmts
     ->methodCall()
-        ->where('var->name', 'table')
+    ->where('var->name', 'table')
     ->args
 	->value
 	->value
-	->get(); // exit ASTQueryBuilder, get a Collection        
+	->get();
 ```
 
 The ASTQueryBuilder examines all possible paths and automatically terminates those that cant complete the query:
