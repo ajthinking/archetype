@@ -200,7 +200,7 @@ php artisan vendor:publish --provider="Archetype\ServiceProvider"
 * Laravel >= 7
 
 ## Contributing
-PRs and issues are welcome :pray: Feel free to take a stab at the [incomplete test](https://github.com/ajthinking/archetype/search?q=%24this-%3EmarkTestIncomplete).
+PRs and issues are welcome :pray: Feel free to take a stab at an [incomplete test](https://github.com/ajthinking/archetype/search?q=%24this-%3EmarkTestIncomplete).
 ### Development installation
 ```
 git clone git@github.com:ajthinking/archetype.git
