@@ -7,11 +7,9 @@ it('it can make an empty file', function () {
 		->assertValidPhp();
 });
 
-it('it can make a class file', function () {
-	PHPFile::make()->class()
-		->assertValidPhp()
-		->assertBeautifulPhp();
-});
+it('it cannot make a class file without a namespace', function () {
+	PHPFile::make()->class(\Dummy::class);
+})->throws(Exception::class);
 
 test('make file defaults to root', function () {
 	$output = PHPFile::make()->file('script.php')->outputDriver();
@@ -24,22 +22,6 @@ test('the php file maker can write into directories', function () {
 	$output = PHPFile::make()->file('app/HTTP/script.php')->outputDriver();
 	$this->assertEquals('app/HTTP', $output->relativeDir);
 	$this->assertEquals('script', $output->filename);
-	$this->assertEquals('php', $output->extension);
-});
-
-it('make class defaults to app', function () {
-	$output = PHPFile::make()->class('Scripter')->outputDriver();
-	$this->assertEquals('app', $output->relativeDir);
-	$this->assertEquals('Scripter', $output->filename);
-	$this->assertEquals('php', $output->extension);
-});
-
-it('can explicitly prepend app path when creating a class', function () {
-	$this->markTestIncomplete();
-
-	$output = PHPFile::make()->class('app/Scripter')->outputDriver();
-	$this->assertEquals('app', $output->relativeDir);
-	$this->assertEquals('Scripter', $output->filename);
 	$this->assertEquals('php', $output->extension);
 });
 
@@ -57,10 +39,7 @@ it('the php class maker accepts a namespaced class', function () {
 	
 	$output = $file->outputDriver();
 
-	$this->assertEquals('app/Weapons', $output->relativeDir);
+	$this->assertEquals('Weapons', $output->relativeDir);
 	$this->assertEquals('RocketLauncher', $output->filename);
 	$this->assertEquals('php', $output->extension);
-
-	$this->assertEquals('App\Weapons', $file->namespace());
-	$this->assertEquals('RocketLauncher', $file->className());
 });

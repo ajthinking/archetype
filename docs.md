@@ -13,7 +13,7 @@ PHPFile::make()->file('dummy.php')
 
 ### Make a class
 ```php example
-PHPFile::make()->class('Car')
+PHPFile::make()->class(\App\Models\Car::class)
 	->render()
 ```
 
@@ -22,7 +22,7 @@ PHPFile::make()->class('Car')
 ```php
 <?php
 
-namespace App;
+namespace App\Models;
 
 class Car
 {
@@ -131,7 +131,7 @@ User
 
 ### Change class name
 ```php example
-PHPFile::make()->class('Dumb')
+PHPFile::make()->class(\App\Dumb::class)
 	->className('Dumber')
 	->className()
 ```

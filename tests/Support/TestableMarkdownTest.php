@@ -26,7 +26,7 @@ MARKDOWN;
 const MAKE_AN_EMPTY_FILE = <<< 'MARKDOWN'
 ### Make an empty file
 ```php example
-PHPFile::make()->file('dummy.php')
+PHPFile::make()->file(\\App\\Dummy::class)
 	->render()
 ```
 

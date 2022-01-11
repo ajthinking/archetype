@@ -43,7 +43,7 @@ it('can create a new class constant in an existing file', function() {
 });
 
 it('can remove an existing class constant in a new file', function() {
-	PHPFile::make()->class('Dummy')
+	PHPFile::make()->class(\App\Dummy::class)
 		->classConstant('MSG', 'hi')
 		->remove()->classConstant('MSG')
 		->assertValidPhp()		

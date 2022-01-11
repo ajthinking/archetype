@@ -24,7 +24,7 @@ it('can create a new class property', function() {
 });
 	
 it('can create a new class property when empty', function() {
-	PHPFile::make()->class('Dummy')
+	PHPFile::make()->class(\App\Dummy::class)
 		->property('master', 'yoda')
 		->assertProperty('master', 'yoda')
 		->assertValidPhp()
@@ -32,7 +32,7 @@ it('can create a new class property when empty', function() {
 });
 	
 it('can set empty property by using explicit set method', function() {
-	PHPFile::make()->class('Dummy')
+	PHPFile::make()->class(\App\Dummy::class)
 		->setProperty('empty')
 		->assertProperty('empty', null)
 		->assertValidPhp()
@@ -40,7 +40,7 @@ it('can set empty property by using explicit set method', function() {
 });
 
 it('can set visibility using directives', function() {
-	PHPFile::make()->class('Dummy')
+	PHPFile::make()->class(\App\Dummy::class)
 		->private()->setProperty('parts')
 		->assertContains('private $parts;')
 		->assertValidPhp()
