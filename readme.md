@@ -23,7 +23,7 @@ That's it! Check out introduction of concepts below or review the [API examples]
 use Archetype\Facades\PHPFile;
 
 // Create new files
-PHPFile::make()->class('acme/Product.php')
+PHPFile::make()->class(\Acme\Product::class)
     ->use('Shippable')
     ->public()->property('stock', -1)
     ->save();
@@ -31,7 +31,7 @@ PHPFile::make()->class('acme/Product.php')
 
 ```php
 // Modify existing files  
-PHPFile::load('app/Models/User.php')
+PHPFile::load(\App\Models\User::class)
     ->className('NewClassName')
     ->save();
 ```
