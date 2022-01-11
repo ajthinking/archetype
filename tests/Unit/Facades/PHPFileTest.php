@@ -26,9 +26,7 @@ describe('#load', function() {
 	});
 	
 	it('can load using namespaced class', function() {
-		$this->markTestIncomplete();
-
-		PHPFile::load(App\User::class)
+		PHPFile::load(App\Models\User::class)
 			->assertValidPhp();
 	});	
 });

@@ -5,6 +5,7 @@ namespace Archetype\Drivers;
 use Archetype\Drivers\InputInterface;
 use Illuminate\Support\Str;
 use Archetype\Support\PHPFileStorage;
+use Archetype\Support\URI;
 
 class FileInput implements InputInterface
 {
@@ -29,9 +30,9 @@ class FileInput implements InputInterface
         return $this;
     }
 
-    public function load(string $path = null)
+    public function load(string $location = null)
     {
-        $this->extractPathProperties($path);
+        $this->extractPathProperties($location);
 
         return (new PHPFileStorage)->get($this->absolutePath());
     }
@@ -53,9 +54,10 @@ class FileInput implements InputInterface
         return $this->filename;
     }
 
-    protected function extractPathProperties($path)
+    protected function extractPathProperties(string $location)
     {
-        preg_match('/(.*)\..*/', basename($path), $matches);
+		$path = URI::make($location)->path();
+		
         $this->filename = $path ? basename($path, '.php') : null;
         
         preg_match('/.*\.(.*)/', basename($path), $matches);
