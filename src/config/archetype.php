@@ -56,7 +56,7 @@ return [
         
         // PHP
         'file_root' => '',
-        'class_root' => 'app',
+        'class_root' => '',
 
         // Laravel
         'commands_root' => 'app/HTTP/Controllers',

@@ -14,13 +14,13 @@ test('arrays are beutiful when loaded modified and rendered', function() {
 });
 
 test('arrays are beautiful when created and rendered', function() {
-	PHPFile::make()->class('CountClass')
+	PHPFile::make()->class()
 		->add()->property('counts', ['first', 'second', 'third'])
 		->assertMultilineArray('counts');
 });
 
 test('class statements have linebreaks between them', function() {
-	PHPFile::make()->class('CountClass')
+	PHPFile::make()->class()
 		->property('a', 1)
 		->property('b', 2)
 		->property('c', 3)

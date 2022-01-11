@@ -4,7 +4,9 @@ namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
 use Archetype\Support\URI;
+use Exception;
 use Illuminate\Support\Str;
+use PhpParser\BuilderFactory;
 
 class Make extends EndpointProvider
 {
@@ -20,9 +22,13 @@ class Make extends EndpointProvider
             ->outputDriver($this->outputDriver);
     }
 
-    public function class($name = 'Dummy')
+    public function class($name = \App\Dummy::class)
     {
         $this->setupNames($name, 'class_root');
+
+		if(!$this->namespace) {
+			throw new Exception('Cannot create a class without a root namespace');
+		}
 
         $contents = Str::of($this->stub('class.php.stub'))
             ->replace(['DummyNamespace', '___NAMESPACE___', '{{ namespace }}'], $this->namespace)
