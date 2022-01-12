@@ -1,141 +1,163 @@
 ## API examples
 
 ### Make an empty file
-```php example
-PHPFile::make()->file('dummy.php')
-	->render()
-```
-
 ```php
-<?php
+PHPFile::make()->file('dummy.php')
 ```
-
 
 ### Make a class
-```php example
-PHPFile::make()->class(\App\Models\Car::class)
-	->render()
-```
-
-<details><summary>Output</summary>
-
 ```php
-<?php
-
-namespace App\Models;
-
-class Car
-{
-}
+PHPFile::make()->class(\App\Models\Car::class)
 ```
-
-
-</details>
 
 ### Load an existing file
 ```php
 PHPFile::load('app/Models/User.php')
-	->render()
 ```
-<details><summary>Output</summary>
 
+### Load an existing class by name
 ```php
-<?php
-
-namespace App\Models;
-
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-}
+PHPFile::load(\App\Models\User::class)
 ```
-
-</details>
-
 
 ### Make a file from a string
-```php example
+```php
 PHPFile::fromString('<?php $hey = 1337;')
 ```
 
 ### Make a file from a pseudo php string
-```php example
+```php
 PHPFile::addMissingTags()->fromString('$hey = 1337')
 ```
 
 ### Render file
-Renders a file
-```php example
-PHPFile::make()->file('dummy.php')
-	->render()
-```
-
-```
-<?php
+```php
+$file->render()
 ```
 
 ### Save file
-Renders a file to disk
-```php example
-PHPFile::make()->file('dummy.php')
-	->save()
+Saves a file to disk
+```php
+$file->save()
 ```
 
+### Save file to a new location
+```php
+$file->save('app/helpers.php')
+```
 
 ### Get class name
-```php example
-PHPFile::load('app/Models/User.php')
-	->className();
+```php
+$file->className();
 ```
-
-```string
-User
-```
-
 
 ### Change class name
-```php example
-PHPFile::make()->class(\App\Dumb::class)
-	->className('Dumber')
-	->className()
+```php
+$file->className('NewName')
 ```
 
-```string
-Dumber
+### Get a class constant
+```php
+$file->classConstant('HOME')
+```
+
+### Set a class constant
+```php
+$file->classConstant('HOME', '/new/home')
+```
+
+### Remove a class constant
+```php
+$file->remove()->classConstant('HOME')
+```
+
+### Get class extends
+```php
+$file->extends();
+```
+
+### Set class extends
+```php
+$file->extends(SomeBaseClass::class)
+```
+
+### Get class implements
+```php
+$file->implements();
+```
+
+### Set class implements
+```php
+$file->implements([SomeInterface::class])
+```
+
+### Get class method names
+```php
+$file->methodNames()
+```
+
+### Get namespace
+```php
+$file->namespace();
+```
+
+### Set class namespace
+```php
+$file->namespace('New\Namespace')
+```
+
+### Get a property
+```php
+$file->property('table');
+```
+
+### Set a property
+```php
+$file->property('table', 'new_table');
+```
+
+### Set property visibility
+```php
+$file->private()->property('table', 'secret');
+```
+
+### Remove property
+```php
+$file->remove()->property('table');
+```
+
+### Clear a property
+```php
+$file->clear()->property('fillable');
+```
+
+### Empty property
+```php
+$file->empty()->property('fillable');
+```
+
+### Add item to array property
+```php
+$file->add('column')->to()->property('fillable');
+```
+
+### Get use statements
+```php
+$file->use()
+```
+
+### Set use statements
+```php
+$file->use([
+	Class1::class,
+	Class2::class,
+])
+```
+
+### Add use statements
+```php
+$file->add()->use([
+	Extra1::class,
+	Extra2::class,
+])
 ```

@@ -8,10 +8,3 @@ test('readme examples are valid', function ($heading, $example) {
 	TestableMarkdown::make(__DIR__.'/../../readme.md')
 		->toPestTestArray()
 );
-
-test('docs examples are valid', function ($heading, $example) {
-    $example->assertValid();
-})->with(
-	TestableMarkdown::make(__DIR__.'/../../docs.md')
-		->toPestTestArray()
-);
