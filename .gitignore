@@ -7,3 +7,4 @@ sketches/
 vendor/
 .phpunit.result.cache
 logs
+composer.lock
