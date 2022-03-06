@@ -172,6 +172,17 @@ class ASTQueryBuilder
         return $arg1 instanceof Closure ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
     }
 
+	public function callStackOn(Closure $closure)
+	{
+        return $this->next(function ($queryNode) use ($closure) {
+            $query = new static(
+                Arr::wrap((clone $queryNode)->result)
+            );
+
+            return $closure($query) ? $queryNode : new Killable;
+        });
+	}
+
     public function next($callback)
     {
         $next = $this->currentNodes()->map($callback)->flatten()->toArray();

@@ -170,3 +170,21 @@ it('can traverse into class properties by passing an arrow separated string', fu
 		->classMethod('name->name')
 		->assertMatches(collect(['register', 'boot']));
 });
+
+it('can traverse into call stacks', function() {
+	$code = <<< 'CODE'
+	init()->first()->second()->third();
+	noise();
+	CODE;
+
+	$stack = PHPFile::fromString($code)
+		->astQuery()
+		->callStackOn(function($query) {
+			return $query->funcCall()->where('name->name', 'init')->get();
+		})->assertMatchCount(1)
+		->first();
+
+	$this->assertInstanceOf(\PhpParser\Node\Stmt\Expression::class, $stack);
+	$this->assertEquals(['init'], $stack->expr->var->var->var->name->parts);
+	$this->assertEquals('third', $stack->expr->name->name);
+});
