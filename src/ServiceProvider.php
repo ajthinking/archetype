@@ -7,12 +7,9 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Archetype\Commands\ErrorsCommand;
 use Archetype\Factories\LaravelFileFactory;
 use Archetype\Factories\PHPFileFactory;
-use Archetype\Traits\AddsLaravelStringsToStrWithMacros;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    use AddsLaravelStringsToStrWithMacros;
-
     public function register()
     {
         $this->registerFacades();
@@ -22,7 +19,6 @@ class ServiceProvider extends BaseServiceProvider
 
     public function boot()
     {
-        $this->bootStrMacros();
         $this->publishConfig();
     }
 
