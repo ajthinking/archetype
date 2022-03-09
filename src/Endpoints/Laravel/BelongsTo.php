@@ -3,10 +3,9 @@
 namespace Archetype\Endpoints\Laravel;
 
 use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\LaravelStrings;
 use Archetype\Support\Snippet;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
-use PhpParser\BuilderFactory;
 
 class BelongsTo extends EndpointProvider
 {
@@ -26,9 +25,9 @@ class BelongsTo extends EndpointProvider
             ->insertStmts(
                 collect(Arr::wrap($targets))->map(function ($target) {
                     return Snippet::___BELONGS_TO_METHOD___([
-                        '___BELONGS_TO_METHOD___' => Str::belongsToMethodName($target),
+                        '___BELONGS_TO_METHOD___' => LaravelStrings::belongsToMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),
-                        '___TARGET_IN_DOC_BLOCK___' => Str::belongsToDocBlockName($target)
+                        '___TARGET_IN_DOC_BLOCK___' => LaravelStrings::belongsToDocBlockName($target)
                     ]);
                 })->toArray()
             )->commit()
