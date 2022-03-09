@@ -3,8 +3,8 @@
 namespace Archetype\Endpoints\Laravel;
 
 use Archetype\Endpoints\EndpointProvider;
+use Archetype\Support\LaravelStrings;
 use Archetype\Support\Snippet;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
 class HasMany extends EndpointProvider
@@ -25,9 +25,9 @@ class HasMany extends EndpointProvider
             ->insertStmts(
                 collect(Arr::wrap($targets))->map(function ($target) {
                     return Snippet::___HAS_MANY_METHOD___([
-                        '___HAS_MANY_METHOD___' => Str::hasManyMethodName($target),
+                        '___HAS_MANY_METHOD___' => LaravelStrings::hasManyMethodName($target),
                         '___TARGET_CLASS___' => class_basename($target),
-                        '___TARGET_IN_DOC_BLOCK___' => Str::hasManyDocBlockName($target)
+                        '___TARGET_IN_DOC_BLOCK___' => LaravelStrings::hasManyDocBlockName($target)
                     ]);
                 })->toArray()
             )->commit()
