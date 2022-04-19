@@ -19,7 +19,6 @@ use Archetype\Traits\HasDirectives;
 use Archetype\Traits\HasDirectiveHandlers;
 use Archetype\Traits\HasIO;
 use Archetype\Traits\HasSyntacticSweeteners;
-use BadMethodCallException;
 
 class PHPFile
 {
@@ -50,9 +49,25 @@ class PHPFile
 
     protected $directives = [];
 
-    protected const endpointProviders = [
-        // Endpoints\SyntacticSweetener::class,
-    ];
+	public function query()
+	{
+		return new $this->fileQueryBuilder($this);
+	}
+
+	public function all(...$args)
+	{
+		return $this->query()->all(...$args);
+	}
+
+	public function in(...$args)
+	{
+		return $this->query()->in(...$args);
+	}
+	
+	public function where(...$args)
+	{
+		return $this->query()->where(...$args);
+	}	
 
 	public function astQuery()
 	{
@@ -84,26 +99,6 @@ class PHPFile
     ) {
         $this->input = $input;
         $this->output = $output;
-    }
-
-    public function __call($method, $args)
-    {
-        $handler = $this->endpointProviders()->filter(function ($endpoint) use ($method, $args) {
-            return (new $endpoint($this))->canHandle($method, $args);
-        })->first();
-
-        if ($handler) {
-            return (new $handler($this))->$method(...$args);
-        }
-
-        throw new BadMethodCallException("Could not find a handler for method $method");
-    }
-
-    public function endpointProviders()
-    {
-        return collect(self::endpointProviders)->push(
-            $this->fileQueryBuilder
-        );
     }
 
 	public function property($key, $value = Types::NO_VALUE)

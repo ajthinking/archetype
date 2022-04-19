@@ -106,15 +106,3 @@ describe('#fromString', function() {
 			->assertValidPhp();
 	});
 });
-
-describe('#__call', function() {
-	it('catches non existing methods', function () {
-		PHPFile::this_method_does_not_exists();
-	})->throws(BadMethodCallException::class);
-
-	it('can delegate method calls to resources', function () {
-		PHPFile::make()->class()->assertInstanceOf(
-			\Archetype\Tests\Support\TestablePHPFile::class
-		);
-	});	
-});

@@ -27,6 +27,7 @@ class ModelProperties extends EndpointProvider
 
     public function getEndpoints()
     {
+		echo "HEY CALLED";
         return collect($this->propertyMap)->keys();
     }
 

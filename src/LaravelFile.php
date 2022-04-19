@@ -12,11 +12,22 @@ use Archetype\PHPFile;
 
 class LaravelFile extends PHPFile
 {
-    protected const endpointProviders = [
-        Endpoints\Laravel\ModelProperties::class,
-    ];
-
 	protected string $fileQueryBuilder = Endpoints\Laravel\LaravelFileQueryBuilder::class;
+
+	public function user(...$args)
+	{
+		return $this->query()->user(...$args);
+	}
+
+	public function controllers(...$args)
+	{
+		return $this->query()->controllers(...$args);
+	}
+	
+	public function models(...$args)
+	{
+		return $this->query()->controllers(...$args);
+	}	
 
 	public function casts(...$args)
 	{
@@ -125,9 +136,4 @@ class LaravelFile extends PHPFile
 		$handler = new HasOne($this);
 		return $handler->hasOne($targets);
 	}
-
-    public function endpointProviders()
-    {
-        return	collect(self::endpointProviders)->push($this->fileQueryBuilder);
-    }
 }
