@@ -12,15 +12,14 @@ use Archetype\Endpoints\PHP\Property;
 use Archetype\Endpoints\PHP\Use_;
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Support\Types;
-use Archetype\Traits\DelegatesAPICalls;
 use Archetype\Traits\HasDirectives;
 use Archetype\Traits\HasDirectiveHandlers;
 use Archetype\Traits\HasIO;
+use BadMethodCallException;
 
 class PHPFile
 {
     use HasIO;
-    use DelegatesAPICalls;
     use HasDirectives;
     use HasDirectiveHandlers;
 
@@ -60,6 +59,19 @@ class PHPFile
         $this->input = $input;
         $this->output = $output;
     }
+
+    public function __call($method, $args)
+    {
+        $handler = $this->endpointProviders()->filter(function ($endpoint) use ($method, $args) {
+            return (new $endpoint($this))->canHandle($method, $args);
+        })->first();
+
+        if ($handler) {
+            return (new $handler($this))->$method(...$args);
+        }
+
+        throw new BadMethodCallException("Could not find a handler for method $method");
+    }	
 
     public function endpointProviders()
     {
