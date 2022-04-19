@@ -2,19 +2,23 @@
 
 namespace Archetype;
 
+use Archetype\Endpoints\PHP\AstQuery;
 use Archetype\Endpoints\PHP\ClassConstant;
 use Archetype\Endpoints\PHP\ClassName;
 use Archetype\Endpoints\PHP\Extends_;
 use Archetype\Endpoints\PHP\Implements_;
+use Archetype\Endpoints\PHP\Make;
 use Archetype\Endpoints\PHP\MethodNames;
 use Archetype\Endpoints\PHP\Namespace_;
 use Archetype\Endpoints\PHP\Property;
+use Archetype\Endpoints\PHP\ReflectionProxy;
 use Archetype\Endpoints\PHP\Use_;
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Support\Types;
 use Archetype\Traits\HasDirectives;
 use Archetype\Traits\HasDirectiveHandlers;
 use Archetype\Traits\HasIO;
+use Archetype\Traits\HasSyntacticSweeteners;
 use BadMethodCallException;
 
 class PHPFile
@@ -22,6 +26,7 @@ class PHPFile
     use HasIO;
     use HasDirectives;
     use HasDirectiveHandlers;
+	use HasSyntacticSweeteners;
 
     protected $input;
 
@@ -46,11 +51,32 @@ class PHPFile
     protected $directives = [];
 
     protected const endpointProviders = [
-        Endpoints\PHP\AstQuery::class,
-        Endpoints\PHP\Make::class,		
-        Endpoints\PHP\ReflectionProxy::class,
-        Endpoints\SyntacticSweetener::class,
+        // Endpoints\SyntacticSweetener::class,
     ];
+
+	public function astQuery()
+	{
+		$handler = new AstQuery($this);
+		return $handler->astQuery();
+	}
+
+	public function getReflection()
+	{
+		$handler = new ReflectionProxy($this);
+		return $handler->getReflection();
+	}
+	
+	public function file(string $name = 'dummy.php')
+	{
+		$handler = new Make($this);
+		return $handler->file($name);
+	}
+
+	public function class($name = \App\Dummy::class)
+	{
+		$handler = new Make($this);
+		return $handler->class($name);		
+	}
 
     public function __construct(
         string $input = \Archetype\Drivers\FileInput::class,
@@ -71,7 +97,7 @@ class PHPFile
         }
 
         throw new BadMethodCallException("Could not find a handler for method $method");
-    }	
+    }
 
     public function endpointProviders()
     {
