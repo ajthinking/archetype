@@ -2,18 +2,30 @@
 
 namespace Archetype;
 
+use Archetype\Endpoints\PHP\AstQuery;
+use Archetype\Endpoints\PHP\ClassConstant;
+use Archetype\Endpoints\PHP\ClassName;
+use Archetype\Endpoints\PHP\Extends_;
+use Archetype\Endpoints\PHP\Implements_;
+use Archetype\Endpoints\PHP\Make;
+use Archetype\Endpoints\PHP\MethodNames;
+use Archetype\Endpoints\PHP\Namespace_;
+use Archetype\Endpoints\PHP\Property;
+use Archetype\Endpoints\PHP\ReflectionProxy;
+use Archetype\Endpoints\PHP\Use_;
 use Archetype\Support\AST\ASTQueryBuilder;
-use Archetype\Traits\DelegatesAPICalls;
+use Archetype\Support\Types;
 use Archetype\Traits\HasDirectives;
 use Archetype\Traits\HasDirectiveHandlers;
 use Archetype\Traits\HasIO;
+use Archetype\Traits\HasSyntacticSweeteners;
 
 class PHPFile
 {
     use HasIO;
-    use DelegatesAPICalls;
     use HasDirectives;
     use HasDirectiveHandlers;
+	use HasSyntacticSweeteners;
 
     protected $input;
 
@@ -37,23 +49,49 @@ class PHPFile
 
     protected $directives = [];
 
-    protected const endpointProviders = [
-        // Utilities
-        Endpoints\PHP\AstQuery::class,
-        Endpoints\PHP\Make::class,		
-        Endpoints\PHP\ReflectionProxy::class,
-        Endpoints\SyntacticSweetener::class,
+	public function query()
+	{
+		return new $this->fileQueryBuilder($this);
+	}
 
-        // Resources
-        Endpoints\PHP\ClassConstant::class,
-        Endpoints\PHP\ClassName::class,
-        Endpoints\PHP\Extends_::class,
-        Endpoints\PHP\Implements_::class,
-        Endpoints\PHP\MethodNames::class,
-        Endpoints\PHP\Namespace_::class,
-        Endpoints\PHP\Property::class,
-        Endpoints\PHP\Use_::class,
-    ];
+	public function all(...$args)
+	{
+		return $this->query()->all(...$args);
+	}
+
+	public function in(...$args)
+	{
+		return $this->query()->in(...$args);
+	}
+	
+	public function where(...$args)
+	{
+		return $this->query()->where(...$args);
+	}	
+
+	public function astQuery()
+	{
+		$handler = new AstQuery($this);
+		return $handler->astQuery();
+	}
+
+	public function getReflection()
+	{
+		$handler = new ReflectionProxy($this);
+		return $handler->getReflection();
+	}
+	
+	public function file(string $name = 'dummy.php')
+	{
+		$handler = new Make($this);
+		return $handler->file($name);
+	}
+
+	public function class($name = \App\Dummy::class)
+	{
+		$handler = new Make($this);
+		return $handler->class($name);		
+	}
 
     public function __construct(
         string $input = \Archetype\Drivers\FileInput::class,
@@ -63,10 +101,63 @@ class PHPFile
         $this->output = $output;
     }
 
-    public function endpointProviders()
+	public function property($key, $value = Types::NO_VALUE)
+	{
+		$handler = new Property($this);
+		return $handler->property($key, $value);
+	}
+
+    public function setProperty($key, $value = Types::NO_VALUE)
     {
-        return collect(self::endpointProviders)->push(
-            $this->fileQueryBuilder
-        );
+		$handler = new Property($this);
+		return $handler->setProperty($key, $value);		
     }
+	
+	public function use($value = null)
+	{
+		$handler = new Use_($this);
+		return $handler->use($value);
+	}
+
+	public function namespace(string $value = null)
+	{
+		$handler = new Namespace_($this);
+		return $handler->namespace($value);
+	}
+
+	public function methodNames()
+	{
+		$handler = new MethodNames($this);
+		return $handler->methodNames();
+	}
+	
+	public function implements($name = null)
+	{
+		$handler = new Implements_($this);
+		return $handler->implements($name);
+	}
+
+	public function extends($name = null)
+	{
+		$handler = new Extends_($this);
+		return $handler->extends($name);
+	}
+	
+	public function className($name = null)
+	{
+		$handler = new ClassName($this);
+		return $handler->className($name);
+	}
+	
+	public function classConstant($key, $value = Types::NO_VALUE)
+	{
+		$handler = new ClassConstant($this);
+		return $handler->classConstant($key, $value);
+	}
+
+	public function setClassConstant($key, $value = Types::NO_VALUE)
+	{
+		$handler = new ClassConstant($this);
+		return $handler->setClassConstant($key, $value);
+	}	
 }
