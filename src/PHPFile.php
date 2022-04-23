@@ -35,6 +35,8 @@ class PHPFile
 
     protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
 
+	protected string $maker = Endpoints\PHP\Make::class;
+
 	public string $astQueryBuilder = ASTQueryBuilder::class;
 
     protected $ast;
@@ -80,17 +82,10 @@ class PHPFile
 		$handler = new ReflectionProxy($this);
 		return $handler->getReflection();
 	}
-	
-	public function file(string $name = 'dummy.php')
-	{
-		$handler = new Make($this);
-		return $handler->file($name);
-	}
 
-	public function class($name = \App\Dummy::class)
+	public function make()
 	{
-		$handler = new Make($this);
-		return $handler->class($name);		
+		return new $this->maker($this);
 	}
 
     public function __construct(
