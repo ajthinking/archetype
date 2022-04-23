@@ -39,11 +39,6 @@ trait HasSyntacticSweeteners
 		return $this;
 	}
 	
-	public function make()
-	{
-		return $this;
-	}
-	
 	public function please()
 	{
 		return $this;
