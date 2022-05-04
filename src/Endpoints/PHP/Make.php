@@ -3,12 +3,13 @@
 namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
+use Archetype\Endpoints\Maker;
 use Archetype\Support\URI;
 use Exception;
 use Illuminate\Support\Str;
 use PhpParser\BuilderFactory;
 
-class Make extends EndpointProvider
+class Make extends Maker
 {
     protected string $filename;
     protected string $extension = '.php';
