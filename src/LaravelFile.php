@@ -88,30 +88,6 @@ class LaravelFile extends PHPFile
 		$handler = new ModelProperties($this);
 		return $handler->hidden(...$args);
 	}
-	
-    public function model($name)
-    {
-		$handler = new LaravelMake($this);
-		$handler->model($name);
-    }
-
-    public function controller($name)
-    {
-		$handler = new LaravelMake($this);
-		$handler->controller($name);
-    }
-
-    public function migration($name)
-    {
-		$handler = new LaravelMake($this);
-		$handler->migration($name);
-    }
-    
-    public function factory($name)
-    {
-		$handler = new LaravelMake($this);
-		$handler->factory($name);
-    }
 
 	public function belongsTo($targets)
 	{
