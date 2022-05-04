@@ -48,9 +48,7 @@ class PHPFile
 
     protected $directives = [];
 
-    public function __construct(
-		Maker $maker,
-    ) {
+    public function __construct(Maker $maker) {
 		$this->maker = $maker;
     }	
 
