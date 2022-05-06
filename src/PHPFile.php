@@ -8,6 +8,7 @@ use Archetype\Endpoints\PHP\ClassName;
 use Archetype\Endpoints\PHP\Extends_;
 use Archetype\Endpoints\PHP\Implements_;
 use Archetype\Endpoints\PHP\Make;
+use Archetype\Endpoints\Maker;
 use Archetype\Endpoints\PHP\MethodNames;
 use Archetype\Endpoints\PHP\Namespace_;
 use Archetype\Endpoints\PHP\Property;
@@ -27,15 +28,11 @@ class PHPFile
     use HasDirectiveHandlers;
 	use HasSyntacticSweeteners;
 
-    protected $input;
-
-    protected $output;
-
     protected string $contents;
 
     protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
 
-	protected string $maker = Endpoints\PHP\Make::class;
+	protected Maker $maker;
 
 	public string $astQueryBuilder = ASTQueryBuilder::class;
 
@@ -50,6 +47,10 @@ class PHPFile
     protected $lexer;
 
     protected $directives = [];
+
+    public function __construct(Maker $maker) {
+		$this->maker = $maker;
+    }	
 
 	public function query()
 	{
@@ -85,16 +86,8 @@ class PHPFile
 
 	public function make()
 	{
-		return new $this->maker($this);
+		return $this->maker->withFile($this);
 	}
-
-    public function __construct(
-        string $input = \Archetype\Drivers\FileInput::class,
-        string $output = \Archetype\Drivers\FileOutput::class
-    ) {
-        $this->input = $input;
-        $this->output = $output;
-    }
 
 	public function property($key, $value = Types::NO_VALUE)
 	{
