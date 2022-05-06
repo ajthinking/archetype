@@ -4,7 +4,7 @@ namespace Archetype\Traits;
 
 use Archetype\Support\Exceptions\FileParseError;
 use Archetype\Support\PSR2PrettyPrinter;
-use PHPParser\Error as PHPParserError;
+use PhpParser\Error as PHPParserError;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 

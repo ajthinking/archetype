@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 class PHPFileStorage
 {
+	public $roots;
+
     public function __construct()
     {
         $this->roots = config('archetype.roots');

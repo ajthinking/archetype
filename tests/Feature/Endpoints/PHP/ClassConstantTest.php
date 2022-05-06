@@ -1,6 +1,5 @@
 <?php
 
-use Archetype\Facades\LaravelFile;
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 
 it('can get a class constant', function() {
@@ -32,15 +31,13 @@ it('can update existing class constants', function() {
 		->assertClassConstant('HOME', '/new_home');
 });
 
-it('can create a new class constant in an existing file', function() {
-	$this->markTestIncomplete();
-
+it('can create a new class constant in an existing file'/*, function() {
 	PHPFile::load('app/Models/User.php')
 		->classConstant('BRAND_NEW', 42)
 		->assertValidPhp()
 		->assertBeautifulPhp()
 		->assertClassConstant('BRAND_NEW', 42);
-});
+}*/);
 
 it('can remove an existing class constant in a new file', function() {
 	PHPFile::make()->class(\App\Dummy::class)

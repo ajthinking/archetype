@@ -11,6 +11,8 @@ use PhpParser\NodeTraverser;
 
 class NodeRemover extends NodeVisitorAbstract
 {
+	public $id;
+
     public function __construct($id)
     {
         $this->id = $id;

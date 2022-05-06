@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class TestableMarkdown
 {
-	public string $content;
+	public string $contents;
 
 	public array $examples = [];
 

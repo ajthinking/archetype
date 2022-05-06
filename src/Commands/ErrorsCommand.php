@@ -12,6 +12,9 @@ use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
 class ErrorsCommand extends Command
 {
+	protected $result;
+	protected $errors;
+
     /**
      * The name and signature of the console command.
      *
@@ -61,7 +64,8 @@ class ErrorsCommand extends Command
         });
 
         if ($this->errors->isEmpty()) {
-            return $this->info('No errors found!');
+            $this->info('No errors found!');
+			return;
         }
 
         $this->table(['path', 'message'], $this->errors->toArray());

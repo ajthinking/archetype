@@ -3,15 +3,14 @@
 namespace Archetype\Support\AST\Visitors;
 
 use PhpParser\Node;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
 class NodeInserter extends NodeVisitorAbstract
 {
-    
+	public $id;
+	public $newNode;
+
     public function __construct($id, $newNode)
     {
         $this->id = $id;

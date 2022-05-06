@@ -6,6 +6,9 @@ use Exception;
 
 class FileParseError extends Exception
 {
+	public $path;
+	public $original;
+
     public function __construct($path, $original)
     {
         $this->path = $path;

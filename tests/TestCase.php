@@ -2,7 +2,6 @@
 
 namespace Archetype\Tests;
 
-use Archetype\Tests\Support\TestablePHPFileFactory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 

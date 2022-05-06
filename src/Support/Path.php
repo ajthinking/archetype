@@ -6,6 +6,9 @@ use Illuminate\Support\Str;
 
 class Path
 {
+	public $path;
+	public $root;
+
     public function __construct($inputPath)
     {
         $this->path = $this->normalize($inputPath);

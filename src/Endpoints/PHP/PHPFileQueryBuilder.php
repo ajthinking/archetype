@@ -14,6 +14,10 @@ class PHPFileQueryBuilder extends EndpointProvider
     use HasOperators;
 
     const PHPSignature = '/\.php$/';
+
+	public $result;
+
+	public $baseDir;
     
     public function __construct($file = null)
     {

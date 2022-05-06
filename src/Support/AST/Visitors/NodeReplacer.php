@@ -11,6 +11,9 @@ use PhpParser\NodeTraverser;
 
 class NodeReplacer extends NodeVisitorAbstract
 {
+	public $id;
+	public $newNode;
+
     public function __construct($id, $newNode)
     {
         $this->id = $id;

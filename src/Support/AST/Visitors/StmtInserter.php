@@ -13,6 +13,10 @@ class StmtInserter extends NodeVisitorAbstract
 {
     protected $finished = false;
 
+	protected $id;
+	protected $newNode;
+	protected $position;
+
     const priority = [
 		'PhpParser\Node\Stmt\Namespace_',
 		'PhpParser\Node\Stmt\TraitUse',
