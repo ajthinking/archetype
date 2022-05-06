@@ -6,7 +6,6 @@ use Archetype\Endpoints\Laravel\BelongsTo;
 use Archetype\Endpoints\Laravel\BelongsToMany;
 use Archetype\Endpoints\Laravel\HasMany;
 use Archetype\Endpoints\Laravel\HasOne;
-use Archetype\Endpoints\Laravel\LaravelMake;
 use Archetype\Endpoints\Laravel\ModelProperties;
 use Archetype\PHPFile;
 

@@ -3,10 +3,7 @@
 namespace Archetype\Support\AST\Visitors;
 
 use PhpParser\Node;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
 class NodePropertyReplacer extends NodeVisitorAbstract
@@ -29,11 +26,6 @@ class NodePropertyReplacer extends NodeVisitorAbstract
         }
 
         return $node;
-    }
-
-    public function afterTraverse(array $nodes)
-    {
-        //
     }
     
     public static function replace($id, $key, $value, $ast)

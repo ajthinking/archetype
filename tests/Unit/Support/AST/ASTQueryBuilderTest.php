@@ -2,7 +2,6 @@
 
 use Archetype\Facades\LaravelFile;
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
-
 use Archetype\Tests\Support\TestableASTQueryBuilder as ASTQueryBuilder;
 
 it('can be instanciated using an ast object', function() {

@@ -4,7 +4,6 @@ use Archetype\Support\Exceptions\FileParseError;
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Illuminate\Support\Facades\Config;
 use PhpParser\Node\Stmt\InlineHTML;
-
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertTrue;
 

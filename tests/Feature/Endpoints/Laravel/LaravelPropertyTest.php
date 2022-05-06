@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Facades\LaravelFile;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertTrue;

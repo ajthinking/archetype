@@ -3,10 +3,7 @@
 namespace Archetype\Support\AST\Visitors;
 
 use PhpParser\Node;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\BuilderFactory;
 use PhpParser\NodeTraverser;
 
 class StmtInserter extends NodeVisitorAbstract
@@ -18,11 +15,11 @@ class StmtInserter extends NodeVisitorAbstract
 	protected $position;
 
     const priority = [
-		'PhpParser\Node\Stmt\Namespace_',
-		'PhpParser\Node\Stmt\TraitUse',
-		'PhpParser\Node\Stmt\ClassConst',
-        'PhpParser\Node\Stmt\Property',
-        'PhpParser\Node\Stmt\ClassMethod',
+		\PhpParser\Node\Stmt\Namespace_::class,
+		\PhpParser\Node\Stmt\TraitUse::class,
+		\PhpParser\Node\Stmt\ClassConst::class,
+        \PhpParser\Node\Stmt\Property::class,
+        \PhpParser\Node\Stmt\ClassMethod::class,
     ];
 
     public function __construct($id, $newNode)
@@ -59,11 +56,6 @@ class StmtInserter extends NodeVisitorAbstract
         $this->finished = true;
 
         return $nodes;
-    }
-
-    public function afterTraverse(array $nodes)
-    {
-        //
     }
     
     public static function insertStmt($id, $newNode, $ast)

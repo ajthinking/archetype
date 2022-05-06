@@ -2,11 +2,10 @@
 
 namespace Archetype\Tests\Support;
 
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertTrue;
-
 use Exception;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertTrue;
 
 class ReadmeExample
 {

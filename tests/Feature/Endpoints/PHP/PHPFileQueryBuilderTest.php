@@ -3,7 +3,6 @@
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Archetype\Tests\Support\TestablePHPFileQueryBuilder;
 use Illuminate\Support\Collection;
-
 use function PHPUnit\Framework\assertInstanceOf;
 
 it('can instanciate via php or laravel file with in method', function() {

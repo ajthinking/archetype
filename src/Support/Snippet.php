@@ -71,10 +71,8 @@ class Snippet
 
         return $node;
     }
-
-
     
-    private function getNodeByName($name)
+    protected function getNodeByName($name)
     {
         return collect([
             $this->getMethodByName($name)

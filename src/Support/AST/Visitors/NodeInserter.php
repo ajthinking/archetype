@@ -22,11 +22,6 @@ class NodeInserter extends NodeVisitorAbstract
         return $node->__object_hash == $this->id ? [$this->newNode, $node] : $node;
     }
 
-    public function beforeTraverse(array $nodes)
-    {
-        //
-    }
-
     public function afterTraverse(array $nodes)
     {
         if ($this->id) {

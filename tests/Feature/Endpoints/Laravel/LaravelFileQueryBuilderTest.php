@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Facades\LaravelFile;
-
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertTrue;
 

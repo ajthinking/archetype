@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
-
 use function PHPUnit\Framework\assertEquals;
 
 it('it can make an empty file', function () {

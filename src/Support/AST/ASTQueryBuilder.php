@@ -107,19 +107,7 @@ class ASTQueryBuilder
                 return Survivor::fromParent($queryNode)->withResult($result);
             })->toArray();
         });
-    }
-
-    // public function traverseIntoClass($expectedClass, $finderMethod = 'findInstanceOf')
-    // {
-    //     return $this->next(function ($queryNode) use ($expectedClass, $finderMethod) {
-    //         // Search the abstract syntax tree
-    //         $results = $this->nodeFinder()->$finderMethod($queryNode->result, $expectedClass);
-    //         // Wrap matches in Survivor object
-    //         return collect($results)->map(function ($result) use ($queryNode) {
-    //             return Survivor::fromParent($queryNode)->withResult($result);
-    //         })->toArray();
-    //     });
-    // }	
+    }	
 
     public function traverseIntoProperty($property)
     {

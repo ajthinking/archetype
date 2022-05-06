@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Config;
-
 use function PHPUnit\Framework\assertFalse;
 
 it('removes debug and output folders at start up', function() {

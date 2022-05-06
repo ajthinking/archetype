@@ -4,7 +4,6 @@ namespace Archetype\Tests\Support;
 
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 use Illuminate\Support\Collection;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertInstanceOf;
 

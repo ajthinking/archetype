@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Tests\Support\TestableMarkdown;
-
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEmpty;
 use function PHPUnit\Framework\assertEquals;

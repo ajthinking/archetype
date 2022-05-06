@@ -2,7 +2,6 @@
 
 namespace Archetype\Tests\Support;
 
-use function PHPUnit\Framework\assertEquals;
 use Illuminate\Support\Str;
 
 class TestableMarkdown

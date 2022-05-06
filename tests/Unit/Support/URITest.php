@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Support\URI;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertTrue;
 

@@ -1,16 +1,8 @@
 <?php
 
 use Archetype\Facades\LaravelFile;
-use PhpParser\Lexer;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor;
-use PhpParser\Parser;
 use PhpParser\ParserFactory;
-
 use Archetype\Support\PSR2PrettyPrinter;
-use PhpParser\BuilderFactory;
-
-use function PHPUnit\Framework\assertMatchesRegularExpression;
 use function PHPUnit\Framework\assertStringContainsString;
 
 const CODE = <<< 'CODE'

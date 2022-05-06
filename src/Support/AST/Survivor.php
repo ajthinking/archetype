@@ -6,7 +6,6 @@ use Archetype\Support\AST\QueryNode;
 
 class Survivor extends QueryNode
 {
-
     public $memory;
 
     public $result;

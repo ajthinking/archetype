@@ -2,10 +2,8 @@
 
 namespace Archetype\Tests\Support;
 
-use Archetype\PHPFile;
 use Archetype\Support\AST\ASTQueryBuilder;
 use Illuminate\Support\Collection;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertInstanceOf;
 

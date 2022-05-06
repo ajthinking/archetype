@@ -3,47 +3,17 @@
 namespace Archetype\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use PHPFile;
 use Archetype\Support\Exceptions\FileParseError;
 
 use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
 class ErrorsCommand extends Command
 {
+    protected $signature = 'archetype:errors';
+    protected $description = 'List dirty files';
 	protected $result;
 	protected $errors;
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'archetype:errors';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'List dirty files';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         $queryBuilder = new PHPFileQueryBuilder;

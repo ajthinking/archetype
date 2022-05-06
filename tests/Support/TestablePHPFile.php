@@ -3,8 +3,6 @@
 namespace Archetype\Tests\Support;
 
 use Archetype\PHPFile;
-use Illuminate\Support\Collection;
-
 use function PHPUnit\Framework\assertEmpty;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;

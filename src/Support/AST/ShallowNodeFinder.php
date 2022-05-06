@@ -6,10 +6,8 @@ use PhpParser\NodeFinder;
 
 class ShallowNodeFinder extends NodeFinder
 {
-
     public function findInstanceOf($node, string $class) : array
-    {
-        
+    {    
         // get all properties (not recursive, one level only)
         $properties = collect(get_object_vars($node))->keys();
 

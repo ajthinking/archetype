@@ -4,7 +4,6 @@ use Archetype\Facades\LaravelFile;
 use Archetype\Support\AST\Visitors\FormattingRemover;
 use PhpParser\Node\Stmt\ClassMethod;
 use Archetype\Support\Snippet;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertNull;

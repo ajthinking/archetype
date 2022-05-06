@@ -1,7 +1,6 @@
 <?php
 
 use Archetype\Facades\PHPFile;
-
 use function PHPUnit\Framework\assertTrue;
 
 test('a file has an input path', function() {
