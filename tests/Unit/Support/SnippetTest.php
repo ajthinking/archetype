@@ -5,8 +5,12 @@ use Archetype\Support\AST\Visitors\FormattingRemover;
 use PhpParser\Node\Stmt\ClassMethod;
 use Archetype\Support\Snippet;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+
 it('can load class methods from snippet defaults', function() {
-	$this->assertInstanceOf(
+	assertInstanceOf(
 		ClassMethod::class,
 		Snippet::___HAS_MANY_METHOD___()
 	);
@@ -17,7 +21,7 @@ it('can replace snippet names', function() {
 		'___HAS_MANY_METHOD___' => 'guitars'
 	]);
 
-	$this->assertEquals(
+	assertEquals(
 		LaravelFile::load('app/Models/User.php')->astQuery()
 			->class()
 			->insertStmt($method)
@@ -29,7 +33,7 @@ it('can replace snippet names', function() {
 });
 
 it('cant load non existing snippets from defaults', function() {
-	$this->assertNull(
+	assertNull(
 		Snippet::NoSuchSnippet()
 	);
 });
@@ -47,6 +51,6 @@ it('can create a snippet without position attributes', function() {
 	];
 
 	foreach ($disabled as $key) {
-		$this->assertEquals(-1, $fromSnippet->getAttribute($key));
+		assertEquals(-1, $fromSnippet->getAttribute($key));
 	}
 });

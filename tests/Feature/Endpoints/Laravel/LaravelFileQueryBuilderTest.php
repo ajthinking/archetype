@@ -2,22 +2,25 @@
 
 use Archetype\Facades\LaravelFile;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertTrue;
+
 it('can scope on models', function() {
-	$this->assertCount(
+	assertCount(
 		1,
 		LaravelFile::models()->get()
 	);
 });
 
 it('can scope on controllers', function() {
-	$this->assertCount(
+	assertCount(
 		1,
 		LaravelFile::controllers()->get()
 	);
 });
 
 it('can get user', function() {
-	$this->assertTrue(
+	assertTrue(
 		get_class(LaravelFile::load('app/Models/User.php')) === 'Archetype\LaravelFile'
 	);
 });

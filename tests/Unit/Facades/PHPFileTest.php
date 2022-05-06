@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use PhpParser\Node\Stmt\InlineHTML;
 
 use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertTrue;
 
 describe('#load', function() {
 	it('can load files inside default root using a relative path', function() {
@@ -34,12 +35,12 @@ describe('#load', function() {
 describe('#save', function() {
 	it('can write to default location', function() {
 		PHPFile::load('app/Models/User.php')->save();
-		$this->assertTrue(is_file(Config::get('archetype.roots.output.root') . '/app/Models/User.php'));
+		assertTrue(is_file(Config::get('archetype.roots.output.root') . '/app/Models/User.php'));
 	});
 
 	it('can write to a debug location', function() {
 		PHPFile::load('app/Models/User.php')->debug();
-		$this->assertTrue(is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php'));
+		assertTrue(is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php'));
 	});	
 });
 
@@ -96,10 +97,8 @@ describe('#fromString', function() {
 	});
 
 	it('will throw error if php code cant be parsed', function() {
-		$this->expectException(FileParseError::class);
-	
 		PHPFile::fromString('<?php ¯\_(ツ)_/¯;');
-	});
+	})->throws(FileParseError::class);
 
 	it('assumes code is php and adds starting tag and missing end semicolon when directive addMissingTags is used', function() {
 		PHPFile::addMissingTags(true)->fromString('1337')

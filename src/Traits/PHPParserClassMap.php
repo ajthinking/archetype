@@ -69,7 +69,6 @@ trait PHPParserClassMap
             'list' => \PhpParser\Node\Expr\List_::class,
             'lNumber' => \PhpParser\Node\Scalar\LNumber::class,
             'magicConst' => \PhpParser\Node\Scalar\MagicConst::class,
-            'magicConst' => \PhpParser\Node\Scalar\MagicConst::class,
             'methodCall' => \PhpParser\Node\Expr\MethodCall::class,
             'name' => \PhpParser\Node\Name::class,
             'namespace' => \PhpParser\Node\Stmt\Namespace_::class,

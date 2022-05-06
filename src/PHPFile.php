@@ -7,7 +7,6 @@ use Archetype\Endpoints\PHP\ClassConstant;
 use Archetype\Endpoints\PHP\ClassName;
 use Archetype\Endpoints\PHP\Extends_;
 use Archetype\Endpoints\PHP\Implements_;
-use Archetype\Endpoints\PHP\Make;
 use Archetype\Endpoints\Maker;
 use Archetype\Endpoints\PHP\MethodNames;
 use Archetype\Endpoints\PHP\Namespace_;
@@ -27,6 +26,10 @@ class PHPFile
     use HasDirectives;
     use HasDirectiveHandlers;
 	use HasSyntacticSweeteners;
+
+	public $input;
+
+	public $output;
 
     protected string $contents;
 

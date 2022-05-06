@@ -52,15 +52,14 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
      * Ensure spacing between class stmts
      *
      * @param [type] $nodes
-     * @return void
      */
     protected function pClassCommon(Class_ $node, $afterClassToken)
     {
         return $this->pModifiers($node->flags)
-        . 'class' . $afterClassToken
-        . (null !== $node->extends ? ' extends ' . $this->p($node->extends) : '')
-        . (!empty($node->implements) ? ' implements ' . $this->pCommaSeparated($node->implements) : '')
-        . $this->nl . '{' . $this->pSeparatedStmts($node->stmts) . $this->nl . '}';
+			. 'class' . $afterClassToken
+			. (null !== $node->extends ? ' extends ' . $this->p($node->extends) : '')
+			. (!empty($node->implements) ? ' implements ' . $this->pCommaSeparated($node->implements) : '')
+			. $this->nl . '{' . $this->pSeparatedStmts($node->stmts) . $this->nl . '}';
     }
 
     protected function implementsSeparated($nodes)

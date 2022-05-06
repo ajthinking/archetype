@@ -9,6 +9,8 @@ abstract class EndpointProvider
 {
     use HasDirectiveHandlers;
 
+	public $file;
+
     protected $directives;
     
     public function __construct(PHPFile $file = null)

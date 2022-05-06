@@ -10,6 +10,9 @@ use PhpParser\ParserFactory;
 use Archetype\Support\PSR2PrettyPrinter;
 use PhpParser\BuilderFactory;
 
+use function PHPUnit\Framework\assertMatchesRegularExpression;
+use function PHPUnit\Framework\assertStringContainsString;
+
 const CODE = <<< 'CODE'
 <?php
 
@@ -38,18 +41,18 @@ it('two line breaks separate methods', function() {
 	
 	$code = $prettyPrinter->prettyPrint($stmts);
 	
-	$this->assertStringContainsString(
+	assertStringContainsString(
 		';' . PHP_EOL . PHP_EOL . '	public function fly()',
 		LaravelFile::fromString(CODE)->table('users_table')->render()
 	);
 	
-	$this->assertStringContainsString(
+	assertStringContainsString(
 		'}' . PHP_EOL . PHP_EOL . '	public function sleeping()',
 		LaravelFile::fromString(CODE)->table('users_table')->render()
 	);
 });
 
-it('there is not a missing space between methods when format preserving pretty printing', function() {
+it('there is not a missing space between methods when format preserving pretty printing'/*, function() {
 	$this->markTestIncomplete();
 	
 	$lexer = new Lexer\Emulative([
@@ -79,9 +82,9 @@ it('there is not a missing space between methods when format preserving pretty p
 	
 	$newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
 
-	// THe spaces should be fixed!
-	$this->assertMatchesRegularExpression(
+	// The spaces should be fixed!
+	assertMatchesRegularExpression(
 		'/\n    \n    public function eating()/',
 		$newCode
 	);
-});
+}*/);

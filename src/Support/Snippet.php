@@ -11,6 +11,8 @@ use Archetype\Support\AST\Visitors\FormattingRemover;
 
 class Snippet
 {
+	public $file;
+
     public static function __callStatic($name, $args)
     {
         $replacementPairs = $args ? $args[0] : [];

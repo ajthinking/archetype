@@ -15,6 +15,10 @@ class Make extends Maker
     protected string $extension = '.php';
     protected string $relativeDir = '';
 
+	protected $namespace;
+	protected $class;
+	protected $outputDriver;
+
     public function file(string $name = 'dummy.php')
     {
         $this->setupNames($name);

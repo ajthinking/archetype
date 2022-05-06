@@ -4,13 +4,15 @@ use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Archetype\Tests\Support\TestablePHPFileQueryBuilder;
 use Illuminate\Support\Collection;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 it('can instanciate via php or laravel file with in method', function() {
 	PHPFile::in('app')
 		->assertInstanceOf(TestablePHPFileQueryBuilder::class);
 });
 
 it('will return a collection on get', function() {
-	$this->assertInstanceOf(
+	assertInstanceOf(
 		Collection::class,
 		PHPFile::in('app')->get()
 	);
