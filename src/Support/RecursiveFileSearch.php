@@ -14,7 +14,7 @@ class RecursiveFileSearch
 
     protected $directory;
 
-    public function __construct($directory)
+    final public function __construct($directory)
     {
         $this->directory = $directory;
     }

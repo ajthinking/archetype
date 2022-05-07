@@ -10,7 +10,7 @@ class URI
     public $path;
     public $name;
 
-    public function __construct($input)
+    final public function __construct($input)
     {
         $this->input = $input;
 

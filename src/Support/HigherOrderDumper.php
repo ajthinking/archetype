@@ -8,7 +8,7 @@ class HigherOrderDumper
 
 	protected string $dumper;
 
-	public function __construct($target, $dumper)
+	final public function __construct($target, $dumper)
 	{
 		$this->target = $target;
 		$this->dumper = $dumper;

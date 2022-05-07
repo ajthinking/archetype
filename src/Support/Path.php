@@ -9,7 +9,7 @@ class Path
 	public $path;
 	public $root;
 
-    public function __construct($inputPath)
+    final public function __construct($inputPath)
     {
         $this->path = $this->normalize($inputPath);
         $this->root = null;

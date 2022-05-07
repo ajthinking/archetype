@@ -10,7 +10,7 @@ class TestableMarkdown
 
 	public array $examples = [];
 
-	public function __construct(string $contents)
+	final public function __construct(string $contents)
 	{
 		$this->contents = $contents;
 		$this->parseExamples();

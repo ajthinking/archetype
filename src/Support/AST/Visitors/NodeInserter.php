@@ -11,7 +11,7 @@ class NodeInserter extends NodeVisitorAbstract
 	public $id;
 	public $newNode;
 
-    public function __construct($id, $newNode)
+    final public function __construct($id, $newNode)
     {
         $this->id = $id;
         $this->newNode = $newNode;

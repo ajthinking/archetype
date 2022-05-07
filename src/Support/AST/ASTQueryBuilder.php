@@ -39,7 +39,7 @@ class ASTQueryBuilder
 
 	public $tree;
 
-    public function __construct($ast)
+    final public function __construct($ast)
     {
         $this->resultingAST = $ast;
 

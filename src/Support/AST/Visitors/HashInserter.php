@@ -8,6 +8,10 @@ use PhpParser\NodeTraverser;
 
 class HashInserter extends NodeVisitorAbstract
 {
+	final public function __construct()
+	{
+	}
+	
     public function leaveNode(Node $node)
     {
         $node->__object_hash = spl_object_hash($node);

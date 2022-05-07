@@ -22,7 +22,7 @@ class StmtInserter extends NodeVisitorAbstract
         \PhpParser\Node\Stmt\ClassMethod::class,
     ];
 
-    public function __construct($id, $newNode)
+    final public function __construct($id, $newNode)
     {
         $this->id = $id;
         $this->newNode = $newNode;

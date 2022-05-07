@@ -8,6 +8,10 @@ use PhpParser\NodeTraverser;
 
 class FormattingRemover extends NodeVisitorAbstract
 {
+	final public function __construct()
+	{
+	}
+
     public function leaveNode(Node $node)
     {
         

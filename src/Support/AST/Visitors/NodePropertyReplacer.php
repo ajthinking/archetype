@@ -12,7 +12,7 @@ class NodePropertyReplacer extends NodeVisitorAbstract
 	public $key;
 	public $value;
 
-    public function __construct($id, $key, $value)
+    final public function __construct($id, $key, $value)
     {
         $this->id = $id;
         $this->key = $key;
