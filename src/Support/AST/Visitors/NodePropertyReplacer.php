@@ -21,7 +21,7 @@ class NodePropertyReplacer extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        if ($node->__object_hash == $this->id) {
+        if ($node->__object_hash === $this->id) {
             $node->{$this->key} = $this->value;
         }
 

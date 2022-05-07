@@ -19,7 +19,7 @@ class NodeInserter extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        return $node->__object_hash == $this->id ? [$this->newNode, $node] : $node;
+        return $node->__object_hash === $this->id ? [$this->newNode, $node] : $node;
     }
 
     public function afterTraverse(array $nodes)

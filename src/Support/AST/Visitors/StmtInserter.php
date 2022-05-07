@@ -67,7 +67,7 @@ class StmtInserter extends NodeVisitorAbstract
 
     protected function isTarget($node)
     {
-        return isset($node->__object_hash) &&  $node->__object_hash == $this->id;
+        return isset($node->__object_hash) && $node->__object_hash === $this->id;
     }
 
     protected function priority($node)
