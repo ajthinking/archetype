@@ -19,7 +19,7 @@ class NodeReplacer extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        return $node->__object_hash == $this->id ? $this->newNode : $node;
+        return $node->__object_hash === $this->id ? $this->newNode : $node;
     }
     
     public static function replace($id, $newNode, $ast)
