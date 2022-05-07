@@ -147,7 +147,10 @@ trait HasIO
 
     public function contents($contents = false)
     {
-        return $contents ? $this->contents = $contents : $this->contents;
+		if($contents == false) return $this->contents;
+        
+		$this->contents = $contents;
+		return $this;
     }
 
     public function ast($ast = null)
