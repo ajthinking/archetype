@@ -14,6 +14,7 @@ use Archetype\Support\AST\Visitors\StmtInserter;
 use Archetype\Support\AST\Visitors\NodePropertyReplacer;
 use Archetype\Support\HigherOrderDumper;
 use Archetype\Traits\Dumpable;
+use Archetype\Traits\PHPParserPropertyMap;
 use Archetype\Traits\Tappable;
 use Closure;
 use Exception;
@@ -25,6 +26,7 @@ class ASTQueryBuilder
 {
     use HasOperators,
 		PHPParserClassMap,
+		PHPParserPropertyMap,
 		RenderGraphs,
 		Dumpable,
 		Tappable;
@@ -48,25 +50,6 @@ class ASTQueryBuilder
                 HashInserter::on($ast)
             )],
         ];
-    }
-
-    /**
-     * Continue into a Node
-     * Example: $query->classMethod() ...
-     *
-     * @param [string] $method
-     * @param [array] $args
-     * @return void
-     */
-    public function __call(string $method, array $args = [])
-    {
-        // Can we find a corresponding PHPParser class to enter?
-        $class = $this->classMap($method);
-        if ($class) {
-            return $this->traverseIntoClass($class, ...$args);
-        }
-
-        throw new Exception("Could not find a method $method in the ASTQueryBuilder!");
     }
 
     /**
