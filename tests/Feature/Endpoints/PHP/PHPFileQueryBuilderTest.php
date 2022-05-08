@@ -92,7 +92,7 @@ it('can chain multiple where clauses', function() {
 	PHPFile::where('extends', 'ServiceProvider')
 		->where('methodNames', 'contains', 'boot')
 		->where(function ($file) {
-			return $file->className() == 'AuthServiceProvider';
+			return $file->className() === 'AuthServiceProvider';
 		})->assertMatchCount(1);
 });
     

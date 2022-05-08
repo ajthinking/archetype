@@ -215,7 +215,7 @@ class ClassConstant extends EndpointProvider
             ->where('name->name', $key)
             ->replaceProperty(
                 'value',
-                $value == Types::NO_VALUE ? null : BuilderHelpers::normalizeValue($value)
+                $value === Types::NO_VALUE ? null : BuilderHelpers::normalizeValue($value)
             )
             ->commit()
             ->end()
@@ -236,7 +236,7 @@ class ClassConstant extends EndpointProvider
 
     protected function prepareValue($value)
     {
-        if ($this->file->directive('assumeType') == 'array') {
+        if ($this->file->directive('assumeType') === 'array') {
             return Arr::wrap($value);
         }
 

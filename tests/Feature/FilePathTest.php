@@ -7,14 +7,14 @@ test('a file has an input path', function() {
 	// relative
 	$file = PHPFile::load('app/Models/User.php');
 	assertTrue(
-		$file->inputDriver()->absolutePath() == base_path('app/Models/User.php')
+		$file->inputDriver()->absolutePath() === base_path('app/Models/User.php')
 	);
 
 	// absolute
 	$path = base_path('app/Models/User.php');
 	$file = PHPFile::load($path);
 	assertTrue(
-		$file->inputDriver()->absolutePath() == base_path('app/Models/User.php')
+		$file->inputDriver()->absolutePath() === base_path('app/Models/User.php')
 	);
 });
     
@@ -29,7 +29,7 @@ test('a file has a filename', function() {
 	$path = base_path('app/Models/User.php');
 	$file = PHPFile::load($path);
 	assertTrue(
-		$file->inputDriver()->filename() == 'User'
+		$file->inputDriver()->filename() === 'User'
 	);
 });
     

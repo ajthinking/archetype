@@ -27,7 +27,7 @@ trait HasOperators
 
     protected function equals($candidate, $expected)
     {
-        return $candidate == $expected;
+        return $candidate === $expected;
     }
 
     protected function notEquals($candidate, $forbidden)

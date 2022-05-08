@@ -86,7 +86,7 @@ class Snippet
             $this->file->ast(),
             ClassMethod::class
         ))->filter(function ($node) use ($requestedName) {
-            return $node->name->name == $requestedName;
+            return $node->name->name === $requestedName;
         })->first();
     }
 }

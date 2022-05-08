@@ -58,7 +58,7 @@ class HigherOrderWhere
 	protected function applyStack($query)
 	{
 		foreach($this->stack as $item) {
-			if($item[0] == '__call') {
+			if($item[0] === '__call') {
 				$method = $item[1];
 				$args = $item[2];
 				$query->$method(...$args);

@@ -241,7 +241,7 @@ class Property extends EndpointProvider
             ->where('name->name', $key)
             ->replaceProperty(
                 'default',
-                $value == Types::NO_VALUE ? null : BuilderHelpers::normalizeValue($value)
+                $value === Types::NO_VALUE ? null : BuilderHelpers::normalizeValue($value)
             )
             ->commit()
             ->end()

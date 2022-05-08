@@ -82,9 +82,9 @@ class ASTQueryBuilder
         $property = $this->propertyMap($name);
         if ($property) return $this->traverseIntoProperty($property);
 
-		if($name == 'dd') return HigherOrderDumper::dd($this);
-		if($name == 'dump') return HigherOrderDumper::dump($this);
-		if($name == 'where') return new HigherOrderWhere($this);
+		if($name === 'dd') return HigherOrderDumper::dd($this);
+		if($name === 'dump') return HigherOrderDumper::dump($this);
+		if($name === 'where') return new HigherOrderWhere($this);
 
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }

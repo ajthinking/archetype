@@ -18,7 +18,7 @@ class ASTSimplifier
 		if(is_object($ast)) {
 			$result->__class = get_class($ast);
 			foreach ($ast as $key => $node) {
-				if($key == 'parts') {
+				if($key === 'parts') {
 					$result->parts = implode('\\', $node);
 				}
 

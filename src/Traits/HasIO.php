@@ -38,7 +38,7 @@ trait HasIO
 
         $this->output->setDefaultsFrom($this->input);
 
-        $this->contents($content);
+        $this->contents = $content;
 
         $this->ast($this->parse());
 
@@ -53,7 +53,7 @@ trait HasIO
     {
 		$code = $this->prepareCode($code);
 		
-        $this->contents($code);
+        $this->contents = $code;
 
         $this->ast($this->parse());
 
@@ -145,13 +145,10 @@ trait HasIO
         );
     }
 
-    public function contents($contents = false)
+    public function contents()
     {
-		if($contents == false) return $this->contents;
-        
-		$this->contents = $contents;
-		return $this;
-    }
+		return $this->contents;
+    }	
 
     public function ast($ast = null)
     {

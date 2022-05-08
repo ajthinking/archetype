@@ -7,13 +7,13 @@ use function PHPUnit\Framework\assertTrue;
 
 it('can retrieve fillables', function() {
 	assertTrue(
-		LaravelFile::load('app/Models/User.php')->fillable() == ['name', 'email', 'password',]
+		LaravelFile::load('app/Models/User.php')->fillable() === ['name', 'email', 'password',]
 	);
 });
 
 it('can retrieve hidden', function() {
 	assertTrue(
-		LaravelFile::load('app/Models/User.php')->hidden() == ['password', 'remember_token',]
+		LaravelFile::load('app/Models/User.php')->hidden() === ['password', 'remember_token',]
 	);
 });
 
