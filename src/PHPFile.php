@@ -2,6 +2,8 @@
 
 namespace Archetype;
 
+use Archetype\Drivers\InputInterface;
+use Archetype\Drivers\OutputInterface;
 use Archetype\Endpoints\PHP\AstQuery;
 use Archetype\Endpoints\PHP\ClassConstant;
 use Archetype\Endpoints\PHP\ClassName;
@@ -27,9 +29,9 @@ class PHPFile
     use HasDirectiveHandlers;
 	use HasSyntacticSweeteners;
 
-	public $input;
+	public InputInterface $input;
 
-	public $output;
+	public OutputInterface $output;
 
     protected string $contents;
 
@@ -51,7 +53,13 @@ class PHPFile
 
     protected $directives = [];
 
-    public function __construct(Maker $maker) {
+    public function __construct(
+		InputInterface $input,
+		OutputInterface $output,
+		Maker $maker
+	) {
+		$this->input = $input;
+		$this->output = $output;
 		$this->maker = $maker;
     }	
 

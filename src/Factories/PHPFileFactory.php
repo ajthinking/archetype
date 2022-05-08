@@ -23,11 +23,10 @@ class PHPFileFactory
     {
         $class = static::FILE_TYPE;
         $instance = new $class(
-			new Make()
+			static::__driver('input'),
+			static::__driver('output'),
+			new Make()			
 		);
-		
-        $instance->inputDriver(static::__driver('input'));
-        $instance->outputDriver(static::__driver('output'));
 
         return $instance;
     }
