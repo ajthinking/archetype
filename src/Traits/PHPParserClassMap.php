@@ -4,186 +4,795 @@ namespace Archetype\Traits;
 
 trait PHPParserClassMap
 {
-    public function classMap(string $class = null)
-    {
-        $map = [
-			'arg' => \PhpParser\Node\Arg::class,
-            'array' => \PhpParser\Node\Expr\Array_::class,
-            'arrayDimFetch' => \PhpParser\Node\Expr\ArrayDimFetch::class,
-            'arrayItem' => \PhpParser\Node\Expr\ArrayItem::class,
-            'arrowFunction' => \PhpParser\Node\Expr\ArrowFunction::class,
-            'assign' => \PhpParser\Node\Expr\Assign::class,
-            'assignOp' => \PhpParser\Node\Expr\AssignOp::class,
-            'assignRef' => \PhpParser\Node\Expr\AssignRef::class,
-            'binaryOp' => \PhpParser\Node\Expr\BinaryOp::class,
-            'bitwiseNot' => \PhpParser\Node\Expr\BitwiseNot::class,
-            'booleanNot' => \PhpParser\Node\Expr\BooleanNot::class,
-            'break' => \PhpParser\Node\Stmt\Break_::class,
-            'case' => \PhpParser\Node\Stmt\Case_::class,
-            'cast' => \PhpParser\Node\Expr\Cast::class,
-            'catch' => \PhpParser\Node\Stmt\Catch_::class,
-            'class' => \PhpParser\Node\Stmt\Class_::class,
-            'classConst' => \PhpParser\Node\Stmt\ClassConst::class,
-            'classConstFetch' => \PhpParser\Node\Expr\ClassConstFetch::class,
-            'classLike' => \PhpParser\Node\Stmt\ClassLike::class,
-            'classMethod' => \PhpParser\Node\Stmt\ClassMethod::class,
-            'clone' => \PhpParser\Node\Expr\Clone_::class,
-            'closure' => \PhpParser\Node\Expr\Closure::class,
-            'closureUse' => \PhpParser\Node\Expr\ClosureUse::class,
-			'const' => \PhpParser\Node\Const_::class, // one of potentially many consts in the same declaration
-			'constStmt' => \PhpParser\Node\Stmt\Const_::class, // a node statement ouside of a class. NOTE NAME CHANGE!
-            'constFetch' => \PhpParser\Node\Expr\ConstFetch::class,
-            'continue' => \PhpParser\Node\Stmt\Continue_::class,
-            'declare' => \PhpParser\Node\Stmt\Declare_::class,
-            'declareDeclare' => \PhpParser\Node\Stmt\DeclareDeclare::class,
-            'dNumber' => \PhpParser\Node\Scalar\DNumber::class,
-            'do' => \PhpParser\Node\Stmt\Do_::class,
-            'echo' => \PhpParser\Node\Stmt\Echo_::class,
-            'else' => \PhpParser\Node\Stmt\Else_::class,
-            'elseIf' => \PhpParser\Node\Stmt\ElseIf_::class,
-            'empty' => \PhpParser\Node\Expr\Empty_::class,
-            'encapsed' => \PhpParser\Node\Scalar\Encapsed::class,
-            'encapsedStringPart' => \PhpParser\Node\Scalar\EncapsedStringPart::class,
-            'error' => \PhpParser\Node\Expr\Error::class,
-            'errorSuppress' => \PhpParser\Node\Expr\ErrorSuppress::class,
-            'eval' => \PhpParser\Node\Expr\Eval_::class,
-            'exit' => \PhpParser\Node\Expr\Exit_::class,
-            'expression' => \PhpParser\Node\Stmt\Expression::class,
-            'finally' => \PhpParser\Node\Stmt\Finally_::class,
-            'for' => \PhpParser\Node\Stmt\For_::class,
-            'foreach' => \PhpParser\Node\Stmt\Foreach_::class,
-            'fullyQualified' => \PhpParser\Node\Name\FullyQualified::class,
-            'funcCall' => \PhpParser\Node\Expr\FuncCall::class,
-            'function' => \PhpParser\Node\Stmt\Function_::class,
-            'global' => \PhpParser\Node\Stmt\Global_::class,
-            'goto' => \PhpParser\Node\Stmt\Goto_::class,
-            'groupUse' => \PhpParser\Node\Stmt\GroupUse::class,
-            'haltCompiler' => \PhpParser\Node\Stmt\HaltCompiler::class,
-            'if' => \PhpParser\Node\Stmt\If_::class,
-            'include' => \PhpParser\Node\Expr\Include_::class,
-            'inlineHTML' => \PhpParser\Node\Stmt\InlineHTML::class,
-            'instanceof' => \PhpParser\Node\Expr\Instanceof_::class,
-            'interface' => \PhpParser\Node\Stmt\Interface_::class,
-            'isset' => \PhpParser\Node\Expr\Isset_::class,
-            'label' => \PhpParser\Node\Stmt\Label::class,
-            'list' => \PhpParser\Node\Expr\List_::class,
-            'lNumber' => \PhpParser\Node\Scalar\LNumber::class,
-            'magicConst' => \PhpParser\Node\Scalar\MagicConst::class,
-            'methodCall' => \PhpParser\Node\Expr\MethodCall::class,
-            'name' => \PhpParser\Node\Name::class,
-            'namespace' => \PhpParser\Node\Stmt\Namespace_::class,
-            'new' => \PhpParser\Node\Expr\New_::class,
-            'nop' => \PhpParser\Node\Stmt\Nop::class,
-            'postDec' => \PhpParser\Node\Expr\PostDec::class,
-            'postInc' => \PhpParser\Node\Expr\PostInc::class,
-            'preDec' => \PhpParser\Node\Expr\PreDec::class,
-            'preInc' => \PhpParser\Node\Expr\PreInc::class,
-            'print' => \PhpParser\Node\Expr\Print_::class,
-            'property' => \PhpParser\Node\Stmt\Property::class,
-            'propertyFetch' => \PhpParser\Node\Expr\PropertyFetch::class,
-            'propertyProperty' => \PhpParser\Node\Stmt\PropertyProperty::class,
-            'relative' => \PhpParser\Node\Name\Relative::class,
-            'return' => \PhpParser\Node\Stmt\Return_::class,
-            'shellExec' => \PhpParser\Node\Expr\ShellExec::class,
-            'static' => \PhpParser\Node\Stmt\Static_::class,
-            'staticCall' => \PhpParser\Node\Expr\StaticCall::class,
-            'staticPropertyFetch' => \PhpParser\Node\Expr\StaticPropertyFetch::class,
-            'staticVar' => \PhpParser\Node\Stmt\StaticVar::class,
-            'string' => \PhpParser\Node\Scalar\String_::class,
-            'switch' => \PhpParser\Node\Stmt\Switch_::class,
-            'ternary' => \PhpParser\Node\Expr\Ternary::class,
-            'throw' => \PhpParser\Node\Stmt\Throw_::class,
-            'trait' => \PhpParser\Node\Stmt\Trait_::class,
-            'traitUse' => \PhpParser\Node\Stmt\TraitUse::class,
-            'traitUseAdaptation' => \PhpParser\Node\Stmt\TraitUseAdaptation::class,
-            'tryCatch' => \PhpParser\Node\Stmt\TryCatch::class,
-            'unaryMinus' => \PhpParser\Node\Expr\UnaryMinus::class,
-            'unaryPlus' => \PhpParser\Node\Expr\UnaryPlus::class,
-            'unset' => \PhpParser\Node\Stmt\Unset_::class,
-            'use' => \PhpParser\Node\Stmt\Use_::class,
-            'useUse' => \PhpParser\Node\Stmt\UseUse::class,
-            'variable' => \PhpParser\Node\Expr\Variable::class,
-            'while' => \PhpParser\Node\Stmt\While_::class,
-            'yield' => \PhpParser\Node\Expr\Yield_::class,
-            'yieldFrom' => \PhpParser\Node\Expr\YieldFrom::class,
-        ];
-        
-        if (!$class) {
-            return $map;
-        }
-
-        if (isset($map[$class])) {
-            return $map[$class];
-        }
-
-        return null;
-    }
-
-    public function propertyMap(string $property = null)
-    {
-        $map = [
-            'expr',
-            'attributes',
-            'type',
-            'name',
-            'alias',
-            'vars',
-            'stmts',
-            'traits',
-            'adaptations',
-            'insteadof',
-            'trait',
-            'method',
-            'newModifier',
-            'newName',
-            'types',
-            'var',
-            'flags',
-            'extends',
-            'implements',
-            'default',
-            'cond',
-            'num',
-            'byRef',
-            'params',
-            'returnType',
-            'magicNames',
-            'remaining',
-            'key',
-            'value',
-            'catches',
-            'finally',
-            'exprs',
-            'declares',
-            'props',
-            'elseifs',
-            'else',
-            'consts',
-            'cases',
-            'keyVar',
-            'valueVar',
-            'init',
-            'loop',
-            'prefix',
-            'use',
-            'uses',
-            'specialClassNames',
-            'variadic',
-            'left',
-            'right',
-            'items',
-            'parts',
-            'class',
-            'args',
-            'static',
-            'dim',
-            'if',
-            'unpack',
-            'replacements',
-        ];
-
-        if (!$property) return $map;
-
-        return in_array($property, $map) ? $property : null;
-    }
+	public function arg($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Arg::class,
+			$path
+		);
+	}
+	
+	public function array($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Array_::class,
+			$path
+		);
+	}
+	
+	public function arrayDimFetch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ArrayDimFetch::class,
+			$path
+		);
+	}
+	
+	public function arrayItem($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ArrayItem::class,
+			$path
+		);
+	}
+	
+	public function arrowFunction($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ArrowFunction::class,
+			$path
+		);
+	}
+	
+	public function assign($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Assign::class,
+			$path
+		);
+	}
+	
+	public function assignOp($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\AssignOp::class,
+			$path
+		);
+	}
+	
+	public function assignRef($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\AssignRef::class,
+			$path
+		);
+	}
+	
+	public function binaryOp($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\BinaryOp::class,
+			$path
+		);
+	}
+	
+	public function bitwiseNot($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\BitwiseNot::class,
+			$path
+		);
+	}
+	
+	public function booleanNot($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\BooleanNot::class,
+			$path
+		);
+	}
+	
+	public function break($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Break_::class,
+			$path
+		);
+	}
+	
+	public function case($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Case_::class,
+			$path
+		);
+	}
+	
+	public function cast($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Cast::class,
+			$path
+		);
+	}
+	
+	public function catch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Catch_::class,
+			$path
+		);
+	}
+	
+	public function class($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Class_::class,
+			$path
+		);
+	}
+	
+	public function classConst($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\ClassConst::class,
+			$path
+		);
+	}
+	
+	public function classConstFetch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ClassConstFetch::class,
+			$path
+		);
+	}
+	
+	public function classLike($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\ClassLike::class,
+			$path
+		);
+	}
+	
+	public function classMethod($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\ClassMethod::class,
+			$path
+		);
+	}
+	
+	public function clone($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Clone_::class,
+			$path
+		);
+	}
+	
+	public function closure($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Closure::class,
+			$path
+		);
+	}
+	
+	public function closureUse($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ClosureUse::class,
+			$path
+		);
+	}
+	
+	public function const($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Const_::class,
+			$path
+		);
+	}
+	 // one of potentially many consts in the same declaration
+	public function constStmt($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Const_::class,
+			$path
+		);
+	}
+	 // a node statement ouside of a class. NOTE NAME CHANGE!
+	public function constFetch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ConstFetch::class,
+			$path
+		);
+	}
+	
+	public function continue($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Continue_::class,
+			$path
+		);
+	}
+	
+	public function declare($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Declare_::class,
+			$path
+		);
+	}
+	
+	public function declareDeclare($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\DeclareDeclare::class,
+			$path
+		);
+	}
+	
+	public function dNumber($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Scalar\DNumber::class,
+			$path
+		);
+	}
+	
+	public function do($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Do_::class,
+			$path
+		);
+	}
+	
+	public function echo($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Echo_::class,
+			$path
+		);
+	}
+	
+	public function else($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Else_::class,
+			$path
+		);
+	}
+	
+	public function elseIf($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\ElseIf_::class,
+			$path
+		);
+	}
+	
+	public function empty($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Empty_::class,
+			$path
+		);
+	}
+	
+	public function encapsed($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Scalar\Encapsed::class,
+			$path
+		);
+	}
+	
+	public function encapsedStringPart($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Scalar\EncapsedStringPart::class,
+			$path
+		);
+	}
+	
+	public function error($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Error::class,
+			$path
+		);
+	}
+	
+	public function errorSuppress($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ErrorSuppress::class,
+			$path
+		);
+	}
+	
+	public function eval($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Eval_::class,
+			$path
+		);
+	}
+	
+	public function exit($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Exit_::class,
+			$path
+		);
+	}
+	
+	public function expression($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Expression::class,
+			$path
+		);
+	}
+	
+	public function finally($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Finally_::class,
+			$path
+		);
+	}
+	
+	public function for($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\For_::class,
+			$path
+		);
+	}
+	
+	public function foreach($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Foreach_::class,
+			$path
+		);
+	}
+	
+	public function fullyQualified($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Name\FullyQualified::class,
+			$path
+		);
+	}
+	
+	public function funcCall($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\FuncCall::class,
+			$path
+		);
+	}
+	
+	public function function($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Function_::class,
+			$path
+		);
+	}
+	
+	public function global($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Global_::class,
+			$path
+		);
+	}
+	
+	public function goto($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Goto_::class,
+			$path
+		);
+	}
+	
+	public function groupUse($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\GroupUse::class,
+			$path
+		);
+	}
+	
+	public function haltCompiler($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\HaltCompiler::class,
+			$path
+		);
+	}
+	
+	public function if($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\If_::class,
+			$path
+		);
+	}
+	
+	public function include($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Include_::class,
+			$path
+		);
+	}
+	
+	public function inlineHTML($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\InlineHTML::class,
+			$path
+		);
+	}
+	
+	public function instanceof($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Instanceof_::class,
+			$path
+		);
+	}
+	
+	public function interface($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Interface_::class,
+			$path
+		);
+	}
+	
+	public function isset($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Isset_::class,
+			$path
+		);
+	}
+	
+	public function label($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Label::class,
+			$path
+		);
+	}
+	
+	public function list($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\List_::class,
+			$path
+		);
+	}
+	
+	public function lNumber($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Scalar\LNumber::class,
+			$path
+		);
+	}
+	
+	public function magicConst($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Scalar\MagicConst::class,
+			$path
+		);
+	}
+	
+	public function methodCall($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\MethodCall::class,
+			$path
+		);
+	}
+	
+	public function name($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Name::class,
+			$path
+		);
+	}
+	
+	public function namespace($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Namespace_::class,
+			$path
+		);
+	}
+	
+	public function new($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\New_::class,
+			$path
+		);
+	}
+	
+	public function nop($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Nop::class,
+			$path
+		);
+	}
+	
+	public function postDec($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\PostDec::class,
+			$path
+		);
+	}
+	
+	public function postInc($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\PostInc::class,
+			$path
+		);
+	}
+	
+	public function preDec($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\PreDec::class,
+			$path
+		);
+	}
+	
+	public function preInc($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\PreInc::class,
+			$path
+		);
+	}
+	
+	public function print($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Print_::class,
+			$path
+		);
+	}
+	
+	public function property($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Property::class,
+			$path
+		);
+	}
+	
+	public function propertyFetch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\PropertyFetch::class,
+			$path
+		);
+	}
+	
+	public function propertyProperty($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\PropertyProperty::class,
+			$path
+		);
+	}
+	
+	public function relative($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Name\Relative::class,
+			$path
+		);
+	}
+	
+	public function return($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Return_::class,
+			$path
+		);
+	}
+	
+	public function shellExec($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\ShellExec::class,
+			$path
+		);
+	}
+	
+	public function static($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Static_::class,
+			$path
+		);
+	}
+	
+	public function staticCall($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\StaticCall::class,
+			$path
+		);
+	}
+	
+	public function staticPropertyFetch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\StaticPropertyFetch::class,
+			$path
+		);
+	}
+	
+	public function staticVar($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\StaticVar::class,
+			$path
+		);
+	}
+	
+	public function string($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Scalar\String_::class,
+			$path
+		);
+	}
+	
+	public function switch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Switch_::class,
+			$path
+		);
+	}
+	
+	public function ternary($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Ternary::class,
+			$path
+		);
+	}
+	
+	public function throw($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Throw_::class,
+			$path
+		);
+	}
+	
+	public function trait($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Trait_::class,
+			$path
+		);
+	}
+	
+	public function traitUse($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\TraitUse::class,
+			$path
+		);
+	}
+	
+	public function traitUseAdaptation($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\TraitUseAdaptation::class,
+			$path
+		);
+	}
+	
+	public function tryCatch($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\TryCatch::class,
+			$path
+		);
+	}
+	
+	public function unaryMinus($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\UnaryMinus::class,
+			$path
+		);
+	}
+	
+	public function unaryPlus($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\UnaryPlus::class,
+			$path
+		);
+	}
+	
+	public function unset($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Unset_::class,
+			$path
+		);
+	}
+	
+	public function use($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\Use_::class,
+			$path
+		);
+	}
+	
+	public function useUse($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\UseUse::class,
+			$path
+		);
+	}
+	
+	public function variable($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Variable::class,
+			$path
+		);
+	}
+	
+	public function while($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Stmt\While_::class,
+			$path
+		);
+	}
+	
+	public function yield($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\Yield_::class,
+			$path
+		);
+	}
+	
+	public function yieldFrom($path = ''): self
+	{
+		return $this->traverseIntoClass(
+			\PhpParser\Node\Expr\YieldFrom::class,
+			$path
+		);
+	}
 }
