@@ -9,22 +9,22 @@ use Archetype\Support\URI;
 
 class FileInput implements InputInterface
 {
-    public $filename;
+    public ?string $filename = '';
 
-    public $extension;
+    public ?string $extension = '';
 
-    public $relativeDir;
+    public ?string $relativeDir = '';
 
-    public $absoluteDir;
+    public ?string $absoluteDir = '';
 
-    public $root;
+    public array $root;
 
     final public function __construct()
     {
         $this->root = config('archetype')['roots']['input'];
     }
 
-    public function readPath($path = null)
+    public function readPath($path = null): self
     {
         $this->extractPathProperties($path);
         return $this;
@@ -37,24 +37,24 @@ class FileInput implements InputInterface
         return (new PHPFileStorage)->get($this->absolutePath());
     }
 
-    public function fileExists($path)
+    public function fileExists($path): bool
     {
         $checker = new static;
         $checker->extractPathProperties($path);
         return is_file($checker->absolutePath());
     }
 
-    public function absolutePath()
+    public function absolutePath(): string
     {
         return "$this->absoluteDir/$this->filename" . ($this->extension ? ".$this->extension" : "");
     }
 
-    public function filename()
+    public function filename(): string
     {
         return $this->filename;
     }
 
-    protected function extractPathProperties(string $location)
+    protected function extractPathProperties(string $location): void
     {
 		$path = URI::make($location)->path();
 		

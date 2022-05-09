@@ -5,8 +5,7 @@ namespace Archetype\Endpoints\PHP;
 use Archetype\Endpoints\EndpointProvider;
 use Archetype\Support\RecursiveFileSearch;
 use Archetype\Traits\HasOperators;
-use ReflectionClass;
-use ReflectionMethod;
+use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 class PHPFileQueryBuilder extends EndpointProvider
@@ -29,7 +28,7 @@ class PHPFileQueryBuilder extends EndpointProvider
      * @example Get a QueryBuilder instance
      * @source PHPFile::query()
      */
-    public function query()
+    public function query(): self
     {
         return $this;
     }
@@ -47,7 +46,7 @@ class PHPFileQueryBuilder extends EndpointProvider
      * @example Query files in directory
      * @source PHPFile::in('app/HTTP')
      */
-    public function in(string $directory)
+    public function in(string $directory): self
     {
         $this->baseDir = $directory;
 
@@ -73,7 +72,7 @@ class PHPFileQueryBuilder extends EndpointProvider
      * @example Where callback returns true
      * @source PHPFile::where(fn($file) => $file->canUseReflection())
      */
-    public function where($arg1, $arg2 = null, $arg3 = null)
+    public function where($arg1, $arg2 = null, $arg3 = null): self
     {
         // Ensure we are in a directory context - default to base path
         if (!isset($this->baseDir)) {
@@ -120,7 +119,7 @@ class PHPFileQueryBuilder extends EndpointProvider
      * @example andWhere is an alias to where
      * @source PHPFile::where(...)->andWhere(...)->get()
      */
-    public function andWhere(...$args)
+    public function andWhere(...$args): self
     {
         return $this->where(...$args);
     }
@@ -129,7 +128,7 @@ class PHPFileQueryBuilder extends EndpointProvider
      * @example Get a collection with results
      * @source PHPFile::where(...)->get()
      */
-    public function get()
+    public function get(): Collection
     {
         // Ensure we are in a directory context - default to base path
         if (!isset($this->baseDir)) {

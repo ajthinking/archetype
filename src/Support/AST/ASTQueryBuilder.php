@@ -72,7 +72,7 @@ class ASTQueryBuilder
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }
 
-    public function traverseIntoClass($expectedClass, string $path = null)
+    public function traverseIntoClass($expectedClass, string $path = null): self
     {
 		$steps = $path ? collect(explode('->', $path)) : collect();
 
@@ -92,7 +92,7 @@ class ASTQueryBuilder
         });
     }	
 
-    public function traverseIntoProperty(string $property)
+    public function traverseIntoProperty(string $property): self
     {
         return $this->next(function ($queryNode) use ($property) {
 			$results = Arr::wrap($queryNode->result);
@@ -106,19 +106,19 @@ class ASTQueryBuilder
         });
     }
 
-    public function shallow()
+    public function shallow(): self
     {
         $this->allowDeepQueries = false;
         return $this;
     }
 
-    public function deep()
+    public function deep(): self
     {
         $this->allowDeepQueries = true;
         return $this;
     }
 
-    public function remember(string $key, Closure $callback)
+    public function remember(string $key, Closure $callback): self
     {
         $this->currentNodes()->each(function ($queryNode) use ($key, $callback) {
             
@@ -132,12 +132,12 @@ class ASTQueryBuilder
         return $this;
     }
 
-	public function is($expected)
+	public function is($expected): self
 	{
 		return $this->whereEquals($expected);
 	}
 
-	public function whereEquals($expected)
+	public function whereEquals($expected): self
 	{
         return $this->next(function ($queryNode) use ($expected) {
             $nodes = collect(Arr::wrap($queryNode->result));
@@ -150,12 +150,12 @@ class ASTQueryBuilder
         });
 	}
 
-    public function where($arg1, $arg2 = null)
+    public function where($arg1, $arg2 = null): self
     {
         return $arg1 instanceof Closure ? $this->whereCallback($arg1) : $this->wherePath($arg1, $arg2);
     }
 
-    public function next(Closure $callback)
+    public function next(Closure $callback): self
     {
         $next = $this->currentNodes()->map($callback)->flatten()->toArray();
 
@@ -171,7 +171,7 @@ class ASTQueryBuilder
         return $this->allowDeepQueries ? new NodeFinder : new ShallowNodeFinder;
     }
 
-    protected function wherePath(string $path, $expected)
+    protected function wherePath(string $path, $expected): self
     {
         return $this->next(function ($queryNode) use ($path, $expected) {
             $nodes = collect(Arr::wrap($queryNode->result));
@@ -189,7 +189,7 @@ class ASTQueryBuilder
         });
     }
 
-    protected function whereCallback(Closure $callback)
+    protected function whereCallback(Closure $callback): self
     {
         return $this->next(function ($queryNode) use ($callback) {
             $query = new static(
@@ -202,13 +202,13 @@ class ASTQueryBuilder
         });
     }
 
-	protected function whereClauseCallbackIsFulfilled($result)
+	protected function whereClauseCallbackIsFulfilled($result): bool
 	{
 		if($result instanceof ASTQueryBuilder) return $result->isNotEmpty();
 
 		if($result instanceof Collection) return $result->isNotEmpty();
 
-		return $result;
+		return (bool) $result;
 	}
 
     /**
@@ -227,12 +227,12 @@ class ASTQueryBuilder
         return $pluck ? $memory->pluck($pluck) : $memory;
     }
 
-    public function get()
+    public function get(): Collection
     {
         return collect(end($this->tree))->pluck('result')->flatten();
     }
 
-	public function isNotEmpty()
+	public function isNotEmpty(): bool
 	{
 		return $this->get()->isNotEmpty();
 	}
@@ -249,7 +249,7 @@ class ASTQueryBuilder
         });
     }
 
-    public function remove()
+    public function remove(): self
     {
         $this->currentNodes()->each(function ($node) {
             
@@ -272,12 +272,12 @@ class ASTQueryBuilder
      * @param Node|Closure $arg1
      * @return $this
      */
-    public function replace($arg1)
+    public function replace($arg1): self
     {
         return is_callable($arg1) ? $this->replaceWithCallback($arg1) : $this->replaceWithNode($arg1);
     }
 
-    protected function replaceWithCallback(Closure $callback)
+    protected function replaceWithCallback(Closure $callback): self
     {
         $this->currentNodes()->each(function ($node) use ($callback) {
             if (!isset($node->result->__object_hash)) {
@@ -294,7 +294,7 @@ class ASTQueryBuilder
         return $this;
     }
 
-    protected function replaceWithNode($newNode)
+    protected function replaceWithNode($newNode): self
     {
         $this->currentNodes()->each(function ($node) use ($newNode) {
             
@@ -314,7 +314,7 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function replaceProperty(string $key, $value)
+    public function replaceProperty(string $key, $value): self
     {
         $this->currentNodes()->each(function ($node) use ($key, $value) {
             if (!isset($node->result->__object_hash)) {
@@ -332,7 +332,7 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function insertStmts($newNodes)
+    public function insertStmts($newNodes): self
     {
         collect($newNodes)->each(function ($newNode) {
             $this->insertStmt($newNode);
@@ -341,7 +341,7 @@ class ASTQueryBuilder
         return $this;
     }
 
-    public function insertStmt($newNode)
+    public function insertStmt($newNode): self
     {
         $this->currentNodes()->each(function ($node) use ($newNode) {
 
@@ -362,7 +362,7 @@ class ASTQueryBuilder
         return $this;
     }
     
-    public function commit()
+    public function commit(): self
     {
         $this->parent->ast(
             $this->resultingAST
@@ -376,7 +376,7 @@ class ASTQueryBuilder
         return $this->parent;
     }
 
-    public function currentNodes()
+    public function currentNodes(): Collection
     {
         return collect($this->tree[$this->currentDepth]);
     }

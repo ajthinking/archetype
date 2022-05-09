@@ -3,19 +3,18 @@
 namespace Archetype\Drivers;
 
 use Archetype\Drivers\OutputInterface;
-use Illuminate\Support\Str;
 use Archetype\Support\PHPFileStorage;
 use TypeError;
 
 class FileOutput implements OutputInterface
 {
-    public $filename;
+    public string $filename = '';
 
-    public $extension;
+    public string $extension = '';
 
-    public $relativeDir;
+    public string $relativeDir = '';
 
-    public $absoluteDir;
+    public string $absoluteDir = '';
 
     public $root;
 
@@ -27,7 +26,7 @@ class FileOutput implements OutputInterface
         $this->ensureDefaultRootExists();
     }
 
-    public function save($path, $code)
+    public function save(string $path, string $code): void
     {
         $this->ensureDefaultRootExists();
         $this->extractPathProperties($path);
@@ -39,12 +38,12 @@ class FileOutput implements OutputInterface
         );
     }
 
-    public function debug($path = null)
+    public function debug($path = null): void
     {
         //
     }
 
-    public function absolutePath()
+    public function absolutePath(): string
     {
         return $this->absoluteDir() . "/$this->filename" . ($this->extension ? ".$this->extension" : "");
     }
@@ -58,12 +57,12 @@ class FileOutput implements OutputInterface
         return $this;
     }
 
-    protected function ensureDefaultRootExists()
+    protected function ensureDefaultRootExists(): void
     {
         $this->root = $this->root ?? config('archetype')['roots']['output'];
     }
 
-    protected function extractPathProperties($path)
+    protected function extractPathProperties(string $path): void
     {
         // If no path is supplied, we will rely on default/mirrored input settings
         if (!$path) {
@@ -77,7 +76,7 @@ class FileOutput implements OutputInterface
         $this->extension = $matches[1] ?? null;
     }
     
-    protected function absoluteDir()
+    protected function absoluteDir(): string
     {
         return collect([
 			$this->root['root'],
@@ -85,7 +84,7 @@ class FileOutput implements OutputInterface
 		])->filter()->join("/");
     }
 
-	protected function ensureFilenameIsSet()
+	protected function ensureFilenameIsSet(): void
 	{
 		if(!$this->filename) throw new TypeError('Could not find a filename');
 	}

@@ -26,7 +26,7 @@ abstract class EndpointProvider
         return $this->file->ast();
     }
 
-    protected function canUseReflection()
+    protected function canUseReflection(): bool
     {
         return $this->file->getReflection() && !$this->file->hasModifications();
     }

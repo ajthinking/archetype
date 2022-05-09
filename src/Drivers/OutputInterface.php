@@ -4,7 +4,7 @@ namespace Archetype\Drivers;
 
 interface OutputInterface
 {
-    public function save($path, $content);
+    public function save(string $path, string $content);
 
     public function debug($path = null);
 }
