@@ -27,7 +27,7 @@ class Make extends Maker
             ->outputDriver($this->outputDriver);
     }
 
-    public function class($name = \App\Dummy::class)
+    public function class(string $name = \App\Dummy::class)
     {
         $this->setupNames($name, 'class_root');
 
@@ -45,7 +45,7 @@ class Make extends Maker
     }
 
 
-    protected function setupNames($path, $location = 'file_root')
+    protected function setupNames(string $path, string $location = 'file_root')
     {
         $relativeLocation = URI::make($path);
         
@@ -80,14 +80,14 @@ class Make extends Maker
         return $this->relativeDir;
     }
 
-    protected function stub($name)
+    protected function stub(string $name)
     {
         return file_get_contents(
             __DIR__ . "/../../stubs/$name"
         );
     }
 
-    protected function emulatedInputDriver($path)
+    protected function emulatedInputDriver(string $path)
     {
         $inputDriverClass = config('archetype.input', \Archetype\Drivers\FileInput::class);
         $inputDriver = new $inputDriverClass;

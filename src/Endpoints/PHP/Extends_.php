@@ -16,7 +16,7 @@ class Extends_ extends EndpointProvider
      * @param string $name
      * @return mixed
      */
-    public function extends($name = null)
+    public function extends(?string $name = null)
     {
         if ($name === null) {
             return $this->get();
@@ -38,7 +38,7 @@ class Extends_ extends EndpointProvider
             ->first();
     }
 
-    protected function set($newExtends)
+    protected function set(string $newExtends)
     {
         return $this->file->astQuery()
             ->class()

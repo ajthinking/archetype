@@ -8,7 +8,7 @@ class URI
 {
     public $input;
     public $path;
-    public $name;
+    public string $name;
 
     final public function __construct($input)
     {

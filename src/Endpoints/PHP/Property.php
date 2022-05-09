@@ -40,7 +40,7 @@ class Property extends EndpointProvider
      * @param mixed $value
      * @return mixed
      */
-    public function property($key, $value = Types::NO_VALUE)
+    public function property(string $key, $value = Types::NO_VALUE)
     {
         // remove?
         if ($this->file->directive('remove')) {
@@ -79,12 +79,12 @@ class Property extends EndpointProvider
      * @param mixed $value
      * @return mixed
      */
-    public function setProperty($key, $value = Types::NO_VALUE)
+    public function setProperty(string $key, $value = Types::NO_VALUE)
     {
         return $this->set($key, $value);
     }
 
-    protected function add($key, $value)
+    protected function add(string $key, $value)
     {
         // no value but has value from intermediate add directive?
         if ($value === Types::NO_VALUE && $this->file->directive('addValue')) {
@@ -119,7 +119,7 @@ class Property extends EndpointProvider
         throw new Exception("Using 'add' on an existing type we cant handle! Current support: array/string/numeric/null");
     }
 
-    protected function addToArray($key, $new, $existing = [])
+    protected function addToArray(string $key, $new, $existing = [])
     {
         $new = Arr::wrap($new);
 
@@ -129,7 +129,7 @@ class Property extends EndpointProvider
         );
     }
 
-    protected function addToString($key, $new, $existing = '')
+    protected function addToString(string $key, $new, $existing = '')
     {
         return $this->set(
             $key,
@@ -137,7 +137,7 @@ class Property extends EndpointProvider
         );
     }
 
-    protected function addToNumeric($key, $new, $existing = 0)
+    protected function addToNumeric(string $key, $new, $existing = 0)
     {
         return $this->set(
             $key,
@@ -145,7 +145,7 @@ class Property extends EndpointProvider
         );
     }
 
-    protected function remove($key)
+    protected function remove(string $key)
     {
         return $this->file->astQuery()
             ->class()
@@ -161,12 +161,12 @@ class Property extends EndpointProvider
             ->continue();
     }
 
-    protected function clear($key)
+    protected function clear(string $key)
     {
         return $this->setProperty($key);
     }
 
-    protected function empty($key)
+    protected function empty(string $key)
     {
         $value = $this->get($key);
 
@@ -183,17 +183,17 @@ class Property extends EndpointProvider
         return $this->setProperty($key, $defaultMeaningOfEmpty);
     }
 
-    protected function get($key)
+    protected function get(string $key)
     {
         return $this->canUseReflection() ? $this->getWithReflection($key) : $this->getWithParser($key);
     }
 
-    protected function getWithReflection($name)
+    protected function getWithReflection(string $name)
     {
         return $this->file->getReflection()->getDefaultProperties()[$name];
     }
 
-    protected function getWithParser($key)
+    protected function getWithParser(string $key)
     {
         return $this->file->astQuery()
             ->class()
@@ -204,7 +204,7 @@ class Property extends EndpointProvider
             ->first();
     }
 
-    protected function set($key, $value = Types::NO_VALUE)
+    protected function set(string $key, $value = Types::NO_VALUE)
     {
         $value = $this->prepareValue($value);
 
@@ -217,7 +217,7 @@ class Property extends EndpointProvider
         return $propertyExists ? $this->update($key, $value) : $this->create($key, $value);
     }
 
-    protected function create($key, $value)
+    protected function create(string $key, $value)
     {
         return $this->file->astQuery()
             ->class()
@@ -227,7 +227,7 @@ class Property extends EndpointProvider
             ->continue();
     }
 
-    protected function update($key, $value)
+    protected function update(string $key, $value)
     {
         return $this->file->astQuery()
             ->class()
@@ -248,7 +248,7 @@ class Property extends EndpointProvider
             ->continue();
     }
 
-    protected function makeProperty($key, $value)
+    protected function makeProperty(string $key, $value)
     {
         $property = (new BuilderFactory)->property($key);
         $property = $property->{'make' . $this->flag()}();
@@ -262,7 +262,7 @@ class Property extends EndpointProvider
         return $property->getNode();
     }
 
-    protected function addToUnknownType($key, $value)
+    protected function addToUnknownType(string $key, $value)
     {
         $assumedType = $this->file->directive('assumeType') ?? 'array';
         $addMethod = 'addTo' . $assumedType;

@@ -17,7 +17,7 @@ class PHPFileQueryBuilder extends EndpointProvider
 
 	public $result;
 
-	public $baseDir;
+	public string $baseDir;
     
     public function __construct($file = null)
     {
@@ -47,7 +47,7 @@ class PHPFileQueryBuilder extends EndpointProvider
      * @example Query files in directory
      * @source PHPFile::in('app/HTTP')
      */
-    public function in($directory)
+    public function in(string $directory)
     {
         $this->baseDir = $directory;
 
@@ -147,7 +147,7 @@ class PHPFileQueryBuilder extends EndpointProvider
         return $this->get()->first();
     }
 
-    public function recursiveFileSearch($directory)
+    public function recursiveFileSearch(string $directory)
     {
         $directory = base_path($directory);
 
@@ -155,13 +155,5 @@ class PHPFileQueryBuilder extends EndpointProvider
             ->matching(static::PHPSignature)
             ->ignore(config('archetype.ignored_paths'))
             ->get();
-    }
-
-    /** this is kept probably because of some inheritance issue */
-    protected function getHandlerMethod($signature, $args)
-    {
-        $reflection = new ReflectionClass(static::class);
-        $methods = collect($reflection->getMethods(ReflectionMethod::IS_PUBLIC))->pluck('name');
-        return collect($methods)->contains($signature) ? $signature : false;
     }
 }

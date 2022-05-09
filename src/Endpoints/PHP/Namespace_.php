@@ -45,7 +45,7 @@ class Namespace_ extends EndpointProvider
             ->first();
     }
 
-    protected function set($newNamespace)
+    protected function set(string $newNamespace)
     {
         $namespace = $this->file->astQuery()
             ->namespace()

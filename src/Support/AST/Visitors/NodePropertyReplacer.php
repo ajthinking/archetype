@@ -8,11 +8,11 @@ use PhpParser\NodeTraverser;
 
 class NodePropertyReplacer extends NodeVisitorAbstract
 {
-	public $id;
-	public $key;
+	public string $id;
+	public string $key;
 	public $value;
 
-    final public function __construct($id, $key, $value)
+    final public function __construct(string $id, string $key, $value)
     {
         $this->id = $id;
         $this->key = $key;

@@ -10,7 +10,6 @@ use PhpParser\Node\Expr\Array_;
 
 class PSR2PrettyPrinter extends StandardPrettyPrinter
 {
-
     public function __construct($options = [])
     {
         $defaults = ['shortArraySyntax' => true];

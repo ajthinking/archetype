@@ -6,8 +6,8 @@ use Illuminate\Support\Str;
 
 class Path
 {
-	public $path;
-	public $root;
+	public ?string $path;
+	public ?string $root;
 
     final public function __construct($inputPath)
     {

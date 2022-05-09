@@ -6,10 +6,10 @@ use Exception;
 
 class FileParseError extends Exception
 {
-	public $path;
+	public string $path;
 	public $original;
 
-    public function __construct($path, $original)
+    public function __construct(string $path, $original)
     {
         $this->path = $path;
         $this->original = $original;

@@ -8,7 +8,7 @@ use PhpParser\NodeTraverser;
 
 class NodeInserter extends NodeVisitorAbstract
 {
-	public $id;
+	public string $id;
 	public $newNode;
 
     final public function __construct($id, $newNode)

@@ -10,11 +10,11 @@ class RecursiveFileSearch
 {
     protected $ignore = [];
 
-    protected $pattern;
+    protected string $pattern;
 
-    protected $directory;
+    protected string $directory;
 
-    final public function __construct($directory)
+    final public function __construct(string $directory)
     {
         $this->directory = $directory;
     }

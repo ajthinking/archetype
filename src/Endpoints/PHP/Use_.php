@@ -72,7 +72,7 @@ class Use_ extends EndpointProvider
         return $this->file->continue();
     }
 
-    protected function useStatement($signature)
+    protected function useStatement(string $signature)
     {
         $parts = Str::of($signature)->explode(' as ');
         $name = $parts->first();

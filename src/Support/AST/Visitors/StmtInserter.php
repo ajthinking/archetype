@@ -10,7 +10,7 @@ class StmtInserter extends NodeVisitorAbstract
 {
     protected $finished = false;
 
-	protected $id;
+	protected ?string $id;
 	protected $newNode;
 	protected $position;
 

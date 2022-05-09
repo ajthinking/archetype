@@ -19,7 +19,7 @@ class ClassName extends EndpointProvider
      * @param string $name
      * @return mixed
      */
-    public function className($name = null)
+    public function className(?string $name = null)
     {
         if ($name === null) {
             return $this->get();
@@ -45,7 +45,7 @@ class ClassName extends EndpointProvider
         return $namespace ? "$namespace\\$className" : $className;
     }
 
-    protected function set($newClassName)
+    protected function set(string $newClassName)
     {
         return $this->file->astQuery()
             ->class()
