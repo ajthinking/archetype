@@ -44,6 +44,9 @@
         }
     },
     "autoload": {
+		"files": [
+			"src/functions.php"
+		],
         "psr-4": {
             "Archetype\\": "src/",
             "Archetype\\Tests\\": "tests/"
