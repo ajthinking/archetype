@@ -27,7 +27,6 @@ class ASTQueryBuilder
     use HasOperators,
 		PHPParserClassMap,
 		PHPParserPropertyMap,
-		RenderGraphs,
 		Dumpable,
 		Tappable;
 
