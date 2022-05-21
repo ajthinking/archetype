@@ -27,7 +27,6 @@ class ASTQueryBuilder
     use HasOperators,
 		PHPParserClassMap,
 		PHPParserPropertyMap,
-		RenderGraphs,
 		Dumpable,
 		Tappable;
 
@@ -211,7 +210,7 @@ class ASTQueryBuilder
 		return (bool) $result;
 	}
 
-	public function withEach($iterable, $callback)
+	public function withEach(Iterable $iterable, Closure $callback): self
 	{
 		foreach($iterable as $item) {
 			$callback($this, $item);
