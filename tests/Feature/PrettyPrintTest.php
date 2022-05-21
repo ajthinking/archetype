@@ -26,3 +26,8 @@ test('class statements have linebreaks between them', function() {
 		->property('c', 3)
 		->assertLinebreaksBetweenClassStmts();
 });
+
+test('created class without use statements have beautiful header', function() {
+	PHPFile::make()->class()
+		->assertProperSpacingInClassHeader();
+});

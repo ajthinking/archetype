@@ -156,6 +156,7 @@ class TestablePHPFile extends PHPFile
 
 	public function assertBeautifulPhp()
 	{
+		// $this->assertProperSpacingInClassHeader();
 		$this->assertLinebreaksBetweenClassStmts();
 
 		return $this;
@@ -187,12 +188,52 @@ class TestablePHPFile extends PHPFile
 		return $this;		
 	}
 
+	public function assertProperSpacingInClassHeader()
+	{
+		if(!$this->hasClass()) return $this;
+
+		$this->assertOneEmptyLineBetweenPhpTagAndNamespace();
+
+		return $this->hasUseStatements()
+			? $this->assertOneEmptyLineBetweenNamespaceAndUseStatements()
+				->assertOneEmptyLineBetweenUseStatementsAndClass()
+			: $this->assertOneEmptyLineBetweenNamespaceAndClass();
+	}
+
+	public function assertOneEmptyLineBetweenUseStatementsAndClass()
+	{
+		assertMatchesRegularExpression('/use .*\n\nclass /', $this->render());
+
+		return $this;
+	}
+
+	public function assertOneEmptyLineBetweenNamespaceAndClass()
+	{
+		assertMatchesRegularExpression('/namespace .*\n\nclass /', $this->render());
+
+		return $this;
+	}
+
+	public function assertOneEmptyLineBetweenPhpTagAndNamespace()
+	{
+		assertMatchesRegularExpression('/^<\?php\n\nnamespace /', $this->render());
+
+		return $this;
+	}
+
+	public function assertOneEmptyLineBetweenNamespaceAndUseStatements()
+	{
+		assertMatchesRegularExpression('/namespace .*\n\nuse /', $this->render());
+
+		return $this;
+	}	
+
 	public function assertLinebreaksBetweenClassStmts() {
 		// Reparse to resolve formatting 
 		$this->fromString($this->render());
 
 		$class = $this->astQuery()->class()->first();
-		if(!$class) return;
+		if(!$class) return $this;
 
 		$stmts = $this->astQuery()->class()->stmts->get();
 
@@ -215,5 +256,15 @@ class TestablePHPFile extends PHPFile
 		});
 
 		return $this;
+	}
+
+	protected function hasClass(): bool
+	{
+		return preg_match('/^class /m', $this->render());
+	}
+
+	protected function hasUsestatements(): bool
+	{
+		return preg_match('/^use /m', $this->render());
 	}	
 }
