@@ -3,6 +3,7 @@
 use Archetype\Facades\LaravelFile;
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Archetype\Tests\Support\TestableASTQueryBuilder as ASTQueryBuilder;
+use PhpParser\BuilderFactory;
 
 it('can be instanciated using an ast object', function() {
 	$ast = LaravelFile::load('public/index.php')->ast();
@@ -168,4 +169,17 @@ it('can traverse into class properties by passing an arrow separated string', fu
 		->astQuery()
 		->classMethod('name->name')
 		->assertMatches(collect(['register', 'boot']));
+});
+
+it('can iterate with incoming data', function() {
+	PHPFile::make()->class(\App\Dummy::class)
+		->astQuery()
+		->class()
+		->withEach(['a', 'b', 'c'], function($query, $name) {
+			$query->insertStmt(
+				(new BuilderFactory)->method($name)->getNode()
+			);
+		})
+		->classMethod('name->name')
+		->assertMatches(collect(['c', 'b', 'a']));
 });
