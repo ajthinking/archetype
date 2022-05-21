@@ -211,6 +211,15 @@ class ASTQueryBuilder
 		return (bool) $result;
 	}
 
+	public function withEach($iterable, $callback)
+	{
+		foreach($iterable as $item) {
+			$callback($this, $item);
+		}
+
+		return $this;
+	}
+
     /**
      * Recall data in memory
      * Use this method in conjunction with remember()
