@@ -31,3 +31,9 @@ test('created class without use statements have beautiful header', function() {
 	PHPFile::make()->class()
 		->assertProperSpacingInClassHeader();
 });
+
+test('created class with use statements have beautiful header'/*, function() {
+	PHPFile::make()->class()
+		->use('\TraitX')
+		->assertProperSpacingInClassHeader();
+}*/);
