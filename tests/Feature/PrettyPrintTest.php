@@ -1,6 +1,7 @@
 <?php
 
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
+use PhpParser\BuilderFactory;
 
 test('arrays are beutiful when loaded and rendered', function() {
 	PHPFile::load('app/Models/User.php')
@@ -35,5 +36,19 @@ test('created class without use statements have beautiful header', function() {
 test('created class with use statements have beautiful header'/*, function() {
 	PHPFile::make()->class()
 		->use('\TraitX')
-		->assertProperSpacingInClassHeader();
+		->assertProperSpacingInClassHeader()
+		->preview();
 }*/);
+
+test('created and modified class without use statements have beautiful header', function() {
+	PHPFile::make()->class(App\Dummy::class)
+		->astQuery()
+		->class()
+		->insertStmt(
+			(new BuilderFactory)->method('myMethod')->getNode()
+		)
+		->commit()
+		->end()
+		->assertProperSpacingInClassHeader();
+});
+
