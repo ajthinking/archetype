@@ -214,5 +214,5 @@ it('can insert stmt with a closure', function() {
 		})
 		->commit()
 		->end()
-		->preview();
+		->assertContains('public $someProperty');
 });
