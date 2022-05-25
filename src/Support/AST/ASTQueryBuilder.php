@@ -20,6 +20,7 @@ use Closure;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use PhpParser\BuilderFactory;
 use PhpParser\ConstExprEvaluator;
 
 class ASTQueryBuilder
@@ -351,6 +352,8 @@ class ASTQueryBuilder
 
     public function insertStmt($newNode): self
     {
+		if($newNode instanceof Closure) $newNode = $newNode(new BuilderFactory);
+
         $this->currentNodes()->each(function ($node) use ($newNode) {
             $target = $node->result;
 

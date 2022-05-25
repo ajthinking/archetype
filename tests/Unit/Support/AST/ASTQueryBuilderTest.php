@@ -204,3 +204,15 @@ it('does not insert statements when no matches', function() {
 	
 	assertEquals($original, $after);
 });
+
+it('can insert stmt with a closure', function() {
+	PHPFile::make()->class(\App\Dummy::class)
+		->astQuery()
+		->class()
+		->insertStmt(function(BuilderFactory $builder) {
+			return $builder->property('someProperty')->getNode();
+		})
+		->commit()
+		->end()
+		->preview();
+});
