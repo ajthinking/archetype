@@ -5,6 +5,8 @@ use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use Archetype\Tests\Support\TestableASTQueryBuilder as ASTQueryBuilder;
 use PhpParser\BuilderFactory;
 
+use function PHPUnit\Framework\assertEquals;
+
 it('can be instanciated using an ast object', function() {
 	$ast = LaravelFile::load('public/index.php')->ast();
 	(new ASTQueryBuilder($ast))->assertInstanceOf(ASTQueryBuilder::class);
@@ -182,4 +184,23 @@ it('can iterate with incoming data', function() {
 		})
 		->classMethod('name->name')
 		->assertMatches(collect(['c', 'b', 'a']));
+});
+
+it('does not insert statements when no matches', function() {
+	$original = PHPFile::load('app/Providers/AppServiceProvider.php')->render();
+	$after = PHPFile::load('app/Providers/AppServiceProvider.php')
+		->astQuery()
+		->classMethod()
+		->where('blabala', 'xyxy')
+		->assertMatchCount(0)
+		->insertStmt(
+			new \PhpParser\Node\Stmt\Return_(
+				new \PhpParser\Node\Expr\Variable('this')
+			)
+		)
+		->commit()
+		->end()
+		->render();
+	
+	assertEquals($original, $after);
 });

@@ -352,8 +352,10 @@ class ASTQueryBuilder
     public function insertStmt($newNode): self
     {
         $this->currentNodes()->each(function ($node) use ($newNode) {
-
             $target = $node->result;
+
+			// Do not insert things on empty results
+			if(is_array($target) && empty($target)) return;
 
             // Assume insertion targets namespace stmts (if present at index 0)
             if (is_array($target) && !empty($target) && get_class($target[0]) == 'PhpParser\\Node\\Stmt\Namespace_') {
