@@ -33,3 +33,9 @@ it('can add class use trait statements by unshifting (!)', function () {
 		->add()->useTrait('B')
 		->assertUseTrait(['B', 'A']); //->assertBeautifulPhp();
 });
+
+it('can add multiple class use trait statements', function () {
+	PHPFile::fromString('class X { use A; }')
+		->add()->useTrait(['B', 'C'])
+		->assertUseTrait(['B', 'C', 'A']); //->assertBeautifulPhp();
+});
