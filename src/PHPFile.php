@@ -15,6 +15,7 @@ use Archetype\Endpoints\PHP\Namespace_;
 use Archetype\Endpoints\PHP\Property;
 use Archetype\Endpoints\PHP\ReflectionProxy;
 use Archetype\Endpoints\PHP\Use_;
+use Archetype\Endpoints\PHP\UseTrait;
 use Archetype\Support\AST\ASTQueryBuilder;
 use Archetype\Support\Types;
 use Archetype\Traits\HasDirectives;
@@ -24,36 +25,36 @@ use Archetype\Traits\HasSyntacticSweeteners;
 
 class PHPFile
 {
-    use HasIO;
-    use HasDirectives;
-    use HasDirectiveHandlers;
+	use HasIO;
+	use HasDirectives;
+	use HasDirectiveHandlers;
 	use HasSyntacticSweeteners;
 
 	public InputInterface $input;
 
 	public OutputInterface $output;
 
-    protected string $contents;
+	protected string $contents;
 
-    protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
+	protected string $fileQueryBuilder = Endpoints\PHP\PHPFileQueryBuilder::class;
 
 	protected Maker $maker;
 
 	public string $astQueryBuilder = ASTQueryBuilder::class;
 
-    protected $ast;
+	protected $ast;
 
-    protected string $initialModificationHash;
+	protected string $initialModificationHash;
 
-    protected $originalAst;
+	protected $originalAst;
 
-    protected $tokens;
+	protected $tokens;
 
-    protected $lexer;
+	protected $lexer;
 
-    protected $directives = [];
+	protected $directives = [];
 
-    public function __construct(
+	public function __construct(
 		InputInterface $input,
 		OutputInterface $output,
 		Maker $maker
@@ -61,7 +62,7 @@ class PHPFile
 		$this->input = $input;
 		$this->output = $output;
 		$this->maker = $maker;
-    }	
+	}
 
 	public function query()
 	{
@@ -77,11 +78,11 @@ class PHPFile
 	{
 		return $this->query()->in(...$args);
 	}
-	
+
 	public function where(...$args)
 	{
 		return $this->query()->where(...$args);
-	}	
+	}
 
 	public function astQuery()
 	{
@@ -106,16 +107,22 @@ class PHPFile
 		return $handler->property($key, $value);
 	}
 
-    public function setProperty($key, $value = Types::NO_VALUE)
-    {
+	public function setProperty($key, $value = Types::NO_VALUE)
+	{
 		$handler = new Property($this);
-		return $handler->setProperty($key, $value);		
-    }
-	
+		return $handler->setProperty($key, $value);
+	}
+
 	public function use($value = null)
 	{
 		$handler = new Use_($this);
 		return $handler->use($value);
+	}
+
+	public function useTrait($value = null)
+	{
+		$handler = new UseTrait($this);
+		return $handler->useTrait($value);
 	}
 
 	public function namespace(string $value = null)
@@ -129,7 +136,7 @@ class PHPFile
 		$handler = new MethodNames($this);
 		return $handler->methodNames();
 	}
-	
+
 	public function implements($name = null)
 	{
 		$handler = new Implements_($this);
@@ -141,13 +148,13 @@ class PHPFile
 		$handler = new Extends_($this);
 		return $handler->extends($name);
 	}
-	
+
 	public function className($name = null)
 	{
 		$handler = new ClassName($this);
 		return $handler->className($name);
 	}
-	
+
 	public function classConstant($key, $value = Types::NO_VALUE)
 	{
 		$handler = new ClassConstant($this);
@@ -158,5 +165,5 @@ class PHPFile
 	{
 		$handler = new ClassConstant($this);
 		return $handler->setClassConstant($key, $value);
-	}	
+	}
 }
