@@ -25,7 +25,7 @@ class TestablePHPFile extends PHPFile
 
 	public function assertDirectives($expectedMap)
 	{
-		foreach($expectedMap as $name => $expected) {
+		foreach ($expectedMap as $name => $expected) {
 			$this->assertDirective($name, $expected);
 		}
 
@@ -45,7 +45,7 @@ class TestablePHPFile extends PHPFile
 
 		return $this;
 	}
-	
+
 	public function assertInstanceOfTestablePHPile()
 	{
 		return $this->assertInstanceOf(\Archetype\Tests\Support\TestablePHPFile::class);
@@ -82,13 +82,13 @@ class TestablePHPFile extends PHPFile
 	public function assertNoClassConstant(string $name)
 	{
 		$exists = $this->astQuery()
-            ->class()
-            ->classConst()
-            ->where(function ($query) use ($name) {
-                return $query->const()
+			->class()
+			->classConst()
+			->where(function ($query) use ($name) {
+				return $query->const()
 					->where('name->name', $name)
 					->isNotEmpty();
-            })->get()
+			})->get()
 			->isNotEmpty();
 
 		assertFalse($exists);
@@ -106,13 +106,13 @@ class TestablePHPFile extends PHPFile
 	public function assertNoProperty(string $name)
 	{
 		$exists = $this->astQuery()
-            ->class()
-            ->property()
-            ->where(function ($query) use ($name) {
-                return $query->propertyProperty()
+			->class()
+			->property()
+			->where(function ($query) use ($name) {
+				return $query->propertyProperty()
 					->where('name->name', $name)
 					->isNotEmpty();
-            })->get()
+			})->get()
 			->isNotEmpty();
 
 		assertFalse($exists);
@@ -123,7 +123,7 @@ class TestablePHPFile extends PHPFile
 	public function assertProperty($name, $value)
 	{
 		assertEquals($this->property($name), $value);
-		
+
 		return $this;
 	}
 
@@ -142,7 +142,14 @@ class TestablePHPFile extends PHPFile
 		assertEquals($expected, $this->use());
 
 		return $this;
-	}	
+	}
+
+	public function assertUseTrait(array $expected = null)
+	{
+		assertEquals($expected, $this->useTrait());
+
+		return $this;
+	}
 
 	public function assertValidPhp()
 	{
@@ -160,13 +167,14 @@ class TestablePHPFile extends PHPFile
 		$this->assertLinebreaksBetweenClassStmts();
 
 		return $this;
-	}	
+	}
 
-	public function assertMultilineArray($name) {
+	public function assertMultilineArray($name)
+	{
 		preg_match("/$name \= (\[[^\;]*)/s", $this->render(), $matches);
 		$code = $matches[1];
 		$commas = substr_count($code, ',');
-		
+
 		assertEquals(
 			substr_count($code, PHP_EOL),
 			$commas + 1
@@ -182,21 +190,22 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
-	public function assertSingleLineEmptyArray($name) {
+	public function assertSingleLineEmptyArray($name)
+	{
 		assertMatchesRegularExpression("/$name \= (\[\];]*)/s", $this->render());
 
-		return $this;		
+		return $this;
 	}
 
 	public function assertProperSpacingInClassHeader()
 	{
-		if(!$this->hasClass()) return $this;
+		if (!$this->hasClass()) return $this;
 
 		$this->assertOneEmptyLineBetweenPhpTagAndNamespace();
 
 		return $this->hasUseStatements()
 			? $this->assertOneEmptyLineBetweenNamespaceAndUseStatements()
-				->assertOneEmptyLineBetweenUseStatementsAndClass()
+			->assertOneEmptyLineBetweenUseStatementsAndClass()
 			: $this->assertOneEmptyLineBetweenNamespaceAndClass();
 	}
 
@@ -226,20 +235,21 @@ class TestablePHPFile extends PHPFile
 		assertMatchesRegularExpression('/namespace .*\n\nuse /', $this->render());
 
 		return $this;
-	}	
+	}
 
-	public function assertLinebreaksBetweenClassStmts() {
+	public function assertLinebreaksBetweenClassStmts()
+	{
 		// Reparse to resolve formatting 
 		$this->fromString($this->render());
 
 		$class = $this->astQuery()->class()->first();
-		if(!$class) return $this;
+		if (!$class) return $this;
 
 		$stmts = $this->astQuery()->class()->stmts->get();
 
 		$lineNumberCursor = $class->getStartLine() + 2;
-		
-		$stmts->each(function($stmt, $index) use(&$lineNumberCursor) {
+
+		$stmts->each(function ($stmt, $index) use (&$lineNumberCursor) {
 			$startLine = collect([
 				$stmt->getStartLine(),
 				collect($stmt->getComments())->map->getStartLine()->min()
@@ -249,7 +259,7 @@ class TestablePHPFile extends PHPFile
 				$lineNumberCursor,
 				$startLine,
 				'Missing linebreaks between class statements:'
-					.PHP_EOL.PHP_EOL.$this->render()
+					. PHP_EOL . PHP_EOL . $this->render()
 			);
 
 			$lineNumberCursor = $stmt->getEndLine() + 2;
@@ -266,5 +276,5 @@ class TestablePHPFile extends PHPFile
 	protected function hasUsestatements(): bool
 	{
 		return preg_match('/^use /m', $this->render());
-	}	
+	}
 }
