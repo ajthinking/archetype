@@ -4,14 +4,14 @@ use Archetype\Support\URI;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertTrue;
 
-it('can enterpret input as path or name', function() {
+it('can interpret input as path or name', function() {
 	assertTrue(URI::make('')->isPath());
 	assertTrue(URI::make('car')->isPath());
 	assertTrue(URI::make('car.php')->isPath());
 	assertTrue(URI::make('Car.php')->isPath());
 	assertTrue(URI::make('app/Car')->isPath());
 	assertTrue(URI::make('/Car')->isPath());
-	
+
 	assertTrue(URI::make('Car')->isName());
 	assertTrue(URI::make('\\Car')->isName());
 	assertTrue(URI::make('App\\Car')->isName());

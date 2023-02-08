@@ -3,12 +3,12 @@
 use Archetype\Tests\Support\Facades\TestablePHPFile as PHPFile;
 use PhpParser\BuilderFactory;
 
-test('arrays are beutiful when loaded and rendered', function() {
+test('arrays are beautiful when loaded and rendered', function() {
 	PHPFile::load('app/Models/User.php')
 		->assertMultilineArray('fillable');
 });
 
-test('arrays are beutiful when loaded modified and rendered', function() {
+test('arrays are beautiful when loaded modified and rendered', function() {
 	PHPFile::load('app/Models/User.php')
 		->add('also')->to()->property('fillable')
 		->assertMultilineArray('fillable');

@@ -7,7 +7,7 @@ use PhpParser\BuilderFactory;
 
 use function PHPUnit\Framework\assertEquals;
 
-it('can be instanciated using an ast object', function() {
+it('can be instantiated using an ast object', function() {
 	$ast = LaravelFile::load('public/index.php')->ast();
 	(new ASTQueryBuilder($ast))->assertInstanceOf(ASTQueryBuilder::class);
 });
@@ -41,7 +41,7 @@ it('can queries deep by default which means it will skip intermediate missing la
 });
 
 it('can query with explicit class names', function() {
-	// Short node names may be amgigious. If needed, refer to explicit class names
+	// Short node names may be ambiguous. If needed, refer to explicit class names
 	PHPFile::fromString('CONST CHANNEL = "tv4", TIME = "20:00"')
 		->astQuery()
 		->traverseIntoClass(\PhpParser\Node\Stmt\Const_::class) // const declaration outside of class
@@ -92,7 +92,7 @@ context('when searching method chains', function() {
 			->value
 			->assertMatchCount(1)
 			->assertMatches(collect('3h'));
-	});	
+	});
 });
 
 test('resolved where closures with matches are considered truthy', function() {
@@ -201,7 +201,7 @@ it('does not insert statements when no matches', function() {
 		->commit()
 		->end()
 		->render();
-	
+
 	assertEquals($original, $after);
 });
 

@@ -29,7 +29,7 @@ trait PHPParserClassMap
 		'closure' => \PhpParser\Node\Expr\Closure::class,
 		'closureUse' => \PhpParser\Node\Expr\ClosureUse::class,
 		'const' => \PhpParser\Node\Const_::class, // one of potentially many consts in the same declaration
-		'constStmt' => \PhpParser\Node\Stmt\Const_::class, // a node statement ouside of a class. NOTE NAME CHANGE!
+		'constStmt' => \PhpParser\Node\Stmt\Const_::class, // a node statement outside of a class. NOTE NAME CHANGE!
 		'constFetch' => \PhpParser\Node\Expr\ConstFetch::class,
 		'continue' => \PhpParser\Node\Stmt\Continue_::class,
 		'declare' => \PhpParser\Node\Stmt\Declare_::class,
@@ -113,7 +113,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function array($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -121,7 +121,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function arrayDimFetch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -129,7 +129,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function arrayItem($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -137,7 +137,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function arrowFunction($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -145,7 +145,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function assign($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -153,7 +153,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function assignOp($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -161,7 +161,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function assignRef($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -169,7 +169,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function binaryOp($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -177,7 +177,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function bitwiseNot($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -185,7 +185,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function booleanNot($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -193,7 +193,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function break($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -201,7 +201,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function case($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -209,7 +209,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function cast($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -217,7 +217,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function catch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -225,7 +225,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function class($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -233,7 +233,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function classConst($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -241,7 +241,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function classConstFetch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -249,7 +249,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function classLike($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -257,7 +257,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function classMethod($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -265,7 +265,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function clone($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -273,7 +273,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function closure($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -281,7 +281,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function closureUse($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -289,7 +289,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function const($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -305,7 +305,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	 // a node statement ouside of a class. NOTE NAME CHANGE!
+	 // a node statement outside of a class. NOTE NAME CHANGE!
 	public function constFetch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -313,7 +313,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function continue($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -321,7 +321,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function declare($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -329,7 +329,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function declareDeclare($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -337,7 +337,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function dNumber($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -345,7 +345,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function do($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -353,7 +353,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function echo($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -361,7 +361,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function else($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -369,7 +369,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function elseIf($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -377,7 +377,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function empty($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -385,7 +385,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function encapsed($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -393,7 +393,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function encapsedStringPart($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -401,7 +401,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function error($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -409,7 +409,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function errorSuppress($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -417,7 +417,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function eval($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -425,7 +425,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function exit($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -433,7 +433,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function expression($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -441,7 +441,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function finally($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -449,7 +449,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function for($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -457,7 +457,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function foreach($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -465,7 +465,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function fullyQualified($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -473,7 +473,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function funcCall($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -481,7 +481,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function function($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -489,7 +489,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function global($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -497,7 +497,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function goto($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -505,7 +505,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function groupUse($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -513,7 +513,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function haltCompiler($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -521,7 +521,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function if($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -529,7 +529,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function include($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -537,7 +537,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function inlineHTML($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -545,7 +545,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function instanceof($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -553,7 +553,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function interface($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -561,7 +561,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function isset($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -569,7 +569,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function label($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -577,7 +577,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function list($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -585,7 +585,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function lNumber($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -593,7 +593,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function magicConst($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -601,7 +601,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function methodCall($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -609,7 +609,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function name($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -617,7 +617,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function namespace($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -625,7 +625,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function new($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -633,7 +633,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function nop($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -641,7 +641,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function postDec($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -649,7 +649,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function postInc($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -657,7 +657,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function preDec($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -665,7 +665,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function preInc($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -673,7 +673,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function print($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -681,7 +681,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function property($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -689,7 +689,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function propertyFetch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -697,7 +697,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function propertyProperty($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -705,7 +705,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function relative($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -713,7 +713,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function return($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -721,7 +721,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function shellExec($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -729,7 +729,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function static($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -737,7 +737,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function staticCall($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -745,7 +745,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function staticPropertyFetch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -753,7 +753,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function staticVar($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -761,7 +761,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function string($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -769,7 +769,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function switch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -777,7 +777,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function ternary($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -785,7 +785,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function throw($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -793,7 +793,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function trait($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -801,7 +801,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function traitUse($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -809,7 +809,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function traitUseAdaptation($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -817,7 +817,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function tryCatch($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -825,7 +825,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function unaryMinus($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -833,7 +833,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function unaryPlus($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -841,7 +841,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function unset($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -849,7 +849,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function use($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -857,7 +857,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function useUse($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -865,7 +865,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function variable($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -873,7 +873,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function while($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -881,7 +881,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function yield($path = ''): self
 	{
 		return $this->traverseIntoClass(
@@ -889,7 +889,7 @@ trait PHPParserClassMap
 			$path
 		);
 	}
-	
+
 	public function yieldFrom($path = ''): self
 	{
 		return $this->traverseIntoClass(
