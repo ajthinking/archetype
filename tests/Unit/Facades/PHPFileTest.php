@@ -18,17 +18,17 @@ describe('#load', function() {
 			base_path('app/Models/User.php')
 		)->assertValidPhp();
 	});
-	
+
 	it('can load files outside default root using an absolute path', function() {
 		PHPFile::load(
 			__DIR__."/../../TestCase.php"
 		)->assertValidPhp();
 	});
-	
+
 	it('can load using namespaced class', function() {
 		PHPFile::load(App\Models\User::class)
 			->assertValidPhp();
-	});	
+	});
 });
 
 describe('#save', function() {
@@ -40,7 +40,7 @@ describe('#save', function() {
 	it('can write to a debug location', function() {
 		PHPFile::load('app/Models/User.php')->debug();
 		assertTrue(is_file(Config::get('archetype.roots.debug.root') . '/app/Models/User.php'));
-	});	
+	});
 });
 
 describe('#directive', function() {
@@ -78,7 +78,7 @@ describe('#directive', function() {
 });
 
 describe('#fromString', function() {
-	it('can instanciate using a php string', function() {
+	it('can instantiate using a php string', function() {
 		PHPFile::fromString('<?php 1337;')
 			->assertValidPhp();
 	});
@@ -86,7 +86,7 @@ describe('#fromString', function() {
 	it('allows missing php tag and end semicolon when testing', function() {
 		PHPFile::fromString('1337')
 			->assertValidPhp();
-	});	
+	});
 
 	it('will interpret content as html if opening php tag is missing', function() {
 		assertInstanceOf(

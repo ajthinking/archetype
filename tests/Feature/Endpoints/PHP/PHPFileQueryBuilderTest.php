@@ -5,7 +5,7 @@ use Archetype\Tests\Support\TestablePHPFileQueryBuilder;
 use Illuminate\Support\Collection;
 use function PHPUnit\Framework\assertInstanceOf;
 
-it('can instanciate via php or laravel file with in method', function() {
+it('can instantiate via php or laravel file with in method', function() {
 	PHPFile::in('app')
 		->assertInstanceOf(TestablePHPFileQueryBuilder::class);
 });
@@ -16,7 +16,7 @@ it('will return a collection on get', function() {
 		PHPFile::in('app')->get()
 	);
 });
-    
+
 it('can filter with in method', function() {
 	PHPFile::in('app/Http/Middleware')->assertMatchCount(8);
 });
@@ -82,12 +82,12 @@ it('can filter with closure', function() {
 		return preg_match('/^.*Kernel$/', $file->extends());
 	})->assertMatchCount(2);
 });
-    
+
 it('can query all files in application root including non classes without extend', function() {
 	PHPFile::where('extends', 'Authenticatable')
 		->assertMatchCount(1);
 });
-    
+
 it('can chain multiple where clauses', function() {
 	PHPFile::where('extends', 'ServiceProvider')
 		->where('methodNames', 'contains', 'boot')
@@ -95,7 +95,7 @@ it('can chain multiple where clauses', function() {
 			return $file->className() === 'AuthServiceProvider';
 		})->assertMatchCount(1);
 });
-    
+
 it('can get first match', function() {
 	PHPFile::in('public')
 		->first()
