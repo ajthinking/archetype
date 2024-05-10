@@ -7,6 +7,7 @@ use Archetype\Support\PSR2PrettyPrinter;
 use PhpParser\Error as PHPParserError;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
+use PhpParser\ParserFactory;
 
 trait HasIO
 {
@@ -88,23 +89,13 @@ trait HasIO
 
     public function parse()
     {
-        $this->lexer = new \PhpParser\Lexer\Emulative([
-            'usedAttributes' => [
-                'comments',
-                'startLine', 'endLine',
-                'startTokenPos', 'endTokenPos',
-            ],
-        ]);
+        $parser = (new ParserFactory)->createForNewestSupportedVersion();
 
-        $parser = new \PhpParser\Parser\Php7($this->lexer);
+        $traverser = new NodeTraverser(new CloningVisitor());
 
-        //$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new CloningVisitor());
-        
         try {
             $this->originalAst = $parser->parse($this->contents());
-            $this->tokens = $this->lexer->getTokens();
+            $this->tokens = $parser->getTokens();
         } catch (PHPParserError $error) {
             // rethrow with extra information
             throw new FileParseError($this->input->absolutePath(), $error);

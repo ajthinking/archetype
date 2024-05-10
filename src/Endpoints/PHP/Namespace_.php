@@ -37,10 +37,7 @@ class Namespace_ extends EndpointProvider
     {
         return $this->file->astQuery()
             ->namespace()
-            ->remember('formatted_namespace', function ($node) {
-                $parts = $node->name->parts ?? null;
-                return $parts ? join('\\', $parts) : null;
-            })
+            ->remember('formatted_namespace', fn ($node) => $node->name)
             ->recall('formatted_namespace')
             ->first();
     }
@@ -53,7 +50,7 @@ class Namespace_ extends EndpointProvider
         
         if ($namespace) {
             // Modifying existing namespace
-            $namespace->name->parts = explode("\\", $newNamespace);
+            $namespace->name->name = $newNamespace;
         } else {
             // Add a namespace
             $ast = $this->file->ast();

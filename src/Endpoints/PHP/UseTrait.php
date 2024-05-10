@@ -31,7 +31,6 @@ class UseTrait extends EndpointProvider
 			->class()
 			->traitUse()
 			->name()
-			->parts
 			->get()
 			->toArray();
 

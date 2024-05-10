@@ -50,8 +50,6 @@ class PHPFile
 
 	protected $tokens;
 
-	protected $lexer;
-
 	protected $directives = [];
 
 	public function __construct(

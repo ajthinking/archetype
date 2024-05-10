@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "nikic/php-parser": "^4.11"
+        "nikic/php-parser": "^5.0"
     },
     "require-dev": {
         "laravel/laravel": "^6.0 || ^7.0 || ^8.0 || ^9.0",
