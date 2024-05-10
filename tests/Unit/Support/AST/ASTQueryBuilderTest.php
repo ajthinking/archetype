@@ -99,7 +99,7 @@ test('resolved where closures with matches are considered truthy', function() {
 	PHPFile::fromString('class Cool extends Ice {}')
 		->astQuery()
 		->class()
-		->where(fn($query) => $query->where('extends->parts', ['Ice'])->get())
+		->where(fn($query) => $query->where('extends->name', 'Ice')->get())
 		->assertMatchCount(1);
 });
 
@@ -107,7 +107,7 @@ test('unresolved where closures with matches are considered truthy', function() 
 	PHPFile::fromString('class Cool extends Ice {}')
 		->astQuery()
 		->class()
-		->where(fn($query) => $query->where('extends->parts', ['Ice']))
+		->where(fn($query) => $query->where('extends->name', 'Ice'))
 		->assertMatchCount(1);
 });
 
