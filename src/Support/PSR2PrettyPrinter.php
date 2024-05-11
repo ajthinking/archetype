@@ -18,13 +18,13 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
     }
 
     // Fix empty line before class definition
-    protected function pStmt_Class(Class_ $node)
+    protected function pStmt_Class(Class_ $node): string
     {
         return $this->pClassCommon($node, ' ' . $node->name);
     }
 
     // Fix empty line before class definition
-    protected function pStmt_ClassMethod(ClassMethod $node)
+    protected function pStmt_ClassMethod(ClassMethod $node): string
     {
         return $this->pAttrGroups($node->attrGroups)
              . $this->pModifiers($node->flags)
@@ -36,7 +36,7 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
                 : ';');
     }
 
-    protected function pExpr_Array(Array_ $node)
+    protected function pExpr_Array(Array_ $node): string
     {
 		$stmts = $this->pCommaSeparatedMultiline($node->items, true);
 		$lineBreaked = $stmts ? $stmts . $this->nl : $stmts;
@@ -48,7 +48,7 @@ class PSR2PrettyPrinter extends StandardPrettyPrinter
      *
      * @param [type] $nodes
      */
-    protected function pClassCommon(Class_ $node, $afterClassToken)
+    protected function pClassCommon(Class_ $node, $afterClassToken): string
     {
         return $this->pModifiers($node->flags)
 			. 'class' . $afterClassToken

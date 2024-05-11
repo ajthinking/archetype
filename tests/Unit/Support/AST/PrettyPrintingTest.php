@@ -26,7 +26,7 @@ class Bird
 CODE;
 
 it('two line breaks separate methods', function() {
-	$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+	$parser = (new ParserFactory)->createForNewestSupportedVersion();
 	$prettyPrinter = new PSR2PrettyPrinter;
 
 	$stmts = $parser->parse(CODE);

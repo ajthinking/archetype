@@ -2,6 +2,7 @@
 
 namespace Archetype\Support\AST;
 
+use PhpParser\Node;
 use PhpParser\NodeFinder;
 
 class ShallowNodeFinder extends NodeFinder
@@ -27,7 +28,7 @@ class ShallowNodeFinder extends NodeFinder
         })->filter()->flatten()->toArray();
     }
 
-    public function findFirstInstanceOf($node, string $class)
+    public function findFirstInstanceOf($node, string $class): ?Node
     {
         return collect($this->findInstanceOf($node, $class))->first();
     }

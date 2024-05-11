@@ -37,9 +37,7 @@ class Implements_ extends EndpointProvider
             ->class()
             ->implements
             ->get()
-            ->map(function ($name) {
-                return implode('\\', $name->parts);
-            })->toArray();
+            ->map(fn ($node) => $node->name)->toArray();
     }
 
     protected function set($newImplements)

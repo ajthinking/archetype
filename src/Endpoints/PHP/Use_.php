@@ -44,7 +44,7 @@ class Use_ extends EndpointProvider
             ->uses
             ->get()
             ->map(function ($useStatement) {
-                $base = join('\\', $useStatement->name->parts);
+                $base = $useStatement->name;
                 return $base . ($useStatement->alias ? ' as ' . $useStatement->alias : '');
             })->toArray();
     }
