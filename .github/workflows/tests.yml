@@ -44,9 +44,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Composer (macOS)
-        if: startsWith(runner.os, 'macOS')
-        run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
+          coverage: none
+          ini-values: "memory_limit=-1"
+          tools: composer
 
       - name: Determine composer cache directory
         id: determine-composer-cache-directory
@@ -58,14 +63,6 @@ jobs:
           path: ${{ steps.determine-composer-cache-directory.outputs.directory }}
           key: dependencies-os-${{ matrix.os }}-php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: dependencies-os-${{ matrix.os }}-php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-composer-
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
-          coverage: none
-          ini-values: "memory_limit=-1"
 
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
