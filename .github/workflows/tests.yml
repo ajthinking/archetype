@@ -55,6 +55,15 @@ jobs:
           key: composer-${{ matrix.os }}-php${{ matrix.php }}-laravel${{ matrix.laravel }}-${{ hashFiles('composer.json') }}
           restore-keys: composer-${{ matrix.os }}-php${{ matrix.php }}-laravel${{ matrix.laravel }}-
 
+      - name: Allow installing EOL Laravel branches
+        # Laravel 10 and 11 are past security support, so every release in those
+        # branches carries an open advisory and Composer 2.9+ declines to install
+        # them at all. This is a compatibility matrix rather than a deployment,
+        # and plenty of applications are still on those versions, so we want to
+        # know whether Archetype works there. Laravel 12 installs unmodified.
+        if: matrix.laravel != '12.*'
+        run: composer config policy.advisories.block false
+
       - name: Install dependencies
         run: |
           composer require --dev --no-update --no-interaction \
