@@ -233,7 +233,3 @@ MIT
 
 ## Like this package?
 <a href="https://github.com/ajthinking/archetype/stargazers" >Star it :star: </a>
-
-[Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
-
-[Github Sponsors :octocat::heart:](https://github.com/sponsors/ajthinking)
