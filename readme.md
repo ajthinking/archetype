@@ -21,7 +21,7 @@ That's it! Check out introduction of concepts below or review the [API examples]
 
 | Archetype | PHP     | Laravel  | php-parser |
 | --------- | ------- | -------- | ---------- |
-| 2.x       | 8.1–8.4 | 10, 11, 12 | ^5.0     |
+| 2.x       | 8.1–8.4 | 10, 11, 12, 13 | ^5.0 |
 | 1.x       | 7.4–8.1 | 6–9      | ^4.11      |
 
 > **On 1.x?** Upgrade to 2.x. Version 1 pins `nikic/php-parser` to `^4.11`, which

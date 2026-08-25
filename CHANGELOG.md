@@ -12,8 +12,9 @@ Maintenance only. No API changes, and nothing here can break existing usage.
 
 ### Added
 
-- Support for PHP 8.2, 8.3 and 8.4, and for Laravel 10, 11 and 12 — now verified
-  in CI across ten combinations rather than assumed.
+- Support for PHP 8.1 through 8.4, and for Laravel 10, 11, 12 and 13 — now
+  verified in CI across twelve combinations rather than assumed. Laravel 13 is
+  included because `statamic/cms` 6 already allows it.
 - A `php` requirement (`^8.1`) in `composer.json`. The package never declared
   one, so Composer could not warn anybody. 8.1 is the floor the code actually
   needs and the whole range CI exercises; the upper bound is deliberate, because

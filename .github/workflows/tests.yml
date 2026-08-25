@@ -24,6 +24,10 @@ jobs:
           - { php: '8.2', laravel: '12.*', testbench: '10.*', os: ubuntu-latest }
           - { php: '8.3', laravel: '12.*', testbench: '10.*', os: ubuntu-latest }
           - { php: '8.4', laravel: '12.*', testbench: '10.*', os: ubuntu-latest }
+          # Laravel 13 (testbench 11, PHP 8.3+). statamic/cms 6 allows ^13.0,
+          # so this is a version real downstream users are already on.
+          - { php: '8.3', laravel: '13.*', testbench: '11.*', os: ubuntu-latest }
+          - { php: '8.4', laravel: '13.*', testbench: '11.*', os: ubuntu-latest }
           # Keep an eye on the other host we claim to work on
           - { php: '8.4', laravel: '12.*', testbench: '10.*', os: macos-latest }
 
