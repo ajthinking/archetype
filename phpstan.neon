@@ -3,5 +3,9 @@ parameters:
 	paths:
 		- src
 		- tests
+	excludePaths:
+		# A pinned copy of a Laravel application skeleton, used as test input.
+		# It is data for the parser, not code we maintain.
+		- tests/fixtures/*
 	ignoreErrors:
 		- '#Dummy not found#'

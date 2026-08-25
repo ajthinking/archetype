@@ -59,8 +59,8 @@ return [
         'class_root' => '',
 
         // Laravel
-        'commands_root' => 'app/HTTP/Controllers',
-        'controllers_root' => 'app/HTTP/Controllers',
+        'commands_root' => 'app/Console/Commands',
+        'controllers_root' => 'app/Http/Controllers',
         'factories_root' => 'database/factories',
         'migrations_root' => 'database/migrations',
         'models_root' => 'app/Models',

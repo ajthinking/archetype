@@ -17,14 +17,13 @@
         }
     ],
     "require": {
+        "php": ">=7.4",
         "nikic/php-parser": "^5.0"
     },
     "require-dev": {
-        "laravel/laravel": "^6.0 || ^7.0 || ^8.0 || ^9.0",
-        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
-        "pestphp/pest": "^1.21",
-        "phpstan/phpstan": "^1.6",
-        "phpunit/phpunit": "^8.0 || ^9.5"
+        "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
+        "pestphp/pest": "^2.0 || ^3.0",
+        "phpstan/phpstan": "^1.11 || ^2.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -44,15 +43,30 @@
     },
     "autoload": {
         "psr-4": {
-            "Archetype\\": "src/",
-            "Archetype\\Tests\\": "tests/"
-        }
+            "Archetype\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "src/snippets/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
-        }
+            "Archetype\\Tests\\": "tests/",
+            "App\\": "tests/fixtures/laravel/app/"
+        },
+        "files": [
+            "tests/stubs/laravel-sanctum.php"
+        ],
+        "exclude-from-classmap": [
+            "tests/fixtures/laravel/database/",
+            "tests/fixtures/laravel/public/",
+            "tests/stubs/"
+        ]
     },
-    "minimum-stability": "dev",
+    "scripts": {
+        "test": "pest",
+        "analyse": "phpstan analyse"
+    },
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

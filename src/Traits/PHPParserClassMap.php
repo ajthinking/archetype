@@ -90,7 +90,8 @@ trait PHPParserClassMap
 		'string' => \PhpParser\Node\Scalar\String_::class,
 		'switch' => \PhpParser\Node\Stmt\Switch_::class,
 		'ternary' => \PhpParser\Node\Expr\Ternary::class,
-		'throw' => \PhpParser\Node\Stmt\Throw_::class,
+		// php-parser 5 dropped Stmt\Throw_; throw is only ever an expression now.
+		'throw' => \PhpParser\Node\Expr\Throw_::class,
 		'trait' => \PhpParser\Node\Stmt\Trait_::class,
 		'traitUse' => \PhpParser\Node\Stmt\TraitUse::class,
 		'traitUseAdaptation' => \PhpParser\Node\Stmt\TraitUseAdaptation::class,

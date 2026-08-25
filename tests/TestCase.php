@@ -43,11 +43,20 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function setupLaravelDirectories()
     {
-        File::ensureDirectoryExists(base_path('vendor/ajthinking/archetype/src/snippets'));
-        File::copyDirectory(base_path('./../../../../src/snippets/'), base_path('vendor/ajthinking/archetype/src/snippets'));
+        $package = dirname(__DIR__);
+        $fixtures = __DIR__.'/fixtures/laravel';
 
-        collect(['app', 'database/migrations','public'])->each(function ($path) {
-            File::copyDirectory(base_path('./../../../../vendor/laravel/laravel/' . $path), base_path($path));
+        File::ensureDirectoryExists(base_path('vendor/ajthinking/archetype/src/snippets'));
+        File::copyDirectory($package.'/src/snippets', base_path('vendor/ajthinking/archetype/src/snippets'));
+
+        // The suite asserts on exact file counts and on the contents of the
+        // application skeleton. Testbench ships its own skeleton, and Laravel
+        // reshapes it every major version, so replace it wholesale with the
+        // pinned fixture app to keep those assertions meaningful.
+        File::deleteDirectory(base_path('app'));
+
+        collect(['app', 'database/migrations', 'public'])->each(function ($path) use ($fixtures) {
+            File::copyDirectory($fixtures.'/'.$path, base_path($path));
         });
     }
 

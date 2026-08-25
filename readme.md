@@ -2,7 +2,7 @@
 
 ### Enabling Rapid-Application-Development-tools, PR-bots, code analyzers and other things
 
-![tests](https://github.com/ajthinking/archetype/workflows/tests/badge.svg)
+[![tests](https://github.com/ajthinking/archetype/actions/workflows/tests.yml/badge.svg)](https://github.com/ajthinking/archetype/actions/workflows/tests.yml)
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
 [![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/archetype.svg)](https://packagist.org/packages/ajthinking/archetype)
 
@@ -16,6 +16,18 @@ composer require ajthinking/archetype
 > 
 
 That's it! Check out introduction of concepts below or review the [API examples](docs.md)
+
+## Supported versions
+
+| Archetype | PHP     | Laravel  | php-parser |
+| --------- | ------- | -------- | ---------- |
+| 2.x       | 8.1–8.4 | 10, 11, 12 | ^5.0     |
+| 1.x       | 7.4–8.1 | 6–9      | ^4.11      |
+
+> **On 1.x?** Upgrade to 2.x. Version 1 pins `nikic/php-parser` to `^4.11`, which
+> cannot be installed alongside anything that needs php-parser 5 — Pest 3 and
+> newer included. If Composer refuses to resolve `ajthinking/archetype`, that is
+> why. The 1.x → 2.x upgrade requires no changes to your own code.
  
 ## `PHPFile` read/write API
 
