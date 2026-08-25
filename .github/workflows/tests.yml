@@ -1,105 +1,95 @@
 name: tests
 
-on: [push, pull_request]
-
-env:
-  COMPOSER_FLAGS: "--ansi --no-interaction --no-progress --no-suggest --prefer-dist -o -n"
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  laravel-tests:
+  tests:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, 8.0]
-        laravel-version: [6, 7, 8]
-        os: [ubuntu-latest]
-        experimental: [false]
-        dependencies: [locked]
         include:
-          - php-version: 7.4
-            laravel-version: 8
-            dependencies: highest
-            os: ubuntu-latest
-            experimental: false
+          # Laravel 10 (testbench 8)
+          - { php: '8.1', laravel: '10.*', testbench: '8.*', os: ubuntu-latest }
+          - { php: '8.2', laravel: '10.*', testbench: '8.*', os: ubuntu-latest }
+          - { php: '8.3', laravel: '10.*', testbench: '8.*', os: ubuntu-latest }
+          # Laravel 11 (testbench 9)
+          - { php: '8.2', laravel: '11.*', testbench: '9.*', os: ubuntu-latest }
+          - { php: '8.3', laravel: '11.*', testbench: '9.*', os: ubuntu-latest }
+          - { php: '8.4', laravel: '11.*', testbench: '9.*', os: ubuntu-latest }
+          # Laravel 12 (testbench 10)
+          - { php: '8.2', laravel: '12.*', testbench: '10.*', os: ubuntu-latest }
+          - { php: '8.3', laravel: '12.*', testbench: '10.*', os: ubuntu-latest }
+          - { php: '8.4', laravel: '12.*', testbench: '10.*', os: ubuntu-latest }
+          # Laravel 13 (testbench 11, PHP 8.3+). statamic/cms 6 allows ^13.0,
+          # so this is a version real downstream users are already on.
+          - { php: '8.3', laravel: '13.*', testbench: '11.*', os: ubuntu-latest }
+          - { php: '8.4', laravel: '13.*', testbench: '11.*', os: ubuntu-latest }
+          # Keep an eye on the other host we claim to work on
+          - { php: '8.4', laravel: '12.*', testbench: '10.*', os: macos-latest }
 
-          # - php-version: 7.4
-          #   laravel-version: 8
-          #   os: windows-latest
-          #   dependencies: locked
-          #   experimental: false
-
-          - php-version: 7.4
-            laravel-version: 8
-            os: macos-latest
-            dependencies: locked
-            experimental: false
-
-    name: PHP ${{ matrix.php-version }} - L${{ matrix.laravel-version }} - ${{ matrix.os }} - ${{ matrix.dependencies }}
+    name: PHP ${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
 
-    continue-on-error: ${{ matrix.experimental }}
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
           coverage: none
-          ini-values: "memory_limit=-1"
-          tools: composer
+          ini-values: memory_limit=-1, error_reporting=E_ALL
+          tools: composer:v2
 
       - name: Determine composer cache directory
-        id: determine-composer-cache-directory
-        run: 'echo "::set-output name=directory::$(composer config cache-dir)"'
+        id: composer-cache
+        run: echo "directory=$(composer config cache-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
-          path: ${{ steps.determine-composer-cache-directory.outputs.directory }}
-          key: dependencies-os-${{ matrix.os }}-php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: dependencies-os-${{ matrix.os }}-php-${{ matrix.php-version }}-laravel-${{ matrix.laravel-version }}-composer-
+          path: ${{ steps.composer-cache.outputs.directory }}
+          key: composer-${{ matrix.os }}-php${{ matrix.php }}-laravel${{ matrix.laravel }}-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ matrix.os }}-php${{ matrix.php }}-laravel${{ matrix.laravel }}-
 
-      - name: Setup problem matchers for PHP
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+      - name: Allow installing EOL Laravel branches
+        # Laravel 10 and 11 are past security support, so every release in those
+        # branches carries an open advisory and Composer 2.9+ declines to install
+        # them at all. This is a compatibility matrix rather than a deployment,
+        # and plenty of applications are still on those versions, so we want to
+        # know whether Archetype works there. Laravel 12 installs unmodified.
+        if: matrix.laravel != '12.*'
+        run: composer config policy.advisories.block false
 
-      - name: Setup problem matchers for PHPUnit
-        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Install highest dependencies from composer.json
-        if: matrix.dependencies == 'highest'
-        uses: nick-invision/retry@v1
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer config platform --unset && composer update ${{ env.COMPOSER_FLAGS }}
-
-      - name: Install lowest dependencies from composer.json
-        if: matrix.dependencies == 'lowest'
-        uses: nick-invision/retry@v1
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer install ${{ env.COMPOSER_FLAGS }} --prefer-lowest
-
-      - name: Install dependencies from composer.lock
-        if: matrix.dependencies == 'locked'
-        uses: nick-invision/retry@v1
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer install ${{ env.COMPOSER_FLAGS }}
-
-      - name: Select Laravel version
-        uses: nick-invision/retry@v1
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer require "laravel/framework:${{ matrix.laravel-version }}.*" --no-update
+      - name: Install dependencies
+        run: |
+          composer require --dev --no-update --no-interaction \
+            "laravel/framework:${{ matrix.laravel }}" \
+            "orchestra/testbench:${{ matrix.testbench }}"
+          composer update --prefer-dist --no-interaction --no-progress
 
       - name: Run tests
-        run: vendor/bin/pest --verbose
+        run: vendor/bin/pest
+
+  static-analysis:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+
+      - run: composer update --prefer-dist --no-interaction --no-progress
+
+      - run: vendor/bin/phpstan analyse --no-progress

@@ -6,5 +6,6 @@ sketches/
 .vscode/
 vendor/
 .phpunit.result.cache
+.phpunit.cache/
 logs
 composer.lock

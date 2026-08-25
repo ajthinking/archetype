@@ -30,7 +30,7 @@ class FileInput implements InputInterface
         return $this;
     }
 
-    public function load(string $location = null)
+    public function load(?string $location = null)
     {
         $this->extractPathProperties($location);
 

@@ -59,6 +59,15 @@ it('can query beyond an array', function() {
 		->assertMatchCount(1);
 });
 
+it('can query throw expressions', function() {
+	// php-parser 5 removed Stmt\Throw_ in favour of Expr\Throw_, so the short
+	// name has to resolve to the expression node.
+	PHPFile::fromString('throw new Exception("nope");')
+		->astQuery()
+		->throw()
+		->assertMatchCount(1);
+});
+
 it('can traverse into property when result is an array', function() {
 	PHPFile::fromString('1;2;')->astQuery() // Two(!) Expression:s
 		->expr
@@ -73,7 +82,7 @@ it('can query beyond an array using in a where closure', function() {
 		->assertMatchCount(1);
 });
 
-context('when searching method chains', function() {
+describe('when searching method chains', function() {
 	it('will match all methodCalls by default', function() {
 		PHPFile::fromString('$lets->go()->go()->go()')
 			->astQuery()

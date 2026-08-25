@@ -13,7 +13,7 @@ abstract class EndpointProvider
 
     protected $directives;
     
-    public function __construct(PHPFile $file = null)
+    public function __construct(?PHPFile $file = null)
     {
         $this->file = $file;
 

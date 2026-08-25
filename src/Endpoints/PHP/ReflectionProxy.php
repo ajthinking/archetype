@@ -4,7 +4,7 @@ namespace Archetype\Endpoints\PHP;
 
 use Archetype\Endpoints\EndpointProvider;
 use ReflectionClass;
-use Exception;
+use Throwable;
 
 class ReflectionProxy extends EndpointProvider
 {
@@ -20,7 +20,11 @@ class ReflectionProxy extends EndpointProvider
 
         try {
             return $class ? new ReflectionClass($class) : null;
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
+            // Autoloading the class can fail outright rather than just miss —
+            // a missing parent class or trait raises an Error, not an Exception.
+            // A file we cannot reflect on is one we skip, never one that kills
+            // the whole query.
             return null;
         }
     }

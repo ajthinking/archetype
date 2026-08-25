@@ -2,7 +2,7 @@
 
 ### Enabling Rapid-Application-Development-tools, PR-bots, code analyzers and other things
 
-![tests](https://github.com/ajthinking/archetype/workflows/tests/badge.svg)
+[![tests](https://github.com/ajthinking/archetype/actions/workflows/tests.yml/badge.svg)](https://github.com/ajthinking/archetype/actions/workflows/tests.yml)
 ![version](https://img.shields.io/packagist/v/ajthinking/archetype?color=blue)
 [![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/archetype.svg)](https://packagist.org/packages/ajthinking/archetype)
 
@@ -16,6 +16,18 @@ composer require ajthinking/archetype
 > 
 
 That's it! Check out introduction of concepts below or review the [API examples](docs.md)
+
+## Supported versions
+
+| Archetype | PHP     | Laravel  | php-parser |
+| --------- | ------- | -------- | ---------- |
+| 2.x       | 8.1–8.4 | 10, 11, 12, 13 | ^5.0 |
+| 1.x       | 7.4–8.1 | 6–9      | ^4.11      |
+
+> **On 1.x?** Upgrade to 2.x. Version 1 pins `nikic/php-parser` to `^4.11`, which
+> cannot be installed alongside anything that needs php-parser 5 — Pest 3 and
+> newer included. If Composer refuses to resolve `ajthinking/archetype`, that is
+> why. The 1.x → 2.x upgrade requires no changes to your own code.
  
 ## `PHPFile` read/write API
 
@@ -194,10 +206,10 @@ To see *all* offending files run `php artisan archetype:errors`. To ignore files
 php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
 
-## Requirmenst
+## Requirements
 * UNIX filesystem
-* PHP >= 7.4
-* Laravel >= 7
+* PHP >= 8.1
+* Laravel >= 10
 
 ## Contributing
 PRs and issues are welcome :pray: Feel free to take a stab at an [incomplete test](https://github.com/ajthinking/archetype/search?q=%24this-%3EmarkTestIncomplete).
@@ -221,7 +233,3 @@ MIT
 
 ## Like this package?
 <a href="https://github.com/ajthinking/archetype/stargazers" >Star it :star: </a>
-
-[Say hi: @ajthinking :gem:](https://twitter.com/ajthinking)
-
-[Github Sponsors :octocat::heart:](https://github.com/sponsors/ajthinking)

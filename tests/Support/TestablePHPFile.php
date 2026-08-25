@@ -32,7 +32,7 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
-	public function assertExtends(string $expected = null)
+	public function assertExtends(?string $expected = null)
 	{
 		assertEquals($expected, $this->extends());
 
@@ -58,21 +58,21 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
-	public function assertImplements(array $expected = null)
+	public function assertImplements(?array $expected = null)
 	{
 		assertEquals($expected, $this->implements());
 
 		return $this;
 	}
 
-	public function assertClassName(string $name = null)
+	public function assertClassName(?string $name = null)
 	{
 		assertEquals($name, $this->className());
 
 		return $this;
 	}
 
-	public function assertMethodNames(array $expected = null)
+	public function assertMethodNames(?array $expected = null)
 	{
 		assertEquals($expected, $this->methodNames());
 
@@ -137,14 +137,14 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
-	public function assertUse(array $expected = null)
+	public function assertUse(?array $expected = null)
 	{
 		assertEquals($expected, $this->use());
 
 		return $this;
 	}
 
-	public function assertUseTrait(array $expected = null)
+	public function assertUseTrait(?array $expected = null)
 	{
 		assertEquals($expected, $this->useTrait());
 
@@ -183,7 +183,7 @@ class TestablePHPFile extends PHPFile
 		return $this;
 	}
 
-	public function assertNamespace(string $expected = null)
+	public function assertNamespace(?string $expected = null)
 	{
 		assertEquals($expected, $this->namespace());
 

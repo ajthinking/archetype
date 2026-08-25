@@ -123,7 +123,7 @@ class PHPFile
 		return $handler->useTrait($value);
 	}
 
-	public function namespace(string $value = null)
+	public function namespace(?string $value = null)
 	{
 		$handler = new Namespace_($this);
 		return $handler->namespace($value);

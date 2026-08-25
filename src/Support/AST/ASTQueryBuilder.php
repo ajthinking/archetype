@@ -72,7 +72,7 @@ class ASTQueryBuilder
         throw new Exception("Could not find a property $property in the ASTQueryBuilder!");
     }
 
-    public function traverseIntoClass($expectedClass, string $path = null): self
+    public function traverseIntoClass($expectedClass, ?string $path = null): self
     {
 		$steps = $path ? collect(explode('->', $path)) : collect();
 

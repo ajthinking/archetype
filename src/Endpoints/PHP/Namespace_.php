@@ -20,7 +20,7 @@ class Namespace_ extends EndpointProvider
      * @param string $value
      * @return mixed
      */
-    public function namespace(string $value = null)
+    public function namespace(?string $value = null)
     {
         if ($this->file->directive('remove')) {
             return $this->remove();

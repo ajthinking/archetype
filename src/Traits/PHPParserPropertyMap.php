@@ -4,7 +4,7 @@ namespace Archetype\Traits;
 
 trait PHPParserPropertyMap
 {
-    public function propertyMap(string $property = null)
+    public function propertyMap(?string $property = null)
     {
         $map = [
             'expr',
