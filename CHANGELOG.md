@@ -14,8 +14,11 @@ Maintenance only. No API changes, and nothing here can break existing usage.
 
 - Support for PHP 8.2, 8.3 and 8.4, and for Laravel 10, 11 and 12 — now verified
   in CI across ten combinations rather than assumed.
-- A `php` requirement (`>=7.4`) in `composer.json`. The package never declared
-  one, so Composer could not warn anybody.
+- A `php` requirement (`^8.1`) in `composer.json`. The package never declared
+  one, so Composer could not warn anybody. 8.1 is the floor the code actually
+  needs and the whole range CI exercises; the upper bound is deliberate, because
+  PHP 9 removes dynamic properties and the AST node-identity mechanism still
+  relies on them.
 - `LICENSE.md`. The package has always been MIT; the file was missing.
 - This changelog.
 - `.github/dependabot.yml`, so dependency updates are configured rather than
@@ -37,7 +40,7 @@ Maintenance only. No API changes, and nothing here can break existing usage.
 
 ### Fixed
 
-- Six implicit-nullable parameters that raised deprecation notices on PHP 8.4
+- Seven implicit-nullable parameters that raised deprecation notices on PHP 8.4
   (`PHPFile::namespace()`, `Namespace_::namespace()`, `FileInput::load()`,
   `InputInterface::load()`, `EndpointProvider::__construct()`,
   `PHPParserPropertyMap::propertyMap()` and `ASTQueryBuilder::traverseIntoClass()`).

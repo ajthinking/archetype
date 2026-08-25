@@ -206,10 +206,10 @@ To see *all* offending files run `php artisan archetype:errors`. To ignore files
 php artisan vendor:publish --provider="Archetype\ServiceProvider"
 ```
 
-## Requirmenst
+## Requirements
 * UNIX filesystem
-* PHP >= 7.4
-* Laravel >= 7
+* PHP >= 8.1
+* Laravel >= 10
 
 ## Contributing
 PRs and issues are welcome :pray: Feel free to take a stab at an [incomplete test](https://github.com/ajthinking/archetype/search?q=%24this-%3EmarkTestIncomplete).
