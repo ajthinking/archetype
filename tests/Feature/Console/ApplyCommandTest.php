@@ -15,9 +15,9 @@ function script(string $contents): string
 it('runs several operations in one call', function () {
     $result = Console::run('archetype:apply '.script(<<<'TXT'
         # everything this change needs, in one call
-        add-to-property app/Models/User.php fillable nickname
-        set-casts app/Models/User.php is_admin=boolean
-        add-relation app/Models/User.php hasMany Post
+        fillable app/Models/User.php nickname --add
+        casts app/Models/User.php '{"is_admin":"boolean"}' --add
+        hasMany app/Models/User.php Post
         TXT));
 
     expect($result->succeeded())->toBeTrue();
@@ -30,16 +30,16 @@ it('runs several operations in one call', function () {
 });
 
 it('accepts operations written with the prefix', function () {
-    $result = Console::run('archetype:apply '.script('archetype:add-to-property app/Models/User.php fillable nickname'));
+    $result = Console::run('archetype:apply '.script('archetype:fillable app/Models/User.php nickname --add'));
 
     expect($result->succeeded())->toBeTrue();
-    expect($result->output)->toContain('OK app/Models/User.php $fillable +1');
+    expect($result->output)->toContain('OK app/Models/User.php $fillable added to');
 });
 
 it('reports a failing operation and keeps going', function () {
     $result = Console::run('archetype:apply '.script(<<<'TXT'
-        add-to-property app/Models/Nope.php fillable slug
-        add-to-property app/Models/User.php fillable nickname
+        fillable app/Models/Nope.php slug --add
+        fillable app/Models/User.php nickname --add
         TXT));
 
     expect($result->succeeded())->toBeFalse();
@@ -49,8 +49,8 @@ it('reports a failing operation and keeps going', function () {
 
 it('stops at the first failure when asked', function () {
     $result = Console::run('archetype:apply '.script(<<<'TXT'
-        add-to-property app/Models/Nope.php fillable slug
-        add-to-property app/Models/User.php fillable nickname
+        fillable app/Models/Nope.php slug --add
+        fillable app/Models/User.php nickname --add
         TXT).' --stop-on-failure');
 
     expect($result->succeeded())->toBeFalse();
@@ -60,13 +60,13 @@ it('stops at the first failure when asked', function () {
 
 it('reports each operation as json', function () {
     $payload = Console::run('archetype:apply '.script(<<<'TXT'
-        add-to-property app/Models/User.php fillable nickname
-        set-casts app/Models/User.php is_admin=boolean
+        fillable app/Models/User.php nickname --add
+        casts app/Models/User.php '{"is_admin":"boolean"}' --add
         TXT).' --json')->json();
 
     expect($payload['ok'])->toBeTrue();
     expect($payload['ran'])->toBe(2);
-    expect($payload['results'][0]['operation'])->toBe('add-to-property app/Models/User.php fillable nickname');
+    expect($payload['results'][0]['operation'])->toBe('fillable app/Models/User.php nickname --add');
     expect(json_decode($payload['results'][0]['output'], true)['changed'])->toBe(1);
 });
 

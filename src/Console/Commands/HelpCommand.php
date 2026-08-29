@@ -29,15 +29,21 @@ class HelpCommand extends ArchetypeCommand
         $this->emit('answer with a diff, skip work already done, and exit non-zero if they');
         $this->emit('could not do what was asked.');
 
+        $describe = fn (array $operations, string $kind) => collect($operations)
+            ->map(fn ($operation, $name) => [
+                'operation' => $name,
+                'usage' => $operation[0],
+                'description' => $operation[1],
+                'kind' => $kind,
+            ])
+            ->values()
+            ->all();
+
         $this->payload = [
-            'operations' => collect(Manifest::OPERATIONS)
-                ->map(fn ($operation, $name) => [
-                    'operation' => $name,
-                    'usage' => $operation[1],
-                    'description' => $operation[2],
-                ])
-                ->values()
-                ->all(),
+            'operations' => array_merge(
+                $describe(Manifest::ENDPOINTS, 'endpoint'),
+                $describe(Manifest::ADDITIONS, 'console')
+            ),
         ];
 
         return self::SUCCESS;

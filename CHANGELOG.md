@@ -13,17 +13,26 @@ printer and no query builder changes. Everything new lives in `src/Console`.
 
 ### Added
 
-- **A command line.** 26 operations, each an Artisan command under `archetype:`,
+- **A command line.** Each operation is an Artisan command under `archetype:`,
   plus an `archetype` binary that finds the application and forwards to it. Run
   `archetype` with no arguments for the list, or see the
   [reference](docs.md#command-line-reference).
 
-  Reading: `inspect`, `show`, `find`, `errors`.
-  Writing: `make`, `set-property`, `add-to-property`, `empty-property`,
-  `remove-property`, `set-casts`, `add-relation`, `set-array-key`, `add-use`,
-  `remove-use`, `add-trait`, `add-implements`, `set-extends`, `set-namespace`,
-  `rename-class`, `set-const`, `remove-const`, `add-case`, `add-method`,
-  `replace-method`, `remove-method`, `apply`.
+- **An operation named after an endpoint is that endpoint.** Same arguments, same
+  directives as flags, same result — `archetype property <target> fillable
+  nickname --add` is `$file->add()->property('fillable', 'nickname')`. Give a
+  value and it writes, give none and it reads. Endpoint commands: `property`,
+  `className`, `extends`, `implements`, `namespace`, `use`, `useTrait`,
+  `classConstant`, `methodNames`, `make`, the ten `LaravelFile` model properties
+  (`fillable`, `hidden`, `visible`, `guarded`, `unguarded`, `casts`, `dates`,
+  `table`, `connection`, `timestamps`) and the four relationships (`hasOne`,
+  `hasMany`, `belongsTo`, `belongsToMany`).
+
+- **Operations with names of their own, which have no PHP equivalent**:
+  `inspect`, `show`, `find`, `set-array-key`, `add-case`, `add-method`,
+  `replace-method`, `remove-method`, `apply`, and the seven relationship types
+  `LaravelFile` does not cover (`hasOneThrough`, `hasManyThrough`, `morphOne`,
+  `morphMany`, `morphTo`, `morphToMany`, `morphedByMany`).
 
 - Every operation takes a single target, which is a path, a class name, or a
   directory — where a directory means every class beneath it, narrowed with
@@ -36,25 +45,22 @@ printer and no query builder changes. Everything new lives in `src/Console`.
 - Every mutation answers with a diff of what it changed, and takes `--dry-run`
   to show that diff without writing.
 - An operation that cannot act on the construct it was pointed at refuses before
-  writing anything, rather than writing the part it can. `add-implements`,
-  `add-trait` and `set-extends` import a name before using it, so a half-done
-  change would otherwise look like a whole one.
+  writing anything, rather than writing the part it can. `implements`,
+  `useTrait` and `extends` import a name before using it, so a half-done change
+  would otherwise look like a whole one.
 - `archetype apply` runs a script of operations in one invocation, reading a file
   or standard input.
-- `set-casts` writes to whichever casting mechanism a model already uses — the
-  `casts()` method Laravel 11 generates, or the `$casts` property — instead of
-  adding a second one beside the first.
 - `set-array-key` edits the array a method returns, which is where `rules()`,
   `toArray()`, `casts()` and `definition()` keep their contents.
-- `add-relation` covers all eleven Eloquent relation types, with pivot tables,
-  explicit keys, `withPivot`, `withTimestamps` and a custom pivot model.
+- `archetype casts` refuses to write `$casts` on a model that declares the
+  `casts()` method Laravel 11 generates, rather than leaving it with two casting
+  mechanisms, and points at `set-array-key` instead.
 
 ### Known limits
 
-- The property, constant, interface, trait, parent-class and rename operations
-  work on classes only, because the endpoints they drive address `class`
-  declarations. On an enum, interface or trait they refuse and write nothing.
-  `inspect`, `show`, `find`, the method operations, `add-case` and
+- The endpoints address `class` declarations, so the endpoint-named operations
+  work on classes only. On an enum, interface or trait they refuse and write
+  nothing. `inspect`, `show`, `find`, the method operations, `add-case` and
   `set-array-key` have no such limit.
 
 ## [2.0.1] - 2026-08-25

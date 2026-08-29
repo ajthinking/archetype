@@ -2,10 +2,16 @@
 
 use Archetype\Tests\Support\Console;
 
-it('adds imports', function () {
-    $result = Console::run('archetype:add-use', [
+it('reads the import statements', function () {
+    expect(Console::run('archetype:use app/Models/User.php')->output)
+        ->toContain('Illuminate\\\\Notifications\\\\Notifiable');
+});
+
+it('adds imports with --add', function () {
+    $result = Console::run('archetype:use', [
         'target' => 'app/Models/User.php',
-        'imports' => ['App\Contracts\Auditable', 'Illuminate\Support\Str'],
+        'names' => ['App\Contracts\Auditable', 'Illuminate\Support\Str'],
+        '--add' => true,
     ]);
 
     expect($result->lines()[0])->toBe('OK app/Models/User.php import +2');
@@ -14,28 +20,39 @@ it('adds imports', function () {
         ->toContain('use Illuminate\Support\Str;');
 });
 
-it('skips imports already there', function () {
-    $result = Console::run('archetype:add-use', [
+it('replaces the imports without --add, as the endpoint does', function () {
+    Console::run('archetype:use', [
         'target' => 'app/Models/User.php',
-        'imports' => ['Illuminate\Notifications\Notifiable'],
+        'names' => ['App\Contracts\Auditable'],
+    ]);
+
+    $source = Console::read('app/Models/User.php');
+
+    expect($source)->toContain('use App\Contracts\Auditable;');
+    // The trait use line also says Notifiable, so name the import exactly.
+    expect($source)->not->toContain('use Illuminate\Notifications\Notifiable;');
+});
+
+it('skips imports already there', function () {
+    $result = Console::run('archetype:use', [
+        'target' => 'app/Models/User.php',
+        'names' => ['Illuminate\Notifications\Notifiable'],
+        '--add' => true,
     ]);
 
     expect($result->lines())->toBe(['SKIP app/Models/User.php imports unchanged']);
 });
 
-it('removes imports', function () {
-    Console::run('archetype:remove-use', [
-        'target' => 'app/Models/User.php',
-        'imports' => ['Illuminate\Contracts\Auth\MustVerifyEmail'],
-    ]);
-
-    expect(Console::read('app/Models/User.php'))->not->toContain('MustVerifyEmail');
+it('reads the traits a class uses', function () {
+    expect(Console::run('archetype:useTrait app/Models/User.php')->output)
+        ->toBe('["HasApiTokens","HasFactory","Notifiable"]');
 });
 
 it('uses a trait and imports it in one step', function () {
-    Console::run('archetype:add-trait', [
+    Console::run('archetype:useTrait', [
         'target' => 'app/Models/User.php',
-        'traits' => ['Illuminate\Database\Eloquent\SoftDeletes'],
+        'names' => ['Illuminate\Database\Eloquent\SoftDeletes'],
+        '--add' => true,
     ]);
 
     expect(Console::read('app/Models/User.php'))
@@ -43,20 +60,38 @@ it('uses a trait and imports it in one step', function () {
         ->toContain('use SoftDeletes;');
 });
 
-it('implements an interface and imports it in one step', function () {
-    Console::run('archetype:add-implements', [
+it('leaves the import alone when told to', function () {
+    Console::run('archetype:useTrait', [
         'target' => 'app/Models/User.php',
-        'interfaces' => ['Illuminate\Contracts\Auth\MustVerifyEmail'],
+        'names' => ['Illuminate\Database\Eloquent\SoftDeletes'],
+        '--add' => true,
+        '--no-import' => true,
+    ]);
+
+    expect(Console::read('app/Models/User.php'))
+        ->toContain('use SoftDeletes;')
+        ->not->toContain('use Illuminate\Database\Eloquent\SoftDeletes;');
+});
+
+it('reads and adds interfaces', function () {
+    expect(Console::run('archetype:implements app/Models/User.php')->output)->toBe('[]');
+
+    Console::run('archetype:implements', [
+        'target' => 'app/Models/User.php',
+        'names' => ['Illuminate\Contracts\Auth\MustVerifyEmail'],
+        '--add' => true,
     ]);
 
     expect(Console::read('app/Models/User.php'))
         ->toContain('class User extends Authenticatable implements MustVerifyEmail');
 });
 
-it('sets the parent class', function () {
-    Console::run('archetype:set-extends', [
+it('reads and sets the parent class', function () {
+    expect(Console::run('archetype:extends app/Models/User.php')->output)->toBe('Authenticatable');
+
+    Console::run('archetype:extends', [
         'target' => 'app/Models/User.php',
-        'parent' => 'Illuminate\Database\Eloquent\Model',
+        'name' => 'Illuminate\Database\Eloquent\Model',
     ]);
 
     expect(Console::read('app/Models/User.php'))
@@ -65,77 +100,78 @@ it('sets the parent class', function () {
 });
 
 it('skips a parent class already set', function () {
-    $result = Console::run('archetype:set-extends app/Models/User.php Authenticatable');
-
-    expect($result->lines())->toBe(['SKIP app/Models/User.php extends unchanged']);
+    expect(Console::run('archetype:extends app/Models/User.php Authenticatable')->lines())
+        ->toBe(['SKIP app/Models/User.php extends unchanged']);
 });
 
-it('sets the namespace', function () {
-    Console::run('archetype:set-namespace', [
+it('reads, sets and removes the namespace', function () {
+    expect(Console::run('archetype:namespace app/Models/User.php')->output)->toBe('App\Models');
+
+    Console::run('archetype:namespace', [
         'target' => 'app/Models/User.php',
-        'namespace' => 'App\Domain\Models',
+        'value' => 'App\Domain\Models',
     ]);
 
     expect(Console::read('app/Models/User.php'))->toContain('namespace App\Domain\Models;');
+
+    Console::run('archetype:namespace app/Models/User.php --remove');
+
+    expect(Console::read('app/Models/User.php'))->not->toContain('namespace');
 });
 
-it('renames the class', function () {
-    Console::run('archetype:rename-class app/Models/User.php Account');
+it('reads and sets the class name', function () {
+    expect(Console::run('archetype:className app/Models/User.php')->output)->toBe('User');
+
+    Console::run('archetype:className app/Models/User.php Account');
 
     expect(Console::read('app/Models/User.php'))->toContain('class Account extends Authenticatable');
 });
 
-it('refuses to rename an enum', function () {
-    Console::write('app/Enums/Status.php', <<<'PHP'
+it('answers with the full class name when asked', function () {
+    expect(Console::run('archetype:className app/Models/User.php --full')->output)
+        ->toBe('App\Models\User');
+});
+
+it('lists the method names', function () {
+    Console::write('app/Models/Project.php', <<<'PHP'
         <?php
 
-        namespace App\Enums;
+        namespace App\Models;
 
-        enum Status: string
+        use Illuminate\Database\Eloquent\Model;
+
+        class Project extends Model
         {
-            case Active = 'active';
+            public function tasks()
+            {
+                return $this->hasMany(Task::class);
+            }
+
+            public function isActive()
+            {
+                return true;
+            }
         }
         PHP);
 
-    $result = Console::run('archetype:rename-class app/Enums/Status.php ProjectStatus');
-
-    expect($result->succeeded())->toBeFalse();
-    expect($result->output)->toContain('only works on classes, and this is an enum');
-    expect(Console::read('app/Enums/Status.php'))->toContain('enum Status: string');
+    expect(Console::run('archetype:methodNames app/Models/Project.php')->output)
+        ->toBe('["tasks","isActive"]');
 });
 
-it('sets and removes a class constant', function () {
-    Console::run('archetype:set-const app/Models/User.php HOME /dashboard');
+it('reads, sets and removes a class constant', function () {
+    Console::run('archetype:classConstant app/Models/User.php HOME /dashboard');
 
     expect(Console::read('app/Models/User.php'))->toContain("const HOME = '/dashboard';");
+    expect(Console::run('archetype:classConstant app/Models/User.php HOME')->output)->toBe('/dashboard');
 
-    Console::run('archetype:remove-const app/Models/User.php HOME');
+    Console::run('archetype:classConstant app/Models/User.php HOME --remove');
 
     expect(Console::read('app/Models/User.php'))->not->toContain('HOME');
 });
 
-it('refuses to set a constant on an interface', function () {
-    Console::write('app/Contracts/Payable.php', <<<'PHP'
-        <?php
+it('skips a constant already set to that value', function () {
+    Console::run('archetype:classConstant app/Models/User.php HOME /dashboard');
 
-        namespace App\Contracts;
-
-        interface Payable
-        {
-            public function pay(): void;
-        }
-        PHP);
-
-    $result = Console::run('archetype:set-const app/Contracts/Payable.php CURRENCY EUR');
-
-    expect($result->succeeded())->toBeFalse();
-    expect($result->output)->toContain('only works on classes, and this is an interface');
-    expect(Console::read('app/Contracts/Payable.php'))->not->toContain('CURRENCY');
-});
-
-it('skips a constant already set', function () {
-    Console::run('archetype:set-const app/Models/User.php HOME /dashboard');
-    $again = Console::run('archetype:set-const app/Models/User.php HOME /dashboard');
-
-    expect($again->lines())->toBe(['SKIP app/Models/User.php HOME unchanged']);
+    expect(Console::run('archetype:classConstant app/Models/User.php HOME /dashboard')->lines())
+        ->toBe(['SKIP app/Models/User.php HOME unchanged']);
 });

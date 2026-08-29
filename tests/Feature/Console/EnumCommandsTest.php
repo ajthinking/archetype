@@ -75,12 +75,13 @@ it('refuses to add an interface to an enum, and writes nothing at all', function
     // The implements endpoint addresses classes, so this cannot be done here.
     // What matters is that it is refused before the import is written: half a
     // change that reports success is worse than no change at all.
-    $result = Console::run('archetype:add-implements', [
+    $result = Console::run('archetype:implements', [
         'target' => 'app/Enums/ProjectStatus.php',
-        'interfaces' => ['App\Contracts\HasColor'],
+        'names' => ['App\Contracts\HasColor'],
+        '--add' => true,
     ]);
 
     expect($result->succeeded())->toBeFalse();
-    expect($result->output)->toContain('archetype:add-implements only works on classes, and this is an enum');
+    expect($result->output)->toContain('archetype:implements only works on classes, and this is an enum');
     expect(Console::read('app/Enums/ProjectStatus.php'))->not->toContain('HasColor');
 });

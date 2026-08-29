@@ -199,33 +199,59 @@ $file->astQuery()
 
 ## Command line
 
-Everything above is also a command. Each operation is an Artisan command under
+The same API, from a terminal. Each operation is an Artisan command under
 `archetype:`, and the `archetype` binary is a shorthand that finds your
 application and forwards to it:
 
 ```bash
-./vendor/bin/archetype inspect app/Models/User.php
+./vendor/bin/archetype fillable app/Models/User.php
 # is the same as
-php artisan archetype:inspect app/Models/User.php
+php artisan archetype:fillable app/Models/User.php
 ```
 
-Run `archetype` with no arguments for the full list. There are 26 operations;
-these are the shape of them:
+**A command named after an endpoint is that endpoint.** It takes the same
+arguments, honours the same directives as flags, and returns what the PHP call
+returns. There is one vocabulary, not two:
+
+```php
+$file->property('table');                              // read
+$file->property('table', 'gdpr_users');                // write
+$file->add()->property('fillable', 'nickname');        // directive
+$file->remove()->property('table');
+```
 
 ```bash
-# read
-archetype inspect app/Models/User.php               # structure, without method bodies
-archetype inspect app/Models/User.php props methods # only the parts you want
-archetype show app/Http/Requests/StoreTask.php rules
-archetype find app --type=models --uses-trait=SoftDeletes
+archetype property app/Models/User.php table
+archetype property app/Models/User.php table gdpr_users
+archetype property app/Models/User.php fillable nickname --add
+archetype property app/Models/User.php table --remove
+```
 
-# write
-archetype add-to-property app/Models/User.php fillable nickname
-archetype set-casts app/Models/User.php archived_at=datetime status=Status::class
-archetype add-relation app/Models/Project.php belongsToMany Label --table=label_project --with-timestamps
+Give a value and it writes; give none and it reads. So the endpoints you already
+know are already commands:
+
+```bash
+archetype className     app/Models/User.php
+archetype fillable      app/Models/User.php nickname --add
+archetype casts         app/Models/User.php '{"archived_at":"datetime"}' --add
+archetype useTrait      app/Models/User.php 'Illuminate\Database\Eloquent\SoftDeletes' --add
+archetype implements    app/Models/User.php 'App\Contracts\Auditable' --add
+archetype extends       app/Models/User.php 'Illuminate\Database\Eloquent\Model'
+archetype classConstant app/Models/User.php HOME /dashboard
+archetype hasMany       app/Models/Project.php Task
+archetype belongsToMany app/Models/Project.php Label --table=label_project
+```
+
+Run `archetype` with no arguments for the whole list. It prints in two halves,
+and the split is the naming rule: everything above the line is an endpoint,
+everything below it has no PHP equivalent and is the console's own.
+
+```bash
+archetype inspect app/Models/User.php               # structure, without method bodies
+archetype show    app/Http/Requests/StoreTask.php rules
+archetype find    app --type=models --uses-trait=SoftDeletes
 archetype set-array-key app/Http/Requests/StoreTask.php rules due_at 'nullable|date'
-archetype add-case app/Enums/Status.php OnHold on_hold
-archetype add-method app/Models/User.php --code='public function scopeActive($q) { return $q->where("active", true); }'
+archetype add-case      app/Enums/Status.php OnHold on_hold
 ```
 
 The full reference is in [docs.md](docs.md#command-line-reference).
@@ -235,9 +261,9 @@ The full reference is in [docs.md](docs.md#command-line-reference).
 Every operation takes one target, which is a path, a class name, or a directory:
 
 ```bash
-archetype add-trait app/Models/User.php Auditable   # one file
-archetype add-trait 'App\Models\User' Auditable     # the same file
-archetype add-trait app/Models Auditable            # every class under app/Models
+archetype useTrait app/Models/User.php Auditable --add   # one file
+archetype useTrait 'App\Models\User' Auditable --add     # the same file
+archetype useTrait app/Models Auditable --add            # every class under app/Models
 ```
 
 A directory target can be narrowed with `--extends`, `--implements`,
@@ -246,8 +272,8 @@ A directory target can be narrowed with `--extends`, `--implements`,
 ### What a mutation answers with
 
 ```bash
-$ archetype add-to-property app/Models/User.php fillable nickname
-OK app/Models/User.php $fillable +1
+$ archetype fillable app/Models/User.php nickname --add
+OK app/Models/User.php $fillable added to
 @@ 24 @@
 +         'nickname',
       ];
@@ -270,10 +296,10 @@ machine-readable answer instead.
 
 ```bash
 archetype apply <<'EOF'
-add-to-property app/Models/Project.php fillable budget_cents
-set-casts app/Models/Project.php budget_cents=integer
-add-relation app/Models/Project.php hasMany Task
-add-implements app/Models/Project.php 'App\Contracts\Auditable'
+fillable    app/Models/Project.php budget_cents --add
+casts       app/Models/Project.php '{"budget_cents":"integer"}' --add
+hasMany     app/Models/Project.php Task
+implements  app/Models/Project.php 'App\Contracts\Auditable' --add
 EOF
 ```
 

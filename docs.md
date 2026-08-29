@@ -169,9 +169,35 @@ Every operation is an Artisan command named `archetype:<operation>`. The
 application's `artisan` file and forwards to it, so these are the same call:
 
 ```bash
-./vendor/bin/archetype inspect app/Models/User.php
-php artisan archetype:inspect app/Models/User.php
+./vendor/bin/archetype fillable app/Models/User.php
+php artisan archetype:fillable app/Models/User.php
 ```
+
+### The naming rule
+
+`archetype` prints its operations in two halves, and the split is the rule:
+
+* **An operation named after a `PHPFile` or `LaravelFile` endpoint is that
+  endpoint.** Same arguments, same directives — as flags — same result. Give a
+  value and it writes; give none and it reads.
+* **An operation with a name of its own has no PHP equivalent** and belongs to
+  the console alone.
+
+Nothing is renamed on the way through. If you know the PHP API you already know
+the commands.
+
+| PHP | Command |
+|---|---|
+| `$file->property('table')` | `archetype property <target> table` |
+| `$file->property('table', 'gdpr_users')` | `archetype property <target> table gdpr_users` |
+| `$file->add()->property('fillable', 'nickname')` | `archetype property <target> fillable nickname --add` |
+| `$file->remove()->property('table')` | `archetype property <target> table --remove` |
+| `$file->empty()->property('fillable')` | `archetype property <target> fillable --empty` |
+| `$file->private()->property('key', 'v')` | `archetype property <target> key v --private` |
+| `$file->className()` | `archetype className <target>` |
+| `$file->full()->className()` | `archetype className <target> --full` |
+| `$file->add()->use([...])` | `archetype use <target> ... --add` |
+| `$file->hasMany('Task')` | `archetype hasMany <target> Task` |
 
 ### Targets
 
@@ -194,20 +220,17 @@ A directory target can be narrowed:
 
 These options are rejected on a single-file target rather than ignored.
 
-### Options every operation takes
+### Options
 
-| Option | Effect |
-|---|---|
-| `--json` | Emit JSON instead of the compact line format |
+| Option | Effect | On |
+|---|---|---|
+| `--json` | Emit JSON instead of the compact line format | every operation but `errors` |
+| `--dry-run` | Show the diff without writing | every mutation |
+| `--no-diff` | Suppress the diff | every mutation |
 
-`errors` predates this console and does not take it.
-
-### Options every mutation takes
-
-| Option | Effect |
-|---|---|
-| `--dry-run` | Show the diff without writing |
-| `--no-diff` | Suppress the diff |
+Directive flags — `--add`, `--remove`, `--empty`, `--clear`, `--full`,
+`--public`, `--protected`, `--private`, `--static` — appear only on the
+operations whose endpoint honours them.
 
 ### Exit codes and statuses
 
@@ -221,11 +244,95 @@ These options are rejected on a single-file target rather than ignored.
 A mutation that matches nothing reports `ERR`, never `OK`. That is what makes it
 safe not to read the file back.
 
-### Reading
+### Reading an endpoint
 
-#### Summarise a file
+With no value, an endpoint command answers with its value. A single file answers
+with the value alone, so it can be piped; a directory answers with one
+`path value` line per file.
+
+```bash
+$ archetype fillable app/Models/User.php
+["name","email","password"]
+
+$ archetype table app/Models/User.php
+gdpr_users
+
+$ archetype className app/Models/User.php --full
+App\Models\User
+
+$ archetype fillable app/Models
+app/Models/User.php ["name","email","password"]
+app/Models/Project.php ["name"]
+```
+
+Scalars print raw; arrays and objects print as compact JSON. `--json` gives the
+typed value.
+
+### The endpoints
+
+```bash
+# PHPFile
+archetype property      <target> <name> [<value>]   # --add --remove --empty --clear --public --protected --private --static
+archetype className     <target> [<NewName>]        # --full
+archetype extends       <target> [<Class>]
+archetype implements    <target> [<Interface>...]   # --add
+archetype namespace     <target> [<Namespace>]      # --remove
+archetype use           <target> [<FQCN>...]        # --add
+archetype useTrait      <target> [<Trait>...]       # --add
+archetype classConstant <target> <NAME> [<value>]   # --add --remove --empty --clear
+archetype methodNames   <target>
+archetype make          <name>                      # --file --extends= --implements= --trait= --force
+archetype errors
+
+# LaravelFile model properties
+archetype fillable   <target> [<value>]             # --add --remove --empty --clear
+archetype hidden     <target> [<value>]
+archetype visible    <target> [<value>]
+archetype guarded    <target> [<value>]
+archetype unguarded  <target> [<value>]
+archetype casts      <target> [<value>]
+archetype dates      <target> [<value>]
+archetype table      <target> [<value>]
+archetype connection <target> [<value>]
+archetype timestamps <target> [<value>]
+
+# LaravelFile relationships
+archetype hasOne        <target> <Related>
+archetype hasMany       <target> <Related>
+archetype belongsTo     <target> <Related>
+archetype belongsToMany <target> <Related>
+```
+
+Without `--add`, `use`, `useTrait` and `implements` replace the list wholesale,
+exactly as the endpoints do. With it they append.
+
+`useTrait`, `implements` and `extends` add the import when given a fully
+qualified name, because a name used without one is never valid PHP.
+`--no-import` leaves that to you.
+
+With nothing but a related class, the four relationship commands call the
+endpoint, so `archetype hasMany <target> Task` and `$file->hasMany('Task')`
+produce byte-identical output. Given options the endpoint cannot express, the
+method is generated instead:
+
+```bash
+archetype belongsTo     <target> User --name=owner --foreign-key=owner_id
+archetype belongsToMany <target> Label --table=label_project --with-pivot=sort,note --with-timestamps
+archetype hasMany       <target> Task --foreign-key=project_id --local-key=uuid
+```
+
+`archetype casts` writes the `$casts` property. On a model that declares the
+`casts()` method Laravel 11 generates, it refuses rather than leaving the model
+with two casting mechanisms, and points at `set-array-key` instead.
+
+### The console's own operations
+
+These have no PHP equivalent.
+
+#### inspect — structure, without method bodies
 ```bash
 archetype inspect app/Models/User.php
+archetype inspect app/Models/User.php props relations
 ```
 ```
 app/Models/User.php
@@ -233,26 +340,21 @@ class App\Models\User extends Authenticatable
 uses HasApiTokens, HasFactory, Notifiable
 import Illuminate\Foundation\Auth\User as Authenticatable
 prop protected $fillable = ["name","email","password"]
-prop protected $casts = {"email_verified_at":"datetime"}
 fn public posts() [4 lines]
 rel posts hasMany Post
 ```
 
-Limit it to the sections you need — `meta`, `traits`, `uses`, `consts`, `cases`,
-`props`, `methods`, `relations`:
+Sections: `meta`, `traits`, `uses`, `consts`, `cases`, `props`, `methods`,
+`relations`.
 
-```bash
-archetype inspect app/Models/User.php props relations
-```
-
-#### Print one method
+#### show — the source of one method
 ```bash
 archetype show app/Http/Requests/StoreTaskRequest.php rules
 ```
 
 `inspect` deliberately leaves method bodies out; this is how you get one.
 
-#### Find files
+#### find — which files are there, and what they are
 ```bash
 archetype find app
 archetype find app --type=models
@@ -266,71 +368,13 @@ The class types use reflection, so they only see classes the application can
 autoload; the other filters read the syntax tree and work on anything that
 parses.
 
-#### List files that do not parse
-```bash
-archetype errors
-```
-
-### Creating
-
-```bash
-archetype make 'App\Services\Billing'
-archetype make app/Services/Billing.php
-archetype make 'App\Models\Invoice' \
-    --extends='Illuminate\Database\Eloquent\Model' \
-    --implements='App\Contracts\Payable' \
-    --trait='Illuminate\Database\Eloquent\Factories\HasFactory'
-archetype make app/helpers.php --file
-```
-
-Refuses to overwrite an existing file unless given `--force`.
-
-### Properties
-
-```bash
-archetype set-property app/Models/User.php table gdpr_users
-archetype set-property app/Models/User.php with '["profile","posts"]'
-archetype set-property app/Models/User.php perPage 25 --visibility=public
-archetype set-property app/Models/User.php connection          # no default value
-
-archetype add-to-property app/Models/User.php fillable nickname avatar
-archetype empty-property app/Models/User.php fillable
-archetype remove-property app/Models/User.php hidden
-```
-
-Values are read as JSON when they are valid JSON, and as a plain string
-otherwise. Visibility is left as it is unless `--visibility` says otherwise.
-
-### Eloquent
-
-```bash
-archetype set-casts app/Models/User.php archived_at=datetime status=Status::class
-
-archetype add-relation app/Models/Project.php hasMany Task
-archetype add-relation app/Models/Project.php belongsTo User --name=owner --foreign-key=owner_id
-archetype add-relation app/Models/Project.php belongsToMany Label \
-    --table=label_project --with-pivot=sort,note --with-timestamps
-archetype add-relation app/Models/Project.php morphMany Comment --morph-name=commentable
-archetype add-relation app/Models/Project.php hasManyThrough Comment --through=Task
-```
-
-`set-casts` writes to whichever mechanism the model already uses — the `casts()`
-method Laravel 11 generates, or the `$casts` property — rather than adding a
-second one beside it.
-
-`add-relation` covers all eleven relation types: `hasOne`, `hasMany`,
-`belongsTo`, `belongsToMany`, `hasOneThrough`, `hasManyThrough`, `morphOne`,
-`morphMany`, `morphTo`, `morphToMany`, `morphedByMany`. The related class is
-imported when it needs to be.
-
-### Arrays returned from methods
-
+#### set-array-key — the array a method returns
 ```bash
 archetype set-array-key app/Http/Requests/StoreTaskRequest.php rules due_at 'nullable|date'
 archetype set-array-key app/Http/Resources/TaskResource.php toArray budget '$this->budget_cents'
+archetype set-array-key app/Models/Project.php casts archived boolean
 archetype set-array-key app/Http/Requests/StoreTaskRequest.php rules tags "['array', 'max:5']"
 archetype set-array-key app/Http/Requests/StoreTaskRequest.php rules title --remove
-archetype set-array-key app/Providers/AppServiceProvider.php policies ignored Policy::class --append
 ```
 
 This reaches `rules()`, `toArray()`, `casts()`, `definition()` and everything
@@ -341,38 +385,15 @@ A bare word is a string, so `nullable|date` is a validation rule rather than a
 bitwise or. Brackets, quotes, `$variables`, calls, `Class::constants`, numbers
 and booleans are read as PHP.
 
-### Structure
-
+#### add-case — an enum case
 ```bash
-archetype add-use app/Models/User.php 'App\Contracts\Auditable' 'Illuminate\Support\Str'
-archetype remove-use app/Models/User.php 'Illuminate\Support\Str'
-archetype add-trait app/Models/User.php 'Illuminate\Database\Eloquent\SoftDeletes'
-archetype add-implements app/Models/User.php 'App\Contracts\Auditable'
-archetype set-extends app/Models/User.php 'Illuminate\Database\Eloquent\Model'
-archetype set-namespace app/Models/User.php 'App\Domain\Models'
-archetype rename-class app/Models/User.php Account
-```
-
-`add-trait`, `add-implements` and `set-extends` add the import too, since a name
-used without one is never valid PHP.
-
-`rename-class` renames the declaration only. It does not move the file or update
-references elsewhere.
-
-### Constants and enum cases
-
-```bash
-archetype set-const app/Models/User.php HOME /dashboard
-archetype remove-const app/Models/User.php HOME
-
 archetype add-case app/Enums/ProjectStatus.php OnHold on_hold
 archetype add-case app/Enums/Suit.php Spades          # pure enum, no backing value
 ```
 
-New enum cases are added after the ones already there.
+New cases are added after the ones already there.
 
-### Methods
-
+#### The method operations
 ```bash
 archetype add-method app/Models/Project.php \
     --code='public function scopeActive($query) { return $query->where("active", true); }'
@@ -384,25 +405,18 @@ archetype remove-method app/Models/Project.php isActive
 Methods can be added to a class, enum, interface or trait, and are appended
 after the methods already there.
 
-### What the console will not do
-
-`set-property`, `add-to-property`, `empty-property`, `remove-property`,
-`set-casts`, `set-const`, `remove-const`, `add-implements`, `add-trait`,
-`set-extends` and `rename-class` work on classes only. On an enum, interface or
-trait they refuse and write nothing, rather than writing the part they can and
-reporting success:
-
-```
-$ archetype add-implements app/Enums/Status.php 'App\Contracts\HasColor'
-ERR app/Enums/Status.php archetype:add-implements only works on classes, and this is an enum
+#### The relations the endpoints do not have
+```bash
+archetype hasOneThrough  <target> <Related> --through=Task
+archetype hasManyThrough <target> <Related> --through=Task
+archetype morphOne       <target> <Related> --morph-name=commentable
+archetype morphMany      <target> <Related> --morph-name=commentable
+archetype morphTo        <target>           [--morph-name=commentable]
+archetype morphToMany    <target> <Related> --morph-name=taggable
+archetype morphedByMany  <target> <Related> --morph-name=taggable
 ```
 
-`inspect`, `show`, `find`, `add-method`, `replace-method`, `remove-method`,
-`add-case` and `set-array-key` have no such limit — they read or write the
-declaration whatever it is.
-
-### Several operations in one call
-
+#### apply — several operations in one call
 ```bash
 archetype apply operations.txt
 archetype apply < operations.txt
@@ -412,23 +426,41 @@ One operation per line, `#` for comments, the `archetype:` prefix optional:
 
 ```text
 # what this change needs
-add-to-property app/Models/Project.php fillable budget_cents
-set-casts app/Models/Project.php budget_cents=integer
-add-relation app/Models/Project.php hasMany Task
+fillable   app/Models/Project.php budget_cents --add
+casts      app/Models/Project.php '{"budget_cents":"integer"}' --add
+hasMany    app/Models/Project.php Task
 ```
 
 Each operation keeps its own verification, diff and exit status. `apply` exits
 non-zero if any of them failed, and `--stop-on-failure` stops at the first.
 
+### What the console will not do
+
+The endpoints address `class` declarations, so `property`, the model
+properties, `classConstant`, `implements`, `useTrait`, `extends`, `className`
+and the relationships work on classes only. On an enum, interface or trait they
+refuse and write nothing, rather than writing the part they can and reporting
+success:
+
+```
+$ archetype implements app/Enums/Status.php 'App\Contracts\HasColor' --add
+ERR app/Enums/Status.php archetype:implements only works on classes, and this is an enum
+```
+
+`inspect`, `show`, `find`, the method operations, `add-case` and `set-array-key`
+have no such limit — they read or write the declaration whatever it is.
+
 ### JSON
 
-Every operation takes `--json`:
+Every operation but `errors` takes `--json`:
 
 ```bash
-archetype add-to-property app/Models/User.php fillable nickname --json
+archetype fillable app/Models/User.php nickname --add --json
 ```
 ```json
-{"ok":true,"dryRun":false,"changed":1,"skipped":0,"failed":0,"results":[{"file":"app/Models/User.php","status":"changed","detail":"$fillable +1","diff":"@@ 24 @@\n+         'nickname',\n      ];"}]}
+{"ok":true,"dryRun":false,"changed":1,"skipped":0,"failed":0,"results":[{"file":"app/Models/User.php","status":"changed","detail":"$fillable added to","diff":"@@ 24 @@\n+         'nickname',\n      ];"}]}
 ```
 
-An error answers with `{"ok":false,"error":"..."}` and exit code 1.
+A read answers with `{"file":"...","value":...}`, or `{"values":{...},"count":n}`
+for a directory. An error answers with `{"ok":false,"error":"..."}` and exit
+code 1.

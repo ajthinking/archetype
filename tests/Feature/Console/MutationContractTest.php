@@ -3,23 +3,23 @@
 use Archetype\Tests\Support\Console;
 
 it('answers with a diff of what it changed', function () {
-    $result = Console::run('archetype:add-to-property app/Models/User.php fillable nickname');
+    $result = Console::run('archetype:fillable app/Models/User.php nickname --add');
 
     expect($result->succeeded())->toBeTrue();
-    expect($result->lines()[0])->toBe('OK app/Models/User.php $fillable +1');
+    expect($result->lines()[0])->toBe('OK app/Models/User.php $fillable added to');
     expect($result->output)->toContain('@@ ');
     expect($result->output)->toContain("+         'nickname',");
 });
 
 it('suppresses the diff when asked', function () {
-    $result = Console::run('archetype:add-to-property app/Models/User.php fillable nickname --no-diff');
+    $result = Console::run('archetype:fillable app/Models/User.php nickname --add --no-diff');
 
-    expect($result->lines())->toBe(['OK app/Models/User.php $fillable +1']);
+    expect($result->lines())->toBe(['OK app/Models/User.php $fillable added to']);
 });
 
 it('skips work already done instead of failing', function () {
-    $first = Console::run('archetype:add-to-property app/Models/User.php fillable nickname');
-    $second = Console::run('archetype:add-to-property app/Models/User.php fillable nickname');
+    $first = Console::run('archetype:fillable app/Models/User.php nickname --add');
+    $second = Console::run('archetype:fillable app/Models/User.php nickname --add');
 
     expect($first->succeeded())->toBeTrue();
     expect($second->succeeded())->toBeTrue();
@@ -28,10 +28,10 @@ it('skips work already done instead of failing', function () {
 
 it('writes nothing on a dry run', function () {
     $before = Console::read('app/Models/User.php');
-    $result = Console::run('archetype:add-to-property app/Models/User.php fillable nickname --dry-run');
+    $result = Console::run('archetype:fillable app/Models/User.php nickname --add --dry-run');
 
     expect($result->succeeded())->toBeTrue();
-    expect($result->lines()[0])->toBe('DRY app/Models/User.php $fillable +1');
+    expect($result->lines()[0])->toBe('DRY app/Models/User.php $fillable added to');
     expect($result->output)->toContain("+         'nickname',");
     expect(Console::read('app/Models/User.php'))->toBe($before);
 });
@@ -40,7 +40,7 @@ it('exits non-zero when there is nothing it could act on', function () {
     Console::write('app/helpers.php', "<?php\n\nfunction thing()\n{\n    return 1;\n}\n");
 
     // There is no class here to rename, so this must not report OK.
-    $result = Console::run('archetype:rename-class app/helpers.php Thing');
+    $result = Console::run('archetype:className app/helpers.php Thing');
 
     expect($result->succeeded())->toBeFalse();
     expect($result->output)->toContain('only works on classes, and this is a file');
@@ -59,10 +59,10 @@ it('refuses a change the construct cannot take, before writing any of it', funct
         }
         PHP);
 
-    $result = Console::run('archetype:set-property app/Enums/Status.php table users');
+    $result = Console::run('archetype:property app/Enums/Status.php table users');
 
     expect($result->succeeded())->toBeFalse();
-    expect($result->output)->toContain('archetype:set-property only works on classes, and this is an enum');
+    expect($result->output)->toContain('archetype:property only works on classes, and this is an enum');
     expect(Console::read('app/Enums/Status.php'))->not->toContain('table');
 });
 
@@ -70,9 +70,10 @@ it('applies one change across a whole directory', function () {
     Console::write('app/Models/Project.php', modelSource('Project'));
     Console::write('app/Models/Task.php', modelSource('Task'));
 
-    $result = Console::run('archetype:add-trait', [
+    $result = Console::run('archetype:useTrait', [
         'target' => 'app/Models',
-        'traits' => ['Illuminate\Database\Eloquent\SoftDeletes'],
+        'names' => ['Illuminate\Database\Eloquent\SoftDeletes'],
+        '--add' => true,
     ]);
 
     expect($result->succeeded())->toBeTrue();
@@ -84,7 +85,7 @@ it('applies one change across a whole directory', function () {
 it('narrows a directory change with a filter', function () {
     Console::write('app/Models/Project.php', modelSource('Project'));
 
-    $result = Console::run('archetype:add-to-property app/Models fillable slug --extends=Model');
+    $result = Console::run('archetype:fillable app/Models slug --add --extends=Model');
 
     expect($result->succeeded())->toBeTrue();
     expect(Console::read('app/Models/Project.php'))->toContain("'slug'");
@@ -92,14 +93,14 @@ it('narrows a directory change with a filter', function () {
 });
 
 it('refuses a filter when the target is a single file', function () {
-    $result = Console::run('archetype:add-to-property app/Models/User.php fillable slug --extends=Model');
+    $result = Console::run('archetype:fillable app/Models/User.php slug --add --extends=Model');
 
     expect($result->succeeded())->toBeFalse();
     expect($result->output)->toContain('--extends only applies when the target is a directory');
 });
 
 it('reports a mutation as json', function () {
-    $payload = Console::run('archetype:add-to-property app/Models/User.php fillable nickname --json')->json();
+    $payload = Console::run('archetype:fillable app/Models/User.php nickname --add --json')->json();
 
     expect($payload['ok'])->toBeTrue();
     expect($payload['changed'])->toBe(1);
@@ -109,7 +110,7 @@ it('reports a mutation as json', function () {
 });
 
 it('fails on a target that does not exist', function () {
-    $result = Console::run('archetype:add-to-property app/Models/Nope.php fillable slug');
+    $result = Console::run('archetype:fillable app/Models/Nope.php slug --add');
 
     expect($result->succeeded())->toBeFalse();
     expect($result->output)->toStartWith('ERR app/Models/Nope.php');
