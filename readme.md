@@ -8,6 +8,7 @@
 
 * Programatically modify php files with an intuitive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
+* Do the same from a terminal — or from an AI agent — with the [`archetype` command line](#command-line)
 
 ## Getting started
 ```bash
@@ -194,6 +195,112 @@ $file->astQuery()
     ->commit() // updates the file's AST
     ->end() // exit query
     ->save() 
+```
+
+## Command line
+
+The same API, from a terminal. Each operation is an Artisan command under
+`archetype:`, and the `archetype` binary is a shorthand that finds your
+application and forwards to it:
+
+```bash
+./vendor/bin/archetype fillable app/Models/User.php
+# is the same as
+php artisan archetype:fillable app/Models/User.php
+```
+
+**A command named after an endpoint is that endpoint.** It takes the same
+arguments, honours the same directives as flags, and returns what the PHP call
+returns. There is one vocabulary, not two:
+
+```php
+$file->property('table');                              // read
+$file->property('table', 'gdpr_users');                // write
+$file->add()->property('fillable', 'nickname');        // directive
+$file->remove()->property('table');
+```
+
+```bash
+archetype property app/Models/User.php table
+archetype property app/Models/User.php table gdpr_users
+archetype property app/Models/User.php fillable nickname --add
+archetype property app/Models/User.php table --remove
+```
+
+Give a value and it writes; give none and it reads. So the endpoints you already
+know are already commands:
+
+```bash
+archetype className     app/Models/User.php
+archetype fillable      app/Models/User.php nickname --add
+archetype casts         app/Models/User.php '{"archived_at":"datetime"}' --add
+archetype useTrait      app/Models/User.php 'Illuminate\Database\Eloquent\SoftDeletes' --add
+archetype implements    app/Models/User.php 'App\Contracts\Auditable' --add
+archetype extends       app/Models/User.php 'Illuminate\Database\Eloquent\Model'
+archetype classConstant app/Models/User.php HOME /dashboard
+archetype hasMany       app/Models/Project.php Task
+archetype belongsToMany app/Models/Project.php Label --table=label_project
+```
+
+Run `archetype` with no arguments for the whole list. It prints in two halves,
+and the split is the naming rule: everything above the line is an endpoint,
+everything below it has no PHP equivalent and is the console's own.
+
+```bash
+archetype inspect app/Models/User.php               # structure, without method bodies
+archetype show    app/Http/Requests/StoreTask.php rules
+archetype find    app --type=models --uses-trait=SoftDeletes
+archetype set-array-key app/Http/Requests/StoreTask.php rules due_at 'nullable|date'
+archetype add-case      app/Enums/Status.php OnHold on_hold
+```
+
+The full reference is in [docs.md](docs.md#command-line-reference).
+
+### What a target is
+
+Every operation takes one target, which is a path, a class name, or a directory:
+
+```bash
+archetype useTrait app/Models/User.php Auditable --add   # one file
+archetype useTrait 'App\Models\User' Auditable --add     # the same file
+archetype useTrait app/Models Auditable --add            # every class under app/Models
+```
+
+A directory target can be narrowed with `--extends`, `--implements`,
+`--uses-trait` and `--matching`.
+
+### What a mutation answers with
+
+```bash
+$ archetype fillable app/Models/User.php nickname --add
+OK app/Models/User.php $fillable added to
+@@ 24 @@
++         'nickname',
+      ];
+```
+
+Three rules hold for every operation that writes:
+
+* it re-renders the file and compares, so a change that matched nothing is an
+  error and exits non-zero — never a success that wrote nothing, and never half
+  a change reported as a whole one;
+* it answers with a diff, so you do not have to read the file back to see what
+  happened;
+* a change already applied is `SKIP`, not `OK` and not an error, so operations
+  are safe to repeat.
+
+`--dry-run` shows the same diff without writing. `--json` gives every operation a
+machine-readable answer instead.
+
+### Several changes in one call
+
+```bash
+archetype apply <<'EOF'
+fillable    app/Models/Project.php budget_cents --add
+casts       app/Models/Project.php '{"budget_cents":"integer"}' --add
+hasMany     app/Models/Project.php Task
+implements  app/Models/Project.php 'App\Contracts\Auditable' --add
+EOF
 ```
 
 ## Errors 😵

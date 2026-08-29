@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * The `archetype` entry point.
+ *
+ * Everything of substance is an Artisan command under `archetype:*`; this walks
+ * up from the working directory to find the application's `artisan` file and
+ * forwards to it, so `archetype inspect app/Models/User.php` and
+ * `php artisan archetype:inspect app/Models/User.php` are the same call.
+ */
+
+$directory = getcwd();
+
+while (! is_file($directory.'/artisan')) {
+    $parent = dirname($directory);
+
+    if ($parent === $directory) {
+        fwrite(STDERR, 'ERR could not find a Laravel artisan file at or above '.getcwd().PHP_EOL);
+        exit(1);
+    }
+
+    $directory = $parent;
+}
+
+$arguments = array_slice($argv, 1);
+$operation = $arguments[0] ?? null;
+
+// A bare `archetype` lists the operations; anything else is `archetype:<op>`.
+if ($operation === null || str_starts_with($operation, '-')) {
+    array_unshift($arguments, 'archetype');
+} else {
+    $arguments[0] = str_starts_with($operation, 'archetype:') ? $operation : 'archetype:'.$operation;
+}
+
+passthru(
+    implode(' ', array_map('escapeshellarg', array_merge([PHP_BINARY, $directory.'/artisan'], $arguments))),
+    $status
+);
+
+exit($status);

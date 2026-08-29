@@ -66,7 +66,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
           Config::get('archetype.roots.debug.root'),
           Config::get('archetype.roots.output.root'),
         ])->filter(function ($directory) {
-            return File::isDirectory($directory);
+            // The console tests point the output root at the application
+            // itself, and emptying that would take the fixture with it.
+            return $directory
+                && File::isDirectory($directory)
+                && realpath($directory) !== realpath(base_path());
         })->each(function ($directory) {
             File::deleteDirectory($directory);
         });

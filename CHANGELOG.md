@@ -6,6 +6,63 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-08-29
+
+Adds a command line to Archetype. The PHP API is untouched — no endpoint, no
+printer and no query builder changes. Everything new lives in `src/Console`.
+
+### Added
+
+- **A command line.** Each operation is an Artisan command under `archetype:`,
+  plus an `archetype` binary that finds the application and forwards to it. Run
+  `archetype` with no arguments for the list, or see the
+  [reference](docs.md#command-line-reference).
+
+- **An operation named after an endpoint is that endpoint.** Same arguments, same
+  directives as flags, same result — `archetype property <target> fillable
+  nickname --add` is `$file->add()->property('fillable', 'nickname')`. Give a
+  value and it writes, give none and it reads. Endpoint commands: `property`,
+  `className`, `extends`, `implements`, `namespace`, `use`, `useTrait`,
+  `classConstant`, `methodNames`, `make`, the ten `LaravelFile` model properties
+  (`fillable`, `hidden`, `visible`, `guarded`, `unguarded`, `casts`, `dates`,
+  `table`, `connection`, `timestamps`) and the four relationships (`hasOne`,
+  `hasMany`, `belongsTo`, `belongsToMany`).
+
+- **Operations with names of their own, which have no PHP equivalent**:
+  `inspect`, `show`, `find`, `set-array-key`, `add-case`, `add-method`,
+  `replace-method`, `remove-method`, `apply`, and the seven relationship types
+  `LaravelFile` does not cover (`hasOneThrough`, `hasManyThrough`, `morphOne`,
+  `morphMany`, `morphTo`, `morphToMany`, `morphedByMany`).
+
+- Every operation takes a single target, which is a path, a class name, or a
+  directory — where a directory means every class beneath it, narrowed with
+  `--extends`, `--implements`, `--uses-trait` or `--matching`.
+- Every operation but `errors` takes `--json`.
+- Every mutation re-renders the file and compares before reporting. One that
+  matched nothing exits non-zero rather than reporting a success that wrote
+  nothing; one whose change is already present reports `SKIP`, which makes the
+  operations safe to repeat.
+- Every mutation answers with a diff of what it changed, and takes `--dry-run`
+  to show that diff without writing.
+- An operation that cannot act on the construct it was pointed at refuses before
+  writing anything, rather than writing the part it can. `implements`,
+  `useTrait` and `extends` import a name before using it, so a half-done change
+  would otherwise look like a whole one.
+- `archetype apply` runs a script of operations in one invocation, reading a file
+  or standard input.
+- `set-array-key` edits the array a method returns, which is where `rules()`,
+  `toArray()`, `casts()` and `definition()` keep their contents.
+- `archetype casts` refuses to write `$casts` on a model that declares the
+  `casts()` method Laravel 11 generates, rather than leaving it with two casting
+  mechanisms, and points at `set-array-key` instead.
+
+### Known limits
+
+- The endpoints address `class` declarations, so the endpoint-named operations
+  work on classes only. On an enum, interface or trait they refuse and write
+  nothing. `inspect`, `show`, `find`, the method operations, `add-case` and
+  `set-array-key` have no such limit.
+
 ## [2.0.1] - 2026-08-25
 
 Maintenance only. No API changes, and nothing here can break existing usage.
@@ -67,7 +124,8 @@ Last release of the 1.x line, which requires `nikic/php-parser` ^4.11.
 Pest 3 and newer. If Composer refuses to resolve `ajthinking/archetype`, upgrade
 to 2.x.
 
-[Unreleased]: https://github.com/ajthinking/archetype/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/ajthinking/archetype/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/ajthinking/archetype/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/ajthinking/archetype/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/ajthinking/archetype/compare/v1.1.5...v2.0.0
 [1.1.5]: https://github.com/ajthinking/archetype/releases/tag/v1.1.5
