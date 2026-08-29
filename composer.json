@@ -41,6 +41,9 @@
             ]
         }
     },
+    "bin": [
+        "bin/archetype"
+    ],
     "autoload": {
         "psr-4": {
             "Archetype\\": "src/"

@@ -6,6 +6,57 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-08-29
+
+Adds a command line to Archetype. Every existing PHP API is untouched; a handful
+of endpoints now reach constructs they previously matched but silently ignored.
+
+### Added
+
+- **A command line.** 26 operations, each an Artisan command under `archetype:`,
+  plus an `archetype` binary that finds the application and forwards to it. Run
+  `archetype` with no arguments for the list, or see the
+  [reference](docs.md#command-line-reference).
+
+  Reading: `inspect`, `show`, `find`, `errors`.
+  Writing: `make`, `set-property`, `add-to-property`, `empty-property`,
+  `remove-property`, `set-casts`, `add-relation`, `set-array-key`, `add-use`,
+  `remove-use`, `add-trait`, `add-implements`, `set-extends`, `set-namespace`,
+  `rename-class`, `set-const`, `remove-const`, `add-case`, `add-method`,
+  `replace-method`, `remove-method`, `apply`.
+
+- Every operation takes a single target, which is a path, a class name, or a
+  directory — where a directory means every class beneath it, narrowed with
+  `--extends`, `--implements`, `--uses-trait` or `--matching`.
+- Every operation takes `--json`.
+- Every mutation re-renders the file and compares before reporting. One that
+  matched nothing exits non-zero rather than reporting a success that wrote
+  nothing; one whose change is already present reports `SKIP`, which makes the
+  operations safe to repeat.
+- Every mutation answers with a diff of what it changed, and takes `--dry-run`
+  to show that diff without writing.
+- `archetype apply` runs a script of operations in one invocation, reading a file
+  or standard input.
+- `set-casts` writes to whichever casting mechanism a model already uses — the
+  `casts()` method Laravel 11 generates, or the `$casts` property — instead of
+  adding a second one beside the first.
+- `set-array-key` edits the array a method returns, which is where `rules()`,
+  `toArray()`, `casts()` and `definition()` keep their contents.
+- `add-relation` covers all eleven Eloquent relation types, with pivot tables,
+  explicit keys, `withPivot`, `withTimestamps` and a custom pivot model.
+- `enum()` and `enumCase()` query methods on the `ASTQueryBuilder`.
+- `php artisan archetype:errors` takes `--json`.
+
+### Changed
+
+- `className()`, `classConstant()`, `useTrait()` and `property()` now match any
+  class-like declaration rather than only `class`, so they work on enums,
+  interfaces and traits. `implements()` matches classes and enums. Previously
+  these silently did nothing on anything but a class.
+- The PSR-2 pretty printer prints `function name(): Type` rather than
+  `function name() : Type`. Only newly printed declarations are affected;
+  untouched code keeps its own formatting.
+
 ## [2.0.1] - 2026-08-25
 
 Maintenance only. No API changes, and nothing here can break existing usage.
@@ -67,7 +118,8 @@ Last release of the 1.x line, which requires `nikic/php-parser` ^4.11.
 Pest 3 and newer. If Composer refuses to resolve `ajthinking/archetype`, upgrade
 to 2.x.
 
-[Unreleased]: https://github.com/ajthinking/archetype/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/ajthinking/archetype/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/ajthinking/archetype/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/ajthinking/archetype/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/ajthinking/archetype/compare/v1.1.5...v2.0.0
 [1.1.5]: https://github.com/ajthinking/archetype/releases/tag/v1.1.5

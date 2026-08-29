@@ -8,6 +8,7 @@
 
 * Programatically modify php files with an intuitive top level read/write API
 * Read/write on classes, framework- and language constructs using `FileQueryBuilders` and `AbstractSyntaxTreeQueryBuilders`
+* Do the same from a terminal — or from an AI agent — with the [`archetype` command line](#command-line)
 
 ## Getting started
 ```bash
@@ -194,6 +195,85 @@ $file->astQuery()
     ->commit() // updates the file's AST
     ->end() // exit query
     ->save() 
+```
+
+## Command line
+
+Everything above is also a command. Each operation is an Artisan command under
+`archetype:`, and the `archetype` binary is a shorthand that finds your
+application and forwards to it:
+
+```bash
+./vendor/bin/archetype inspect app/Models/User.php
+# is the same as
+php artisan archetype:inspect app/Models/User.php
+```
+
+Run `archetype` with no arguments for the full list. There are 26 operations;
+these are the shape of them:
+
+```bash
+# read
+archetype inspect app/Models/User.php               # structure, without method bodies
+archetype inspect app/Models/User.php props methods # only the parts you want
+archetype show app/Http/Requests/StoreTask.php rules
+archetype find app --type=models --uses-trait=SoftDeletes
+
+# write
+archetype add-to-property app/Models/User.php fillable nickname
+archetype set-casts app/Models/User.php archived_at=datetime status=Status::class
+archetype add-relation app/Models/Project.php belongsToMany Label --table=label_project --with-timestamps
+archetype set-array-key app/Http/Requests/StoreTask.php rules due_at 'nullable|date'
+archetype add-case app/Enums/Status.php OnHold on_hold
+archetype add-method app/Models/User.php --code='public function scopeActive($q) { return $q->where("active", true); }'
+```
+
+The full reference is in [docs.md](docs.md#command-line-reference).
+
+### What a target is
+
+Every operation takes one target, which is a path, a class name, or a directory:
+
+```bash
+archetype add-trait app/Models/User.php Auditable   # one file
+archetype add-trait 'App\Models\User' Auditable     # the same file
+archetype add-trait app/Models Auditable            # every class under app/Models
+```
+
+A directory target can be narrowed with `--extends`, `--implements`,
+`--uses-trait` and `--matching`.
+
+### What a mutation answers with
+
+```bash
+$ archetype add-to-property app/Models/User.php fillable nickname
+OK app/Models/User.php $fillable +1
+@@ 24 @@
++         'nickname',
+      ];
+```
+
+Three rules hold for every operation that writes:
+
+* it re-renders the file and compares, so a change that matched nothing is an
+  error and exits non-zero — never a success that wrote nothing;
+* it answers with a diff, so you do not have to read the file back to see what
+  happened;
+* a change already applied is `SKIP`, not `OK` and not an error, so operations
+  are safe to repeat.
+
+`--dry-run` shows the same diff without writing. `--json` gives every operation a
+machine-readable answer instead.
+
+### Several changes in one call
+
+```bash
+archetype apply <<'EOF'
+add-to-property app/Models/Project.php fillable budget_cents
+set-casts app/Models/Project.php budget_cents=integer
+add-relation app/Models/Project.php hasMany Task
+add-implements app/Models/Project.php 'App\Contracts\Auditable'
+EOF
 ```
 
 ## Errors 😵

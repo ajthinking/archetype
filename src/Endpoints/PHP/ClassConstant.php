@@ -122,7 +122,7 @@ class ClassConstant extends EndpointProvider
     protected function remove(string $key)
     {
 		return $this->file->astQuery()
-            ->class()
+            ->classLike()
             ->classConst()
             ->where(function ($query) use ($key) {
                 return $query->const()
@@ -170,7 +170,7 @@ class ClassConstant extends EndpointProvider
     protected function getWithParser(string $key)
     {
         return $this->file->astQuery()
-            ->class()
+            ->classLike()
             ->classConst()->consts
             ->where('name->name', $key)
             ->value
@@ -183,7 +183,7 @@ class ClassConstant extends EndpointProvider
         $value = $this->prepareValue($value);
 
         $propertyExists = $this->file->astQuery()
-            ->class()
+            ->classLike()
             ->classConst()->consts
             ->where('name->name', $key)
             ->isNotEmpty();
@@ -194,7 +194,7 @@ class ClassConstant extends EndpointProvider
     protected function create(string $key, $value)
     {
         return $this->file->astQuery()
-            ->class()
+            ->classLike()
             ->insertStmt($this->makeConstant($key, $value))
             ->commit()
             ->end()
@@ -204,7 +204,7 @@ class ClassConstant extends EndpointProvider
     protected function update(string $key, $value)
     {
         return $this->file->astQuery()
-            ->class()
+            ->classLike()
             ->classConst()->consts
             ->where('name->name', $key)
             ->replaceProperty(
