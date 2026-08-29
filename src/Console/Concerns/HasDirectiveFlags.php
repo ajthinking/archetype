@@ -2,6 +2,7 @@
 
 namespace Archetype\Console\Concerns;
 
+use Archetype\Console\Support\Directives;
 use Archetype\LaravelFile as File;
 use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,22 +17,6 @@ use Symfony\Component\Console\Input\InputOption;
  */
 trait HasDirectiveFlags
 {
-    /** directive method => flag description */
-    const DIRECTIVES = [
-        'add' => 'Add to what is there instead of replacing it',
-        'remove' => 'Remove it',
-        'clear' => 'Clear the default value, keeping the declaration',
-        'empty' => 'Empty it, keeping the declaration',
-        'full' => 'Answer with the fully qualified name',
-        'public' => 'Declare it public',
-        'protected' => 'Declare it protected',
-        'private' => 'Declare it private',
-        'static' => 'Declare it static',
-    ];
-
-    /** The directives that make an operation a write rather than a read. */
-    const WRITING_DIRECTIVES = ['add', 'remove', 'clear', 'empty'];
-
     /** Which directives this command's endpoint honours. */
     abstract protected function directives(): array;
 
@@ -54,7 +39,7 @@ trait HasDirectiveFlags
     /** True when the caller asked a question rather than for a change. */
     protected function isRead(): bool
     {
-        foreach (array_intersect($this->directives(), self::WRITING_DIRECTIVES) as $directive) {
+        foreach (array_intersect($this->directives(), Directives::WRITING) as $directive) {
             if ($this->option($directive)) {
                 return false;
             }
@@ -67,7 +52,7 @@ trait HasDirectiveFlags
     protected function guardDirectives(): void
     {
         $given = array_values(array_filter(
-            array_intersect($this->directives(), self::WRITING_DIRECTIVES),
+            array_intersect($this->directives(), Directives::WRITING),
             fn ($directive) => $this->option($directive)
         ));
 
@@ -78,7 +63,7 @@ trait HasDirectiveFlags
         }
 
         $visibility = array_values(array_filter(
-            ['public', 'protected', 'private'],
+            Directives::VISIBILITY,
             fn ($flag) => in_array($flag, $this->directives(), true) && $this->option($flag)
         ));
 
@@ -99,7 +84,7 @@ trait HasDirectiveFlags
                 $directive,
                 null,
                 InputOption::VALUE_NONE,
-                self::DIRECTIVES[$directive]
+                Directives::ALL[$directive]
             );
         }
 

@@ -4,6 +4,7 @@ namespace Archetype\Console\Commands;
 
 use Archetype\Console\EndpointCommand;
 use Archetype\Console\Support\Code;
+use Archetype\Console\Support\Directives;
 use Archetype\Console\Support\Introspector;
 use Archetype\LaravelFile as File;
 use RuntimeException;
@@ -46,7 +47,7 @@ class ModelPropertyCommand extends EndpointCommand
 
     protected function directives(): array
     {
-        return ['add', 'remove', 'clear', 'empty'];
+        return Directives::WRITING;
     }
 
     protected function hasValue(): bool

@@ -4,6 +4,7 @@ namespace Archetype\Console\Commands;
 
 use Archetype\Console\EndpointCommand;
 use Archetype\Console\Support\Code;
+use Archetype\Console\Support\Directives;
 use Archetype\Console\Support\Introspector;
 use Archetype\LaravelFile as File;
 use Archetype\Support\Types;
@@ -24,7 +25,7 @@ class PropertyCommand extends EndpointCommand
 
     protected function directives(): array
     {
-        return ['add', 'remove', 'clear', 'empty', 'public', 'protected', 'private', 'static'];
+        return array_merge(Directives::WRITING, Directives::VISIBILITY, ['static']);
     }
 
     protected function hasValue(): bool
@@ -70,7 +71,7 @@ class PropertyCommand extends EndpointCommand
      */
     protected function withVisibility(File $file, string $name): File
     {
-        foreach (['public', 'protected', 'private'] as $flag) {
+        foreach (Directives::VISIBILITY as $flag) {
             if ($this->option($flag)) {
                 return $file;
             }
