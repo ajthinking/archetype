@@ -50,7 +50,7 @@ it('replaces a method', function () {
 
     expect($result->succeeded())->toBeTrue();
     expect(Console::read('app/Models/Project.php'))
-        ->toContain('public function isActive(): bool')
+        ->toContain('public function isActive() : bool')
         ->not->toContain('return true;');
 });
 
@@ -94,5 +94,5 @@ it('adds a method to an enum', function () {
     $result = Console::run('archetype:add-method app/Enums/Status.php --code="public function label(): string { return ucfirst(\$this->value); }"');
 
     expect($result->succeeded())->toBeTrue();
-    expect(Console::read('app/Enums/Status.php'))->toContain('public function label(): string');
+    expect(Console::read('app/Enums/Status.php'))->toContain('public function label() : string');
 });

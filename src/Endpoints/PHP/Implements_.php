@@ -33,33 +33,23 @@ class Implements_ extends EndpointProvider
 
     protected function get()
     {
-        return collect(['class', 'enum'])->flatMap(function ($construct) {
-            return $this->file->astQuery()
-                ->$construct()
-                ->implements
-                ->get()
-                ->map(fn ($node) => $node->name);
-        })->toArray();
+        return $this->file->astQuery()
+            ->class()
+            ->implements
+            ->get()
+            ->map(fn ($node) => $node->name)->toArray();
     }
 
-    /**
-     * Classes and enums, because those are the two constructs that implement.
-     * An interface extends rather than implements, and giving it an `implements`
-     * would produce something PHP cannot parse.
-     */
     protected function set($newImplements)
     {
         $newImplements = $this->makeNameObject($newImplements);
-
-        foreach (['class', 'enum'] as $construct) {
-            $this->file->astQuery()
-                ->$construct()
-                ->replaceProperty('implements', $newImplements)
-                ->commit()
-                ->end();
-        }
-
-        return $this->file->continue();
+        
+        return $this->file->astQuery()
+            ->class()
+            ->replaceProperty('implements', $newImplements)
+            ->commit()
+            ->end()
+            ->continue();
     }
     
     protected function add($newImplements)

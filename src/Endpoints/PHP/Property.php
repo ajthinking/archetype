@@ -148,7 +148,7 @@ class Property extends EndpointProvider
     protected function remove(string $key)
     {
         return $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->property()
             ->where(function ($query) use ($key) {
                 return $query->propertyProperty()
@@ -196,7 +196,7 @@ class Property extends EndpointProvider
     protected function getWithParser(string $key)
     {
         return $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->propertyProperty()
             ->where('name->name', $key)
             ->default
@@ -209,7 +209,7 @@ class Property extends EndpointProvider
         $value = $this->prepareValue($value);
 
         $propertyExists = $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->propertyProperty()
             ->where('name->name', $key)
             ->get()->isNotEmpty();
@@ -220,7 +220,7 @@ class Property extends EndpointProvider
     protected function create(string $key, $value)
     {
         return $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->insertStmt($this->makeProperty($key, $value))
             ->commit()
             ->end()
@@ -230,7 +230,7 @@ class Property extends EndpointProvider
     protected function update(string $key, $value)
     {
         return $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->property()
 			->where->propertyProperty('name->name')->is($key)->get()
             ->replace(function ($property) {

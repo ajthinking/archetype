@@ -23,7 +23,7 @@ class SetPropertyCommand extends MutationCommand
         $raw = $this->argument('value');
 
         return $this->mutate(function (LaravelFile $file) use ($name, $raw) {
-            $this->requirePropertyHolder($file);
+            $this->requireKind($file, ['class']);
 
             $visibility = $this->visibilityOf($file, $name, $this->option('visibility'));
 

@@ -4,6 +4,7 @@ namespace Archetype;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Archetype\Commands\ErrorsCommand;
 use Archetype\Console\Support\Manifest;
 use Archetype\Factories\LaravelFileFactory;
 use Archetype\Factories\PHPFileFactory;
@@ -42,6 +43,9 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerCommands()
     {
-        $this->commands(Manifest::commands());
+        $this->commands([
+            ErrorsCommand::class,
+            ...Manifest::commands(),
+        ]);
     }
 }

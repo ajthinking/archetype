@@ -18,6 +18,8 @@ class SetExtendsCommand extends MutationCommand
         $parent = $this->argument('parent');
 
         return $this->mutate(function (LaravelFile $file) use ($parent) {
+            $this->requireKind($file, ['class']);
+
             if ($file->extends() === class_basename($parent)) {
                 return $this->unchanged('extends unchanged');
             }

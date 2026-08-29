@@ -18,6 +18,8 @@ class AddImplementsCommand extends MutationCommand
         $interfaces = $this->argument('interfaces');
 
         return $this->mutate(function (LaravelFile $file) use ($interfaces) {
+            $this->requireKind($file, ['class']);
+
             $existing = array_map(fn ($name) => class_basename($name), $file->implements());
 
             $wanted = array_values(array_filter(

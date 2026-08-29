@@ -19,6 +19,8 @@ class RemovePropertyCommand extends MutationCommand
         $name = $this->argument('name');
 
         return $this->mutate(function (LaravelFile $file) use ($name) {
+            $this->requireKind($file, ['class']);
+
             if (! (new Introspector($file))->hasProperty($name)) {
                 return $this->unchanged("no \$$name");
             }

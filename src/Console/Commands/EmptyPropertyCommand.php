@@ -19,7 +19,7 @@ class EmptyPropertyCommand extends MutationCommand
         $name = $this->argument('name');
 
         return $this->mutate(function (LaravelFile $file) use ($name) {
-            $this->requirePropertyHolder($file);
+            $this->requireKind($file, ['class']);
 
             if (! (new Introspector($file))->hasProperty($name)) {
                 return $this->unchanged("no \$$name");

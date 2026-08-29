@@ -19,6 +19,8 @@ class RemoveConstCommand extends MutationCommand
         $name = $this->argument('name');
 
         return $this->mutate(function (LaravelFile $file) use ($name) {
+            $this->requireKind($file, ['class']);
+
             $present = collect((new Introspector($file))->constants())
                 ->contains(fn ($constant) => $constant['name'] === $name);
 

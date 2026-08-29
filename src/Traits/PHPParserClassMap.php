@@ -42,8 +42,6 @@ trait PHPParserClassMap
 		'empty' => \PhpParser\Node\Expr\Empty_::class,
 		'encapsed' => \PhpParser\Node\Scalar\Encapsed::class,
 		'encapsedStringPart' => \PhpParser\Node\Scalar\EncapsedStringPart::class,
-		'enum' => \PhpParser\Node\Stmt\Enum_::class,
-		'enumCase' => \PhpParser\Node\Stmt\EnumCase::class,
 		'error' => \PhpParser\Node\Expr\Error::class,
 		'errorSuppress' => \PhpParser\Node\Expr\ErrorSuppress::class,
 		'eval' => \PhpParser\Node\Expr\Eval_::class,
@@ -398,22 +396,6 @@ trait PHPParserClassMap
 	}
 
 	public function encapsedStringPart($path = ''): self
-	{
-		return $this->traverseIntoClass(
-			$this->phpParserClassMap[__FUNCTION__],
-			$path
-		);
-	}
-
-	public function enum($path = ''): self
-	{
-		return $this->traverseIntoClass(
-			$this->phpParserClassMap[__FUNCTION__],
-			$path
-		);
-	}
-
-	public function enumCase($path = ''): self
 	{
 		return $this->traverseIntoClass(
 			$this->phpParserClassMap[__FUNCTION__],

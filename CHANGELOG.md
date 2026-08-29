@@ -8,8 +8,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.1.0] - 2026-08-29
 
-Adds a command line to Archetype. Every existing PHP API is untouched; a handful
-of endpoints now reach constructs they previously matched but silently ignored.
+Adds a command line to Archetype. The PHP API is untouched — no endpoint, no
+printer and no query builder changes. Everything new lives in `src/Console`.
 
 ### Added
 
@@ -28,13 +28,17 @@ of endpoints now reach constructs they previously matched but silently ignored.
 - Every operation takes a single target, which is a path, a class name, or a
   directory — where a directory means every class beneath it, narrowed with
   `--extends`, `--implements`, `--uses-trait` or `--matching`.
-- Every operation takes `--json`.
+- Every operation but `errors` takes `--json`.
 - Every mutation re-renders the file and compares before reporting. One that
   matched nothing exits non-zero rather than reporting a success that wrote
   nothing; one whose change is already present reports `SKIP`, which makes the
   operations safe to repeat.
 - Every mutation answers with a diff of what it changed, and takes `--dry-run`
   to show that diff without writing.
+- An operation that cannot act on the construct it was pointed at refuses before
+  writing anything, rather than writing the part it can. `add-implements`,
+  `add-trait` and `set-extends` import a name before using it, so a half-done
+  change would otherwise look like a whole one.
 - `archetype apply` runs a script of operations in one invocation, reading a file
   or standard input.
 - `set-casts` writes to whichever casting mechanism a model already uses — the
@@ -44,18 +48,14 @@ of endpoints now reach constructs they previously matched but silently ignored.
   `toArray()`, `casts()` and `definition()` keep their contents.
 - `add-relation` covers all eleven Eloquent relation types, with pivot tables,
   explicit keys, `withPivot`, `withTimestamps` and a custom pivot model.
-- `enum()` and `enumCase()` query methods on the `ASTQueryBuilder`.
-- `php artisan archetype:errors` takes `--json`.
 
-### Changed
+### Known limits
 
-- `className()`, `classConstant()`, `useTrait()` and `property()` now match any
-  class-like declaration rather than only `class`, so they work on enums,
-  interfaces and traits. `implements()` matches classes and enums. Previously
-  these silently did nothing on anything but a class.
-- The PSR-2 pretty printer prints `function name(): Type` rather than
-  `function name() : Type`. Only newly printed declarations are affected;
-  untouched code keeps its own formatting.
+- The property, constant, interface, trait, parent-class and rename operations
+  work on classes only, because the endpoints they drive address `class`
+  declarations. On an enum, interface or trait they refuse and write nothing.
+  `inspect`, `show`, `find`, the method operations, `add-case` and
+  `set-array-key` have no such limit.
 
 ## [2.0.1] - 2026-08-25
 

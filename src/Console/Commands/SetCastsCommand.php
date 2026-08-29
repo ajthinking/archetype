@@ -32,7 +32,7 @@ class SetCastsCommand extends MutationCommand
         $casts = $this->casts();
 
         return $this->mutate(function (LaravelFile $file) use ($casts) {
-            $this->requirePropertyHolder($file);
+            $this->requireKind($file, ['class']);
 
             [$array, $where] = $this->literal($file);
 

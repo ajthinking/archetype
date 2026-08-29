@@ -28,7 +28,7 @@ class UseTrait extends EndpointProvider
 	protected function get()
 	{
 		$r = $this->file->astQuery()
-			->classLike()
+			->class()
 			->traitUse()
 			->name()
 			->get()
@@ -40,7 +40,7 @@ class UseTrait extends EndpointProvider
 	protected function add($newUseTraitNames)
 	{
 		return $this->file->astQuery()
-			->classLike()
+			->class()
 			->insertStmts(
 				collect(Arr::wrap($newUseTraitNames))
 					->reverse()

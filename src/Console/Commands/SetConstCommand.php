@@ -22,6 +22,8 @@ class SetConstCommand extends MutationCommand
         $raw = $this->argument('value');
 
         return $this->mutate(function (LaravelFile $file) use ($name, $raw) {
+            $this->requireKind($file, ['class']);
+
             foreach ((new Introspector($file))->constants() as $constant) {
                 if ($constant['name'] === $name && $constant['evaluated'] && $constant['value'] === Code::value($raw)) {
                     return $this->unchanged("$name unchanged");

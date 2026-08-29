@@ -24,6 +24,8 @@ class RenameClassCommand extends MutationCommand
         $name = $this->argument('name');
 
         return $this->mutate(function (LaravelFile $file) use ($name) {
+            $this->requireKind($file, ['class']);
+
             if ((new Introspector($file))->name() === $name) {
                 return $this->unchanged('class name unchanged');
             }

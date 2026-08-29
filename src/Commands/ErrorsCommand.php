@@ -9,7 +9,7 @@ use Archetype\Endpoints\PHP\PHPFileQueryBuilder;
 
 class ErrorsCommand extends Command
 {
-    protected $signature = 'archetype:errors {--json : Emit JSON instead of a table}';
+    protected $signature = 'archetype:errors';
     protected $description = 'List dirty files';
 	protected $result;
 	protected $errors;
@@ -32,15 +32,6 @@ class ErrorsCommand extends Command
                 ]);
             }
         });
-
-        if ($this->option('json')) {
-            $this->output->writeln(json_encode([
-                'ok' => $this->errors->isEmpty(),
-                'errors' => $this->errors->values()->all(),
-            ], JSON_UNESCAPED_SLASHES));
-
-            return;
-        }
 
         if ($this->errors->isEmpty()) {
             $this->info('No errors found!');

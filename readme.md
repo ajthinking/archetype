@@ -256,7 +256,8 @@ OK app/Models/User.php $fillable +1
 Three rules hold for every operation that writes:
 
 * it re-renders the file and compares, so a change that matched nothing is an
-  error and exits non-zero — never a success that wrote nothing;
+  error and exits non-zero — never a success that wrote nothing, and never half
+  a change reported as a whole one;
 * it answers with a diff, so you do not have to read the file back to see what
   happened;
 * a change already applied is `SKIP`, not `OK` and not an error, so operations

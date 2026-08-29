@@ -200,6 +200,8 @@ These options are rejected on a single-file target rather than ignored.
 |---|---|
 | `--json` | Emit JSON instead of the compact line format |
 
+`errors` predates this console and does not take it.
+
 ### Options every mutation takes
 
 | Option | Effect |
@@ -367,8 +369,7 @@ archetype add-case app/Enums/ProjectStatus.php OnHold on_hold
 archetype add-case app/Enums/Suit.php Spades          # pure enum, no backing value
 ```
 
-Constants work on classes, interfaces, enums and traits. New enum cases are
-added after the ones already there.
+New enum cases are added after the ones already there.
 
 ### Methods
 
@@ -382,6 +383,23 @@ archetype remove-method app/Models/Project.php isActive
 
 Methods can be added to a class, enum, interface or trait, and are appended
 after the methods already there.
+
+### What the console will not do
+
+`set-property`, `add-to-property`, `empty-property`, `remove-property`,
+`set-casts`, `set-const`, `remove-const`, `add-implements`, `add-trait`,
+`set-extends` and `rename-class` work on classes only. On an enum, interface or
+trait they refuse and write nothing, rather than writing the part they can and
+reporting success:
+
+```
+$ archetype add-implements app/Enums/Status.php 'App\Contracts\HasColor'
+ERR app/Enums/Status.php archetype:add-implements only works on classes, and this is an enum
+```
+
+`inspect`, `show`, `find`, `add-method`, `replace-method`, `remove-method`,
+`add-case` and `set-array-key` have no such limit — they read or write the
+declaration whatever it is.
 
 ### Several operations in one call
 

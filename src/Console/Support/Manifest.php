@@ -147,12 +147,23 @@ class Manifest
         ],
     ];
 
-    /** @return array<int, class-string> every command the service provider registers */
+    /**
+     * The console's own commands.
+     *
+     * `errors` is listed above so it shows up in the operation map, but it
+     * predates this console and the service provider registers it directly, so
+     * it is not returned here.
+     *
+     * @return array<int, class-string>
+     */
     public static function commands(): array
     {
         return array_merge(
             [Commands\HelpCommand::class],
-            array_values(array_map(fn ($operation) => $operation[0], self::OPERATIONS))
+            array_values(array_filter(
+                array_map(fn ($operation) => $operation[0], self::OPERATIONS),
+                fn ($class) => str_starts_with($class, 'Archetype\\Console\\')
+            ))
         );
     }
 

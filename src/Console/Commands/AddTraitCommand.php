@@ -18,6 +18,8 @@ class AddTraitCommand extends MutationCommand
         $traits = $this->argument('traits');
 
         return $this->mutate(function (LaravelFile $file) use ($traits) {
+            $this->requireKind($file, ['class']);
+
             $existing = array_map(fn ($trait) => class_basename($trait), $file->useTrait());
 
             $wanted = array_values(array_filter(

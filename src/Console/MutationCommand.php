@@ -6,6 +6,7 @@ use Archetype\Console\Support\Diff;
 use Archetype\Console\Support\Introspector;
 use Archetype\Facades\LaravelFile;
 use Archetype\LaravelFile as File;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
 use Throwable;
@@ -135,20 +136,42 @@ abstract class MutationCommand extends TargetedCommand
     }
 
     /**
-     * Refuse a property write on a construct that cannot hold one.
+     * Refuse an operation on a construct it does not support.
      *
-     * The endpoints match any class-like now, so an enum or an interface would
-     * otherwise accept a property and produce a file PHP cannot parse.
+     * The endpoints this console drives address `class` declarations, so on an
+     * enum, interface or trait most of them match nothing. That alone would be
+     * caught by the did-anything-change check — but an operation that imports a
+     * name before using it writes the import either way, and a file that
+     * changed by half looks exactly like a file that changed. Saying no up
+     * front is the only version of this that cannot mislead.
+     *
+     * @param array<int, string> $kinds the constructs the operation supports
      */
-    protected function requirePropertyHolder(File $file): void
+    protected function requireKind(File $file, array $kinds): void
     {
         $kind = (new Introspector($file))->kind();
 
-        if (in_array($kind, ['enum', 'interface'], true)) {
-            throw new InvalidArgumentException(
-                ($kind === 'enum' ? 'an' : 'a')." $kind cannot have properties"
-            );
+        if (in_array($kind, $kinds, true)) {
+            return;
         }
+
+        throw new InvalidArgumentException(sprintf(
+            '%s only works on %s, and this is %s %s',
+            $this->getName(),
+            $this->list($kinds),
+            in_array($kind[0], ['a', 'e', 'i', 'o', 'u'], true) ? 'an' : 'a',
+            $kind
+        ));
+    }
+
+    /** @param array<int, string> $items */
+    protected function list(array $items): string
+    {
+        $items = array_map(fn ($item) => Str::plural($item), $items);
+
+        return count($items) < 2
+            ? $items[0]
+            : implode(', ', array_slice($items, 0, -1)).' and '.end($items);
     }
 
     /**

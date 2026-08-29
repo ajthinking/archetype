@@ -25,7 +25,7 @@ class AddToPropertyCommand extends MutationCommand
         $values = $this->argument('values');
 
         return $this->mutate(function (LaravelFile $file) use ($name, $values) {
-            $this->requirePropertyHolder($file);
+            $this->requireKind($file, ['class']);
 
             $visibility = $this->visibilityOf($file, $name, $this->option('visibility'));
             $existing = $file->property($name);

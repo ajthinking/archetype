@@ -85,7 +85,7 @@ it('renames the class', function () {
     expect(Console::read('app/Models/User.php'))->toContain('class Account extends Authenticatable');
 });
 
-it('renames an enum', function () {
+it('refuses to rename an enum', function () {
     Console::write('app/Enums/Status.php', <<<'PHP'
         <?php
 
@@ -97,9 +97,11 @@ it('renames an enum', function () {
         }
         PHP);
 
-    Console::run('archetype:rename-class app/Enums/Status.php ProjectStatus');
+    $result = Console::run('archetype:rename-class app/Enums/Status.php ProjectStatus');
 
-    expect(Console::read('app/Enums/Status.php'))->toContain('enum ProjectStatus: string');
+    expect($result->succeeded())->toBeFalse();
+    expect($result->output)->toContain('only works on classes, and this is an enum');
+    expect(Console::read('app/Enums/Status.php'))->toContain('enum Status: string');
 });
 
 it('sets and removes a class constant', function () {
@@ -112,7 +114,7 @@ it('sets and removes a class constant', function () {
     expect(Console::read('app/Models/User.php'))->not->toContain('HOME');
 });
 
-it('sets a constant on an interface', function () {
+it('refuses to set a constant on an interface', function () {
     Console::write('app/Contracts/Payable.php', <<<'PHP'
         <?php
 
@@ -126,8 +128,9 @@ it('sets a constant on an interface', function () {
 
     $result = Console::run('archetype:set-const app/Contracts/Payable.php CURRENCY EUR');
 
-    expect($result->succeeded())->toBeTrue();
-    expect(Console::read('app/Contracts/Payable.php'))->toContain("const CURRENCY = 'EUR';");
+    expect($result->succeeded())->toBeFalse();
+    expect($result->output)->toContain('only works on classes, and this is an interface');
+    expect(Console::read('app/Contracts/Payable.php'))->not->toContain('CURRENCY');
 });
 
 it('skips a constant already set', function () {

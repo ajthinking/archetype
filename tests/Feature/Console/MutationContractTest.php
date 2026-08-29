@@ -36,17 +36,18 @@ it('writes nothing on a dry run', function () {
     expect(Console::read('app/Models/User.php'))->toBe($before);
 });
 
-it('exits non-zero when the change matched nothing', function () {
+it('exits non-zero when there is nothing it could act on', function () {
     Console::write('app/helpers.php', "<?php\n\nfunction thing()\n{\n    return 1;\n}\n");
 
     // There is no class here to rename, so this must not report OK.
     $result = Console::run('archetype:rename-class app/helpers.php Thing');
 
     expect($result->succeeded())->toBeFalse();
-    expect($result->output)->toContain('but the file did not change');
+    expect($result->output)->toContain('only works on classes, and this is a file');
+    expect(Console::read('app/helpers.php'))->toContain('function thing()');
 });
 
-it('refuses a change the construct cannot take', function () {
+it('refuses a change the construct cannot take, before writing any of it', function () {
     Console::write('app/Enums/Status.php', <<<'PHP'
         <?php
 
@@ -61,7 +62,7 @@ it('refuses a change the construct cannot take', function () {
     $result = Console::run('archetype:set-property app/Enums/Status.php table users');
 
     expect($result->succeeded())->toBeFalse();
-    expect($result->output)->toContain('an enum cannot have properties');
+    expect($result->output)->toContain('archetype:set-property only works on classes, and this is an enum');
     expect(Console::read('app/Enums/Status.php'))->not->toContain('table');
 });
 

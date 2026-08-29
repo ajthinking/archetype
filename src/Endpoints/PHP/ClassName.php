@@ -31,7 +31,7 @@ class ClassName extends EndpointProvider
     protected function get()
     {
         $className = $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->name
             ->name
             ->first();
@@ -48,7 +48,7 @@ class ClassName extends EndpointProvider
     protected function set(string $newClassName)
     {
         return $this->file->astQuery()
-            ->classLike()
+            ->class()
             ->name
             ->replaceProperty('name', $newClassName)
             ->commit()
