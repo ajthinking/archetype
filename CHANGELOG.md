@@ -6,7 +6,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-Proposed as 2.1.0: no API changes, but the php-parser floor rises.
+## [2.1.0] - 2026-10-27
+
+No API changes, but the php-parser floor rises.
 
 ### Added
 
@@ -84,7 +86,8 @@ Last release of the 1.x line, which requires `nikic/php-parser` ^4.11.
 Pest 3 and newer. If Composer refuses to resolve `ajthinking/archetype`, upgrade
 to 2.x.
 
-[Unreleased]: https://github.com/ajthinking/archetype/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/ajthinking/archetype/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/ajthinking/archetype/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/ajthinking/archetype/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/ajthinking/archetype/compare/v1.1.5...v2.0.0
 [1.1.5]: https://github.com/ajthinking/archetype/releases/tag/v1.1.5
