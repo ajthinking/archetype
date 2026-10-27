@@ -6,6 +6,23 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+Proposed as 2.1.0: no API changes, but the php-parser floor rises.
+
+### Added
+
+- Support for PHP 8.5 (CI runs 8.5 against Laravel 12 and 13). The suite
+  passes unmodified on PHP 8.5.12, the current security release.
+- Files written in PHP 8.5 syntax (pipe operator `|>`, `(void)` casts,
+  `final` promoted properties, `#[\NoDiscard]`) can be loaded, edited and
+  rendered. A round-trip test covers this.
+
+### Changed
+
+- `nikic/php-parser` is now required at `^5.6` instead of `^5.0`. Archetype
+  parses with php-parser's newest supported version, and 5.5 and older reject
+  PHP 8.5 syntax with a parse error. Composer upgrades php-parser within 5.x,
+  and nothing changes in your own code.
+
 ## [2.0.1] - 2026-08-25
 
 Maintenance only. No API changes, and nothing here can break existing usage.
