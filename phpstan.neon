@@ -9,3 +9,10 @@ parameters:
 		- tests/fixtures/*
 	ignoreErrors:
 		- '#Dummy not found#'
+		# Pest <= 3 leaves $this untyped inside test closures, so PHPStan flags
+		# $this->artisan() there; Pest 4+ types it. Ignore it without reporting
+		# the ignore as unmatched, so analysis passes on every Pest we allow.
+		-
+			message: '#(artisan\(\)|\$this)#'
+			path: tests/Feature/Commands/ErrorsCommandTest.php
+			reportUnmatched: false
